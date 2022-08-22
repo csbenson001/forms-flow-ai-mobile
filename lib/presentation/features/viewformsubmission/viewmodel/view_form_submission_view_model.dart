@@ -2,10 +2,9 @@ import 'dart:convert';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:formsflowai/presentation/features/viewformsubmission/view/view_form_submission_screen.dart';
 import 'package:formsflowai/presentation/features/viewformsubmission/viewmodel/view_form_submission_state_notifier.dart';
-import 'package:formsflowai_shared/core/base/base_view_model.dart';
+import 'package:formsflowai_shared/core/base/base_notifier_view_model.dart';
 import 'package:formsflowai_shared/core/networkmanager/internet_connectivity_provider.dart';
 import 'package:formsflowai_shared/core/networkmanager/network_manager_controller.dart';
 import 'package:formsflowai_shared/core/preferences/app_preference.dart';
@@ -20,10 +19,7 @@ import '../../taskdetails/usecases/fetch_forms_usecase.dart';
 
 /// [ViewFormSubmissionViewModel] ViewModel class contains business logic
 /// related to [ViewFormSubmissionScreen]
-class ViewFormSubmissionViewModel extends BaseViewModel {
-  //  Private Variables
-  late InAppWebViewController formWebViewController;
-
+class ViewFormSubmissionViewModel extends BaseNotifierViewModel {
   final Ref ref;
   final AppPreferences appPreferences;
   final FetchFormUseCase fetchFormUseCase;
@@ -41,6 +37,7 @@ class ViewFormSubmissionViewModel extends BaseViewModel {
 
   /// OnInit Method
   void onInit({required ApplicationHistoryDM applicationHistoryDM}) {
+    
     _applicationHistoryDM = applicationHistoryDM;
     fetchForms();
     _initInternetNetworkCallback();
@@ -48,16 +45,19 @@ class ViewFormSubmissionViewModel extends BaseViewModel {
 
   /// Method to fetch forms
   Future<void> fetchForms() async {
+  
     if (networkManagerController.connectionType != ConnectivityResult.none) {
       SchedulerBinding.instance.addPostFrameCallback((_) {
-        ref.read(viewFormSubmissionStateProvider.notifier).updateFormLoading();
+        ref
+            .read(viewFormSubmissionStateProvider.notifier)
+            .updateFormLoading(isLoading: true);
       });
 
       var formUrl = _applicationHistoryDM?.formUrl ?? '';
+      String formResourceId = _applicationHistoryDM?.formId ?? '';
+      String formSubmissionId = _applicationHistoryDM?.formSubmissionId ?? '';
+
       if (!GeneralUtil.isStringEmpty(formUrl)) {
-        List<String> data = formUrl.split('/');
-        String formResourceId = data[4];
-        String formSubmissionId = data[data.length - 1];
         var response = await fetchFormUseCase.call(
             params: FetchFormParams(formResourceId: formResourceId));
         response.fold((left) {
@@ -76,6 +76,10 @@ class ViewFormSubmissionViewModel extends BaseViewModel {
                 .updateNoFormResourceFound();
           }
         });
+      } else {
+        ref
+            .read(viewFormSubmissionStateProvider.notifier)
+            .updateNoFormResourceFound();
       }
     }
   }
@@ -104,7 +108,7 @@ class ViewFormSubmissionViewModel extends BaseViewModel {
         FormIoModel formIoModel = FormIoModel(
             readOnly: true,
             formComponents: formDM.formResponse,
-            formData: json.encode(submissionResponse.data));
+            formData: json.encode(submissionResponse));
         ref
             .read(viewFormSubmissionStateProvider.notifier)
             .updateFormioModel(formIoModel: formIoModel);

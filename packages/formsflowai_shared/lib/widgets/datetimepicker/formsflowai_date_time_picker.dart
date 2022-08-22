@@ -5,17 +5,18 @@ class FormsflowAIDateTimePicker {
   /// Function to open Date Time Picker
   static Future<DateTime?>? buildDateTimePicker(
       {required BuildContext context}) async {
-    final ThemeData theme = Theme.of(context);
-    switch (theme.platform) {
-      case TargetPlatform.android:
-      case TargetPlatform.fuchsia:
-      case TargetPlatform.linux:
-      case TargetPlatform.windows:
-        return _buildMaterialDatePicker(context: context);
-      case TargetPlatform.iOS:
-      case TargetPlatform.macOS:
-        return _buildCupertinoDatePicker(context: context);
-    }
+    // final ThemeData theme = Theme.of(context);
+    // switch (theme.platform) {
+    //   case TargetPlatform.android:
+    //   case TargetPlatform.fuchsia:
+    //   case TargetPlatform.linux:
+    //   case TargetPlatform.windows:
+    //     return _buildMaterialDatePicker(context: context);
+    //   case TargetPlatform.iOS:
+    //   case TargetPlatform.macOS:
+    //     return _buildMaterialDatePicker(context: context);
+    // }
+    return _buildMaterialDatePicker(context: context);
   }
 
   /// Function to build material date and time picker in Android
@@ -68,7 +69,12 @@ class FormsflowAIDateTimePicker {
             color: Colors.white,
             child: CupertinoDatePicker(
               mode: CupertinoDatePickerMode.date,
-              onDateTimeChanged: (picked) {},
+              onDateTimeChanged: (picked) {
+                if (picked != null) {
+                  _buildCupertinoTimePicker(
+                      context: context, selectedDate: picked);
+                }
+              },
               initialDateTime: DateTime.now(),
               minimumYear: DateTime.now().year,
               maximumYear: DateTime.now().add(const Duration(days: 365)).year,
@@ -80,7 +86,7 @@ class FormsflowAIDateTimePicker {
 
   /// This builds cupertino time picker in iOS
   static Future<DateTime?>? _buildCupertinoTimePicker(
-      {required BuildContext context, required String selectedDate}) {
+      {required BuildContext context, required DateTime selectedDate}) {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext builder) {
@@ -89,7 +95,10 @@ class FormsflowAIDateTimePicker {
             color: Colors.white,
             child: CupertinoTimerPicker(
               mode: CupertinoTimerPickerMode.hm,
-              onTimerDurationChanged: (Duration value) {},
+              onTimerDurationChanged: (Duration value) {
+                
+                ;
+              },
             ),
           );
         });

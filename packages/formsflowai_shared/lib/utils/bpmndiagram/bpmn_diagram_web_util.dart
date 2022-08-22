@@ -24,7 +24,7 @@ class BpmnDiagramWebUtil {
 	   text-color: #ffffff;
 	}
 	.djs-container .highlight .djs-visual>:nth-child(1) {
-	   fill: #bce2f5 !important;
+	   fill: #42628F !important;
 	   text-color: #fff;
 	}
 	</style>
@@ -106,6 +106,8 @@ class BpmnDiagramWebUtil {
     String? processKey = SharedUtil.getProcessKey(
         processName: processName,
         definitionResponse: processDefinitionResponse);
-    return '${ApiConstantUrl.FORMSFLOWAI_BASE_URL}${ApiConstantUrl.CAMUNDA_ENGINE_REST}/${ApiConstantUrl.PROCESS_DEFINITION_KEY}/$processKey/${ApiConstantUrl.PROCESS_XML}';
+    var processXMl =
+        '${ApiConstantUrl.FORMSFLOWAI_BASE_URL}${ApiConstantUrl.CAMUNDA_ENGINE_REST}/${ApiConstantUrl.PROCESS_DEFINITION_KEY}/$processKey/${ApiConstantUrl.PROCESS_XML}';
+    return processXMl;
   }
 }

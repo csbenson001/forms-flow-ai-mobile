@@ -15,6 +15,7 @@ import 'package:formsflowai_shared/widgets/nointernetview/no_internet_snackbar_v
 import 'package:formsflowai_shared/widgets/shimmer/shimmer_widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../../../../core/module/providers/view_model_provider.dart';
 import '../../../../../shared/app_text_styles.dart';
@@ -143,40 +144,29 @@ class TaskDetailsHeaderView extends BaseConsumerWidget {
                                             overflow: TextOverflow.ellipsis,
                                           ),
                                         ),
-                                        Flexible(
-                                            child: Container(
-                                                margin: const EdgeInsets.only(
-                                                    top: Dimens.spacing_2),
-                                                decoration: BoxDecoration(
-                                                  shape: BoxShape.rectangle,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          Dimens.spacing_6),
-                                                  color: AppColor.red,
-                                                ),
-                                                child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: Dimens
-                                                                .spacing_2,
-                                                            right: Dimens
-                                                                .spacing_2),
-                                                    child: InkWell(
-                                                      onTap: () {
-                                                        ref
-                                                            .read(
-                                                                taskDetailsViewModelProvider)
-                                                            .onRemovedTaskDate(
-                                                                dateSelectorType:
-                                                                    TaskDetailsDateSelectorType
-                                                                        .dueDate);
-                                                      },
-                                                      child: const Icon(
-                                                        Icons.close,
-                                                        size: 15.0,
-                                                        color: Colors.white,
-                                                      ),
-                                                    )))),
+                                        Expanded(
+                                            flex: 2,
+                                            child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: Dimens.spacing_2),
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    ref
+                                                        .read(
+                                                            taskDetailsViewModelProvider)
+                                                        .onRemovedTaskDate(
+                                                            dateSelectorType:
+                                                                TaskDetailsDateSelectorType
+                                                                    .dueDate);
+                                                  },
+                                                  child: SvgPicture.asset(
+                                                    FormsFlowAIImageAssets
+                                                        .imagesCloseFilled,
+                                                    width: Dimens.size_16,
+                                                    height: Dimens.size_16,
+                                                    color: AppColor.red,
+                                                  ),
+                                                ))),
                                       ],
                                     )
                                   : Row(
@@ -193,11 +183,17 @@ class TaskDetailsHeaderView extends BaseConsumerWidget {
                                                     textColor: Colors.black),
                                           ),
                                         ),
-                                        const Flexible(
+                                        Expanded(
+                                            flex: 2,
                                             child: Padding(
                                                 padding: EdgeInsets.only(
-                                                    left: Dimens.spacing_2),
-                                                child: Icon(
+                                                  left: SizerUtil.deviceType ==
+                                                          DeviceType.mobile
+                                                      ? Dimens.spacing_2
+                                                      : Dimens.spacing_10,
+                                                  right: Dimens.spacing_2,
+                                                ),
+                                                child: const Icon(
                                                   Icons.calendar_today_sharp,
                                                   size: 16.0,
                                                   color: AppColor.primarycolor,
@@ -260,40 +256,31 @@ class TaskDetailsHeaderView extends BaseConsumerWidget {
                                                       textColor: Colors.black),
                                             ),
                                           ),
-                                          Flexible(
-                                              child: Container(
-                                                  margin: const EdgeInsets.only(
-                                                      top: Dimens.spacing_2),
-                                                  decoration: BoxDecoration(
-                                                    shape: BoxShape.rectangle,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            Dimens.spacing_6),
-                                                    color: AppColor.red,
-                                                  ),
-                                                  child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: Dimens
-                                                                  .spacing_2,
-                                                              right: Dimens
-                                                                  .spacing_2),
-                                                      child: InkWell(
-                                                        onTap: () {
-                                                          ref
-                                                              .read(
-                                                                  taskDetailsViewModelProvider)
-                                                              .onRemovedTaskDate(
-                                                                  dateSelectorType:
-                                                                      TaskDetailsDateSelectorType
-                                                                          .followupDate);
-                                                        },
-                                                        child: const Icon(
-                                                          Icons.close,
-                                                          size: 15.0,
-                                                          color: Colors.white,
-                                                        ),
-                                                      )))),
+                                          Expanded(
+                                              flex: 2,
+                                              child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left:
+                                                              Dimens.spacing_2),
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      ref
+                                                          .read(
+                                                              taskDetailsViewModelProvider)
+                                                          .onRemovedTaskDate(
+                                                              dateSelectorType:
+                                                                  TaskDetailsDateSelectorType
+                                                                      .followupDate);
+                                                    },
+                                                    child: SvgPicture.asset(
+                                                      FormsFlowAIImageAssets
+                                                          .imagesCloseFilled,
+                                                      width: Dimens.size_16,
+                                                      height: Dimens.size_16,
+                                                      color: AppColor.red,
+                                                    ),
+                                                  ))),
                                         ],
                                       )
                                     : Row(
@@ -312,12 +299,17 @@ class TaskDetailsHeaderView extends BaseConsumerWidget {
                                                       textColor: Colors.black),
                                             ),
                                           ),
-                                          const Flexible(
+                                          Expanded(
+                                              flex: 2,
                                               child: Padding(
                                                   padding: EdgeInsets.only(
-                                                      left: Dimens.spacing_2,
+                                                      left: SizerUtil
+                                                                  .deviceType ==
+                                                              DeviceType.mobile
+                                                          ? Dimens.spacing_2
+                                                          : Dimens.spacing_10,
                                                       right: Dimens.spacing_2),
-                                                  child: Icon(
+                                                  child: const Icon(
                                                     Icons.calendar_today_sharp,
                                                     size: Dimens.size_16,
                                                     color:
@@ -508,31 +500,24 @@ class TaskDetailsHeaderView extends BaseConsumerWidget {
                                                                           .spacing_4,
                                                                       top: Dimens
                                                                           .spacing_8),
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    shape: BoxShape
-                                                                        .rectangle,
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            Dimens.spacing_6),
-                                                                    color:
-                                                                        AppColor
-                                                                            .red,
-                                                                  ),
                                                                   child:
-                                                                      const Padding(
-                                                                    padding: EdgeInsets.only(
+                                                                      Padding(
+                                                                    padding: const EdgeInsets
+                                                                            .only(
                                                                         left: Dimens
                                                                             .spacing_2,
                                                                         right: Dimens
                                                                             .spacing_2),
-                                                                    child: Icon(
-                                                                      Icons
-                                                                          .close,
-                                                                      size: Dimens
-                                                                          .size_18,
-                                                                      color: Colors
-                                                                          .white,
+                                                                    child: SvgPicture
+                                                                        .asset(
+                                                                      FormsFlowAIImageAssets
+                                                                          .imagesCloseFilled,
+                                                                      width: Dimens
+                                                                          .size_16,
+                                                                      height: Dimens
+                                                                          .size_16,
+                                                                      color: AppColor
+                                                                          .red,
                                                                     ),
                                                                   ))),
                                                         ],

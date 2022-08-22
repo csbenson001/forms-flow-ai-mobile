@@ -76,7 +76,7 @@ class TaskListInflateRowView extends BaseConsumerWidget {
                         children: [
                           Row(
                             children: [
-                              Expanded(
+                              Flexible(
                                   flex: 1,
                                   child: Padding(
                                     padding: const EdgeInsets.only(
@@ -105,6 +105,7 @@ class TaskListInflateRowView extends BaseConsumerWidget {
                                   child: Container(
                                     alignment: Alignment.topCenter,
                                     child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         Padding(
                                             padding: const EdgeInsets.only(

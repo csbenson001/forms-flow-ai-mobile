@@ -16,23 +16,23 @@ class ApplicationHistoryResponse {
 }
 
 class Applications {
-  final String? formUrl;
+  final String? submissionId;
   final String? created;
   final String? applicationStatus;
+  final String? formId;
 
-  Applications({
-    this.formUrl,
-    this.created,
-    this.applicationStatus,
-  });
+  Applications(
+      {this.submissionId, this.created, this.applicationStatus, this.formId});
 
   Applications.fromJson(Map<String, dynamic> json)
-      : formUrl = json['formUrl'] as String?,
+      : submissionId = json['submissionId'] as String?,
         created = json['created'] as String?,
+        formId = json['formId'] as String?,
         applicationStatus = json['applicationStatus'] as String?;
 
   Map<String, dynamic> toJson() => {
-        'formUrl': formUrl,
+        'submissionId': submissionId,
+        'formId': formId,
         'created': created,
         'applicationStatus': applicationStatus
       };

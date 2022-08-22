@@ -26,7 +26,7 @@ class FetchIsolatedFormSubmissionDataUseCase
       {required FetchIsolatedFormSubmissionDataParams params}) {
     return repository.fetchFormSubmissionIsolatedData(
         host:
-            '${ApiConstantUrl.FORMSFLOWAI_BASE_URL}${ApiConstantUrl.FORM}/${params.formResourceId}${ApiConstantUrl.FORM_SUBMISSION}/${params.formSubmissionId}',
+            '${ApiConstantUrl.FORMSFLOWAI_BASE_URL}${ApiConstantUrl.FORM}/${params.formResourceId}/${ApiConstantUrl.FORM_SUBMISSION}/${params.formSubmissionId}',
         formSubmissionId: params.formSubmissionId,
         taskId: params.taskId);
   }

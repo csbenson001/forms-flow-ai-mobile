@@ -87,6 +87,7 @@ class TaskDetailsScreen extends BaseHooksConsumerWidget {
             },
             body: Container(
                 color: Colors.white,
+                width: MediaQuery.of(context).size.width,
                 child: TabBarView(
                   physics: const ClampingScrollPhysics(),
                   controller: tabController,

@@ -134,11 +134,11 @@ class FilterInflateTaskProcessView extends BaseConsumerWidget {
                                   color: AppColor.primarycolor,
                                   size: Dimens.size_20,
                                 ),
-                                reversedIcon: const Icon(
-                                  Icons.keyboard_arrow_up_rounded,
-                                  color: AppColor.primarycolor,
-                                  size: Dimens.size_20,
-                                ),
+                                // reversedIcon: const Icon(
+                                //   Icons.keyboard_arrow_up_rounded,
+                                //   color: AppColor.primarycolor,
+                                //   size: Dimens.size_20,
+                                // ),
                                 onChanged: (selectedOperator) {
                                   ref
                                       .read(taskListViewModelProvider)

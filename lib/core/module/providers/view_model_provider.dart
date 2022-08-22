@@ -73,7 +73,7 @@ final taskDetailsViewModelProvider = ChangeNotifierProvider.autoDispose((ref) =>
 
 /// Defining [viewFormSubmissionViewModelProvider]
 /// provider ref object for the [ViewModel] class [ViewFormSubmissionViewModel]
-final viewFormSubmissionViewModelProvider = Provider.autoDispose((ref) =>
+final viewFormSubmissionViewModelProvider = ChangeNotifierProvider.autoDispose((ref) =>
     ViewFormSubmissionViewModel(
         ref: ref,
         fetchFormSubmissionUseCase: dl(),

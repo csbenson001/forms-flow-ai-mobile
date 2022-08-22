@@ -40,7 +40,7 @@ class TaskSortView extends BaseConsumerWidget {
                 borderRadius:
                     const BorderRadius.all(Radius.circular(Dimens.radius_5))))
         : Container(
-            width: double.infinity,
+            width: MediaQuery.of(context).size.width,
             margin: const EdgeInsets.only(
                 left: Dimens.spacing_2,
                 right: Dimens.spacing_2,

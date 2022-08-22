@@ -48,4 +48,5 @@ class FormsFlowAIImageAssets {
   static const String imagesLogout = 'assets/images/logout.svg';
   static const String imagesSimpleLogo = 'assets/images/simple_logo.svg';
   static const String imagesUser = 'assets/images/user.svg';
+  static const String imagesCloseFilled = 'assets/images/ic_close_filled.svg';
 }

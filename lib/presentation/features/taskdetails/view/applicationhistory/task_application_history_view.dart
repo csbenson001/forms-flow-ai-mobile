@@ -150,7 +150,9 @@ class TaskApplicationHistoryView extends BaseHooksConsumerWidget {
                                                   .viewFormSubmissionScreen,
                                               extra: dm,
                                               params: {
-                                                "formUrl": dm.formUrl ?? ''
+                                                "id": dm.applicationId
+                                                        .toString() ??
+                                                    ''
                                               });
                                         },
                                         style: ElevatedButton.styleFrom(

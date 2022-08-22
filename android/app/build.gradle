@@ -43,7 +43,7 @@ android {
 
     defaultConfig {
 
-        applicationId "com.formsflowai.app"
+        applicationId "com.aot.formsflowai"
         minSdkVersion 21
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()

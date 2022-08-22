@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formsflowai/repository/form/form_data_repository.dart';
+import 'package:formsflowai_api/response/base/base_response.dart';
 import 'package:formsflowai_api/response/form/submission/form_submission_response.dart';
 
 import '../../../../core/error/errors_failure.dart';
@@ -16,7 +17,7 @@ class SaveFormSubmissionUseCase
   final FormDataRepository repository;
 
   @override
-  Future<Either<Failure, void>> call(
+  Future<Either<Failure, BaseResponse>> call(
       {required SaveFormSubmissionParams params}) {
     return repository.submitFormData(
         formResourceId: params.formResourceId,

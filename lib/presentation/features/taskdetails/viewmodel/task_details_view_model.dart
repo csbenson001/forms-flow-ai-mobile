@@ -2,7 +2,6 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:formsflowai/core/router/app_routes.dart';
 import 'package:formsflowai/presentation/features/assigntask/model/memebers_data_model.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/usecases/index.dart';
@@ -76,9 +75,9 @@ class TaskDetailsViewModel extends BaseNotifierViewModel {
   /// Tab index
   int _selectedTabIndex = 0;
   int get selectedTabIndex => _selectedTabIndex;
-
-  ///  Private Variables
-  late InAppWebViewController formWebViewController;
+  //
+  // ///  Private Variables
+  // late InAppWebViewController formWebViewController;
 
   /// Selected Task from task listing screen
   TaskListingDM? _taskListingDM;
@@ -587,7 +586,6 @@ class TaskDetailsViewModel extends BaseNotifierViewModel {
         dismissProgressLoading();
       }, (r) {
         dismissProgressLoading();
-
         ref
             .read(taskListViewModelProvider)
             .onCurrentTaskCompleted(taskId: taskListingDM?.taskId);

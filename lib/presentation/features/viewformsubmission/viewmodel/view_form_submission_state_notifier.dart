@@ -18,8 +18,8 @@ class ViewFormSubmissionStateNotifier
             isNoFormResourceFound: false));
 
   /// Method to update form loading
-  void updateFormLoading() {
-    state = state.copyWith(isLoadingForm: true);
+  void updateFormLoading({required bool isLoading}) {
+    state = state.copyWith(isLoadingForm: isLoading);
   }
 
   /// Method to update form resource found
@@ -29,6 +29,6 @@ class ViewFormSubmissionStateNotifier
 
   /// Method to update formIoModel
   void updateFormioModel({required FormIoModel formIoModel}) {
-    state = state.copyWith(formIoModel: formIoModel);
+    state = state.copyWith(formIoModel: formIoModel, isLoadingForm: false);
   }
 }

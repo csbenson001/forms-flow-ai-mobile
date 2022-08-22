@@ -7,7 +7,7 @@ class ApiConstantUrl {
   static const String FORMSFLOWAI_BASE_URL =
       'https://app2.aot-technologies.com/';
 
-  static const String CAMUNDA_ENGINE_REST = 'camunda/engine-rest';
+  static const String CAMUNDA_ENGINE_REST = 'camunda/engine-rest-ext';
 
   static const String FILTER = 'filter';
 
@@ -21,7 +21,7 @@ class ApiConstantUrl {
 
   static const String PROCESS_XML = 'xml';
 
-  static const String FORM_SUBMISSION = 'submission/';
+  static const String FORM_SUBMISSION = 'submission';
 
   // ----------------------- TASK  ---------------------
 
@@ -40,7 +40,7 @@ class ApiConstantUrl {
       '$CAMUNDA_ENGINE_REST/$FILTER/$PATH_ID/count';
 
   static const String FETCH_FILTERS =
-      '$CAMUNDA_ENGINE_REST/$FILTER?resourceType=Task';
+      '$CAMUNDA_ENGINE_REST/$FILTER?resourceType=Task&itemCount=true';
 
   static const String FETCH_PROCESS_DEIFINITION =
       '$CAMUNDA_ENGINE_REST/process-definition';

@@ -5,6 +5,7 @@ import 'package:formsflowai/presentation/features/taskdetails/model/form_dm.dart
 import 'package:formsflowai/repository/form/form_local_data_source_impl.dart';
 import 'package:formsflowai/repository/form/form_remote_data_source_impl.dart';
 import 'package:formsflowai/repository/form/form_repository.dart';
+import 'package:formsflowai_api/response/base/base_response.dart';
 import 'package:formsflowai_api/response/form/submission/form_submission_response.dart';
 import 'package:formsflowai_shared/core/database/entity/form_entity.dart';
 import 'package:formsflowai_shared/core/networkmanager/network_manager_controller.dart';
@@ -106,7 +107,7 @@ class FormDataRepository implements FormRepository {
   /// [FormSubmissionId]
   /// [FormSubmissionResponse]
   @override
-  Future<Either<Failure, void>> submitFormData(
+  Future<Either<Failure, BaseResponse>> submitFormData(
       {required String formResourceId,
       required String formSubmissionId,
       required FormSubmissionResponse formSubmissionResponse}) {

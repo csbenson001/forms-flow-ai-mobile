@@ -102,11 +102,13 @@ class FormRemoteDataSource implements FormRepository {
     try {
       var response = await formsApiClient.getFormIoJson(
           appPreferences.getFormJwtToken(), id);
-      if (response.response.statusCode !=
-          FormsFlowAIAPIConstants.statusCode200) {
-        return Left(ServerFailure());
+      if (response.response.statusCode ==
+              FormsFlowAIAPIConstants.statusCode200 ||
+          response.response.statusCode ==
+              FormsFlowAIAPIConstants.statusCode204) {
+        return Right(FormDM.transform(response.response));
       }
-      return Right(FormDM.transform(response.response));
+      return Left(ServerFailure());
     } on SocketException {
       return Left(NoConnectionFailure());
     } on ServerException {
@@ -167,13 +169,14 @@ class FormRemoteDataSource implements FormRepository {
           formResourceId,
           formSubmissionId,
           formSubmissionResponse);
-      if (response.response.statusCode !=
+      if (response.response.statusCode ==
               FormsFlowAIAPIConstants.statusCode200 ||
-          response.response.statusCode !=
+          response.response.statusCode ==
               FormsFlowAIAPIConstants.statusCode204) {
-        return Left(ServerFailure());
+        return Right(BaseResponse(
+            statusCode: response.response.statusCode, message: "Success"));
       }
-      return Right(BaseResponse(statusCode: response.response.statusCode));
+      return Left(ServerFailure());
     } on SocketException {
       return Left(NoConnectionFailure());
     } on ServerException {
@@ -201,7 +204,7 @@ class FormRemoteDataSource implements FormRepository {
       required String formSubmissionId,
       required FormSubmissionResponse formSubmissionResponse}) async {
     String apiUrl =
-        "${ApiConstantUrl.FORMSFLOWAI_BASE_URL}${ApiConstantUrl.FORM}/${formResourceId}/${ApiConstantUrl.FORM_SUBMISSION}${formSubmissionId}";
+        "${ApiConstantUrl.FORMSFLOWAI_BASE_URL}${ApiConstantUrl.FORM}/${formResourceId}/${ApiConstantUrl.FORM_SUBMISSION}/${formSubmissionId}";
     try {
       var response = await isolatedHttpClient.put(
           host: apiUrl,

@@ -19,7 +19,7 @@ class TaskDetailsFormsView extends BaseConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     initListeners(context, ref);
-    return const FormsWebView();
+    return FormsWebView();
   }
 
   void initListeners(BuildContext context, WidgetRef ref) {

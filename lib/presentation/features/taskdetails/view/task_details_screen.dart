@@ -102,6 +102,8 @@ class TaskDetailsScreen extends BaseHooksConsumerWidget {
   void initListeners(WidgetRef ref, BuildContext context) {
     ref.listen<bool>(authorizationExpiredFailureProvider, (previous, next) {
       if (next) {
+        showErrorToast(
+            context: context, description: Strings.generalErrorSessionTimeout);
         ref.read(taskListViewModelProvider).logoutUser(context: context);
       }
     });

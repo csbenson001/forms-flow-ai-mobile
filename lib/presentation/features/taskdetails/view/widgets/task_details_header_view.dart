@@ -191,7 +191,10 @@ class TaskDetailsHeaderView extends BaseConsumerWidget {
                                                           DeviceType.mobile
                                                       ? Dimens.spacing_2
                                                       : Dimens.spacing_10,
-                                                  right: Dimens.spacing_2,
+                                                  right: SizerUtil.deviceType ==
+                                                          DeviceType.mobile
+                                                      ? Dimens.spacing_2
+                                                      : Dimens.spacing_none,
                                                 ),
                                                 child: const Icon(
                                                   Icons.calendar_today_sharp,
@@ -302,13 +305,19 @@ class TaskDetailsHeaderView extends BaseConsumerWidget {
                                           Expanded(
                                               flex: 2,
                                               child: Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: SizerUtil
-                                                                  .deviceType ==
-                                                              DeviceType.mobile
-                                                          ? Dimens.spacing_2
-                                                          : Dimens.spacing_10,
-                                                      right: Dimens.spacing_2),
+                                                  padding: SizerUtil
+                                                              .deviceType ==
+                                                          DeviceType.mobile
+                                                      ? const EdgeInsets.only(
+                                                          left:
+                                                              Dimens.spacing_2,
+                                                          right:
+                                                              Dimens.spacing_2)
+                                                      : const EdgeInsets.only(
+                                                          left:
+                                                              Dimens.spacing_10,
+                                                          right: Dimens
+                                                              .spacing_none),
                                                   child: const Icon(
                                                     Icons.calendar_today_sharp,
                                                     size: Dimens.size_16,

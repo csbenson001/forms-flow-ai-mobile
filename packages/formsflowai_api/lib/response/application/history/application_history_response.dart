@@ -20,20 +20,27 @@ class Applications {
   final String? created;
   final String? applicationStatus;
   final String? formId;
+  final String? submittedBy;
 
   Applications(
-      {this.submissionId, this.created, this.applicationStatus, this.formId});
+      {this.submissionId,
+      this.created,
+      this.applicationStatus,
+      this.formId,
+      this.submittedBy});
 
   Applications.fromJson(Map<String, dynamic> json)
       : submissionId = json['submissionId'] as String?,
         created = json['created'] as String?,
         formId = json['formId'] as String?,
+        submittedBy = json['submittedBy'] as String?,
         applicationStatus = json['applicationStatus'] as String?;
 
   Map<String, dynamic> toJson() => {
         'submissionId': submissionId,
         'formId': formId,
         'created': created,
+    'submittedBy':submittedBy,
         'applicationStatus': applicationStatus
       };
 }

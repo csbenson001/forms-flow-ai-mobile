@@ -70,6 +70,8 @@ class TaskListScreen extends BaseHooksConsumerWidget {
     /// Listen for token expired failure
     ref.listen<bool>(authorizationExpiredFailureProvider, (previous, next) {
       if (next) {
+        showErrorToast(
+            context: context, description: Strings.generalErrorSessionTimeout);
         ref.read(taskListViewModelProvider).logoutUser(context: context);
       }
     });

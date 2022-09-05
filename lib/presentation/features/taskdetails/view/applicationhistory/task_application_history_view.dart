@@ -182,13 +182,24 @@ class TaskApplicationHistoryView extends BaseHooksConsumerWidget {
                             padding: const EdgeInsets.only(
                                 left: Dimens.spacing_16,
                                 top: Dimens.spacing_8,
-                                bottom: Dimens.spacing_12),
+                                bottom: Dimens.spacing_8),
                             child: Text(
                               dm.created != null && dm.created!.isNotEmpty
                                   ? dm.created!.getApplicationTime(
                                       text: Strings.taskListingLabelCreated,
                                       dateTime: dm.created!)
                                   : "",
+                              style: AppTextStyles.mediumTextStyle(
+                                  fontSize: Dimens.font_13,
+                                  textColor: Colors.black87),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: Dimens.spacing_16,
+                                bottom: Dimens.spacing_12),
+                            child: Text(
+                              "Submitted By ${dm.submittedBy ?? ''}",
                               style: AppTextStyles.mediumTextStyle(
                                   fontSize: Dimens.font_13,
                                   textColor: Colors.black87),

@@ -10,6 +10,7 @@ import 'package:formsflowai_shared/shared/dimens.dart';
 import 'package:formsflowai_shared/widgets/dropdown/dropdown_below.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../../../../../../core/module/providers/view_model_provider.dart';
 import '../../../../../../../shared/app_text_styles.dart';
@@ -57,8 +58,10 @@ class TaskFiltersDropdownView extends BaseConsumerWidget {
                 const Spacer(),
                 if (isInternetAvailable != ConnectivityResult.none)
                   Expanded(
-                      flex: 4,
-                      child: Container(
+                    flex: SizerUtil.deviceType == DeviceType.mobile ? 4 : 3,
+                    child: LayoutBuilder(builder:
+                        (BuildContext context, BoxConstraints constraints) {
+                      return Container(
                         margin: const EdgeInsets.only(
                             left: Dimens.spacing_24,
                             top: Dimens.spacing_none,
@@ -81,13 +84,22 @@ class TaskFiltersDropdownView extends BaseConsumerWidget {
                           ),
                         ),
                         child: DropdownBelow(
-                          itemWidth: Dimens.size_125,
+                          itemWidth: SizerUtil.deviceType == DeviceType.mobile
+                              ? Dimens.size_125
+                              : constraints.maxWidth,
                           isDense: false,
-                          itemTextstyle: const TextStyle(
-                              fontSize: Dimens.font_12,
-                              fontWeight: FontWeight.w400,
-                              overflow: TextOverflow.ellipsis,
-                              color: Colors.black),
+                          itemTextstyle:
+                              SizerUtil.deviceType == DeviceType.mobile
+                                  ? const TextStyle(
+                                      fontSize: Dimens.font_12,
+                                      fontWeight: FontWeight.w400,
+                                      overflow: TextOverflow.ellipsis,
+                                      color: Colors.black)
+                                  : const TextStyle(
+                                      fontSize: Dimens.font_13,
+                                      fontWeight: FontWeight.w400,
+                                      overflow: TextOverflow.visible,
+                                      color: Colors.black),
                           boxTextstyle: const TextStyle(
                               fontSize: Dimens.font_12,
                               fontWeight: FontWeight.w400,
@@ -98,7 +110,9 @@ class TaskFiltersDropdownView extends BaseConsumerWidget {
                               Dimens.spacing_4,
                               Dimens.spacing_4,
                               Dimens.spacing_8),
-                          boxWidth: Dimens.size_125,
+                          boxWidth: SizerUtil.deviceType == DeviceType.mobile
+                              ? Dimens.size_125
+                              : constraints.maxWidth,
                           boxHeight: Dimens.size_40,
                           icon: const Icon(
                             Icons.keyboard_arrow_down_rounded,
@@ -113,7 +127,9 @@ class TaskFiltersDropdownView extends BaseConsumerWidget {
                           items: taskDropDownItems,
                           value: selectedSortFilterItem,
                         ),
-                      ))
+                      );
+                    }),
+                  )
               ],
             ))
         : Row(

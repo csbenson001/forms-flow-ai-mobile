@@ -13,6 +13,7 @@ class ApplicationHistoryEntity {
   String? formUrl;
   String? created;
   String? applicationStatus;
+  String? submittedBy;
 
   ApplicationHistoryEntity(
       {this.id,
@@ -21,6 +22,7 @@ class ApplicationHistoryEntity {
       this.taskId,
       this.applicationStatus,
       this.formId,
+      this.submittedBy,
       this.formSubmissionId,
       this.applicationId});
 

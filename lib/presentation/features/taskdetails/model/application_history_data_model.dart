@@ -11,6 +11,7 @@ class ApplicationHistoryDM {
   int? applicationId;
   String? formId;
   String? formSubmissionId;
+  String? submittedBy;
 
   @override
   String toString() {
@@ -33,6 +34,7 @@ class ApplicationHistoryDM {
         dm.applicationStatus = element.applicationStatus;
         dm.formSubmissionId = element.submissionId;
         dm.formId = element.formId;
+        dm.submittedBy = element.submittedBy;
         dm.formUrl =
             "${ApiConstantUrl.FORMSFLOWAI_BASE_URL}${ApiConstantUrl.FORM}/${element.formId}/${ApiConstantUrl.FORM_SUBMISSION}/${element.submissionId}";
         mData.add(dm);
@@ -57,6 +59,7 @@ class ApplicationHistoryDM {
         dm.formUrl = element.formUrl;
         dm.formSubmissionId = element.formSubmissionId;
         dm.formId = element.formId;
+        dm.submittedBy = element.submittedBy;
         mData.add(dm);
       }
     }
@@ -85,6 +88,7 @@ class ApplicationHistoryDM {
             created: element.created,
             formSubmissionId: element.formSubmissionId,
             formId: element.formId,
+            submittedBy: element.submittedBy,
             taskId: taskId));
       }
     }

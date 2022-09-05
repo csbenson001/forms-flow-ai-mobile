@@ -12,8 +12,6 @@ var gForm = null;
     readOnly: formioInputData['readOnly']
     }
    ).then((form) => {
-    console.log("----- Load Form -----");
-    console.log(JSON.stringify(data));
     gForm = form;
     form.submission = data;
     form.nosubmit = true;

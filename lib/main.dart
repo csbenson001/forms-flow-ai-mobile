@@ -7,6 +7,7 @@ import 'package:formsflowai_shared/shared/formsflow_app_constants.dart';
 import 'package:formsflowai_shared/widgets/progress/progress_custom_animation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:isolated_http_client/isolated_http_client.dart';
+import 'package:sizer/sizer.dart';
 
 import 'core/di/injection.dart';
 import 'core/router/app_pages.dart';
@@ -25,16 +26,16 @@ Future<void> main() async {
 
   /// call function [InitEasyLoading] to set system bar color brightness
   initEasyLoading();
-  runApp(
-    ProviderScope(
+  runApp(Sizer(builder: (context, orientation, deviceType) {
+    return ProviderScope(
         child: MaterialApp.router(
       routeInformationParser:
           FormsFlowAIRouter.appRouteList.routeInformationParser,
       routerDelegate: FormsFlowAIRouter.appRouteList.routerDelegate,
       debugShowCheckedModeBanner: false,
       builder: EasyLoading.init(),
-    )),
-  );
+    ));
+  }));
 }
 
 /// Function to set overlay [StatusBar] color and brightness

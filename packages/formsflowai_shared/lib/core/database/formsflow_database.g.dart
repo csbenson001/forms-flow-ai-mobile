@@ -90,7 +90,7 @@ class _$FormsFlowDatabase extends FormsFlowDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `formsflowform` (`id` INTEGER, `formResponse` TEXT, `formId` TEXT, PRIMARY KEY (`id`))');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `applicationhistory` (`id` INTEGER, `applicationId` INTEGER, `taskId` TEXT, `formUrl` TEXT, `created` TEXT, `applicationStatus` TEXT, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `applicationhistory` (`id` INTEGER, `applicationId` INTEGER, `taskId` TEXT, `formId` TEXT, `formSubmissionId` TEXT, `formUrl` TEXT, `created` TEXT, `applicationStatus` TEXT, PRIMARY KEY (`id`))');
         await database.execute(
             'CREATE UNIQUE INDEX `index_task_taskId` ON `task` (`taskId`)');
         await database.execute(
@@ -643,6 +643,8 @@ class _$ApplicationHistoryDao extends ApplicationHistoryDao {
                   'id': item.id,
                   'applicationId': item.applicationId,
                   'taskId': item.taskId,
+                  'formId': item.formId,
+                  'formSubmissionId': item.formSubmissionId,
                   'formUrl': item.formUrl,
                   'created': item.created,
                   'applicationStatus': item.applicationStatus
@@ -655,6 +657,8 @@ class _$ApplicationHistoryDao extends ApplicationHistoryDao {
                   'id': item.id,
                   'applicationId': item.applicationId,
                   'taskId': item.taskId,
+                  'formId': item.formId,
+                  'formSubmissionId': item.formSubmissionId,
                   'formUrl': item.formUrl,
                   'created': item.created,
                   'applicationStatus': item.applicationStatus
@@ -667,6 +671,8 @@ class _$ApplicationHistoryDao extends ApplicationHistoryDao {
                   'id': item.id,
                   'applicationId': item.applicationId,
                   'taskId': item.taskId,
+                  'formId': item.formId,
+                  'formSubmissionId': item.formSubmissionId,
                   'formUrl': item.formUrl,
                   'created': item.created,
                   'applicationStatus': item.applicationStatus
@@ -696,6 +702,8 @@ class _$ApplicationHistoryDao extends ApplicationHistoryDao {
             created: row['created'] as String?,
             taskId: row['taskId'] as String?,
             applicationStatus: row['applicationStatus'] as String?,
+            formId: row['formId'] as String?,
+            formSubmissionId: row['formSubmissionId'] as String?,
             applicationId: row['applicationId'] as int?),
         arguments: [id]);
   }
@@ -710,6 +718,8 @@ class _$ApplicationHistoryDao extends ApplicationHistoryDao {
             created: row['created'] as String?,
             taskId: row['taskId'] as String?,
             applicationStatus: row['applicationStatus'] as String?,
+            formId: row['formId'] as String?,
+            formSubmissionId: row['formSubmissionId'] as String?,
             applicationId: row['applicationId'] as int?),
         arguments: [taskId]);
   }
@@ -725,6 +735,8 @@ class _$ApplicationHistoryDao extends ApplicationHistoryDao {
             created: row['created'] as String?,
             taskId: row['taskId'] as String?,
             applicationStatus: row['applicationStatus'] as String?,
+            formId: row['formId'] as String?,
+            formSubmissionId: row['formSubmissionId'] as String?,
             applicationId: row['applicationId'] as int?),
         arguments: [applicationId]);
   }
@@ -738,6 +750,8 @@ class _$ApplicationHistoryDao extends ApplicationHistoryDao {
             created: row['created'] as String?,
             taskId: row['taskId'] as String?,
             applicationStatus: row['applicationStatus'] as String?,
+            formId: row['formId'] as String?,
+            formSubmissionId: row['formSubmissionId'] as String?,
             applicationId: row['applicationId'] as int?));
   }
 

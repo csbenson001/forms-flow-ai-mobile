@@ -9,6 +9,7 @@ import 'package:formsflowai_shared/core/base/base_hooks_consumer_widget.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
 import 'package:formsflowai_shared/utils/router/router_utils.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sizer/sizer.dart';
 
 class SplashScreen extends BaseHooksConsumerWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -30,15 +31,15 @@ class SplashScreen extends BaseHooksConsumerWidget {
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               child: Container(
-                height: Dimens.size_300,
-                width: Dimens.size_300,
+                height: Dimens.size_300.h,
+                width: Dimens.size_300.w,
                 margin: const EdgeInsets.only(
                     left: Dimens.spacing_24, right: Dimens.spacing_24),
                 alignment: Alignment.center,
                 child: SvgPicture.asset(
                   FormsFlowAIImageAssets.imagesIcFormsFlowLogo,
-                  width: Dimens.size_230,
-                  height: Dimens.size_230,
+                  width: Dimens.size_230.w,
+                  height: Dimens.size_230.h,
                   alignment: Alignment.center,
                 ),
               ))),

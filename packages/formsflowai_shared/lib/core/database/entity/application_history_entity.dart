@@ -8,9 +8,12 @@ class ApplicationHistoryEntity {
   final int? id;
   final int? applicationId;
   final String? taskId;
+  String? formId;
+  String? formSubmissionId;
   String? formUrl;
   String? created;
   String? applicationStatus;
+  String? submittedBy;
 
   ApplicationHistoryEntity(
       {this.id,
@@ -18,6 +21,9 @@ class ApplicationHistoryEntity {
       this.created,
       this.taskId,
       this.applicationStatus,
+      this.formId,
+      this.submittedBy,
+      this.formSubmissionId,
       this.applicationId});
 
   @override

@@ -20,15 +20,15 @@ class _TaskApiClient implements TaskApiClient {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<List<dynamic>>(
-        _setStreamType<List<FiltersResponse>>(Options(
-                method: 'GET',
-                headers: <String, dynamic>{r'Authorization': accessToken},
-                extra: _extra)
-            .compose(
-                _dio.options, 'camunda/engine-rest/filter?resourceType=Task',
-                queryParameters: queryParameters, data: _data)
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final _result = await _dio.fetch<List<dynamic>>(_setStreamType<
+        List<FiltersResponse>>(Options(
+            method: 'GET',
+            headers: <String, dynamic>{r'Authorization': accessToken},
+            extra: _extra)
+        .compose(_dio.options,
+            'camunda/engine-rest-ext/filter?resourceType=Task&itemCount=true',
+            queryParameters: queryParameters, data: _data)
+        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     var value = _result.data!
         .map((dynamic i) => FiltersResponse.fromJson(i as Map<String, dynamic>))
         .toList();
@@ -46,7 +46,7 @@ class _TaskApiClient implements TaskApiClient {
                 method: 'GET',
                 headers: <String, dynamic>{r'Authorization': accessToken},
                 extra: _extra)
-            .compose(_dio.options, 'camunda/engine-rest/process-definition',
+            .compose(_dio.options, 'camunda/engine-rest-ext/process-definition',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     var value = _result.data!
@@ -71,7 +71,7 @@ class _TaskApiClient implements TaskApiClient {
                 method: 'POST',
                 headers: <String, dynamic>{r'Authorization': accessToken},
                 extra: _extra)
-            .compose(_dio.options, 'camunda/engine-rest/filter/$id/list?',
+            .compose(_dio.options, 'camunda/engine-rest-ext/filter/$id/list?',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     var value = _result.data!
@@ -91,7 +91,7 @@ class _TaskApiClient implements TaskApiClient {
                 method: 'GET',
                 headers: <String, dynamic>{r'Authorization': accessToken},
                 extra: _extra)
-            .compose(_dio.options, 'camunda/engine-rest/filter/$id/count',
+            .compose(_dio.options, 'camunda/engine-rest-ext/filter/$id/count',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = TaskCountResponse.fromJson(_result.data!);
@@ -109,7 +109,7 @@ class _TaskApiClient implements TaskApiClient {
                 method: 'GET',
                 headers: <String, dynamic>{r'Authorization': accessToken},
                 extra: _extra)
-            .compose(_dio.options, 'camunda/engine-rest/task/$id/variables',
+            .compose(_dio.options, 'camunda/engine-rest-ext/task/$id/variables',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = TaskVariablesResponse.fromJson(_result.data!);
@@ -127,7 +127,7 @@ class _TaskApiClient implements TaskApiClient {
                 method: 'POST',
                 headers: <String, dynamic>{r'Authorization': accessToken},
                 extra: _extra)
-            .compose(_dio.options, 'camunda/engine-rest/task/$id',
+            .compose(_dio.options, 'camunda/engine-rest-ext/task/$id',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = TaskListResponse.fromJson(_result.data!);
@@ -145,7 +145,7 @@ class _TaskApiClient implements TaskApiClient {
                 method: 'POST',
                 headers: <String, dynamic>{r'Authorization': accessToken},
                 extra: _extra)
-            .compose(_dio.options, 'camunda/engine-rest/task/$id/claim',
+            .compose(_dio.options, 'camunda/engine-rest-ext/task/$id/claim',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final httpResponse = HttpResponse(null, _result);
@@ -162,7 +162,7 @@ class _TaskApiClient implements TaskApiClient {
                 method: 'POST',
                 headers: <String, dynamic>{r'Authorization': accessToken},
                 extra: _extra)
-            .compose(_dio.options, 'camunda/engine-rest/task/$id/unclaim',
+            .compose(_dio.options, 'camunda/engine-rest-ext/task/$id/unclaim',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final httpResponse = HttpResponse(null, _result);
@@ -181,7 +181,8 @@ class _TaskApiClient implements TaskApiClient {
                 method: 'POST',
                 headers: <String, dynamic>{r'Authorization': accessToken},
                 extra: _extra)
-            .compose(_dio.options, 'camunda/engine-rest/task/$id/submit-form',
+            .compose(
+                _dio.options, 'camunda/engine-rest-ext/task/$id/submit-form',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final httpResponse = HttpResponse(null, _result);
@@ -198,7 +199,7 @@ class _TaskApiClient implements TaskApiClient {
             method: 'PUT',
             headers: <String, dynamic>{r'Authorization': accessToken},
             extra: _extra)
-        .compose(_dio.options, 'camunda/engine-rest/task/$id',
+        .compose(_dio.options, 'camunda/engine-rest-ext/task/$id',
             queryParameters: queryParameters, data: _data)
         .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     return null;
@@ -210,15 +211,15 @@ class _TaskApiClient implements TaskApiClient {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<List<dynamic>>(
-        _setStreamType<HttpResponse<List<TaskGroupsResponse>>>(Options(
-                method: 'GET',
-                headers: <String, dynamic>{r'Authorization': accessToken},
-                extra: _extra)
-            .compose(_dio.options,
-                'camunda/engine-rest/task/$id/identity-links?type=candidate',
-                queryParameters: queryParameters, data: _data)
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final _result = await _dio.fetch<List<dynamic>>(_setStreamType<
+        HttpResponse<List<TaskGroupsResponse>>>(Options(
+            method: 'GET',
+            headers: <String, dynamic>{r'Authorization': accessToken},
+            extra: _extra)
+        .compose(_dio.options,
+            'camunda/engine-rest-ext/task/$id/identity-links?type=candidate',
+            queryParameters: queryParameters, data: _data)
+        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     var value = _result.data!
         .map((dynamic i) =>
             TaskGroupsResponse.fromJson(i as Map<String, dynamic>))
@@ -234,15 +235,15 @@ class _TaskApiClient implements TaskApiClient {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(addGroupPostModel.toJson());
-    final _result = await _dio.fetch<void>(_setStreamType<HttpResponse<void>>(
-        Options(
-                method: 'POST',
-                headers: <String, dynamic>{r'Authorization': accessToken},
-                extra: _extra)
-            .compose(_dio.options,
-                'camunda/engine-rest/task/$id/identity-links?type=candidate',
-                queryParameters: queryParameters, data: _data)
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final _result = await _dio.fetch<void>(_setStreamType<
+        HttpResponse<void>>(Options(
+            method: 'POST',
+            headers: <String, dynamic>{r'Authorization': accessToken},
+            extra: _extra)
+        .compose(_dio.options,
+            'camunda/engine-rest-ext/task/$id/identity-links?type=candidate',
+            queryParameters: queryParameters, data: _data)
+        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final httpResponse = HttpResponse(null, _result);
     return httpResponse;
   }
@@ -258,7 +259,7 @@ class _TaskApiClient implements TaskApiClient {
                 method: 'GET',
                 headers: <String, dynamic>{r'Authorization': accessToken},
                 extra: _extra)
-            .compose(_dio.options, 'camunda/engine-rest/user',
+            .compose(_dio.options, 'camunda/engine-rest-ext/user',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     var value = _result.data!
@@ -282,7 +283,7 @@ class _TaskApiClient implements TaskApiClient {
                 headers: <String, dynamic>{r'Authorization': accessToken},
                 extra: _extra)
             .compose(_dio.options,
-                'camunda/engine-rest/task/$id/identity-links/delete',
+                'camunda/engine-rest-ext/task/$id/identity-links/delete',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final httpResponse = HttpResponse(null, _result);
@@ -300,7 +301,7 @@ class _TaskApiClient implements TaskApiClient {
                 method: 'POST',
                 headers: <String, dynamic>{r'Authorization': accessToken},
                 extra: _extra)
-            .compose(_dio.options, 'camunda/engine-rest/task/$id/assignee',
+            .compose(_dio.options, 'camunda/engine-rest-ext/task/$id/assignee',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final httpResponse = HttpResponse(null, _result);

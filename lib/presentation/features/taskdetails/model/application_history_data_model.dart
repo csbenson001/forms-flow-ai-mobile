@@ -1,5 +1,6 @@
 import 'package:formsflowai_api/response/application/history/application_history_response.dart';
 import 'package:formsflowai_shared/core/database/entity/application_history_entity.dart';
+import 'package:formsflowai_shared/shared/api_constants_url.dart';
 
 /// [ApplicationHistoryDM] data model class contains all application
 /// history related data fields
@@ -8,6 +9,14 @@ class ApplicationHistoryDM {
   String? created;
   String? applicationStatus;
   int? applicationId;
+  String? formId;
+  String? formSubmissionId;
+  String? submittedBy;
+
+  @override
+  String toString() {
+    return 'ApplicationHistoryDM{formUrl: $formUrl, created: $created, applicationStatus: $applicationStatus, applicationId: $applicationId}';
+  }
 
   /// Method to transform [ApplicationHistoryResponse]
   /// into List[ApplicationHistoryDM]
@@ -23,7 +32,11 @@ class ApplicationHistoryDM {
         ApplicationHistoryDM dm = ApplicationHistoryDM();
         dm.created = element.created;
         dm.applicationStatus = element.applicationStatus;
-        dm.formUrl = element.formUrl;
+        dm.formSubmissionId = element.submissionId;
+        dm.formId = element.formId;
+        dm.submittedBy = element.submittedBy;
+        dm.formUrl =
+            "${ApiConstantUrl.FORMSFLOWAI_BASE_URL}${ApiConstantUrl.FORM}/${element.formId}/${ApiConstantUrl.FORM_SUBMISSION}/${element.submissionId}";
         mData.add(dm);
       }
     }
@@ -44,6 +57,9 @@ class ApplicationHistoryDM {
         dm.created = element.created;
         dm.applicationStatus = element.applicationStatus;
         dm.formUrl = element.formUrl;
+        dm.formSubmissionId = element.formSubmissionId;
+        dm.formId = element.formId;
+        dm.submittedBy = element.submittedBy;
         mData.add(dm);
       }
     }
@@ -70,6 +86,9 @@ class ApplicationHistoryDM {
             applicationId: applicationId,
             formUrl: element.formUrl,
             created: element.created,
+            formSubmissionId: element.formSubmissionId,
+            formId: element.formId,
+            submittedBy: element.submittedBy,
             taskId: taskId));
       }
     }

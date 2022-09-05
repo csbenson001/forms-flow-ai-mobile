@@ -46,6 +46,6 @@ class APIUtils {
   }
 
   static String getProcessInstancesUrl(String processId) {
-    return '${ApiConstantUrl.FORMSFLOWAI_BASE_URL}camunda/engine-rest/process-instance/${processId}/activity-instances';
+    return '${ApiConstantUrl.FORMSFLOWAI_BASE_URL}${ApiConstantUrl.CAMUNDA_ENGINE_REST}/process-instance/${processId}/activity-instances';
   }
 }

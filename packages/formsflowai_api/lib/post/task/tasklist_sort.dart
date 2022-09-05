@@ -49,7 +49,7 @@ class TaskSortPostModel {
         processDefinitionFilters!.isNotEmpty) {
       for (var element in processDefinitionFilters!) {
         if (element.operator == TaskConstants.FILTER_OPERATOR_LIKE_OPERATOR) {
-          json['processDefinitionLike'] = "%${element.value}%";
+          json['processDefinitionNameLike'] = "%${element.value}%";
           break;
         }
       }

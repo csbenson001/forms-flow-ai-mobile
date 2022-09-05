@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:formsflowai/core/module/providers/view_model_provider.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/usecases/fetch_form_entity_usecase.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/usecases/fetch_isolated_form_data_usecase.dart';
@@ -13,6 +14,7 @@ import 'package:formsflowai_shared/core/networkmanager/network_manager_controlle
 import 'package:formsflowai_shared/core/preferences/app_preference.dart';
 import 'package:formsflowai_shared/shared/app_strings.dart';
 import 'package:formsflowai_shared/shared/webview_constants.dart';
+import 'package:formsflowai_shared/utils/form/formio_webview_util.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../../../core/database/worker/database_worker.dart';
@@ -50,6 +52,10 @@ class FormsViewModel extends BaseNotifierViewModel {
   final FetchIsolatedFormDataUseCase fetchIsolatedFormDataUseCase;
   final Ref ref;
 
+  // WebView Plus View Controller
+  InAppWebViewController? _webViewPluscontroller;
+  InAppWebViewController? get webViewPluscontroller => _webViewPluscontroller;
+
   // Forms Data Model
   FormDM _formDM = FormDM();
   FormDM get formDM => _formDM;
@@ -85,14 +91,14 @@ class FormsViewModel extends BaseNotifierViewModel {
         params: FetchFormParams(formResourceId: formResourceId));
 
     fetchFormResponse.fold((error) {
-      print("Got Error" + error.toString());
+
       noFormResourceFound = true;
       notifyListeners();
       if (error is AuthorizationTokenExpiredFailure) {
         ref.read(authorizationExpiredFailureProvider.notifier).state = true;
       }
     }, (right) async {
-      print("Got res" + right.toString());
+      
       if (right != null) {
         _formDM = right;
         fetchFormSubmissionData(right);
@@ -166,8 +172,10 @@ class FormsViewModel extends BaseNotifierViewModel {
 
   // Update form configuration data
   void updateFormConfig({required bool readOnly}) {
-    _formIoModel = _formIoModel.copyWith(readOnly: readOnly);
-    notifyListeners();
+    if (_formIoModel.readOnly != readOnly) {
+      _formIoModel = _formIoModel.copyWith(readOnly: readOnly);
+      loadForm();
+    }
   }
 
   // onForm Submit Custom Action callback
@@ -284,5 +292,23 @@ class FormsViewModel extends BaseNotifierViewModel {
           .read(taskDetailsViewModelProvider)
           .goToHomePageOnOfflineSubmissionAction();
     }
+  }
+
+  void updateWebViewController(
+      {required InAppWebViewController webViewController}) {
+    _webViewPluscontroller = webViewController;
+  }
+
+  loadForm() {
+    _webViewPluscontroller?.injectCSSFileFromAsset(
+        assetFilePath: "assets/formio/app/bootstrap/css/bootstrap.min.css");
+    _webViewPluscontroller?.injectCSSFileFromAsset(
+        assetFilePath: "assets/formio/dist/formio.full.min.css");
+
+    _webViewPluscontroller?.evaluateJavascript(
+        source:
+            'createForm(${_formIoModel.formComponents}, ${_formIoModel.formData},'
+            '${FormioWebViewUtil.fetchFormIoInputData(readOnly: _formIoModel.readOnly ?? false, formResourceId: _formIoModel.formResourceId, userInfoResponse: appPreferences.getUserInfo(), authToken: appPreferences.getAccessToken(), formToken: appPreferences.getFormJwtToken())}'
+            ')');
   }
 }

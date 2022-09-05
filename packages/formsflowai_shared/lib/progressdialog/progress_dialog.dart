@@ -113,15 +113,13 @@ class ProgressDialog {
       if (_isShowing) {
         _isShowing = false;
         Navigator.of(_dismissingContext!).pop();
-        if (_showLogs!) debugPrint('ProgressDialog dismissed');
+
         return Future.value(true);
       } else {
-        if (_showLogs!) debugPrint('ProgressDialog already dismissed');
         return Future.value(false);
       }
     } catch (err) {
-      debugPrint('Seems there is an issue hiding dialog');
-      debugPrint(err.toString());
+
       return Future.value(false);
     }
   }
@@ -161,8 +159,6 @@ class ProgressDialog {
       }
     } catch (err) {
       _isShowing = false;
-      debugPrint('Exception while showing the dialog');
-      debugPrint(err.toString());
       return false;
     }
   }

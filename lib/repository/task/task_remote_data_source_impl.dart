@@ -68,15 +68,16 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
       } else if (e is DioError) {
         if (e.response?.statusCode == FormsFlowAIAPIConstants.statusCode401) {
           // Check for the retry limit get data with the refresh token
-          var newTokenResponse = await _fetchNewToken();
-          newTokenResponse.fold((l) {
-            return Left(AuthorizationTokenExpiredFailure());
-          }, (tokenResponse) {
-            appPreferences.setAccessToken(tokenResponse.accessToken);
-            appPreferences.setRefreshToken(tokenResponse.refreshToken);
-            return addGroup(
-                taskId: taskId, addGroupPostModel: addGroupPostModel);
-          });
+          // var newTokenResponse = await _fetchNewToken();
+          // newTokenResponse.fold((l) {
+          //   return Left(AuthorizationTokenExpiredFailure());
+          // }, (tokenResponse) {
+          //   appPreferences.setAccessToken(tokenResponse.accessToken);
+          //   appPreferences.setRefreshToken(tokenResponse.refreshToken);
+          //   return addGroup(
+          //       taskId: taskId, addGroupPostModel: addGroupPostModel);
+          // });
+          return Left(AuthorizationTokenExpiredFailure());
         }
         return Left(ServerFailure());
       } else {
@@ -111,15 +112,16 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
         return Left(DataTypeFailure());
       } else if (e is DioError) {
         if (e.response?.statusCode == FormsFlowAIAPIConstants.statusCode401) {
-          // Check for the retry limit get data with the refresh token
-          var newTokenResponse = await _fetchNewToken();
-          newTokenResponse.fold((l) {
-            return Left(AuthorizationTokenExpiredFailure());
-          }, (tokenResponse) {
-            appPreferences.setAccessToken(tokenResponse.accessToken);
-            appPreferences.setRefreshToken(tokenResponse.refreshToken);
-            return claimTask(taskId: taskId, payload: payload);
-          });
+          // // Check for the retry limit get data with the refresh token
+          // var newTokenResponse = await _fetchNewToken();
+          // newTokenResponse.fold((l) {
+          //   return Left(AuthorizationTokenExpiredFailure());
+          // }, (tokenResponse) {
+          //   appPreferences.setAccessToken(tokenResponse.accessToken);
+          //   appPreferences.setRefreshToken(tokenResponse.refreshToken);
+          //   return claimTask(taskId: taskId, payload: payload);
+          // });
+          return Left(AuthorizationTokenExpiredFailure());
         }
         return Left(ServerFailure());
       } else {
@@ -149,15 +151,16 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
         return Left(DataTypeFailure());
       } else if (e is DioError) {
         if (e.response?.statusCode == FormsFlowAIAPIConstants.statusCode401) {
-          var newTokenResponse = await _fetchNewToken();
-          newTokenResponse.fold((l) {
-            return Left(AuthorizationTokenExpiredFailure());
-          }, (tokenResponse) {
-            appPreferences.setAccessToken(tokenResponse.accessToken);
-            appPreferences.setRefreshToken(tokenResponse.refreshToken);
-            return deleteGroup(
-                taskId: taskId, addGroupPostModel: addGroupPostModel);
-          });
+          // var newTokenResponse = await _fetchNewToken();
+          // newTokenResponse.fold((l) {
+          //   return Left(AuthorizationTokenExpiredFailure());
+          // }, (tokenResponse) {
+          //   appPreferences.setAccessToken(tokenResponse.accessToken);
+          //   appPreferences.setRefreshToken(tokenResponse.refreshToken);
+          //   return deleteGroup(
+          //       taskId: taskId, addGroupPostModel: addGroupPostModel);
+          // });
+          return Left(AuthorizationTokenExpiredFailure());
         }
         return Left(ServerFailure());
       } else {
@@ -172,7 +175,6 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
   /// ---> Returns [BpmnWorkflowInstancesResponse]
   @override
   Future<Either<Failure, BpmnDiagramResponse>> fetchBpmnDiagram() {
-    // TODO: implement fetchBpmnDiagram
     throw UnimplementedError();
   }
 
@@ -183,7 +185,6 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
   @override
   Future<Either<Failure, BpmnWorkflowInstancesResponse>> fetchBpmnInstances(
       {required String id}) {
-    // TODO: implement fetchBpmnInstances
     throw UnimplementedError();
   }
 
@@ -200,16 +201,28 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
         return Left(DataTypeFailure());
       } else if (e is DioError) {
         if (e.response?.statusCode == FormsFlowAIAPIConstants.statusCode401) {
-          var newTokenResponse = await _fetchNewToken();
-          newTokenResponse.fold((l) {
-            return Left(AuthorizationTokenExpiredFailure());
-          }, (tokenResponse) {
-            appPreferences.setAccessToken(tokenResponse.accessToken);
-            appPreferences.setRefreshToken(tokenResponse.refreshToken);
-            return fetchFilters();
-          });
+          //   var newTokenResponse =
+          //       await _fetchNewToken().onError((error, stackTrace) {
+          //     print("------ Error ------");
+          //     return Left(AuthorizationTokenExpiredFailure());
+          //   });
+          //   ;
+          //   newTokenResponse.fold((l) {
+          //     print("------ Error ------");
+          //     print(l.toString());
+          //     return Left(AuthorizationTokenExpiredFailure());
+          //   }, (tokenResponse) {
+          //     appPreferences.setAccessToken(tokenResponse.accessToken);
+          //     appPreferences.setRefreshToken(tokenResponse.refreshToken);
+          //     return fetchFilters();
+          //   });
+          // } else {
+          //   return Left(ServerFailure());
+          // }
+          return Left(AuthorizationTokenExpiredFailure());
+        } else {
+          return Left(ServerFailure());
         }
-        return Left(ServerFailure());
       } else {
         return Left(ServerFailure());
       }
@@ -224,7 +237,6 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
   @override
   Future<Either<Failure, String>> fetchFormSubmissionData(
       String host, String taskId, String formSubmissionId) {
-    // TODO: implement fetchFormSubmissionData
     throw UnimplementedError();
   }
 
@@ -253,14 +265,15 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
         return Left(DataTypeFailure());
       } else if (e is DioError) {
         if (e.response?.statusCode == FormsFlowAIAPIConstants.statusCode401) {
-          var newTokenResponse = await _fetchNewToken();
-          newTokenResponse.fold((l) {
-            return Left(AuthorizationTokenExpiredFailure());
-          }, (tokenResponse) {
-            appPreferences.setAccessToken(tokenResponse.accessToken);
-            appPreferences.setRefreshToken(tokenResponse.refreshToken);
-            return fetchGroups(taskId: taskId);
-          });
+          // var newTokenResponse = await _fetchNewToken();
+          // newTokenResponse.fold((l) {
+          //   return Left(AuthorizationTokenExpiredFailure());
+          // }, (tokenResponse) {
+          //   appPreferences.setAccessToken(tokenResponse.accessToken);
+          //   appPreferences.setRefreshToken(tokenResponse.refreshToken);
+          //   return fetchGroups(taskId: taskId);
+          // });
+          return Left(AuthorizationTokenExpiredFailure());
         }
         return Left(ServerFailure());
       } else {
@@ -295,14 +308,18 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
         return Left(DataTypeFailure());
       } else if (e is DioError) {
         if (e.response?.statusCode == FormsFlowAIAPIConstants.statusCode401) {
-          var newTokenResponse = await _fetchNewToken();
-          newTokenResponse.fold((l) {
-            return Left(AuthorizationTokenExpiredFailure());
-          }, (tokenResponse) {
-            appPreferences.setAccessToken(tokenResponse.accessToken);
-            appPreferences.setRefreshToken(tokenResponse.refreshToken);
-            return fetchIsolatedTaskVariables(host: host);
-          });
+          // var newTokenResponse =
+          //     await _fetchNewToken().onError((error, stackTrace) {
+          //   return Left(AuthorizationTokenExpiredFailure());
+          // });
+          // newTokenResponse.fold((l) {
+          //   return Left(AuthorizationTokenExpiredFailure());
+          // }, (tokenResponse) {
+          //   appPreferences.setAccessToken(tokenResponse.accessToken);
+          //   appPreferences.setRefreshToken(tokenResponse.refreshToken);
+          //   return fetchIsolatedTaskVariables(host: host);
+          // });
+          return Left(AuthorizationTokenExpiredFailure());
         }
         return Left(ServerFailure());
       } else {
@@ -335,14 +352,15 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
         return Left(DataTypeFailure());
       } else if (e is DioError) {
         if (e.response?.statusCode == FormsFlowAIAPIConstants.statusCode401) {
-          var newTokenResponse = await _fetchNewToken();
-          newTokenResponse.fold((l) {
-            return Left(AuthorizationTokenExpiredFailure());
-          }, (tokenResponse) {
-            appPreferences.setAccessToken(tokenResponse.accessToken);
-            appPreferences.setRefreshToken(tokenResponse.refreshToken);
-            return fetchMembers();
-          });
+          //   var newTokenResponse = await _fetchNewToken();
+          //   newTokenResponse.fold((l) {
+          //     return Left(AuthorizationTokenExpiredFailure());
+          //   }, (tokenResponse) {
+          //     appPreferences.setAccessToken(tokenResponse.accessToken);
+          //     appPreferences.setRefreshToken(tokenResponse.refreshToken);
+          //     return fetchMembers();
+          //   });
+          return Left(AuthorizationTokenExpiredFailure());
         }
         return Left(ServerFailure());
       } else {
@@ -366,14 +384,15 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
         return Left(DataTypeFailure());
       } else if (e is DioError) {
         if (e.response?.statusCode == FormsFlowAIAPIConstants.statusCode401) {
-          var newTokenResponse = await _fetchNewToken();
-          newTokenResponse.fold((l) {
-            return Left(AuthorizationTokenExpiredFailure());
-          }, (tokenResponse) {
-            appPreferences.setAccessToken(tokenResponse.accessToken);
-            appPreferences.setRefreshToken(tokenResponse.refreshToken);
-            return fetchProcessDefinitions();
-          });
+          // var newTokenResponse = await _fetchNewToken();
+          // newTokenResponse.fold((l) {
+          //   return Left(AuthorizationTokenExpiredFailure());
+          // }, (tokenResponse) {
+          //   appPreferences.setAccessToken(tokenResponse.accessToken);
+          //   appPreferences.setRefreshToken(tokenResponse.refreshToken);
+          //   return fetchProcessDefinitions();
+          // });
+          return Left(AuthorizationTokenExpiredFailure());
         }
         return Left(ServerFailure());
       } else {
@@ -391,7 +410,6 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
   @override
   Future<Either<Failure, TaskListingDM>> fetchTaskById(
       String id, List<ProcessDefinitionResponse>? definitionResponse) {
-    // TODO: implement fetchTaskById
     throw UnimplementedError();
   }
 
@@ -410,16 +428,20 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
         return Left(DataTypeFailure());
       } else if (e is DioError) {
         if (e.response?.statusCode == FormsFlowAIAPIConstants.statusCode401) {
-          var newTokenResponse = await _fetchNewToken();
-          newTokenResponse.fold((l) {
-            return Left(AuthorizationTokenExpiredFailure());
-          }, (tokenResponse) {
-            appPreferences.setAccessToken(tokenResponse.accessToken);
-            appPreferences.setRefreshToken(tokenResponse.refreshToken);
-            return fetchTaskCount(id);
-          });
+          //   var newTokenResponse = await _fetchNewToken();
+          //   newTokenResponse.fold((l) {
+          //     return Left(AuthorizationTokenExpiredFailure());
+          //   }, (tokenResponse) {
+          //     appPreferences.setAccessToken(tokenResponse.accessToken);
+          //     appPreferences.setRefreshToken(tokenResponse.refreshToken);
+          //     return fetchTaskCount(id);
+          //   });
+          // }
+          // return Left(ServerFailure());
+          return Left(AuthorizationTokenExpiredFailure());
+        } else {
+          return Left(ServerFailure());
         }
-        return Left(ServerFailure());
       } else {
         return Left(ServerFailure());
       }
@@ -442,14 +464,15 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
         return Left(DataTypeFailure());
       } else if (e is DioError) {
         if (e.response?.statusCode == FormsFlowAIAPIConstants.statusCode401) {
-          var newTokenResponse = await _fetchNewToken();
-          newTokenResponse.fold((l) {
-            return Left(AuthorizationTokenExpiredFailure());
-          }, (tokenResponse) {
-            appPreferences.setAccessToken(tokenResponse.accessToken);
-            appPreferences.setRefreshToken(tokenResponse.refreshToken);
-            return fetchTaskVariables(id: id);
-          });
+          // var newTokenResponse = await _fetchNewToken();
+          // newTokenResponse.fold((l) {
+          //   return Left(AuthorizationTokenExpiredFailure());
+          // }, (tokenResponse) {
+          //   appPreferences.setAccessToken(tokenResponse.accessToken);
+          //   appPreferences.setRefreshToken(tokenResponse.refreshToken);
+          //   return fetchTaskVariables(id: id);
+          // });
+          return Left(AuthorizationTokenExpiredFailure());
         }
         return Left(ServerFailure());
       } else {
@@ -509,15 +532,19 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
         return Left(DataTypeFailure());
       } else if (e is DioError) {
         if (e.response?.statusCode == 401) {
-          var newTokenResponse = await _fetchNewToken();
-          newTokenResponse.fold((l) {
-            return Left(AuthorizationTokenExpiredFailure());
-          }, (tokenResponse) {
-            appPreferences.setAccessToken(tokenResponse.accessToken);
-            appPreferences.setRefreshToken(tokenResponse.refreshToken);
-            return fetchTasks(id, firstResult, maxResults, taskSortingPostModel,
-                definitionResponse);
-          });
+          // var newTokenResponse =
+          //     await _fetchNewToken().onError((error, stackTrace) {
+          //   return Left(AuthorizationTokenExpiredFailure());
+          // });
+          // newTokenResponse.fold((l) {
+          //   return Left(AuthorizationTokenExpiredFailure());
+          // }, (tokenResponse) {
+          //   appPreferences.setAccessToken(tokenResponse.accessToken);
+          //   appPreferences.setRefreshToken(tokenResponse.refreshToken);
+          //   return fetchTasks(id, firstResult, maxResults, taskSortingPostModel,
+          //       definitionResponse);
+          // });
+          return Left(AuthorizationTokenExpiredFailure());
         }
         return Left(ServerFailure());
       } else {
@@ -552,15 +579,16 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
         return Left(DataTypeFailure());
       } else if (e is DioError) {
         if (e.response?.statusCode == FormsFlowAIAPIConstants.statusCode401) {
-          var newTokenResponse = await _fetchNewToken();
-          newTokenResponse.fold((l) {
-            return Left(AuthorizationTokenExpiredFailure());
-          }, (tokenResponse) {
-            appPreferences.setAccessToken(tokenResponse.accessToken);
-            appPreferences.setRefreshToken(tokenResponse.refreshToken);
-            return submitForm(
-                id: id, formSubmissionPostModel: formSubmissionPostModel);
-          });
+          // var newTokenResponse = await _fetchNewToken();
+          // newTokenResponse.fold((l) {
+          //   return Left(AuthorizationTokenExpiredFailure());
+          // }, (tokenResponse) {
+          //   appPreferences.setAccessToken(tokenResponse.accessToken);
+          //   appPreferences.setRefreshToken(tokenResponse.refreshToken);
+          //   return submitForm(
+          //       id: id, formSubmissionPostModel: formSubmissionPostModel);
+          // });
+          return Left(AuthorizationTokenExpiredFailure());
         }
         return Left(ServerFailure());
       } else {
@@ -589,14 +617,15 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
         return Left(DataTypeFailure());
       } else if (e is DioError) {
         if (e.response?.statusCode == FormsFlowAIAPIConstants.statusCode401) {
-          var newTokenResponse = await _fetchNewToken();
-          newTokenResponse.fold((l) {
-            return Left(AuthorizationTokenExpiredFailure());
-          }, (tokenResponse) {
-            appPreferences.setAccessToken(tokenResponse.accessToken);
-            appPreferences.setRefreshToken(tokenResponse.refreshToken);
-            return unClaimTask(taskId: taskId);
-          });
+          // var newTokenResponse = await _fetchNewToken();
+          // newTokenResponse.fold((l) {
+          //   return Left(AuthorizationTokenExpiredFailure());
+          // }, (tokenResponse) {
+          //   appPreferences.setAccessToken(tokenResponse.accessToken);
+          //   appPreferences.setRefreshToken(tokenResponse.refreshToken);
+          //   return unClaimTask(taskId: taskId);
+          // });
+          return Left(AuthorizationTokenExpiredFailure());
         }
         return Left(ServerFailure());
       } else {
@@ -627,14 +656,15 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
         return Left(DataTypeFailure());
       } else if (e is DioError) {
         if (e.response?.statusCode == FormsFlowAIAPIConstants.statusCode401) {
-          var newTokenResponse = await _fetchNewToken();
-          newTokenResponse.fold((l) {
-            return Left(AuthorizationTokenExpiredFailure());
-          }, (tokenResponse) {
-            appPreferences.setAccessToken(tokenResponse.accessToken);
-            appPreferences.setRefreshToken(tokenResponse.refreshToken);
-            return updateAssignee(taskId: taskId, payload: payload);
-          });
+          // var newTokenResponse = await _fetchNewToken();
+          // newTokenResponse.fold((l) {
+          //   return Left(AuthorizationTokenExpiredFailure());
+          // }, (tokenResponse) {
+          //   appPreferences.setAccessToken(tokenResponse.accessToken);
+          //   appPreferences.setRefreshToken(tokenResponse.refreshToken);
+          //   return updateAssignee(taskId: taskId, payload: payload);
+          // });
+          return Left(AuthorizationTokenExpiredFailure());
         }
         return Left(ServerFailure());
       } else {
@@ -660,15 +690,16 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
         return Left(DataTypeFailure());
       } else if (e is DioError) {
         if (e.response?.statusCode == FormsFlowAIAPIConstants.statusCode401) {
-          var newTokenResponse = await _fetchNewToken();
-          newTokenResponse.fold((l) {
-            return Left(AuthorizationTokenExpiredFailure());
-          }, (tokenResponse) {
-            appPreferences.setAccessToken(tokenResponse.accessToken);
-            appPreferences.setRefreshToken(tokenResponse.refreshToken);
-            return updateRemoteTask(
-                taskId: taskId, updateTaskPostModel: updateTaskPostModel);
-          });
+          // var newTokenResponse = await _fetchNewToken();
+          // newTokenResponse.fold((l) {
+          //   return Left(AuthorizationTokenExpiredFailure());
+          // }, (tokenResponse) {
+          //   appPreferences.setAccessToken(tokenResponse.accessToken);
+          //   appPreferences.setRefreshToken(tokenResponse.refreshToken);
+          //   return updateRemoteTask(
+          //       taskId: taskId, updateTaskPostModel: updateTaskPostModel);
+          // });
+          return Left(AuthorizationTokenExpiredFailure());
         }
         return Left(ServerFailure());
       } else {
@@ -708,17 +739,18 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
         return Left(DataTypeFailure());
       } else if (e is DioError) {
         if (e.response?.statusCode == FormsFlowAIAPIConstants.statusCode401) {
-          var newTokenResponse = await _fetchNewToken();
-          newTokenResponse.fold((l) {
-            return Left(AuthorizationTokenExpiredFailure());
-          }, (tokenResponse) {
-            appPreferences.setAccessToken(tokenResponse.accessToken);
-            appPreferences.setRefreshToken(tokenResponse.refreshToken);
-            return updateTaskWithIsolates(
-                url: url,
-                taskId: taskId,
-                updateTaskPostModel: updateTaskPostModel);
-          });
+          // var newTokenResponse = await _fetchNewToken();
+          // newTokenResponse.fold((l) {
+          //   return Left(AuthorizationTokenExpiredFailure());
+          // }, (tokenResponse) {
+          //   appPreferences.setAccessToken(tokenResponse.accessToken);
+          //   appPreferences.setRefreshToken(tokenResponse.refreshToken);
+          //   return updateTaskWithIsolates(
+          //       url: url,
+          //       taskId: taskId,
+          //       updateTaskPostModel: updateTaskPostModel);
+          // });
+          return Left(AuthorizationTokenExpiredFailure());
         }
         return Left(ServerFailure());
       } else {
@@ -741,7 +773,6 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
 
   @override
   Future<Either<Failure, List<TaskEntity>>> fetchAllTasksFromLocalDb() {
-    // TODO: implement fetchAllTasksFromLocalDb
     throw UnimplementedError();
   }
 

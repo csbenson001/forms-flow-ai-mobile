@@ -16,42 +16,39 @@ class NoDataView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        verticalDirection: VerticalDirection.down,
-        children: [
-          SvgPicture.asset(
-            Assets.imagesIconNoResults,
-            width: Dimens.size_200,
-            height: Dimens.size_200,
-            fit: BoxFit.contain,
+    return ListView(
+      shrinkWrap: true,
+      primary: false,
+      children: [
+        SvgPicture.asset(
+          Assets.imagesIconNoResults,
+          width: Dimens.size_200,
+          height: Dimens.size_200,
+          fit: BoxFit.contain,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 16.0),
+          child: Text(
+            heading ?? Strings.generalNoData,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.boldTextStyle(
+                fontSize: Dimens.font_22, textColor: Colors.black),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 16.0),
-            child: Text(
-              heading ?? Strings.generalNoData,
-              style: AppTextStyles.boldTextStyle(
-                  fontSize: Dimens.font_22, textColor: Colors.black),
-            ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(
+              top: Dimens.spacing_16,
+              left: Dimens.spacing_16,
+              right: Dimens.spacing_16,
+              bottom: Dimens.spacing_16),
+          child: Text(
+            description ?? Strings.generalNoDataErrorDescription,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.mediumTextStyle(
+                fontSize: Dimens.font_16, textColor: Colors.black),
           ),
-          Padding(
-            padding: const EdgeInsets.only(
-                top: Dimens.spacing_16,
-                left: Dimens.spacing_16,
-                right: Dimens.spacing_16,
-                bottom: Dimens.spacing_16),
-            child: Text(
-              description ?? Strings.generalNoDataErrorDescription,
-              textAlign: TextAlign.center,
-              style: AppTextStyles.mediumTextStyle(
-                  fontSize: Dimens.font_16, textColor: Colors.black),
-            ),
-          )
-        ],
-      ),
+        )
+      ],
     );
   }
 }

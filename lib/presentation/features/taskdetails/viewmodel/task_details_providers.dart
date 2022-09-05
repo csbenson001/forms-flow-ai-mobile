@@ -17,3 +17,7 @@ final currentTaskCompletedSocketProvider =
 final socketCallbackProvider = StateProvider<SocketEventBusDM>((ref) {
   return SocketEventBusDM();
 });
+
+final viewSubmissionFormViewLoadingProvider = StateProvider<bool>((ref) {
+  return false;
+});

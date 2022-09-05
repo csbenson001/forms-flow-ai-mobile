@@ -87,6 +87,7 @@ class TaskDetailsScreen extends BaseHooksConsumerWidget {
             },
             body: Container(
                 color: Colors.white,
+                width: MediaQuery.of(context).size.width,
                 child: TabBarView(
                   physics: const ClampingScrollPhysics(),
                   controller: tabController,
@@ -101,6 +102,8 @@ class TaskDetailsScreen extends BaseHooksConsumerWidget {
   void initListeners(WidgetRef ref, BuildContext context) {
     ref.listen<bool>(authorizationExpiredFailureProvider, (previous, next) {
       if (next) {
+        showErrorToast(
+            context: context, description: Strings.generalErrorSessionTimeout);
         ref.read(taskListViewModelProvider).logoutUser(context: context);
       }
     });

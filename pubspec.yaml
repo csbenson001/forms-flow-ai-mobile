@@ -52,6 +52,8 @@ dependencies:
   auto_size_text: ^3.0.0
   url_launcher: ^6.1.2
   overlay_builder: ^1.1.0
+  flutter_inappwebview: ^5.4.3+7
+  sizer: ^2.0.15
   # internal packages
   formsflowai_shared:
     path: packages/formsflowai_shared
@@ -105,6 +107,31 @@ flutter:
   assets:
     - assets/images/
     - assets/font/
+    - assets/formio/
+    - assets/formio/form.html
+    - assets/formio/script.js
+    - assets/formio/dist/formio.full.min.css
+    - assets/formio/app/jquery/jquery.min.js
+    - assets/formio/app/jquery/jquery.slim.min.js
+    - assets/formio/app/bootstrap/js/bootstrap.bundle.min.js
+    - assets/formio/dist/formio.full.min.js
+    - assets/formio/app/bootstrap/css/bootstrap.min.css
+    - assets/formio/dist/fonts/fontawesome-webfont.ttf
+    - assets/formio/dist/fonts/
+    - assets/formio/app/bootstrap/fonts/glyphicons-halflings-regular.eot
+    - assets/formio/app/fontawesome/fonts/fontawesome-webfont.eot
+    - assets/formio/app/fontawesome/fonts/FontAwesome.otf
+    - assets/formio/app/fontawesome/less/icons.less
+    - assets/formio/app/fontawesome/less/larger.less
+    - assets/formio/app/fontawesome/less/list.less
+    - assets/formio/app/fontawesome/less/mixins.less
+    - assets/formio/app/fontawesome/less/rotated-flipped.less
+    - assets/formio/app/fontawesome/scss/_icons.scss
+    -
+
+
+
+
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

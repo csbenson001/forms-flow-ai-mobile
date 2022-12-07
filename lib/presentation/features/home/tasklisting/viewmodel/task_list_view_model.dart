@@ -5,34 +5,38 @@ import 'package:flutter/scheduler.dart';
 import 'package:formsflowai/core/database/worker/database_worker.dart';
 import 'package:formsflowai/core/error/errors_failure.dart';
 import 'package:formsflowai/core/router/app_routes.dart';
+import 'package:formsflowai/presentation/features/home/tasklisting/usecases/form/fetch_formio_roles_usecase.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/viewmodel/task_list_screen_providers.dart';
+import 'package:formsflowai_api/formsflowai_api.dart' as formioApi;
 import 'package:formsflowai_api/post/task/tasklist_sort.dart';
 import 'package:formsflowai_api/response/filter/get_filters_response.dart';
 import 'package:formsflowai_api/response/processdefinition/process_definition_response.dart';
 import 'package:formsflowai_api/response/task/tasklist/task_list_response.dart';
-import 'package:formsflowai_shared/core/base/base_notifier_view_model.dart';
-import 'package:formsflowai_shared/core/networkmanager/internet_connectivity_provider.dart';
-import 'package:formsflowai_shared/core/networkmanager/network_manager_controller.dart';
-import 'package:formsflowai_shared/core/preferences/app_preference.dart';
-import 'package:formsflowai_shared/core/services/socket_service.dart';
-import 'package:formsflowai_shared/shared/app_status.dart';
-import 'package:formsflowai_shared/shared/app_strings.dart';
 import 'package:formsflowai_shared/shared/formsflow_api_constants.dart';
 import 'package:formsflowai_shared/shared/formsflow_app_constants.dart';
 import 'package:formsflowai_shared/shared/task_constants.dart';
 import 'package:formsflowai_shared/utils/form/jwttoken/jwt_token_util.dart';
 import 'package:formsflowai_shared/utils/router/router_utils.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../../core/module/providers/view_model_provider.dart';
+import '../../../../../core/networkmanager/internet_connectivity_provider.dart';
+import '../../../../../core/networkmanager/network_manager_controller.dart';
+import '../../../../../core/preferences/app_preference.dart';
+import '../../../../../core/socket/socket_service.dart';
+import '../../../../../shared/app_status.dart';
+import '../../../../../shared/app_strings.dart';
 import '../../../../../shared/toast/toast_message_provider.dart';
 import '../../../../../utils/database/database_query_util.dart';
 import '../../../../../utils/general_util.dart';
+import '../../../../base/viewmodel/base_notifier_view_model.dart';
 import '../../../taskdetails/usecases/index.dart';
 import '../../../taskdetails/viewmodel/task_details_providers.dart';
 import '../model/index.dart';
 import '../usecases/index.dart';
 
-/// [TaskListViewModel] viewmodel class to hold bussiness logic related to
+/// [TaskListViewModel] viewmodel class to hold business logic related to
 /// task list screen
 class TaskListViewModel extends BaseNotifierViewModel {
   Ref ref;
@@ -44,7 +48,7 @@ class TaskListViewModel extends BaseNotifierViewModel {
   var _hasNextPage = true;
 
   // init Scroll controller
-  late ScrollController scrollController;
+  ScrollController? scrollController;
 
   // Use cases
   final FetchFiltersUseCase fetchFiltersUseCase;
@@ -53,6 +57,7 @@ class TaskListViewModel extends BaseNotifierViewModel {
   final FetchTaskCountUseCase fetchTaskCountUseCase;
   final FetchIsolatedTaskUseCase fetchIsolatedTaskUseCase;
   final ClearLocalDatabaseUseCase clearLocalDatabaseUseCase;
+  final FetchFormioRolesUseCase fetchFormioRolesUseCase;
 
   final AppPreferences appPreferences;
   final NetworkManagerController networkManagerController;
@@ -106,8 +111,16 @@ class TaskListViewModel extends BaseNotifierViewModel {
   // Initial
   bool isInitialApiCalled = false;
 
-  ToastStateDM _toastStateDM = ToastStateDM();
+  ToastStateDM _toastStateDM = const ToastStateDM();
   ToastStateDM get toastStateDM => _toastStateDM;
+
+  // task page load status
+  PageStatus _pageStatus = PageStatus.initial;
+  PageStatus get pageStatus => _pageStatus;
+
+  // task count
+  int _totalTaskCount = 0;
+  int get totalTaskCount => _totalTaskCount;
 
   TaskListViewModel(
       {required this.fetchFiltersUseCase,
@@ -120,14 +133,16 @@ class TaskListViewModel extends BaseNotifierViewModel {
       required this.networkManagerController,
       required this.fetchIsolatedTaskUseCase,
       required this.clearLocalDatabaseUseCase,
+      required this.fetchFormioRolesUseCase,
       required this.ref});
 
   /// OnInit method to initialise listeners and to fetch initial data
   Future<void> onInit({required ScrollController scrollController}) async {
     this.scrollController = scrollController;
+    // ref.read(tokenServiceProvider).startService();
     _startLocalDatabaseRemoteSync();
-    generateFormioToken();
     fetchFilters();
+    fetchFormioRoles();
     scrollController.addListener(_onScroll);
     _initWebSocket();
     _initInternetNetworkCallback();
@@ -138,7 +153,10 @@ class TaskListViewModel extends BaseNotifierViewModel {
   @override
   void dispose() {
     super.dispose();
-    scrollController.removeListener(_onScroll);
+    if (scrollController != null && scrollController!.hasClients) {
+      scrollController?.removeListener(_onScroll);
+    }
+    ref.read(tokenServiceProvider).stopService();
   }
 
   /// Function to add sorted items to selected list
@@ -227,13 +245,15 @@ class TaskListViewModel extends BaseNotifierViewModel {
     SchedulerBinding.instance.addPostFrameCallback((_) {
       ref.read(taskVariablesLoadingProvider.notifier).state =
           PageStatus.loading;
-      ref.read(taskLoadingProvider.notifier).state = PageStatus.loading;
+      _pageStatus = PageStatus.loading;
+      notifyListeners();
     });
     fetchFiltersUseCase.call(params: FetchFiltersParams()).then((value) {
       value.fold((l) {
         ref.read(taskVariablesLoadingProvider.notifier).state =
             PageStatus.failure;
-        ref.read(taskLoadingProvider.notifier).state = PageStatus.failure;
+        _pageStatus = PageStatus.failure;
+        notifyListeners();
         if (l is AuthorizationTokenExpiredFailure) {
           ref.read(authorizationExpiredFailureProvider.notifier).state = true;
         }
@@ -246,13 +266,13 @@ class TaskListViewModel extends BaseNotifierViewModel {
             !GeneralUtil.isStringEmpty(selectedFilterItem.id)) {
           _selectedSortFilterItemProvider = selectedFilterItem;
           fetchTasks(filterId: selectedFilterItem.id ?? '', refresh: false);
-          fetchTaskCount(filterId: selectedFilterItem.id);
         }
       });
     }).onError((error, stackTrace) {
       ref.read(taskVariablesLoadingProvider.notifier).state =
           PageStatus.failure;
-      ref.read(taskLoadingProvider.notifier).state = PageStatus.failure;
+      _pageStatus = PageStatus.failure;
+      notifyListeners();
     });
   }
 
@@ -286,9 +306,11 @@ class TaskListViewModel extends BaseNotifierViewModel {
       _taskList.clear();
     }
     if (_taskList.isEmpty) {
-      ref.read(taskLoadingProvider.notifier).state = PageStatus.loading;
+      _pageStatus = PageStatus.loading;
+      notifyListeners();
     } else {
-      ref.read(taskLoadingProvider.notifier).state = PageStatus.loadingMore;
+      _pageStatus = PageStatus.loadingMore;
+      notifyListeners();
     }
     final taskResponse = await fetchTasksUseCase.call(
         params: FetchTaskParams(
@@ -299,21 +321,31 @@ class TaskListViewModel extends BaseNotifierViewModel {
             taskSortingPostModel: taskSortPostModel));
 
     taskResponse.fold((l) {
-      ref.read(taskLoadingProvider.notifier).state = PageStatus.failure;
+      _pageStatus = PageStatus.failure;
+      notifyListeners();
       if (l is AuthorizationTokenExpiredFailure) {
         ref.read(authorizationExpiredFailureProvider.notifier).state = true;
       }
-    }, (data) {
+    }, (data) async {
       _taskList.addAll(data.taskData ?? []);
       _hasNextPage = data.taskData?.isNotEmpty ?? false;
       _start = _start + _limit;
-      ref.read(taskLoadingProvider.notifier).state = PageStatus.success;
-      notifyListeners();
+      _pageStatus = PageStatus.success;
       if (networkManagerController.connectionType != ConnectivityResult.none) {
+        _totalTaskCount = data.taskCount ?? 0;
+        notifyListeners();
         databaseWorker.insertTasksIntoLocalSource(
             data: data.taskData ?? [],
             filterId: filterId ?? '',
             assigneeName: appPreferences.getPreferredUserName());
+      } else {
+        final taskCountResponse = await fetchTaskCountUseCase.call(
+            params: FetchTaskCountParams(filterId: filterId));
+        taskCountResponse.fold((l) {}, (r) {
+          _totalTaskCount = r.count ?? 0;
+          print(r.toJson());
+          notifyListeners();
+        });
       }
       if (!isInitialApiCalled) {
         isInitialApiCalled = true;
@@ -321,32 +353,32 @@ class TaskListViewModel extends BaseNotifierViewModel {
     });
   }
 
-  /// Function to get task count from local/remote based on internet
-  /// connectivity
-  /// Input Parameters
-  /// optional[FilterId]
-  void fetchTaskCount({String? filterId}) {
-    if (GeneralUtil.isStringEmpty(filterId)) {
-      return;
-    }
-    ref.read(taskCountProvider.notifier).updateState(isLoading: true);
-    fetchTaskCountUseCase
-        .call(params: FetchTaskCountParams(filterId: filterId!))
-        .then((value) {
-      value.fold((l) {
-        ref
-            .read(taskCountProvider.notifier)
-            .updateState(count: 0, isLoading: false);
-        if (l is AuthorizationTokenExpiredFailure) {
-          ref.read(authorizationExpiredFailureProvider.notifier).state = true;
-        }
-      }, (data) {
-        ref
-            .read(taskCountProvider.notifier)
-            .updateState(count: data.count, isLoading: false);
-      });
-    });
-  }
+  // /// Function to get task count from local/remote based on internet
+  // /// connectivity
+  // /// Input Parameters
+  // /// optional[FilterId]
+  // void fetchTaskCount({String? filterId}) {
+  //   if (GeneralUtil.isStringEmpty(filterId)) {
+  //     return;
+  //   }
+  //   ref.read(taskCountProvider.notifier).updateState(isLoading: true);
+  //   fetchTaskCountUseCase
+  //       .call(params: FetchTaskCountParams(filterId: filterId!))
+  //       .then((value) {
+  //     value.fold((l) {
+  //       ref
+  //           .read(taskCountProvider.notifier)
+  //           .updateState(count: 0, isLoading: false);
+  //       if (l is AuthorizationTokenExpiredFailure) {
+  //         ref.read(authorizationExpiredFailureProvider.notifier).state = true;
+  //       }
+  //     }, (data) {
+  //       ref
+  //           .read(taskCountProvider.notifier)
+  //           .updateState(count: data.count, isLoading: false);
+  //     });
+  //   });
+  // }
 
   // Function to fetch selected variables in task list screen
   void fetchSelectedVariableList() {
@@ -386,15 +418,24 @@ class TaskListViewModel extends BaseNotifierViewModel {
   }
 
   // Function to generate token if not added or expired
-  void generateFormioToken() {
-    if (!appPreferences.isJwtTokenAdded()) {
-      // Create a json web token
-      List<String> roles = List.empty(growable: true);
-      roles.add(FormsFlowAIAPIConstants.ROLE_ID);
-      appPreferences.setFormJWtToken(JwtTokenUtils.signJwtToken(
-          FormsFlowAIAPIConstants.FORM_ID, roles, ''));
-      appPreferences.setJwtTokenAdded(true);
-    }
+  void generateFormioToken(
+      {required formioApi.FormioRolesResponse formioRolesResponse}) {
+    try {
+      formioApi.Form? reviewer = formioRolesResponse.form?.singleWhere(
+          (element) => element.type == FormsFlowAIAPIConstants.REVIEWER);
+
+      formioApi.Form? resourceId = formioRolesResponse.form?.singleWhere(
+          (element) => element.type == FormsFlowAIAPIConstants.RESOURCE_ID);
+
+      if (reviewer != null) {
+        // Create a json web token
+        List<String> roles = List.empty(growable: true);
+        roles.add(reviewer.roleId ?? '');
+        appPreferences.setFormJWtToken(
+            JwtTokenUtils.signJwtToken(resourceId?.roleId ?? '', roles, ''));
+        appPreferences.setJwtTokenAdded(true);
+      }
+    } catch (e) {}
   }
 
   /// Function to get task post model
@@ -493,12 +534,9 @@ class TaskListViewModel extends BaseNotifierViewModel {
       try {
         _taskList.removeAt(index);
         notifyListeners();
-        int currentTaskCount =
-            ref.read(taskCountProvider.notifier).state.count ?? 0;
-        if (currentTaskCount > 0) {
-          ref
-              .read(taskCountProvider.notifier)
-              .updateState(count: currentTaskCount - 1, isLoading: false);
+        if (_totalTaskCount > 0) {
+          _totalTaskCount--;
+          notifyListeners();
         }
       } catch (e) {}
     }
@@ -540,12 +578,8 @@ class TaskListViewModel extends BaseNotifierViewModel {
               0,
               TaskListingDM.transformSingle(
                   taskData, _processDefinitionResponse));
+          _totalTaskCount = _totalTaskCount + 1;
           notifyListeners();
-          int currentTaskCount =
-              ref.read(taskCountProvider.notifier).state.count ?? 0;
-          ref
-              .read(taskCountProvider.notifier)
-              .updateState(count: currentTaskCount + 1, isLoading: false);
         }
       }
     });
@@ -556,13 +590,16 @@ class TaskListViewModel extends BaseNotifierViewModel {
   /// Input Parameters
   /// [BuildContext]
   Future<void> logoutUser({required BuildContext context}) async {
+    showProgressLoading();
     final clearDatabaseResponse = await clearLocalDatabaseUseCase.call(
         params: const ClearLocalDatabaseUseCaseParams());
     clearDatabaseResponse.fold((l) {
+      dismissProgressLoading();
       appPreferences.clear();
       RouterUtils.logoutUser(
           context: context, routeName: AppRoutes.loginScreen);
     }, (r) {
+      dismissProgressLoading();
       appPreferences.clear();
       RouterUtils.logoutUser(
           context: context, routeName: AppRoutes.loginScreen);
@@ -579,18 +616,21 @@ class TaskListViewModel extends BaseNotifierViewModel {
 
   /// Load more scroll listener to fetch paginated data
   void _onScroll() {
+    if (scrollController == null) {
+      return;
+    }
     if (_hasNextPage == true &&
-        ref.read(taskLoadingProvider) != PageStatus.loadingMore &&
-        scrollController.position.extentAfter < 300) {
+        _pageStatus != PageStatus.loadingMore &&
+        scrollController!.position.extentAfter < 300) {
       fetchTasks(
           filterId: _selectedSortFilterItemProvider.id ?? '', refresh: false);
     }
-    if (scrollController.offset < 100) {
+    if (scrollController!.offset < 100) {
       ref.read(showHideFloatingActionButtonProvider.notifier).state = false;
     } else if (!ref.read(showTaskVariablesViewProvider) &&
-        scrollController.offset > 200) {
+        scrollController!.offset > 200) {
       ref.read(showHideFloatingActionButtonProvider.notifier).state = true;
-    } else if (scrollController.offset > 400) {
+    } else if (scrollController!.offset > 400) {
       ref.read(showHideFloatingActionButtonProvider.notifier).state = true;
     }
   }
@@ -598,13 +638,13 @@ class TaskListViewModel extends BaseNotifierViewModel {
   /// Function to refresh page data
   void refreshPageData() {
     fetchTasks(filterId: _selectedSortFilterItemProvider.id, refresh: true);
-    fetchTaskCount(filterId: _selectedSortFilterItemProvider.id);
+    // fetchTaskCount(filterId: _selectedSortFilterItemProvider.id);
   }
 
   /// Function to handle pull to refresh
   Future<void> pullToRefresh() async {
     fetchTasks(filterId: _selectedSortFilterItemProvider.id, refresh: true);
-    fetchTaskCount(filterId: _selectedSortFilterItemProvider.id);
+    // fetchTaskCount(filterId: _selectedSortFilterItemProvider.id);
   }
 
   /// Function to clear and reset task sort post model
@@ -712,7 +752,16 @@ class TaskListViewModel extends BaseNotifierViewModel {
           dueDate: taskListingDM.dueDate,
           followUp: taskListingDM.followUp);
       notifyListeners();
+      // fetchTaskCount(filterId: selectedSortFilterItem.id);
     }
+  }
+
+  /// Function to listen when task is unclaimed
+  /// Input Parameters
+  /// [TaskListingDM]
+  void refreshPageOnTaskUnClaimed() {
+    fetchTasks(filterId: selectedSortFilterItem.id, refresh: true);
+    // fetchTaskCount(filterId: selectedSortFilterItem.id);
   }
 
   /// Function to update ascending/descending order in sort filter
@@ -804,11 +853,16 @@ class TaskListViewModel extends BaseNotifierViewModel {
 
   /// Method to scroll the page to the top
   void scrollToTop() {
-    scrollController.animateTo(
-      0,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.easeInOut,
-    );
+    if (scrollController == null) {
+      return;
+    }
+    if (scrollController!.hasClients) {
+      scrollController!.animateTo(
+        0,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
   }
 
   /// Method to handle socket current task completed event
@@ -908,6 +962,41 @@ class TaskListViewModel extends BaseNotifierViewModel {
       }
     }
     return taskSortPostModel;
+  }
+
+  /// Function to open launcher to load terms and conditions webpage
+  void openTermsAndConditionsUrlLauncher() {
+    launch("https://formsflow.ai/service/");
+  }
+
+  /// Function to clear all local database cache data
+  Future<void> clearAppCache({required BuildContext context}) async {
+    showProgressLoading();
+    final clearDatabaseResponse = await clearLocalDatabaseUseCase.call(
+        params: const ClearLocalDatabaseUseCaseParams());
+    clearDatabaseResponse.fold((l) {
+      dismissProgressLoading();
+    }, (r) {
+      dismissProgressLoading();
+      if (networkManagerController.connectionType == ConnectivityResult.none) {
+        refreshPageData();
+      }
+      showSuccessToast(
+          context: context, description: Strings.taskListingClearCacheSuccess);
+    });
+  }
+
+  /// Function to fetch formioRoles
+  void fetchFormioRoles() {
+    if (!appPreferences.isJwtTokenAdded()) {
+      fetchFormioRolesUseCase
+          .call(params: const FetchFormioRolesParams())
+          .then((value) {
+        value.fold((l) {}, (formioRolesResponse) {
+          generateFormioToken(formioRolesResponse: formioRolesResponse);
+        });
+      });
+    }
   }
 }
 

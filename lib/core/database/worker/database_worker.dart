@@ -2,16 +2,13 @@ import 'dart:convert';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
+import 'package:formsflowai/core/database/entity/task_entity.dart';
 import 'package:formsflowai/core/error/errors_failure.dart';
-import 'package:formsflowai/presentation/features/taskdetails/usecases/save_form_submission_isolate_usecase.dart';
-import 'package:formsflowai/presentation/features/taskdetails/usecases/submit_form_isolate_usecase.dart';
+import 'package:formsflowai/presentation/features/taskdetails/usecases/form/save_form_submission_isolate_usecase.dart';
+import 'package:formsflowai/presentation/features/taskdetails/usecases/form/submit_form_isolate_usecase.dart';
 import 'package:formsflowai_api/post/form/form_submission_post_model.dart';
 import 'package:formsflowai_api/post/task/update_task_post_model.dart';
 import 'package:formsflowai_api/response/form/submission/form_submission_response.dart';
-import 'package:formsflowai_shared/core/database/entity/form_entity.dart';
-import 'package:formsflowai_shared/core/database/entity/task_entity.dart';
-import 'package:formsflowai_shared/core/networkmanager/network_manager_controller.dart';
-import 'package:formsflowai_shared/core/preferences/app_preference.dart';
 import 'package:formsflowai_shared/shared/formsflow_api_constants.dart';
 import 'package:formsflowai_shared/shared/formsflow_app_constants.dart';
 import 'package:formsflowai_shared/utils/datetime/timestamp_utils.dart';
@@ -23,6 +20,9 @@ import '../../../presentation/features/taskdetails/model/form_dm.dart';
 import '../../../presentation/features/taskdetails/usecases/index.dart';
 import '../../../utils/compute/app_compute_parse_json.dart';
 import '../../../utils/general_util.dart';
+import '../../networkmanager/network_manager_controller.dart';
+import '../../preferences/app_preference.dart';
+import '../entity/form_entity.dart';
 
 /// Database worker class to interact with the local data source
 class DatabaseWorker {

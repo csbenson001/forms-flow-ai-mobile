@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:formsflowai_shared/shared/app_strings.dart';
 
 import '../../assets.dart';
 import '../../shared/app_text_styles.dart';
@@ -29,7 +28,7 @@ class NoDataView extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 16.0),
           child: Text(
-            heading ?? Strings.generalNoData,
+            heading ?? "No Data",
             textAlign: TextAlign.center,
             style: AppTextStyles.boldTextStyle(
                 fontSize: Dimens.font_22, textColor: Colors.black),
@@ -42,7 +41,7 @@ class NoDataView extends StatelessWidget {
               right: Dimens.spacing_16,
               bottom: Dimens.spacing_16),
           child: Text(
-            description ?? Strings.generalNoDataErrorDescription,
+            description ?? "No Data",
             textAlign: TextAlign.center,
             style: AppTextStyles.mediumTextStyle(
                 fontSize: Dimens.font_16, textColor: Colors.black),

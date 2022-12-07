@@ -1,6 +1,10 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter_appauth_platform_interface/src/authorization_token_response.dart';
+import 'package:flutter_appauth_platform_interface/src/token_response.dart';
 import 'package:formsflowai/core/error/errors_failure.dart';
 import 'package:formsflowai/presentation/features/login/usecases/fetch_user_info_usecase.dart';
+import 'package:formsflowai/presentation/features/login/usecases/login_keycloak_authenticator_usecase.dart';
+import 'package:formsflowai/presentation/features/login/usecases/refresk_keycloak_token_usecase.dart';
 import 'package:formsflowai/presentation/features/login/usecases/save_user_details_usecase.dart';
 import 'package:formsflowai/repository/user/user_local_data_source.dart';
 import 'package:formsflowai/repository/user/user_local_data_source_impl.dart';
@@ -45,5 +49,18 @@ class UserDataRepository implements UserRemoteDataSource, UserLocalDataSource {
   Future<Either<Failure, UserInfoResponse>> userInfo(
       {required FetchUserInfoParams fetchUserInfoParams}) {
     return remoteDataSource.userInfo(fetchUserInfoParams: fetchUserInfoParams);
+  }
+
+  @override
+  Future<Either<Failure, AuthorizationTokenResponse>>
+      loginUserUsingKeycloakAuthenticator(
+          {required LoginKeycloakAuthenticatorParams params}) {
+    return remoteDataSource.loginUserUsingKeycloakAuthenticator(params: params);
+  }
+
+  @override
+  Future<Either<Failure, TokenResponse>> refreshKeycloakToken(
+      {required RefreshKeycloakTokenParams params}) {
+    return remoteDataSource.refreshKeycloakToken(params: params);
   }
 }

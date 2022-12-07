@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:formsflowai_api/response/task/tasklist_hal/task_list_hal_response.dart';
 import 'package:formsflowai_shared/shared/api_constants_url.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -32,9 +33,9 @@ abstract class TaskApiClient {
   );
 
   @POST(ApiConstantUrl.FETCH_TASKS)
-  Future<List<TaskListResponse>> fetchTasks(
+  Future<TaskListHalResponse> fetchTasks(
       @Header('Authorization') String accessToken,
-      // @Header('Accept') String acceptType,
+      @Header('Accept') String acceptType,
       @Path() String id,
       @Query('firstResult') int firstResult,
       @Query('maxResults') int maxResults,

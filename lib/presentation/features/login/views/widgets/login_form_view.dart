@@ -5,20 +5,19 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/src/consumer.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:formsflowai/presentation/features/login/viewmodel/login_state_notifier.dart';
-import 'package:formsflowai_shared/core/base/base_hooks_consumer_widget.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
 import 'package:formsflowai_shared/shared/app_font.dart';
-import 'package:formsflowai_shared/shared/app_strings.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
 import 'package:formsflowai_shared/widgets/button/customfilledbutton.dart';
 import 'package:formsflowai_shared/widgets/textformfield/formsflowai_password_text_field.dart';
 import 'package:formsflowai_shared/widgets/textformfield/formsflowai_text_field.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../core/module/providers/view_model_provider.dart';
+import '../../../../../shared/app_strings.dart';
 import '../../../../../shared/app_text_styles.dart';
 import '../../../../../shared/imageassets/formsflowai_image_assets.dart';
+import '../../../../base/widgets/base_hooks_consumer_widget.dart';
 
 class LoginFormView extends BaseHooksConsumerWidget {
   // Form Key
@@ -72,7 +71,7 @@ class LoginFormView extends BaseHooksConsumerWidget {
                       right: Dimens.spacing_32),
                   child: FormsFlowAICustomTextField(
                       controller: _userNameController,
-                      keyboardType: TextInputType.name,
+                      keyboardType: TextInputType.text,
                       submitted: isSubmitted,
                       validator: (value) =>
                           value!.isEmpty ? Strings.loginErrorUserName : null,
@@ -155,8 +154,9 @@ class LoginFormView extends BaseHooksConsumerWidget {
                                             overflow: TextOverflow.ellipsis),
                                         recognizer: TapGestureRecognizer()
                                           ..onTap = () {
-                                            launch(
-                                                "https://fahad-aot.github.io/terms_and_conditions/");
+                                            ref
+                                                .refresh(loginViewModelProvider)
+                                                .openTermsAndConditionsUrlLauncher();
                                           })
                                   ]))),
                     ],

@@ -6,21 +6,21 @@ import 'package:flutter_svg/svg.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/model/task_listing_data_model.dart';
 import 'package:formsflowai/presentation/features/taskdetails/viewmodel/task_details_providers.dart';
 import 'package:formsflowai_api/response/task/details/task_group_response.dart';
-import 'package:formsflowai_shared/core/base/base_consumer_widget.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
-import 'package:formsflowai_shared/shared/app_strings.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
 import 'package:formsflowai_shared/shared/formsflow_app_constants.dart';
-import 'package:formsflowai_shared/widgets/nointernetview/no_internet_snackbar_view.dart';
 import 'package:formsflowai_shared/widgets/shimmer/shimmer_widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../../core/module/providers/view_model_provider.dart';
+import '../../../../../shared/app_strings.dart';
 import '../../../../../shared/app_text_styles.dart';
 import '../../../../../shared/imageassets/formsflowai_image_assets.dart';
 import '../../../../../utils/general_util.dart';
+import '../../../../../widgets/nointernet/no_internet_snackbar_view.dart';
+import '../../../../base/widgets/base_consumer_widget.dart';
 
 class TaskDetailsHeaderView extends BaseConsumerWidget {
   const TaskDetailsHeaderView({Key? key}) : super(key: key);
@@ -43,19 +43,22 @@ class TaskDetailsHeaderView extends BaseConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const NoInternetTopSnackBarView(),
+                if (!GeneralUtil.isStringEmpty(taskInfoDM.taskName))
+                  Padding(
+                      padding: const EdgeInsets.only(
+                          top: Dimens.spacing_16,
+                          left: Dimens.spacing_16,
+                          right: Dimens.spacing_16),
+                      child: Text(
+                        taskInfoDM.taskName ?? '',
+                        style: AppTextStyles.semiBoldTextStyle(
+                            fontSize: Dimens.font_16, textColor: Colors.black),
+                      )),
                 Padding(
-                    padding: const EdgeInsets.only(
-                        top: Dimens.spacing_16,
-                        left: Dimens.spacing_16,
-                        right: Dimens.spacing_16),
-                    child: Text(
-                      taskInfoDM.taskName ?? '',
-                      style: AppTextStyles.semiBoldTextStyle(
-                          fontSize: Dimens.font_16, textColor: Colors.black),
-                    )),
-                Padding(
-                    padding: const EdgeInsets.only(
-                        top: Dimens.spacing_8,
+                    padding: EdgeInsets.only(
+                        top: GeneralUtil.isStringEmpty(taskInfoDM.taskName)
+                            ? Dimens.spacing_16
+                            : Dimens.spacing_8,
                         left: Dimens.spacing_16,
                         right: Dimens.spacing_16),
                     child: Text(

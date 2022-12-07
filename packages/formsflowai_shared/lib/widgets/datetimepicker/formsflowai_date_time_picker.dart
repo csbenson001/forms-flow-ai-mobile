@@ -25,7 +25,7 @@ class FormsflowAIDateTimePicker {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
+      firstDate: DateTime.now().subtract(const Duration(days: 365)),
       lastDate: DateTime.now().add(const Duration(days: 365)),
       builder: (context, child) {
         return Theme(data: ThemeData.light(), child: child!);
@@ -96,7 +96,6 @@ class FormsflowAIDateTimePicker {
             child: CupertinoTimerPicker(
               mode: CupertinoTimerPickerMode.hm,
               onTimerDurationChanged: (Duration value) {
-                
                 ;
               },
             ),

@@ -41,8 +41,9 @@ class TaskSortPostModel {
           taskVariableFilters?.map((e) => e.toJson()).toList();
     }
     if (processVariableFilters != null && processVariableFilters!.isNotEmpty) {
-      json['processVariables'] =
+      final processVariables =
           processVariableFilters?.map((e) => e.toJson()).toList();
+      json['processVariables'] = processVariableFilters;
     }
 
     if (processDefinitionFilters != null &&
@@ -190,7 +191,7 @@ class TaskSortPostModel {
                   element.value!, FormsFlowAIConstants.dateYearTimeStamp);
           String? dateTime = TimeStampUtils.formatISOTime(convertedDateTime);
           if (dateTime != null) {
-            json['CreatedBefore'] = dateTime;
+            json['createdBefore'] = dateTime;
           }
           break;
         }
@@ -203,7 +204,7 @@ class TaskSortPostModel {
                   element.value!, FormsFlowAIConstants.dateYearTimeStamp);
           String? dateTime = TimeStampUtils.formatISOTime(convertedDateTime);
           if (dateTime != null) {
-            json['CreatedAfter'] = dateTime;
+            json['createdAfter'] = dateTime;
           }
           break;
         }
@@ -242,7 +243,7 @@ class Sorting {
 class VariableFilters {
   String? name;
   String? operator;
-  String? value;
+  dynamic? value;
 
   VariableFilters({
     this.name,
@@ -253,15 +254,19 @@ class VariableFilters {
   VariableFilters.fromJson(Map<String, dynamic> json) {
     name = json['name'] as String?;
     operator = json['operator'] as String?;
-    value = json['value'] as String?;
+    value = json['value'] as dynamic?;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> json = <String, dynamic>{};
-    json['name'] = name;
-    json['operator'] = operator;
-    json['value'] = value;
-    return json;
+    if (name == 'applicationId') {
+      return {
+        'name': "$name",
+        'operator': "$operator",
+        'value': int.parse(value)
+      };
+    } else {
+      return {'name': "$name", 'operator': "$operator", 'value': value};
+    }
   }
 
   @override

@@ -5,13 +5,13 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/src/consumer.dart';
 import 'package:formsflowai/presentation/features/taskdetails/view/form/widgets/forms_web_view.dart';
 import 'package:formsflowai/utils/general_util.dart';
-import 'package:formsflowai_shared/core/base/base_consumer_widget.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../../../core/module/providers/view_model_provider.dart';
 import '../../../../../../utils/general_util.dart';
 import '../../../../../core/module/providers/view_model_provider.dart';
 import '../../../../../shared/toast/toast_message_provider.dart';
+import '../../../../base/widgets/base_consumer_widget.dart';
 
 class TaskDetailsFormsView extends BaseConsumerWidget {
   const TaskDetailsFormsView({Key? key}) : super(key: key);

@@ -1,8 +1,9 @@
 import 'package:formsflowai/presentation/features/home/tasklisting/model/task_listing_data_model.dart';
+import 'package:formsflowai_api/formsflowai_api.dart';
 import 'package:formsflowai_api/response/processdefinition/process_definition_response.dart';
-import 'package:formsflowai_api/response/task/tasklist/task_list_response.dart';
-import 'package:formsflowai_shared/core/database/entity/task_entity.dart';
-import 'package:formsflowai_shared/shared/app_strings.dart';
+
+import '../../../../../core/database/entity/task_entity.dart';
+import '../../../../../shared/app_strings.dart';
 
 /// [TaskBaseDataResponse] class contains [TaskListingDataModel]
 /// [ErrorCode]
@@ -11,16 +12,33 @@ class TaskBaseDataResponse {
   int? errorCode;
   String? errorMessage;
   List<TaskListingDM>? taskData;
+  int? taskCount;
 
-  TaskBaseDataResponse({this.errorCode, this.errorMessage, this.taskData});
+  TaskBaseDataResponse(
+      {this.errorCode, this.errorMessage, this.taskData, this.taskCount});
 
-  /// Method to transform [TaskListResponse] into TaskBaseDataResponse
+  // /// Method to transform [TaskListResponse] into TaskBaseDataResponse
+  // /// Input Param
+  // /// [TaskListResponse]
+  // /// [ProcessDefinitionResponse]
+  // static TaskBaseDataResponse transform(List<TaskListResponse> data,
+  //     List<ProcessDefinitionResponse>? processDefinitionResponse) {
+  //   TaskBaseDataResponse taskBaseResponse = TaskBaseDataResponse();
+  //   taskBaseResponse.errorMessage = Strings.generalLabelSuccess;
+  //   taskBaseResponse.errorCode = 200;
+  //   taskBaseResponse.taskData =
+  //       TaskListingDM.transform(data, processDefinitionResponse);
+  //   return taskBaseResponse;
+  // }
+
+  /// Method to transform [TaskListHalResponse] into TaskBaseDataResponse
   /// Input Param
-  /// [TaskListResponse]
+  /// [TaskListHalResponse]
   /// [ProcessDefinitionResponse]
-  static TaskBaseDataResponse transform(List<TaskListResponse> data,
+  static TaskBaseDataResponse transform(TaskListHalResponse data,
       List<ProcessDefinitionResponse>? processDefinitionResponse) {
     TaskBaseDataResponse taskBaseResponse = TaskBaseDataResponse();
+    taskBaseResponse.taskCount = data.count;
     taskBaseResponse.errorMessage = Strings.generalLabelSuccess;
     taskBaseResponse.errorCode = 200;
     taskBaseResponse.taskData =
@@ -28,7 +46,7 @@ class TaskBaseDataResponse {
     return taskBaseResponse;
   }
 
-  /// Method to transform [TaskListResponse] into TaskBaseDataResponse
+  /// Method to transform [TaskListHalResponse] into TaskBaseDataResponse
   /// Input Param
   /// [TaskEntity] taskEntity List
   static TaskBaseDataResponse transformFromEntity(
@@ -36,6 +54,7 @@ class TaskBaseDataResponse {
     TaskBaseDataResponse taskBaseResponse = TaskBaseDataResponse();
     if (data != null && data.length > 0) {
       taskBaseResponse.errorMessage = Strings.generalLabelSuccess;
+      taskBaseResponse.taskCount = data.length;
       taskBaseResponse.errorCode = 200;
       taskBaseResponse.taskData =
           TaskListingDM.transformFromEntity(response: data);

@@ -2,12 +2,13 @@ import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:formsflowai/repository/form/form_repository.dart';
+import 'package:formsflowai_api/response/form/roles/formio_roles_response.dart';
 import 'package:formsflowai_api/response/form/submission/form_submission_response.dart';
-import 'package:formsflowai_shared/core/database/dao/formsflowforms_dao.dart';
-import 'package:formsflowai_shared/core/database/dao/task_dao.dart';
-import 'package:formsflowai_shared/core/database/entity/form_entity.dart';
 import 'package:isolated_http_client/isolated_http_client.dart';
 
+import '../../core/database/dao/formsflowforms_dao.dart';
+import '../../core/database/dao/task_dao.dart';
+import '../../core/database/entity/form_entity.dart';
 import '../../core/error/errors_failure.dart';
 import '../../presentation/features/taskdetails/model/form_dm.dart';
 import '../../utils/general_util.dart';
@@ -113,5 +114,10 @@ class FormLocalDataSource implements FormRepository {
       required FormSubmissionResponse formSubmissionResponse}) {
     // TODO: implement submitFormDataIsolate
     throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, FormioRolesResponse>> fetchFormioRoles() {
+    return Future(() => Left(NoConnectionFailure()));
   }
 }

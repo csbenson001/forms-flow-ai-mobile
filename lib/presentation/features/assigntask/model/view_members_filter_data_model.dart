@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:formsflowai_shared/shared/app_strings.dart';
 
+import '../../../../shared/app_strings.dart';
 import 'memebers_data_model.dart';
 
 /// [ViewMembersFilterDM] data model class contains data fields

@@ -1,6 +1,7 @@
 import 'package:formsflowai_api/response/application/history/application_history_response.dart';
-import 'package:formsflowai_shared/core/database/entity/application_history_entity.dart';
 import 'package:formsflowai_shared/shared/api_constants_url.dart';
+
+import '../../../../core/database/entity/application_history_entity.dart';
 
 /// [ApplicationHistoryDM] data model class contains all application
 /// history related data fields

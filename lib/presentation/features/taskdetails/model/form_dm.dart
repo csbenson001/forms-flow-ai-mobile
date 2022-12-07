@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:dio/src/response.dart';
-import 'package:formsflowai_shared/core/database/entity/form_entity.dart';
+
+import '../../../../core/database/entity/form_entity.dart';
 
 /// [FormDM] data model class to hold form data fields
 class FormDM {

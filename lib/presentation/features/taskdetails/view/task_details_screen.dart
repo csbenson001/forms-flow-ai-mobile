@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:formsflowai/presentation/features/taskdetails/view/applicationhistory/task_application_history_view.dart';
-import 'package:formsflowai/presentation/features/taskdetails/view/diagram/task_bpmn_diagram_view.dart';
 import 'package:formsflowai/presentation/features/taskdetails/view/widgets/task_details_header_view.dart';
 import 'package:formsflowai/presentation/features/taskdetails/viewmodel/task_details_providers.dart';
-import 'package:formsflowai_shared/core/base/base_hooks_consumer_widget.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
-import 'package:formsflowai_shared/shared/app_strings.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
 import 'package:formsflowai_shared/utils/router/router_utils.dart';
+import 'package:formsflowai_shared/widgets/extended_scroll_view/extended_nested_scroll_view.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../core/module/providers/view_model_provider.dart';
+import '../../../../shared/app_strings.dart';
 import '../../../../shared/toast/toast_message_provider.dart';
-import '../../../base/toolbar_app_scaffold.dart';
+import '../../../base/toolbar/toolbar_app_scaffold.dart';
+import '../../../base/widgets/base_hooks_consumer_widget.dart';
 import '../../home/tasklisting/model/task_listing_data_model.dart';
-import '../../home/tasklisting/viewmodel/task_list_screen_providers.dart';
+import 'applicationhistory/task_application_history_view.dart';
+import 'diagram/task_bpmn_diagram_view.dart';
 import 'form/task_details_forms_view.dart';
 
 class TaskDetailsScreen extends BaseHooksConsumerWidget {
@@ -39,16 +39,21 @@ class TaskDetailsScreen extends BaseHooksConsumerWidget {
 
     return ToolbarAppScaffold(
         pageTitle: Strings.taskDetailsTitle,
-        body: NestedScrollView(
-            physics: const ClampingScrollPhysics(),
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) {
-              return <Widget>[
-                SliverList(
-                  delegate: SliverChildListDelegate([
-                    Container(
-                        color: AppColor.grey7,
-                        child: const TaskDetailsHeaderView()),
+        body: SafeArea(
+            child: ExtendedNestedScrollView(
+                onlyOneScrollInBody: true,
+                headerSliverBuilder:
+                    (BuildContext context, bool innerBoxIsScrolled) {
+                  return <Widget>[
+                    SliverToBoxAdapter(
+                      child: Container(
+                          color: AppColor.grey7,
+                          child: const TaskDetailsHeaderView()),
+                    )
+                  ];
+                },
+                body: Column(
+                  children: [
                     Card(
                         color: Colors.white,
                         elevation: Dimens.radius_2,
@@ -81,32 +86,27 @@ class TaskDetailsScreen extends BaseHooksConsumerWidget {
                             Tab(text: Strings.taskDetailsTabTitleDiagram),
                           ],
                         )),
-                  ]),
-                ),
-              ];
-            },
-            body: Container(
-                color: Colors.white,
-                width: MediaQuery.of(context).size.width,
-                child: TabBarView(
-                  physics: const ClampingScrollPhysics(),
-                  controller: tabController,
-                  children: const [
-                    TaskDetailsFormsView(),
-                    TaskApplicationHistoryView(),
-                    TaskBpmnDiagramView()
+                    Expanded(
+                        child: TabBarView(
+                      controller: tabController,
+                      children: const [
+                        TaskDetailsFormsView(),
+                        TaskApplicationHistoryView(),
+                        TaskBpmnDiagramView()
+                      ],
+                    ))
                   ],
                 ))));
   }
 
   void initListeners(WidgetRef ref, BuildContext context) {
-    ref.listen<bool>(authorizationExpiredFailureProvider, (previous, next) {
-      if (next) {
-        showErrorToast(
-            context: context, description: Strings.generalErrorSessionTimeout);
-        ref.read(taskListViewModelProvider).logoutUser(context: context);
-      }
-    });
+    // ref.listen<bool>(authorizationExpiredFailureProvider, (previous, next) {
+    //   if (next) {
+    //     showErrorToast(
+    //         context: context, description: Strings.generalErrorSessionTimeout);
+    //     ref.read(taskListViewModelProvider).logoutUser(context: context);
+    //   }
+    // });
 
     ref.listen<bool>(currentTaskCompletedSocketProvider, (previous, next) {
       if (next) {

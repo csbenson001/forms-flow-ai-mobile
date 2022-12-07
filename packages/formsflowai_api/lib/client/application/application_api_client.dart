@@ -8,7 +8,7 @@ import '../../response/diagram/bpmn_diagram_response.dart';
 
 part 'application_api_client.g.dart';
 
-@RestApi(baseUrl: ApiConstantUrl.FORMSFLOWAI_BASE_URL)
+@RestApi(baseUrl: ApiConstantUrl.FORMSFLOWAI_APPLICATION_BASE_URL)
 abstract class ApplicationApiClient {
   factory ApplicationApiClient(Dio dio, {String? baseUrl}) =
       _ApplicationApiClient;

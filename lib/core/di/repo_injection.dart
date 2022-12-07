@@ -1,3 +1,4 @@
+import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:formsflowai/repository/application/application_local_data_source_impl.dart';
 import 'package:formsflowai/repository/application/application_remote_data_source_impl.dart';
 import 'package:formsflowai/repository/form/form_data_repository.dart';
@@ -11,13 +12,13 @@ import 'package:formsflowai_api/client/form/forms_api_client.dart';
 import 'package:formsflowai_api/client/task/task_api_client.dart';
 import 'package:formsflowai_api/client/user/user_api_client.dart';
 import 'package:formsflowai_api/utils/dio_di.dart';
-import 'package:formsflowai_shared/core/networkmanager/network_manager_controller.dart';
 import 'package:isolated_http_client/isolated_http_client.dart';
 
 import '../../repository/application/application_data_repository.dart';
 import '../../repository/user/user_data_repository.dart';
 import '../../repository/user/user_local_data_source_impl.dart';
 import '../../repository/user/user_remote_data_source_impl.dart';
+import '../networkmanager/network_manager_controller.dart';
 import 'injection.dart';
 
 /// Function to register repository and dats sources
@@ -28,7 +29,8 @@ Future<void> registerRepository() async {
   /// Register User data sources and API client
   dl.registerLazySingleton(() => UserApiClient(getDio()));
   dl.registerLazySingleton(() => UserLocalDataSourceImpl(appPreferences: dl()));
-  dl.registerLazySingleton(() => UserRemoteDataSourceImpl(userApiClient: dl()));
+  dl.registerLazySingleton(() => UserRemoteDataSourceImpl(
+      userApiClient: dl(), flutterAppAuth: FlutterAppAuth()));
   dl.registerLazySingleton(
       () => UserDataRepository(remoteDataSource: dl(), localDataSource: dl()));
 

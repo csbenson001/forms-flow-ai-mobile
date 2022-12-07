@@ -1,11 +1,9 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:formsflowai/presentation/features/home/tasklisting/model/task_variable_filter_data_model.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/viewmodel/task_list_screen_providers.dart';
-import 'package:formsflowai_shared/core/base/base_consumer_widget.dart';
-import 'package:formsflowai_shared/core/networkmanager/internet_connectivity_provider.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
-import 'package:formsflowai_shared/shared/app_strings.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
 import 'package:formsflowai_shared/widgets/dropdown/dropdown_below.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -13,8 +11,12 @@ import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../../../../../core/module/providers/view_model_provider.dart';
+import '../../../../../../../core/networkmanager/internet_connectivity_provider.dart';
+import '../../../../../../../shared/app_status.dart';
+import '../../../../../../../shared/app_strings.dart';
 import '../../../../../../../shared/app_text_styles.dart';
 import '../../../../../../../utils/general_util.dart';
+import '../../../../../../base/widgets/base_consumer_widget.dart';
 
 /// [TaskFiltersDropdownView] to display filters dropdown views
 class TaskFiltersDropdownView extends BaseConsumerWidget {
@@ -25,13 +27,24 @@ class TaskFiltersDropdownView extends BaseConsumerWidget {
     final selectedSortFilterItem = ref.watch(taskListViewModelProvider
         .select((value) => value.selectedSortFilterItem));
     final taskDropDownItems = ref.watch(taskFilterDropDownItemsProvider);
-    final isLoading =
-        ref.watch(taskCountProvider.select((value) => value.isLoading));
-    final taskCount =
-        ref.watch(taskCountProvider.select((value) => value.count));
+    // final isLoading =
+    //     ref.watch(taskCountProvider.select((value) => value.isLoading));
+    final isLoading = ref
+        .watch(taskListViewModelProvider.select((value) => value.pageStatus));
+    // final taskCount =
+    //     ref.watch(taskCountProvider.select((value) => value.count));
+
+    final taskCount = ref.watch(
+        taskListViewModelProvider.select((value) => value.totalTaskCount));
     final isInternetAvailable = ref.watch(internetConnectivityProvider);
 
-    return isLoading != null && !isLoading
+    /// Watch for selectedVariablesList changes
+    final selectedVariablesList =
+        ref.watch(taskListViewModelProvider).selectedVariablesFiltersList;
+
+    final taskList = ref.watch(taskListViewModelProvider).taskList;
+
+    return isLoading != null && isLoading == PageStatus.success
         ? Container(
             alignment: Alignment.topLeft,
             margin: const EdgeInsets.only(
@@ -42,18 +55,30 @@ class TaskFiltersDropdownView extends BaseConsumerWidget {
               children: [
                 Expanded(
                   flex: 5,
-                  child: Text(
-                    isInternetAvailable != ConnectivityResult.none
-                        ? !GeneralUtil.isStringEmpty(
-                                selectedSortFilterItem.name ?? '')
-                            ? "${selectedSortFilterItem.name} (${taskCount.toString()})"
-                            : "${Strings.taskListingLabelAllTasks}(${taskCount.toString()})"
-                        : "${Strings.taskListingLabelAllTasks}(${taskCount.toString()})",
-                    style: AppTextStyles.boldTextStyle(
-                        fontSize: Dimens.font_16, textColor: Colors.black87),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                  ),
+                  child: !isFilterAdded(selectedVariablesList)
+                      ? Text(
+                          isInternetAvailable != ConnectivityResult.none
+                              ? !GeneralUtil.isStringEmpty(
+                                      selectedSortFilterItem.name ?? '')
+                                  ? "${selectedSortFilterItem.name} (${taskCount.toString()})"
+                                  : "${Strings.taskListingLabelAllTasks}(${taskCount.toString()})"
+                              : "${Strings.taskListingLabelMyTasks}(${taskCount.toString()})",
+                          style: AppTextStyles.boldTextStyle(
+                              fontSize: Dimens.font_16,
+                              textColor: Colors.black87),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                        )
+                      : Text(
+                          isInternetAvailable != ConnectivityResult.none
+                              ? "${Strings.taskListingFilteredTasks}(${taskCount.toString()})"
+                              : "${Strings.taskListingLabelMyTasks}(${taskCount.toString()})",
+                          style: AppTextStyles.boldTextStyle(
+                              fontSize: Dimens.font_16,
+                              textColor: Colors.black87),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                        ),
                 ),
                 const Spacer(),
                 if (isInternetAvailable != ConnectivityResult.none)
@@ -178,5 +203,37 @@ class TaskFiltersDropdownView extends BaseConsumerWidget {
               ),
             ],
           );
+  }
+
+  /// Function to check if there are any filters added
+  bool isFilterAdded(List<TaskVariableFilterDM> selectedVariablesList) {
+    bool isFilterItemAdded = false;
+    print(selectedVariablesList.toString());
+    if (selectedVariablesList.isEmpty) {
+      return isFilterItemAdded;
+    }
+    for (int i = 0; i < selectedVariablesList.length; i++) {
+      // if (!GeneralUtil.isStringEmpty(
+      //         selectedVariablesList[i].selectedVariableProperty) &&
+      //     !GeneralUtil.isStringEmpty(
+      //         selectedVariablesList[i].selectedVariableValue) &&
+      //     !GeneralUtil.isStringEmpty(
+      //         selectedVariablesList[i].selectedOperatorValue)) {
+      //   isFilterItemAdded = true;
+      //   break;
+      // }
+      // else if(!GeneralUtil.isStringEmpty(
+      //     selectedVariablesList[i].selectedVariableValue) &&
+      //     !GeneralUtil.isStringEmpty(
+      //         selectedVariablesList[i].selectedOperatorValue)){
+      //   isFilterItemAdded = true;
+      //   break;
+      // }
+      if (selectedVariablesList[i].filterSaved ?? false) {
+        isFilterItemAdded = true;
+        break;
+      }
+    }
+    return isFilterItemAdded;
   }
 }

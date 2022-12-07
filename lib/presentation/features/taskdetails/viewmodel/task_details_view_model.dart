@@ -11,11 +11,6 @@ import 'package:formsflowai/presentation/features/taskdetails/view/task_details_
 import 'package:formsflowai/presentation/features/taskdetails/viewmodel/task_details_providers.dart';
 import 'package:formsflowai_api/post/form/form_submission_post_model.dart';
 import 'package:formsflowai_api/response/task/details/task_group_response.dart';
-import 'package:formsflowai_shared/core/base/base_notifier_view_model.dart';
-import 'package:formsflowai_shared/core/database/entity/task_entity.dart';
-import 'package:formsflowai_shared/core/networkmanager/network_manager_controller.dart';
-import 'package:formsflowai_shared/core/preferences/app_preference.dart';
-import 'package:formsflowai_shared/shared/app_strings.dart';
 import 'package:formsflowai_shared/shared/formsflow_api_constants.dart';
 import 'package:formsflowai_shared/shared/formsflow_app_constants.dart';
 import 'package:formsflowai_shared/utils/api/api_utils.dart';
@@ -23,19 +18,24 @@ import 'package:formsflowai_shared/utils/router/router_utils.dart';
 import 'package:formsflowai_shared/widgets/datetimepicker/formsflowai_date_time_picker.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../../core/database/entity/task_entity.dart';
 import '../../../../core/database/worker/database_worker.dart';
 import '../../../../core/error/errors_failure.dart';
 import '../../../../core/module/providers/view_model_provider.dart';
+import '../../../../core/networkmanager/network_manager_controller.dart';
+import '../../../../core/preferences/app_preference.dart';
+import '../../../../shared/app_strings.dart';
 import '../../../../shared/toast/toast_message_provider.dart';
 import '../../../../utils/database/database_query_util.dart';
 import '../../../../utils/general_util.dart';
+import '../../../base/viewmodel/base_notifier_view_model.dart';
 import '../../home/tasklisting/model/index.dart';
 import '../../home/tasklisting/model/task_listing_data_model.dart';
 import '../../home/tasklisting/viewmodel/task_list_screen_providers.dart';
 import '../../home/tasklisting/viewmodel/task_list_view_model.dart';
 import '../model/index.dart';
+import '../usecases/form/submit_form_usecase.dart';
 import '../usecases/index.dart';
-import '../usecases/submit_form_usecase.dart';
 import '../view/addgroups/add_group_dialog.dart';
 
 /// [TaskDetailsViewModel] ViewModel class contains business logic
@@ -442,6 +442,7 @@ class TaskDetailsViewModel extends BaseNotifierViewModel {
         ref
             .read(taskListViewModelProvider)
             .updatedTaskDetails(taskListingDM: _taskListingDM!);
+
         await databaseWorker.insertClaimedTask(
             taskEntity: TaskListingDM.transformTaskEntity(
                 taskListingDM!, _taskInfoDM, _taskVariablesDM.formResourceId));
@@ -522,9 +523,7 @@ class TaskDetailsViewModel extends BaseNotifierViewModel {
         _toastStateDM = _toastStateDM.copyWith(
             info: Strings.taskDetailsLabelUnclaimSuccess);
         notifyListeners();
-        ref
-            .read(taskListViewModelProvider)
-            .updatedTaskDetails(taskListingDM: _taskListingDM!);
+        ref.read(taskListViewModelProvider).refreshPageOnTaskUnClaimed();
       });
     }
   }
@@ -538,7 +537,6 @@ class TaskDetailsViewModel extends BaseNotifierViewModel {
     _taskListingDM = _taskListingDM?.copyWith(assignee: null);
     notifyListeners();
     ref.read(formsTabViewModelProvider).updateFormConfig(readOnly: true);
-
     databaseWorker.deleteTaskFromLocalDb(taskId: taskId);
   }
 

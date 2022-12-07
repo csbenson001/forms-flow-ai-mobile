@@ -14,6 +14,7 @@ Dio getDio() {
     compact: true,
   ));
 
+
   return dio;
 }
 

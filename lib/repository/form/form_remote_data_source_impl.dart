@@ -2,17 +2,18 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:formsflowai_api/client/form/forms_api_client.dart';
+import 'package:formsflowai_api/formsflowai_api.dart';
 import 'package:formsflowai_api/response/base/base_response.dart';
 import 'package:formsflowai_api/response/form/submission/form_submission_response.dart';
-import 'package:formsflowai_shared/core/database/entity/form_entity.dart';
-import 'package:formsflowai_shared/core/preferences/app_preference.dart';
 import 'package:formsflowai_shared/shared/api_constants_url.dart';
 import 'package:formsflowai_shared/shared/formsflow_api_constants.dart';
 import 'package:formsflowai_shared/utils/api/api_utils.dart';
 import 'package:isolated_http_client/isolated_http_client.dart';
 
+import '../../core/database/entity/form_entity.dart';
 import '../../core/error/errors_failure.dart';
 import '../../core/error/server_exception.dart';
+import '../../core/preferences/app_preference.dart';
 import '../../presentation/features/taskdetails/model/form_dm.dart';
 import 'form_repository.dart';
 
@@ -223,6 +224,27 @@ class FormRemoteDataSource implements FormRepository {
       return Left(ServerFailure());
     } catch (e) {
       return left(NoResourceFoundFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, FormioRolesResponse>> fetchFormioRoles() async {
+    try {
+      var response = await formsApiClient
+          .getFormioRoles(appPreferences.getBearerAccessToken());
+
+      if (response.form != null) {
+        return Right(response);
+      }
+      return Left(ServerFailure());
+    } on SocketException {
+      return Left(NoConnectionFailure());
+    } on ServerException {
+      return Left(ServerFailure());
+    } catch (e) {
+      print("--- Error ----");
+      print(e);
+      return Left(NoResourceFoundFailure());
     }
   }
 }

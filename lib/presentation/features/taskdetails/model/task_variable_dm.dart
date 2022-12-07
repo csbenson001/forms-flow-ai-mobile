@@ -1,6 +1,7 @@
 import 'package:formsflowai_api/response/task/variables/task_variables_response.dart';
-import 'package:formsflowai_shared/core/database/entity/task_entity.dart';
 import 'package:formsflowai_shared/shared/formsflow_app_constants.dart';
+
+import '../../../../core/database/entity/task_entity.dart';
 
 /// [TaskVariableDM] data model class to hold task variable data fields
 class TaskVariableDM {

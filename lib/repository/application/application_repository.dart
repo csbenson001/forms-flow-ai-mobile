@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:formsflowai_shared/core/database/entity/application_history_entity.dart';
 
+import '../../core/database/entity/application_history_entity.dart';
 import '../../core/error/errors_failure.dart';
 import '../../presentation/features/taskdetails/model/application_history_data_model.dart';
 

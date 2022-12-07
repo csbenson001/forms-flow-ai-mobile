@@ -5,8 +5,9 @@ import 'package:formsflowai/presentation/features/taskdetails/model/application_
 import 'package:formsflowai/repository/application/application_local_data_source_impl.dart';
 import 'package:formsflowai/repository/application/application_remote_data_source_impl.dart';
 import 'package:formsflowai/repository/application/application_repository.dart';
-import 'package:formsflowai_shared/core/database/entity/application_history_entity.dart';
-import 'package:formsflowai_shared/core/networkmanager/network_manager_controller.dart';
+
+import '../../core/database/entity/application_history_entity.dart';
+import '../../core/networkmanager/network_manager_controller.dart';
 
 class ApplicationHistoryDataRepository implements ApplicationHistoryRepository {
   final ApplicationLocalDataSourceImpl localDataSource;

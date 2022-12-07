@@ -4,14 +4,14 @@ import 'package:formsflowai/core/module/providers/view_model_provider.dart';
 import 'package:formsflowai_api/post/task/add_group_post_model.dart';
 import 'package:formsflowai_api/post/task/delete_group_post_model.dart';
 import 'package:formsflowai_api/response/task/details/task_group_response.dart';
-import 'package:formsflowai_shared/core/base/base_notifier_view_model.dart';
-import 'package:formsflowai_shared/core/networkmanager/network_manager_controller.dart';
 import 'package:formsflowai_shared/shared/formsflow_api_constants.dart';
 import 'package:formsflowai_shared/utils/router/router_utils.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../usecases/add_groups_usecase.dart';
-import '../../../usecases/delete_groups_usecase.dart';
+import '../../../../../../core/networkmanager/network_manager_controller.dart';
+import '../../../../../base/viewmodel/base_notifier_view_model.dart';
+import '../../../usecases/task/add_groups_usecase.dart';
+import '../../../usecases/task/delete_groups_usecase.dart';
 
 /// [AddGroupDialogViewModel] ViewModel class contains all bussiness logic
 /// related to add groups dialog screen

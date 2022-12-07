@@ -6,13 +6,13 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_riverpod/src/consumer.dart';
 import 'package:formsflowai/core/module/providers/view_model_provider.dart';
 import 'package:formsflowai/presentation/features/viewformsubmission/viewmodel/view_form_submission_state_notifier.dart';
-import 'package:formsflowai_shared/core/base/base_consumer_widget.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
 import 'package:formsflowai_shared/utils/form/formio_webview_util.dart';
 import 'package:formsflowai_shared/widgets/formsflow_circular_progress_indicator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../../utils/general_util.dart';
+import '../../../../base/widgets/base_consumer_widget.dart';
 
 class ViewFormSubmissionWebView extends BaseConsumerWidget {
   ViewFormSubmissionWebView({Key? key}) : super(key: key);
@@ -70,13 +70,9 @@ class ViewFormSubmissionWebView extends BaseConsumerWidget {
                     resources: resources,
                     action: PermissionRequestResponseAction.GRANT);
               },
-              onConsoleMessage: (controller, consoleMessage) {
-                
-              },
+              onConsoleMessage: (controller, consoleMessage) {},
               onLoadStop:
                   (InAppWebViewController inappController, Uri? uri) async {
-   
-
                 webViewController?.evaluateJavascript(
                     source:
                         'loadForm(${formIoModel?.formComponents}, ${formIoModel?.formData},'

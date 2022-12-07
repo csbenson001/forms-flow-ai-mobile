@@ -6,10 +6,12 @@ import 'package:formsflowai/repository/form/form_local_data_source_impl.dart';
 import 'package:formsflowai/repository/form/form_remote_data_source_impl.dart';
 import 'package:formsflowai/repository/form/form_repository.dart';
 import 'package:formsflowai_api/response/base/base_response.dart';
+import 'package:formsflowai_api/response/form/roles/formio_roles_response.dart';
 import 'package:formsflowai_api/response/form/submission/form_submission_response.dart';
-import 'package:formsflowai_shared/core/database/entity/form_entity.dart';
-import 'package:formsflowai_shared/core/networkmanager/network_manager_controller.dart';
 import 'package:isolated_http_client/src/response.dart';
+
+import '../../core/database/entity/form_entity.dart';
+import '../../core/networkmanager/network_manager_controller.dart';
 
 class FormDataRepository implements FormRepository {
   final FormLocalDataSource localDataSource;
@@ -138,5 +140,15 @@ class FormDataRepository implements FormRepository {
         formResourceId: formResourceId,
         formSubmissionId: formSubmissionId,
         formSubmissionResponse: formSubmissionResponse);
+  }
+
+  /// Method to fetch Roles
+  @override
+  Future<Either<Failure, FormioRolesResponse>> fetchFormioRoles() {
+    if (networkManagerController.connectionType != ConnectivityResult.none) {
+      return remoteDataSource.fetchFormioRoles();
+    } else {
+      return localDataSource.fetchFormioRoles();
+    }
   }
 }

@@ -17,11 +17,6 @@ class TaskVariableFilterDM {
   bool? filterSaved;
   bool? enableEditing;
 
-  @override
-  String toString() {
-    return 'TaskVariableFilterDM{comparess: $comparess, values: $values, selectedOperatorValue: $selectedOperatorValue, selectedVariableProperty: $selectedVariableProperty, selectedVariableValue: $selectedVariableValue}';
-  }
-
   /// Named Constructor
   TaskVariableFilterDM.named(
       {required this.label,

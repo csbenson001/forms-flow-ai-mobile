@@ -2,12 +2,18 @@ class ApiConstantUrl {
   // ------------------- BASE URLS AND BASE PROVIDERS  ---------------------
 
   static const String KEYCLOCK_AUTH_BASE_URL =
-      'https://iam3.aot-technologies.com/';
+      'https://iam.aot-technologies.com/';
 
   static const String FORMSFLOWAI_BASE_URL =
+      'https://bpm2.aot-technologies.com/';
+
+  static const String FORMSFLOWAI_FORM_BASE_URL =
       'https://app2.aot-technologies.com/';
 
-  static const String CAMUNDA_ENGINE_REST = 'camunda/engine-rest-ext';
+  static const String FORMSFLOWAI_APPLICATION_BASE_URL =
+      'https://app2.aot-technologies.com/';
+
+  static const String CAMUNDA_ENGINE_REST = 'camunda/engine-rest-ext/v1';
 
   static const String FILTER = 'filter';
 
@@ -23,13 +29,18 @@ class ApiConstantUrl {
 
   static const String FORM_SUBMISSION = 'submission';
 
-  // ----------------------- TASK  ---------------------
+  // ----------------------- USER  ---------------------
 
   static const String FETCH_TOKEN =
       'auth/realms/forms-flow-mahagony/protocol/openid-connect/token';
 
+  static const String FETCH_TOKEN_OPEN_ID_CONNECT =
+      '/auth/realms/forms-flow-mahagony/protocol/openid-connect';
+
   static const String FETCH_USER_INFO =
       'auth/realms/forms-flow-mahagony/protocol/openid-connect/userinfo';
+
+  // ----------------------- TASK  ---------------------
 
   static const String FETCH_TASKS =
       '$CAMUNDA_ENGINE_REST/$FILTER/$PATH_ID/list?';
@@ -73,6 +84,8 @@ class ApiConstantUrl {
       '$CAMUNDA_ENGINE_REST/$TASK/$PATH_ID/submit-form';
 
   // ----------------------- FORMS ---------------------
+
+  static const String FETCH_FORMIO_ROLES = 'api/formio/roles';
 
   static const String FETCH_FORM_SUBMISSION_DATA =
       '$FORM/{formResourceId}/submission/{formSubmissionId}';

@@ -5,15 +5,15 @@ class FiltersResponse {
   final dynamic owner;
   final FilterQuery? query;
   final Properties? properties;
+  bool isSelected = false;
 
-  FiltersResponse({
-    this.id,
-    this.resourceType,
-    this.name,
-    this.owner,
-    this.query,
-    this.properties,
-  });
+  FiltersResponse(
+      {this.id,
+      this.resourceType,
+      this.name,
+      this.owner,
+      this.query,
+      this.properties});
 
   FiltersResponse.fromJson(Map<String, dynamic> json)
       : id = json['id'] as String?,

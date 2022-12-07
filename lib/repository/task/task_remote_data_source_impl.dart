@@ -22,8 +22,6 @@ import 'package:formsflowai_api/response/processdefinition/process_definition_re
 import 'package:formsflowai_api/response/task/details/list_members_response.dart';
 import 'package:formsflowai_api/response/task/details/task_group_response.dart';
 import 'package:formsflowai_api/response/user/login/keycloak_login_response.dart';
-import 'package:formsflowai_shared/core/database/entity/task_entity.dart';
-import 'package:formsflowai_shared/core/preferences/app_preference.dart';
 import 'package:formsflowai_shared/shared/api_constants_url.dart';
 import 'package:formsflowai_shared/shared/formsflow_api_constants.dart';
 import 'package:formsflowai_shared/shared/formsflow_app_constants.dart';
@@ -31,8 +29,10 @@ import 'package:formsflowai_shared/utils/api/api_utils.dart';
 import 'package:isolated_http_client/isolated_http_client.dart';
 import 'package:isolated_http_client/src/response.dart' as isolatedResponse;
 
+import '../../core/database/entity/task_entity.dart';
 import '../../core/error/errors_failure.dart';
 import '../../core/error/server_exception.dart';
+import '../../core/preferences/app_preference.dart';
 
 class TaskRemoteDataSourceImpl implements TaskRepository {
   final TaskApiClient taskApiClient;
@@ -521,13 +521,16 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
     try {
       var data = await taskApiClient.fetchTasks(
           appPreferences.getBearerAccessToken(),
-          // "application/hal+json",
+          "application/hal+json",
           id,
           firstResult,
           maxResults,
           taskSortingPostModel);
       return Right(TaskBaseDataResponse.transform(data, definitionResponse));
     } catch (e) {
+      print("***** Response Error *****");
+      print(e);
+
       if (e is TypeError) {
         return Left(DataTypeFailure());
       } else if (e is DioError) {
@@ -809,7 +812,7 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
 
   Future<Either<Failure, KeyCloakLoginResponse>> _fetchNewToken() async {
     try {
-      var response = await userApiClient.fetchNewToken(
+      var response = await userApiClient.refreshUserToken(
           FormsFlowAIConstants.CLIENT_ID,
           FormsFlowAIConstants.CLIENT_SECRET_KEY,
           appPreferences.getRefreshToken(),

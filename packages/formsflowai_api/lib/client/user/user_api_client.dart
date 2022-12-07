@@ -25,7 +25,7 @@ abstract class UserApiClient {
 
   @POST(ApiConstantUrl.FETCH_TOKEN)
   @FormUrlEncoded()
-  Future<KeyCloakLoginResponse> fetchNewToken(
+  Future<KeyCloakLoginResponse> refreshUserToken(
       @Field("client_id") String clientId,
       @Field("client_secret") String clientSecret,
       @Field("refresh_token") String refreshToken,

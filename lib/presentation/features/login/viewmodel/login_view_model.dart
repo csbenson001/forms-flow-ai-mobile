@@ -1,30 +1,41 @@
+import 'package:flutter/scheduler.dart';
 import 'package:formsflowai/core/error/errors_failure.dart';
+import 'package:formsflowai/presentation/base/viewmodel/base_notifier_view_model.dart';
 import 'package:formsflowai/presentation/features/login/usecases/fetch_user_info_usecase.dart';
 import 'package:formsflowai/presentation/features/login/usecases/login_user_usecase.dart';
 import 'package:formsflowai/presentation/features/login/usecases/save_user_details_usecase.dart';
 import 'package:formsflowai/presentation/features/login/viewmodel/login_state_notifier.dart';
-import 'package:formsflowai_shared/core/base/base_view_model.dart';
-import 'package:formsflowai_shared/core/preferences/app_preference.dart';
-import 'package:formsflowai_shared/shared/app_strings.dart';
+import 'package:formsflowai/shared/app_status.dart';
+import 'package:formsflowai_shared/shared/formsflow_app_constants.dart';
 import 'package:formsflowai_shared/utils/api/api_utils.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../../../../core/preferences/app_preference.dart';
+import '../../../../shared/app_strings.dart';
+import '../usecases/login_keycloak_authenticator_usecase.dart';
 
 /// [LoginViewModel] to hold all bussiness logic related to
 /// Login Screen
-class LoginViewModel extends BaseViewModel {
+class LoginViewModel extends BaseNotifierViewModel {
   LoginViewModel(
       {required this.appPreferences,
       required this.loginUserCase,
       required this.fetchUserInfoUseCase,
       required this.saveUserDetailsUsecase,
+      required this.loginKeycloakAuthenticatorUserCase,
       required this.ref});
 
   /// UseCases
   final LoginUserCase loginUserCase;
   final FetchUserInfoUseCase fetchUserInfoUseCase;
   final AppPreferences appPreferences;
+  final LoginKeycloakAuthenticatorUserCase loginKeycloakAuthenticatorUserCase;
   final SaveUserDetailsUseCase saveUserDetailsUsecase;
   final Ref ref;
+
+  LoginStatus _showLoginApiLoadingProgress = LoginStatus.initial;
+  LoginStatus get showLoginApiLoadingProgress => _showLoginApiLoadingProgress;
 
   /// Function to update password visibility
   void updatePasswordVisible() {
@@ -61,7 +72,7 @@ class LoginViewModel extends BaseViewModel {
         .then((value) {
       value.fold((error) {
         dismissProgressLoading();
-        if (Error is NoConnectionFailure) {
+        if (error is NoConnectionFailure) {
           ref
               .read(loginStateProvider.notifier)
               .showToastMessage(error: Strings.loginErrorNoInternet);
@@ -78,6 +89,51 @@ class LoginViewModel extends BaseViewModel {
     });
   }
 
+  /// Function to call api to login User
+  /// fold response and handle the on recieve response on right
+  /// after successful login call [_fetchUserInfo] function to get
+  /// user info response
+  /// Input Parameters
+  /// [UserName]
+  /// [Password]
+  Future<void> loginUserKeycloakExternal() async {
+    const String _clientId = FormsFlowAIConstants.CLIENT_ID;
+    const String _redirectUrl = 'com.aot.formsflowai:/*';
+    // final List<String> _scopes = <String>[
+    //   'openid',
+    //   'profile',
+    //   'offline_access'
+    // ];
+
+    final List<String> _scopes = <String>['openid', 'profile'];
+
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      _showLoginApiLoadingProgress = LoginStatus.launched;
+      notifyListeners();
+    });
+    try {
+      final loginAuthenticatorResponse =
+          await loginKeycloakAuthenticatorUserCase.call(
+              params: LoginKeycloakAuthenticatorParams(
+                  clientId: _clientId,
+                  redirectUrl: _redirectUrl,
+                  scopes: _scopes));
+      loginAuthenticatorResponse.fold((l) {
+        _showLoginApiLoadingProgress = LoginStatus.failure;
+        notifyListeners();
+      }, (result) async {
+        _showLoginApiLoadingProgress = LoginStatus.success;
+        notifyListeners();
+        await _fetchUserInfo(
+            accessToken: result.accessToken ?? '',
+            refreshToken: result.refreshToken ?? '');
+      });
+    } catch (e) {
+      _showLoginApiLoadingProgress = LoginStatus.failure;
+      notifyListeners();
+    }
+  }
+
   /// Function to fetch User Info after the successful login
   /// Input Parameters
   /// [AccessToken]
@@ -88,9 +144,12 @@ class LoginViewModel extends BaseViewModel {
         params: FetchUserInfoParams(
             accessToken: APIUtils.getBearerToken(accessToken)));
     userInfoResponse.fold((l) {
-      dismissProgressLoading();
+      _showLoginApiLoadingProgress = LoginStatus.failure;
+      notifyListeners();
     }, (infoResponse) async {
-      dismissProgressLoading();
+      _showLoginApiLoadingProgress = LoginStatus.success;
+      notifyListeners();
+
       ref
           .read(loginStateProvider.notifier)
           .showToastMessage(info: Strings.loginLabelSuccess);
@@ -108,5 +167,10 @@ class LoginViewModel extends BaseViewModel {
   /// Function to navigate to home screen
   void _navigateToHomeScreen() async {
     ref.read(loginStateProvider.notifier).updateLoginSuccess();
+  }
+
+  /// Function to open launcher to load terms and conditions webpage
+  void openTermsAndConditionsUrlLauncher() {
+    launch("https://formsflow.ai/service/");
   }
 }

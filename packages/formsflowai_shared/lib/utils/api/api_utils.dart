@@ -2,7 +2,7 @@ import '../../shared/api_constants_url.dart';
 
 class APIUtils {
   static String getBearerToken(String token) {
-    return 'bearer ' + token;
+    return 'Bearer $token';
   }
 
   static Map<String, String> getFormsJwtTokenHeader(

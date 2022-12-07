@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:formsflowai/repository/user/user_local_data_source.dart';
 import 'package:formsflowai_api/response/user/info/user_info_response.dart';
-import 'package:formsflowai_shared/core/preferences/app_preference.dart';
 
 import '../../core/error/errors_failure.dart';
+import '../../core/preferences/app_preference.dart';
 import '../../presentation/features/login/usecases/save_user_details_usecase.dart';
 import '../../utils/general_util.dart';
 

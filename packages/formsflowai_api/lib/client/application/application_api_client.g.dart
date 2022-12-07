@@ -7,7 +7,10 @@ part of 'application_api_client.dart';
 // **************************************************************************
 
 class _ApplicationApiClient implements ApplicationApiClient {
-  _ApplicationApiClient(this._dio, {this.baseUrl}) {
+  _ApplicationApiClient(
+    this._dio, {
+    this.baseUrl,
+  }) {
     baseUrl ??= 'https://app2.aot-technologies.com/';
   }
 
@@ -17,17 +20,24 @@ class _ApplicationApiClient implements ApplicationApiClient {
 
   @override
   Future<ApplicationHistoryResponse> fetchApplicationHistory(
-      accessToken, id) async {
+    accessToken,
+    id,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ApplicationHistoryResponse>(Options(
-                method: 'GET',
-                headers: <String, dynamic>{r'Authorization': accessToken},
-                extra: _extra)
-            .compose(_dio.options, 'api/application/$id/history',
-                queryParameters: queryParameters, data: _data)
+      method: 'GET',
+      headers: <String, dynamic>{r'Authorization': accessToken},
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'api/application/$id/history',
+              queryParameters: queryParameters,
+              data: _data,
+            )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ApplicationHistoryResponse.fromJson(_result.data!);
     return value;
@@ -40,11 +50,16 @@ class _ApplicationApiClient implements ApplicationApiClient {
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<BpmnDiagramResponse>(Options(
-                method: 'GET',
-                headers: <String, dynamic>{r'Authorization': accessToken},
-                extra: _extra)
-            .compose(_dio.options, 'api/process/onestepapproval/xml',
-                queryParameters: queryParameters, data: _data)
+      method: 'GET',
+      headers: <String, dynamic>{r'Authorization': accessToken},
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'api/process/onestepapproval/xml',
+              queryParameters: queryParameters,
+              data: _data,
+            )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = BpmnDiagramResponse.fromJson(_result.data!);
     return value;
@@ -52,18 +67,24 @@ class _ApplicationApiClient implements ApplicationApiClient {
 
   @override
   Future<BpmnWorkflowInstancesResponse> fetchBpmnWorkflowInstance(
-      accessToken, id) async {
+    accessToken,
+    id,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<BpmnWorkflowInstancesResponse>(Options(
-                method: 'GET',
-                headers: <String, dynamic>{r'Authorization': accessToken},
-                extra: _extra)
-            .compose(_dio.options,
-                'api/process/process-instance/$id}/activity-instances',
-                queryParameters: queryParameters, data: _data)
+      method: 'GET',
+      headers: <String, dynamic>{r'Authorization': accessToken},
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'api/process/process-instance/$id}/activity-instances',
+              queryParameters: queryParameters,
+              data: _data,
+            )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = BpmnWorkflowInstancesResponse.fromJson(_result.data!);
     return value;

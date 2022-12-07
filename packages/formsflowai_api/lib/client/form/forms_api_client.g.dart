@@ -7,7 +7,10 @@ part of 'forms_api_client.dart';
 // **************************************************************************
 
 class _FormsApiClient implements FormsApiClient {
-  _FormsApiClient(this._dio, {this.baseUrl}) {
+  _FormsApiClient(
+    this._dio, {
+    this.baseUrl,
+  }) {
     baseUrl ??= 'https://app2.aot-technologies.com/';
   }
 
@@ -16,20 +19,28 @@ class _FormsApiClient implements FormsApiClient {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<dynamic>> submitFormData(jwtToken, formResourceId,
-      formSubmissionId, formSubmissionResponse) async {
+  Future<HttpResponse<dynamic>> submitFormData(
+    jwtToken,
+    formResourceId,
+    formSubmissionId,
+    formSubmissionResponse,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(formSubmissionResponse.toJson());
-    final _result = await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(
-        Options(
-                method: 'PUT',
-                headers: <String, dynamic>{r'x-jwt-token': jwtToken},
-                extra: _extra)
-            .compose(_dio.options,
-                'formio/form/$formResourceId/submission/$formSubmissionId',
-                queryParameters: queryParameters, data: _data)
+    final _result =
+        await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
+      method: 'PUT',
+      headers: <String, dynamic>{r'x-jwt-token': jwtToken},
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'formio/form/$formResourceId/submission/$formSubmissionId',
+              queryParameters: queryParameters,
+              data: _data,
+            )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = _result.data;
     final httpResponse = HttpResponse(value, _result);
@@ -37,37 +48,74 @@ class _FormsApiClient implements FormsApiClient {
   }
 
   @override
-  Future<HttpResponse<dynamic>> getFormIoJson(jwtToken, id) async {
+  Future<HttpResponse<dynamic>> getFormIoJson(
+    jwtToken,
+    id,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(
-        Options(
-                method: 'GET',
-                headers: <String, dynamic>{r'x-jwt-token': jwtToken},
-                extra: _extra)
-            .compose(_dio.options, 'formio/form/$id',
-                queryParameters: queryParameters, data: _data)
+    final _result =
+        await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
+      method: 'GET',
+      headers: <String, dynamic>{r'x-jwt-token': jwtToken},
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'formio/form/$id',
+              queryParameters: queryParameters,
+              data: _data,
+            )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = _result.data;
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
+  }
+
+  @override
+  Future<FormioRolesResponse> getFormioRoles(token) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<FormioRolesResponse>(Options(
+      method: 'GET',
+      headers: <String, dynamic>{r'Authorization': token},
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'api/formio/roles',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = FormioRolesResponse.fromJson(_result.data!);
+    return value;
   }
 
   @override
   Future<HttpResponse<FormSubmissionResponse>> fetchFormSubmissionData(
-      jwtToken, resourceId, submissionId) async {
+    jwtToken,
+    resourceId,
+    submissionId,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<FormSubmissionResponse>>(Options(
-                method: 'GET',
-                headers: <String, dynamic>{r'x-jwt-token': jwtToken},
-                extra: _extra)
-            .compose(_dio.options,
-                'formio/form/$resourceId/submission/$submissionId',
-                queryParameters: queryParameters, data: _data)
+      method: 'GET',
+      headers: <String, dynamic>{r'x-jwt-token': jwtToken},
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'formio/form/$resourceId/submission/$submissionId',
+              queryParameters: queryParameters,
+              data: _data,
+            )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = FormSubmissionResponse.fromJson(_result.data!);
     final httpResponse = HttpResponse(value, _result);

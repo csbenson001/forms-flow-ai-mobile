@@ -3,15 +3,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:formsflowai_shared/core/base/base_hooks_consumer_widget.dart';
-import 'package:formsflowai_shared/core/networkmanager/internet_connectivity_provider.dart';
-import 'package:formsflowai_shared/shared/app_strings.dart';
 import 'package:formsflowai_shared/shared/webview_constants.dart';
 import 'package:formsflowai_shared/utils/form/formsflowai_webview_utils.dart';
-import 'package:formsflowai_shared/widgets/nointernetview/no_internet_view.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../../core/module/providers/view_model_provider.dart';
+import '../../../../../core/networkmanager/internet_connectivity_provider.dart';
+import '../../../../../shared/app_strings.dart';
+import '../../../../../widgets/nointernet/no_internet_view.dart';
+import '../../../../base/widgets/base_hooks_consumer_widget.dart';
 
 class TaskBpmnDiagramView extends BaseHooksConsumerWidget {
   const TaskBpmnDiagramView({Key? key}) : super(key: key);

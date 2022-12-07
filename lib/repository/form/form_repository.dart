@@ -1,9 +1,10 @@
 import 'package:dartz/dartz.dart';
+import 'package:formsflowai_api/formsflowai_api.dart';
 import 'package:formsflowai_api/response/form/submission/form_submission_response.dart';
-import 'package:formsflowai_shared/core/database/entity/form_entity.dart';
 import 'package:isolated_http_client/isolated_http_client.dart'
     as isolatedResponse;
 
+import '../../core/database/entity/form_entity.dart';
 import '../../core/error/errors_failure.dart';
 import '../../presentation/features/taskdetails/model/form_dm.dart';
 
@@ -42,4 +43,6 @@ abstract class FormRepository<T> {
       {required String formResourceId,
       required String formSubmissionId,
       required FormSubmissionResponse formSubmissionResponse});
+
+  Future<Either<Failure, FormioRolesResponse>> fetchFormioRoles();
 }

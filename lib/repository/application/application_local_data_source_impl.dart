@@ -2,9 +2,10 @@ import 'package:dartz/dartz.dart';
 import 'package:formsflowai/core/error/errors_failure.dart';
 import 'package:formsflowai/presentation/features/taskdetails/model/application_history_data_model.dart';
 import 'package:formsflowai/repository/application/application_repository.dart';
-import 'package:formsflowai_shared/core/database/dao/application_history_dao.dart';
-import 'package:formsflowai_shared/core/database/entity/application_history_entity.dart';
-import 'package:formsflowai_shared/core/preferences/app_preference.dart';
+
+import '../../core/database/dao/application_history_dao.dart';
+import '../../core/database/entity/application_history_entity.dart';
+import '../../core/preferences/app_preference.dart';
 
 class ApplicationLocalDataSourceImpl implements ApplicationHistoryRepository {
   final AppPreferences appPreferences;

@@ -1,7 +1,8 @@
 import 'package:formsflowai_api/response/processdefinition/process_definition_response.dart';
-import 'package:formsflowai_shared/core/database/entity/task_entity.dart';
 import 'package:formsflowai_shared/shared/formsflow_app_constants.dart';
 import 'package:formsflowai_shared/shared/task_constants.dart';
+
+import '../core/database/entity/task_entity.dart';
 
 /// [GeneralUtil] class  contains all utilitu methods
 /// required in the formsFlow.ai mobile application

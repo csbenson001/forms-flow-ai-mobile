@@ -12,9 +12,9 @@ import 'package:formsflowai_api/response/filter/task_count_response.dart';
 import 'package:formsflowai_api/response/processdefinition/process_definition_response.dart';
 import 'package:formsflowai_api/response/task/details/list_members_response.dart';
 import 'package:formsflowai_api/response/task/details/task_group_response.dart';
-import 'package:formsflowai_shared/core/database/entity/task_entity.dart';
 import 'package:isolated_http_client/isolated_http_client.dart';
 
+import '../../core/database/entity/task_entity.dart';
 import '../../core/error/errors_failure.dart';
 import '../../presentation/features/home/tasklisting/model/task_base_response.dart';
 import '../../presentation/features/home/tasklisting/model/task_listing_data_model.dart';

@@ -49,4 +49,12 @@ class DatabaseQueryUtil {
     }
     return dateTimeValue.toUtc().toIso8601String();
   }
+
+  /// Function to fetch local task count
+  /// ---> [Returns] Query String
+  static String generateTotalOfflineTaskSqlQuery() {
+    // Query string
+    String queryString = 'SELECT COUNT(id) FROM task';
+    return queryString;
+  }
 }

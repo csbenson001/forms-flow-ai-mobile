@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/src/consumer.dart';
-import 'package:formsflowai_shared/core/base/base_consumer_widget.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
 import 'package:formsflowai_shared/shared/task_constants.dart';
 
 import '../../../../../../../core/module/providers/view_model_provider.dart';
+import '../../../../../../base/widgets/base_consumer_widget.dart';
 import '../../../model/task_variable_filter_data_model.dart';
 import 'filter_input_date_inflate_row.dart';
 import 'filter_input_like_equal_operator_inflate_row.dart';

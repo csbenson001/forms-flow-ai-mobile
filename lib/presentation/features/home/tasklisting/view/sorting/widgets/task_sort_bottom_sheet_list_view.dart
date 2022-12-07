@@ -8,10 +8,11 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../../../../../../core/module/providers/view_model_provider.dart';
 import '../../../../../../../shared/app_text_styles.dart';
+import '../../../../../../base/widgets/base_consumer_widget.dart';
 import '../../../model/task_sort_filter_data_model.dart';
 
 /// [TaskSortBottomSheetListView] to display task sort list view
-class TaskSortBottomSheetListView extends ConsumerWidget {
+class TaskSortBottomSheetListView extends BaseConsumerWidget {
   const TaskSortBottomSheetListView({Key? key}) : super(key: key);
 
   @override

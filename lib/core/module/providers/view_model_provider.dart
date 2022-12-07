@@ -1,3 +1,4 @@
+import 'package:cron/cron.dart';
 import 'package:formsflowai/presentation/features/splash/viewmodel/splash_view_model.dart';
 import 'package:formsflowai/presentation/features/taskdetails/view/applicationhistory/viewmodel/applicatiion_history_view_model.dart';
 import 'package:formsflowai/presentation/features/taskdetails/view/diagram/viewmodel/bpmn_diagram_view_model.dart';
@@ -11,16 +12,18 @@ import '../../../presentation/features/taskdetails/view/addgroups/viewmodel/add_
 import '../../../presentation/features/taskdetails/viewmodel/task_details_view_model.dart';
 import '../../../presentation/features/viewformsubmission/viewmodel/view_form_submission_view_model.dart';
 import '../../di/injection.dart';
+import '../../tokenservice/token_service.dart';
 
 /// ----------------- VIEW MODEL PROVIDERS ---------------------- ///
 
 /// Defining [loginViewModelProvider] as an auto disposable
 /// provider ref object for the [ViewModel] class [LoginViewModel]
-final loginViewModelProvider = Provider.autoDispose(
+final loginViewModelProvider = ChangeNotifierProvider.autoDispose(
   (ref) => LoginViewModel(
       loginUserCase: dl(),
       appPreferences: dl(),
       fetchUserInfoUseCase: dl(),
+      loginKeycloakAuthenticatorUserCase: dl(),
       saveUserDetailsUsecase: dl(),
       ref: ref),
 );
@@ -39,6 +42,7 @@ final taskListViewModelProvider = ChangeNotifierProvider.autoDispose(
       fetchFiltersUseCase: dl(),
       ref: ref,
       fetchProcessDefinitionUseCase: dl(),
+      fetchFormioRolesUseCase: dl(),
       fetchTaskCountUseCase: dl(),
       fetchTasksUseCase: dl(),
       databaseWorker: dl(),
@@ -73,8 +77,8 @@ final taskDetailsViewModelProvider = ChangeNotifierProvider.autoDispose((ref) =>
 
 /// Defining [viewFormSubmissionViewModelProvider]
 /// provider ref object for the [ViewModel] class [ViewFormSubmissionViewModel]
-final viewFormSubmissionViewModelProvider = ChangeNotifierProvider.autoDispose((ref) =>
-    ViewFormSubmissionViewModel(
+final viewFormSubmissionViewModelProvider = ChangeNotifierProvider.autoDispose(
+    (ref) => ViewFormSubmissionViewModel(
         ref: ref,
         fetchFormSubmissionUseCase: dl(),
         networkManagerController: dl(),
@@ -132,3 +136,9 @@ final assignTaskViewModelProvider = Provider.autoDispose((ref) =>
         preferences: dl(),
         listMembersUseCase: dl(),
         networkManagerController: dl()));
+
+final tokenServiceProvider = Provider((ref) => TokenService(
+    ref: ref,
+    appPreferences: dl(),
+    cron: Cron(),
+    refreshKeyCloakTokenUserCase: dl()));

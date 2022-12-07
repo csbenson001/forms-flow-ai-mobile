@@ -3,8 +3,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/src/consumer.dart';
 import 'package:formsflowai/presentation/features/assigntask/view/widgets/member_list_inflate_row.dart';
 import 'package:formsflowai/presentation/features/assigntask/viewmodel/assign_task_state_notifier.dart';
-import 'package:formsflowai_shared/core/base/base_consumer_widget.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
+
+import '../../../../base/widgets/base_consumer_widget.dart';
 
 /// [MembersListView] build seperated listview with a spacing
 /// separator widget

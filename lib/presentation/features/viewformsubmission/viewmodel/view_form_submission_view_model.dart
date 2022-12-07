@@ -4,18 +4,18 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:formsflowai/presentation/features/viewformsubmission/view/view_form_submission_screen.dart';
 import 'package:formsflowai/presentation/features/viewformsubmission/viewmodel/view_form_submission_state_notifier.dart';
-import 'package:formsflowai_shared/core/base/base_notifier_view_model.dart';
-import 'package:formsflowai_shared/core/networkmanager/internet_connectivity_provider.dart';
-import 'package:formsflowai_shared/core/networkmanager/network_manager_controller.dart';
-import 'package:formsflowai_shared/core/preferences/app_preference.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../../core/networkmanager/internet_connectivity_provider.dart';
+import '../../../../core/networkmanager/network_manager_controller.dart';
+import '../../../../core/preferences/app_preference.dart';
 import '../../../../utils/general_util.dart';
+import '../../../base/viewmodel/base_notifier_view_model.dart';
 import '../../taskdetails/model/application_history_data_model.dart';
 import '../../taskdetails/model/form_dm.dart';
 import '../../taskdetails/model/formio/formio_model.dart';
-import '../../taskdetails/usecases/fetch_form_submission_data.dart';
-import '../../taskdetails/usecases/fetch_forms_usecase.dart';
+import '../../taskdetails/usecases/form/fetch_form_submission_data.dart';
+import '../../taskdetails/usecases/form/fetch_forms_usecase.dart';
 
 /// [ViewFormSubmissionViewModel] ViewModel class contains business logic
 /// related to [ViewFormSubmissionScreen]
@@ -37,7 +37,6 @@ class ViewFormSubmissionViewModel extends BaseNotifierViewModel {
 
   /// OnInit Method
   void onInit({required ApplicationHistoryDM applicationHistoryDM}) {
-    
     _applicationHistoryDM = applicationHistoryDM;
     fetchForms();
     _initInternetNetworkCallback();
@@ -45,7 +44,6 @@ class ViewFormSubmissionViewModel extends BaseNotifierViewModel {
 
   /// Method to fetch forms
   Future<void> fetchForms() async {
-  
     if (networkManagerController.connectionType != ConnectivityResult.none) {
       SchedulerBinding.instance.addPostFrameCallback((_) {
         ref

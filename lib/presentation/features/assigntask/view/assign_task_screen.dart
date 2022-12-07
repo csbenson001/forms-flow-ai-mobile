@@ -5,13 +5,13 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:formsflowai/core/module/providers/view_model_provider.dart';
 import 'package:formsflowai/presentation/features/assigntask/view/widgets/assign_task_button.dart';
 import 'package:formsflowai/presentation/features/assigntask/view/widgets/assign_task_component_view.dart';
-import 'package:formsflowai_shared/core/base/base_hooks_consumer_widget.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
-import 'package:formsflowai_shared/shared/app_strings.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../base/toolbar_app_scaffold.dart';
+import '../../../../shared/app_strings.dart';
+import '../../../base/toolbar/toolbar_app_scaffold.dart';
+import '../../../base/widgets/base_hooks_consumer_widget.dart';
 import '../../home/tasklisting/model/task_listing_data_model.dart';
 
 /// [AssignTaskScreen] assign the task to other members
@@ -34,7 +34,8 @@ class AssignTaskScreen extends BaseHooksConsumerWidget {
 
     return ToolbarAppScaffold(
         pageTitle: Strings.assignTaskTitle,
-        body: Stack(
+        body: SafeArea(
+            child: Stack(
           children: [
             Container(
                 height: MediaQuery.of(context).size.height,
@@ -47,6 +48,6 @@ class AssignTaskScreen extends BaseHooksConsumerWidget {
                 )),
             const AssignTaskButton()
           ],
-        ));
+        )));
   }
 }

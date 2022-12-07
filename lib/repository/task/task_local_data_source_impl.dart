@@ -17,15 +17,15 @@ import 'package:formsflowai_api/response/filter/task_count_response.dart';
 import 'package:formsflowai_api/response/processdefinition/process_definition_response.dart';
 import 'package:formsflowai_api/response/task/details/list_members_response.dart';
 import 'package:formsflowai_api/response/task/details/task_group_response.dart';
-import 'package:formsflowai_shared/core/database/dao/application_history_dao.dart';
-import 'package:formsflowai_shared/core/database/dao/task_dao.dart';
-import 'package:formsflowai_shared/core/database/entity/task_entity.dart';
-import 'package:formsflowai_shared/core/database/formsflow_database.dart';
-import 'package:formsflowai_shared/core/preferences/app_preference.dart';
 import 'package:isolated_http_client/isolated_http_client.dart';
 import 'package:isolated_http_client/src/response.dart';
 
+import '../../core/database/dao/application_history_dao.dart';
+import '../../core/database/dao/task_dao.dart';
+import '../../core/database/entity/task_entity.dart';
+import '../../core/database/formsflow_database.dart';
 import '../../core/error/errors_failure.dart';
+import '../../core/preferences/app_preference.dart';
 import '../../utils/database/database_query_util.dart';
 
 class TaskLocalDataSourceImpl implements TaskRepository {
@@ -177,8 +177,9 @@ class TaskLocalDataSourceImpl implements TaskRepository {
   /// ---> Returns [TaskCountResponse]
   @override
   Future<Either<Failure, TaskCountResponse>> fetchTaskCount(String id) async {
-    var tasks = await taskDao.fetchAllTasks();
-    return Right(TaskCountResponse(count: tasks.length));
+    final results = await formsFlowDatabase.database
+        .rawQuery(DatabaseQueryUtil.generateTotalOfflineTaskSqlQuery());
+    return Right(TaskCountResponse(count: results[0]['COUNT(id)'] as int?));
   }
 
   /// Method to fetch task variables

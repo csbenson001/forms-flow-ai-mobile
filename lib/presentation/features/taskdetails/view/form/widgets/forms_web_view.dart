@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_riverpod/src/consumer.dart';
-import 'package:formsflowai_shared/core/base/base_consumer_widget.dart';
-import 'package:formsflowai_shared/shared/app_strings.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
 import 'package:formsflowai_shared/shared/webview_constants.dart';
 import 'package:formsflowai_shared/widgets/formsflow_circular_progress_indicator.dart';
@@ -13,7 +11,9 @@ import 'package:formsflowai_shared/widgets/nodata/no_data_view.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../../../core/module/providers/view_model_provider.dart';
+import '../../../../../../shared/app_strings.dart';
 import '../../../../../../utils/general_util.dart';
+import '../../../../../base/widgets/base_consumer_widget.dart';
 import '../../../viewmodel/task_details_providers.dart';
 
 class FormsWebView extends BaseConsumerWidget {
@@ -120,7 +120,9 @@ class FormsWebView extends BaseConsumerWidget {
                                 ref
                                     .read(formsTabViewModelProvider)
                                     .onClickSubmitFormEvent(
-                                        formSubmissionData: formData);
+                                        formSubmissionData: formData[
+                                            FormsFlowWebViewConstants
+                                                .FORM_KEY_SUBMISSION_DATA]);
                               }
                             });
                     ref
@@ -137,9 +139,7 @@ class FormsWebView extends BaseConsumerWidget {
                         resources: resources,
                         action: PermissionRequestResponseAction.GRANT);
                   },
-                  onConsoleMessage: (controller, consoleMessage) {
-        
-                  },
+                  onConsoleMessage: (controller, consoleMessage) {},
                   onLoadStop:
                       (InAppWebViewController inappController, Uri? uri) async {
                     ref.read(formsTabViewModelProvider).loadForm();

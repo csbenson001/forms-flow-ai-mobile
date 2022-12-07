@@ -22,8 +22,9 @@ class FormsFlowAIAPIConstants {
   static const String ALL_TASKS = 'All tasks';
 
   // Forms
-  static const String ROLE_ID = '61b857cdf85e9225c08f89fa';
-  static const String FORM_ID = '61b857cef85e9220818f89fc';
+  static const String REVIEWER = 'REVIEWER';
+  static const String RESOURCE_ID = 'RESOURCE_ID';
+  // static const String USER_RESOURCE_ID = '61b857cef85e9220818f89fc';
 
   // Group member type
   static const String GROUP_CANDIDATE = 'candidate';

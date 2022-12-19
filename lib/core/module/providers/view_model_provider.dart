@@ -1,4 +1,3 @@
-import 'package:cron/cron.dart';
 import 'package:formsflowai/presentation/features/splash/viewmodel/splash_view_model.dart';
 import 'package:formsflowai/presentation/features/taskdetails/view/applicationhistory/viewmodel/applicatiion_history_view_model.dart';
 import 'package:formsflowai/presentation/features/taskdetails/view/diagram/viewmodel/bpmn_diagram_view_model.dart';
@@ -12,7 +11,6 @@ import '../../../presentation/features/taskdetails/view/addgroups/viewmodel/add_
 import '../../../presentation/features/taskdetails/viewmodel/task_details_view_model.dart';
 import '../../../presentation/features/viewformsubmission/viewmodel/view_form_submission_view_model.dart';
 import '../../di/injection.dart';
-import '../../tokenservice/token_service.dart';
 
 /// ----------------- VIEW MODEL PROVIDERS ---------------------- ///
 
@@ -32,7 +30,10 @@ final loginViewModelProvider = ChangeNotifierProvider.autoDispose(
 /// provider ref object for the [ViewModel] class [SplashViewModel]
 final splashViewModelProvider = Provider(
   (ref) => SplashViewModel(
-      appPreferences: dl(), ref: ref, networkManagerController: dl()),
+      refreshKeyCloakTokenUserCase: dl(),
+      appPreferences: dl(),
+      ref: ref,
+      networkManagerController: dl()),
 );
 
 /// Defining [taskListViewModelProvider] as an auto disposable
@@ -136,9 +137,3 @@ final assignTaskViewModelProvider = Provider.autoDispose((ref) =>
         preferences: dl(),
         listMembersUseCase: dl(),
         networkManagerController: dl()));
-
-final tokenServiceProvider = Provider((ref) => TokenService(
-    ref: ref,
-    appPreferences: dl(),
-    cron: Cron(),
-    refreshKeyCloakTokenUserCase: dl()));

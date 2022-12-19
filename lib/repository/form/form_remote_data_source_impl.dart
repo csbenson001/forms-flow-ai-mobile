@@ -46,7 +46,7 @@ class FormRemoteDataSource implements FormRepository {
       required String taskId}) async {
     try {
       var response = await formsApiClient.fetchFormSubmissionData(
-          appPreferences.getFormJwtToken(), formResourceId, formSubmissionId);
+          formResourceId, formSubmissionId);
       if (response.response.statusCode ==
               FormsFlowAIAPIConstants.statusCode200 ||
           response.response.statusCode ==
@@ -57,7 +57,7 @@ class FormRemoteDataSource implements FormRepository {
       }
     } on SocketException {
       return Left(NoConnectionFailure());
-    } on ServerException {
+    } on RefreshTokenFailureException {
       return Left(ServerFailure());
     } catch (e) {
       return Left(NoResourceFoundFailure());
@@ -87,7 +87,7 @@ class FormRemoteDataSource implements FormRepository {
       return left(ServerFailure());
     } on SocketException {
       return left(NoConnectionFailure());
-    } on ServerException {
+    } on RefreshTokenFailureException {
       return Left(ServerFailure());
     } catch (e) {
       return left(NoResourceFoundFailure());
@@ -101,8 +101,7 @@ class FormRemoteDataSource implements FormRepository {
   @override
   Future<Either<Failure, FormDM?>> fetchFormsData({required String id}) async {
     try {
-      var response = await formsApiClient.getFormIoJson(
-          appPreferences.getFormJwtToken(), id);
+      var response = await formsApiClient.getFormIoJson(id);
       if (response.response.statusCode ==
               FormsFlowAIAPIConstants.statusCode200 ||
           response.response.statusCode ==
@@ -112,7 +111,7 @@ class FormRemoteDataSource implements FormRepository {
       return Left(ServerFailure());
     } on SocketException {
       return Left(NoConnectionFailure());
-    } on ServerException {
+    } on RefreshTokenFailureException {
       return Left(ServerFailure());
     } catch (e) {
       return Left(NoResourceFoundFailure());
@@ -140,7 +139,7 @@ class FormRemoteDataSource implements FormRepository {
       return left(ServerFailure());
     } on SocketException {
       return left(NoConnectionFailure());
-    } on ServerException {
+    } on RefreshTokenFailureException {
       return Left(ServerFailure());
     } catch (e) {
       return left(NoResourceFoundFailure());
@@ -166,10 +165,7 @@ class FormRemoteDataSource implements FormRepository {
       required FormSubmissionResponse formSubmissionResponse}) async {
     try {
       var response = await formsApiClient.submitFormData(
-          appPreferences.getFormJwtToken(),
-          formResourceId,
-          formSubmissionId,
-          formSubmissionResponse);
+          formResourceId, formSubmissionId, formSubmissionResponse);
       if (response.response.statusCode ==
               FormsFlowAIAPIConstants.statusCode200 ||
           response.response.statusCode ==
@@ -180,7 +176,7 @@ class FormRemoteDataSource implements FormRepository {
       return Left(ServerFailure());
     } on SocketException {
       return Left(NoConnectionFailure());
-    } on ServerException {
+    } on RefreshTokenFailureException {
       return Left(ServerFailure());
     } catch (e) {
       return Left(NoResourceFoundFailure());
@@ -205,7 +201,7 @@ class FormRemoteDataSource implements FormRepository {
       required String formSubmissionId,
       required FormSubmissionResponse formSubmissionResponse}) async {
     String apiUrl =
-        "${ApiConstantUrl.FORMSFLOWAI_BASE_URL}${ApiConstantUrl.FORM}/${formResourceId}/${ApiConstantUrl.FORM_SUBMISSION}/${formSubmissionId}";
+        "${ApiConstantUrl.FORMSFLOWAI_FORM_BASE_URL}${ApiConstantUrl.FORM}/${formResourceId}/${ApiConstantUrl.FORM_SUBMISSION}/${formSubmissionId}";
     try {
       var response = await isolatedHttpClient.put(
           host: apiUrl,
@@ -220,7 +216,7 @@ class FormRemoteDataSource implements FormRepository {
       return left(ServerFailure());
     } on SocketException {
       return left(NoConnectionFailure());
-    } on ServerException {
+    } on RefreshTokenFailureException {
       return Left(ServerFailure());
     } catch (e) {
       return left(NoResourceFoundFailure());
@@ -239,11 +235,9 @@ class FormRemoteDataSource implements FormRepository {
       return Left(ServerFailure());
     } on SocketException {
       return Left(NoConnectionFailure());
-    } on ServerException {
+    } on RefreshTokenFailureException {
       return Left(ServerFailure());
     } catch (e) {
-      print("--- Error ----");
-      print(e);
       return Left(NoResourceFoundFailure());
     }
   }

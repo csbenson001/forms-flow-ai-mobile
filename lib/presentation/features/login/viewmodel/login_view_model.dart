@@ -6,7 +6,6 @@ import 'package:formsflowai/presentation/features/login/usecases/login_user_usec
 import 'package:formsflowai/presentation/features/login/usecases/save_user_details_usecase.dart';
 import 'package:formsflowai/presentation/features/login/viewmodel/login_state_notifier.dart';
 import 'package:formsflowai/shared/app_status.dart';
-import 'package:formsflowai_shared/shared/formsflow_app_constants.dart';
 import 'package:formsflowai_shared/utils/api/api_utils.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -97,16 +96,6 @@ class LoginViewModel extends BaseNotifierViewModel {
   /// [UserName]
   /// [Password]
   Future<void> loginUserKeycloakExternal() async {
-    const String _clientId = FormsFlowAIConstants.CLIENT_ID;
-    const String _redirectUrl = 'com.aot.formsflowai:/*';
-    // final List<String> _scopes = <String>[
-    //   'openid',
-    //   'profile',
-    //   'offline_access'
-    // ];
-
-    final List<String> _scopes = <String>['openid', 'profile'];
-
     SchedulerBinding.instance.addPostFrameCallback((_) {
       _showLoginApiLoadingProgress = LoginStatus.launched;
       notifyListeners();
@@ -114,16 +103,14 @@ class LoginViewModel extends BaseNotifierViewModel {
     try {
       final loginAuthenticatorResponse =
           await loginKeycloakAuthenticatorUserCase.call(
-              params: LoginKeycloakAuthenticatorParams(
-                  clientId: _clientId,
-                  redirectUrl: _redirectUrl,
-                  scopes: _scopes));
+              params: const LoginKeycloakAuthenticatorParams());
       loginAuthenticatorResponse.fold((l) {
         _showLoginApiLoadingProgress = LoginStatus.failure;
         notifyListeners();
       }, (result) async {
         _showLoginApiLoadingProgress = LoginStatus.success;
         notifyListeners();
+
         await _fetchUserInfo(
             accessToken: result.accessToken ?? '',
             refreshToken: result.refreshToken ?? '');

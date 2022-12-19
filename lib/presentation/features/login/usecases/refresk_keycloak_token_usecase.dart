@@ -25,17 +25,10 @@ class RefreshKeyCloakTokenUserCase
 }
 
 class RefreshKeycloakTokenParams extends Equatable {
-  final String clientId;
-  final String redirectUrl;
-  final List<String> scopes;
   final String refreshOfflineToken;
 
-  const RefreshKeycloakTokenParams(
-      {required this.clientId,
-      required this.redirectUrl,
-      required this.refreshOfflineToken,
-      required this.scopes});
+  const RefreshKeycloakTokenParams({required this.refreshOfflineToken});
 
   @override
-  List<Object?> get props => [clientId, redirectUrl, scopes];
+  List<Object?> get props => [refreshOfflineToken];
 }

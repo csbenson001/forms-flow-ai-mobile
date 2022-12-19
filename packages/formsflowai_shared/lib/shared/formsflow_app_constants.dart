@@ -4,8 +4,10 @@ class FormsFlowAIConstants {
   //Environment File
 
   static const env_File_Name = '.env';
-  // static const CLIENT_ID = 'forms-flow-mobile';
-  static const CLIENT_ID = 'forms-flow-web';
+  static const CLIENT_ID = 'forms-flow-mobile';
+  // static const CLIENT_ID = 'forms-flow-web';
+  static const KEYCLOAK_SCOPES = ['openid', 'profile', 'offline_access'];
+  static const KEYCLOAK_REDIRECT_URL = 'com.aot.formsflowai:/*';
   static const CLIENT_SECRET_KEY = 'e4bdbd25-1467-4f7f-b993-bc4b1944c943';
   static const TOKEN_GRANT_TYPE_PASSWORD = 'password';
   static const TOKEN_GRANT_TYPE_REFRESH_TOKEN = 'refresh_token';

@@ -22,7 +22,8 @@ class FetchIsolatedFormDataUseCase
   Future<Either<Failure, isolatedResponse.Response>> call(
       {required FetchIsolatedFormDataParams params}) {
     return repository.fetchIsolatedFormData(
-        host: '${ApiConstantUrl.FORMSFLOWAI_BASE_URL}${ApiConstantUrl.FORM}/',
+        host:
+            '${ApiConstantUrl.FORMSFLOWAI_FORM_BASE_URL}${ApiConstantUrl.FORM}/',
         path: params.formId);
   }
 }

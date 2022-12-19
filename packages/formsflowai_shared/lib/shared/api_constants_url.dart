@@ -110,5 +110,5 @@ class ApiConstantUrl {
 // ------------------- SOCKET  ---------------------
 
   static const SOCKET_URL =
-      "https://app2.aot-technologies.com/camunda/forms-flow-bpm-socket";
+      "https://bpm2.aot-technologies.com/camunda/forms-flow-bpm-socket";
 }

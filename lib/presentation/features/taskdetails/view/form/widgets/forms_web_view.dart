@@ -84,7 +84,10 @@ class FormsWebView extends BaseConsumerWidget {
                         ?.addJavaScriptHandler(
                             handlerName: FormsFlowWebViewConstants
                                 .HANDLER_ON_SUBMISSION_CHANGED,
-                            callback: (data) {});
+                            callback: (data) {
+
+
+                            });
 
                     ref
                         .read(formsTabViewModelProvider)
@@ -100,6 +103,8 @@ class FormsWebView extends BaseConsumerWidget {
                             handlerName: FormsFlowWebViewConstants
                                 .HANDLER_SUBMISSION_DATA,
                             callback: (data) {
+  
+
                               dynamic formData = data[0];
                               if (formData[FormsFlowWebViewConstants
                                       .FORM_KEY_EVENT_TYPE] ==

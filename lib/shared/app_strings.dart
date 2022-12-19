@@ -56,6 +56,7 @@ class Strings {
   static const String loginLabelTermsConditions = 'Terms and Conditions';
   static const String loginErrorNoInternet =
       'No Internet. Please connect to an active network to continue';
+  static const String loginLabelLoggingIn = 'Logging in';
 
   // ----------------------- TASK LISTING ---------------------
 
@@ -75,7 +76,7 @@ class Strings {
       'of the criteria are met. Add a task by making a selection.';
   static const String taskListingLabelVariablesIgnoreCase =
       'For variables, ignore case of';
-  static const String taskListingLabelTaskFiltered = 'Tasks Filtered';
+  static const String taskListingLabelTaskFiltered = 'Selected Filters';
   static const taskListingLabelNoProcessDefinitionAvailable =
       'No Process Definition Available';
   static const taskListingButtonClearFilters = 'Clear Filters';

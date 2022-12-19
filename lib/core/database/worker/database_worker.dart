@@ -160,6 +160,7 @@ class DatabaseWorker {
       /// split the formUrl string with the path to
       /// get [FormResourceId] and [FormSubmissionId]
       String formUrl = variableResponse.formUrl?.value ?? '';
+
       List<String> formData = formUrl.split('/');
       String formResourceId = formData[4];
       if (formResourceId == FormsFlowAIConstants.FORMSFLOWAI_FORM) {

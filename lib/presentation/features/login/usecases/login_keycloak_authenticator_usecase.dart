@@ -26,15 +26,8 @@ class LoginKeycloakAuthenticatorUserCase
 }
 
 class LoginKeycloakAuthenticatorParams extends Equatable {
-  final String clientId;
-  final String redirectUrl;
-  final List<String> scopes;
-
-  const LoginKeycloakAuthenticatorParams(
-      {required this.clientId,
-      required this.redirectUrl,
-      required this.scopes});
+  const LoginKeycloakAuthenticatorParams();
 
   @override
-  List<Object?> get props => [clientId, redirectUrl, scopes];
+  List<Object?> get props => [];
 }

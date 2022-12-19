@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:formsflowai/utils/general_util.dart';
+import 'package:formsflowai_api/formsflowai_api.dart';
 import 'package:formsflowai_api/response/filter/get_filters_response.dart';
 import 'package:formsflowai_shared/utils/api/api_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,6 +26,7 @@ class AppPreferences implements BasePreference {
   static const String PREF_ROLES = "PREF_ROLES";
   static const String PREF_USER_ROLE = "PREF_USER_ROLE";
   static const String PREF_USER_INFO = "PREF_USER_INFO";
+  static const String PREF_FORM_ROLE_RESPONSE = "PREF_FORM_ROLE_RESPONSE";
 
   final SharedPreferences _sharedPreferences;
 
@@ -120,7 +123,7 @@ class AppPreferences implements BasePreference {
   }
 
   @override
-  bool isJwtTokenAdded() {
+  bool isFormJwtTokenAdded() {
     return _sharedPreferences.getBool(PREF_JWT_TOKEN_ADDED) ?? false;
   }
 
@@ -130,7 +133,7 @@ class AppPreferences implements BasePreference {
   }
 
   @override
-  void setJwtTokenAdded(bool value) {
+  void setFormJwtTokenAdded(bool value) {
     _sharedPreferences.setBool(PREF_JWT_TOKEN_ADDED, value);
   }
 
@@ -217,5 +220,21 @@ class AppPreferences implements BasePreference {
   @override
   void setRefreshToken(String refreshToken) {
     _sharedPreferences.setString(PREF_USER_REFRESH_TOKEN, refreshToken);
+  }
+
+  @override
+  FormioRolesResponse? getFormioRoleResponse() {
+    final data = _sharedPreferences.getString(PREF_USER_REFRESH_TOKEN) ?? "";
+    if (!GeneralUtil.isStringEmpty(data)) {
+      FormioRolesResponse formioRolesResponse = json.decode(data);
+      return formioRolesResponse;
+    }
+    return null;
+  }
+
+  @override
+  void setFormioRoleResponse(FormioRolesResponse response) {
+    final String encodedData = json.encode(response);
+    _sharedPreferences.setString(PREF_FORM_ROLE_RESPONSE, encodedData);
   }
 }

@@ -47,9 +47,17 @@ class SocketService {
   StompClient _getStompClient() {
     return StompClient(
       config: StompConfig.SockJS(
-          url: _bpmSocketUrl,
+          url: '${_bpmSocketUrl}}',
+          webSocketConnectHeaders: {
+            'Connection': 'Upgrade',
+            'Upgrade': 'websocket',
+            'Cookie': 'access_token=${_preferences.getAccessToken()}',
+            'Host': 'https://bpm2.aot-technologies.com'
+          },
           onConnect: onConnect,
-          onWebSocketError: (dynamic error) => {},
+          onWebSocketError: (dynamic error) {
+
+          },
           stompConnectHeaders: {
             FormsFlowAIAPIConstants.socketAccessToken:
                 _preferences.getAccessToken()

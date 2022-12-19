@@ -34,7 +34,6 @@ abstract class TaskApiClient {
 
   @POST(ApiConstantUrl.FETCH_TASKS)
   Future<TaskListHalResponse> fetchTasks(
-      @Header('Authorization') String accessToken,
       @Header('Accept') String acceptType,
       @Path() String id,
       @Query('firstResult') int firstResult,
@@ -42,61 +41,47 @@ abstract class TaskApiClient {
       @Body() TaskSortPostModel taskSortingPostModel);
 
   @GET(ApiConstantUrl.FETCH_TASKS_LIST_COUNT)
-  Future<TaskCountResponse> fetchTaskCount(
-      @Header('Authorization') String accessToken, @Path() String id);
+  Future<TaskCountResponse> fetchTaskCount(@Path() String id);
 
   @GET(ApiConstantUrl.FETCH_TASKS_DETAILS_VARIABLES)
   Future<HttpResponse<TaskVariablesResponse>> fetchTaskVariables(
-      @Header('Authorization') String accessToken, @Path() String id);
+      @Path() String id);
 
   @POST(ApiConstantUrl.FETCH_TASKS_BY_ID)
-  Future<TaskListResponse> fetchTaskById(
-      @Header('Authorization') String accessToken, @Path() String id);
+  Future<TaskListResponse> fetchTaskById(@Path() String id);
 
   @POST(ApiConstantUrl.CLAIM_TASK)
   Future<HttpResponse<void>> claimTask(
-      @Header('Authorization') String accessToken,
-      @Path() String id,
-      @Body() Map<String, String> body);
+      @Path() String id, @Body() Map<String, String> body);
 
   @POST(ApiConstantUrl.UNCLAIM_TASK)
-  Future<HttpResponse<void>> unclaimTask(
-      @Header('Authorization') String accessToken, @Path() String id);
+  Future<HttpResponse<void>> unclaimTask(@Path() String id);
 
   @POST(ApiConstantUrl.SUBMIT_FORM)
-  Future<HttpResponse<void>> submitForm(
-      @Header('Authorization') String accessToken,
-      @Path() String id,
+  Future<HttpResponse<void>> submitForm(@Path() String id,
       @Body() FormSubmissionPostModel formSubmissionPostModel);
 
   @PUT(ApiConstantUrl.UPDATE_TASK)
-  Future<void> updateTask(@Header('Authorization') String accessToken,
+  Future<void> updateTask(
       @Path() String id, @Body() UpdateTaskPostModel updateTaskPostModel);
 
   @GET(ApiConstantUrl.TASK_GROUP)
   Future<HttpResponse<List<TaskGroupsResponse>>> fetchTaskGroups(
-      @Header('Authorization') String accessToken, @Path() String id);
+      @Path() String id);
 
   @POST(ApiConstantUrl.TASK_GROUP)
   Future<HttpResponse<void>> addGroup(
-      @Header('Authorization') String accessToken,
-      @Path() String id,
-      @Body() AddGroupPostModel addGroupPostModel);
+      @Path() String id, @Body() AddGroupPostModel addGroupPostModel);
 
   @GET(ApiConstantUrl.FETCH_MEMBERS)
   Future<HttpResponse<List<ListMembersResponse>>> fetchMembersList(
-      @Header('Authorization') String accessToken,
       @Query("memberOfGroup") String memberOfGroup);
 
   @POST(ApiConstantUrl.DELETE_GROUP)
   Future<HttpResponse<void>> deleteGroup(
-      @Header('Authorization') String accessToken,
-      @Path() String id,
-      @Body() DeleteGroupPostModel deleteGroupPostModel);
+      @Path() String id, @Body() DeleteGroupPostModel deleteGroupPostModel);
 
   @POST(ApiConstantUrl.UPDATE_ASSIGNEE)
   Future<HttpResponse<void>> updateAssignee(
-      @Header('Authorization') String accessToken,
-      @Path() String id,
-      @Body() Map<String, String> body);
+      @Path() String id, @Body() Map<String, String> body);
 }

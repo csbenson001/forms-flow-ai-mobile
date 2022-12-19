@@ -50,7 +50,7 @@ class LoginFormExternalView extends BaseConsumerWidget {
                       const SizedBox(height: Dimens.size_16),
                       if (isLoading == LoginStatus.success)
                         const Text(
-                          "Logging in",
+                          Strings.loginLabelLoggingIn,
                           style:
                               AppTextStyles.blackRegularTextStyleWithHeight_14,
                         )

@@ -24,6 +24,8 @@ Future<void> main() async {
   /// call function [SetAppOverlay] to set system bar color brightness
   await setAppOverlay();
 
+  // dl<DioHelper>().addInterceptors();
+
   /// call function [InitEasyLoading] to initialize overlay progress loading
   initEasyLoading();
   runApp(Sizer(builder: (context, orientation, deviceType) {

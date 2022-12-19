@@ -95,6 +95,7 @@ class FormsViewModel extends BaseNotifierViewModel {
         ref.read(authorizationExpiredFailureProvider.notifier).state = true;
       }
     }, (right) async {
+
       if (right != null) {
         _formDM = right;
         fetchFormSubmissionData(right);

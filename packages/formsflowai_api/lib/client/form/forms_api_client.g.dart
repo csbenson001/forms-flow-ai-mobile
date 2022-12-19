@@ -20,7 +20,6 @@ class _FormsApiClient implements FormsApiClient {
 
   @override
   Future<HttpResponse<dynamic>> submitFormData(
-    jwtToken,
     formResourceId,
     formSubmissionId,
     formSubmissionResponse,
@@ -32,7 +31,7 @@ class _FormsApiClient implements FormsApiClient {
     final _result =
         await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
       method: 'PUT',
-      headers: <String, dynamic>{r'x-jwt-token': jwtToken},
+      headers: <String, dynamic>{},
       extra: _extra,
     )
             .compose(
@@ -48,17 +47,14 @@ class _FormsApiClient implements FormsApiClient {
   }
 
   @override
-  Future<HttpResponse<dynamic>> getFormIoJson(
-    jwtToken,
-    id,
-  ) async {
+  Future<HttpResponse<dynamic>> getFormIoJson(id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result =
         await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
       method: 'GET',
-      headers: <String, dynamic>{r'x-jwt-token': jwtToken},
+      headers: <String, dynamic>{},
       extra: _extra,
     )
             .compose(
@@ -97,7 +93,6 @@ class _FormsApiClient implements FormsApiClient {
 
   @override
   Future<HttpResponse<FormSubmissionResponse>> fetchFormSubmissionData(
-    jwtToken,
     resourceId,
     submissionId,
   ) async {
@@ -107,7 +102,7 @@ class _FormsApiClient implements FormsApiClient {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<FormSubmissionResponse>>(Options(
       method: 'GET',
-      headers: <String, dynamic>{r'x-jwt-token': jwtToken},
+      headers: <String, dynamic>{},
       extra: _extra,
     )
             .compose(

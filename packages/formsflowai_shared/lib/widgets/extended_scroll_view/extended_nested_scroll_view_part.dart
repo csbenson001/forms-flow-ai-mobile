@@ -88,9 +88,7 @@ class _ExtendedNestedScrollCoordinator extends _NestedScrollCoordinator {
                 ExtendedVisibilityDetector.of(
                     scrollPosition.context.storageContext);
             if (visibilityInfo != null && visibilityInfo.visibleFraction == 1) {
-              if (kDebugMode) {
-                print('${visibilityInfo.key} is visible');
-              }
+    
               return <_ExtendedNestedScrollPosition>[scrollPosition];
             }
 
@@ -287,12 +285,12 @@ class _ExtendedNestedScrollPosition extends _NestedScrollPosition {
   bool _isActived = false;
   @override
   Drag drag(DragStartDetails details, VoidCallback dragCancelCallback) {
-    //print('drag--$debugLabel');
+   
     _isActived = true;
     return coordinator.drag(details, () {
       dragCancelCallback();
       _isActived = false;
-      //print('dragCancel--$debugLabel');
+
     });
   }
 

@@ -20,7 +20,6 @@ import 'package:formsflowai_shared/utils/router/router_utils.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../../../core/module/providers/view_model_provider.dart';
 import '../../../../../core/networkmanager/internet_connectivity_provider.dart';
 import '../../../../../core/networkmanager/network_manager_controller.dart';
 import '../../../../../core/preferences/app_preference.dart';
@@ -156,7 +155,6 @@ class TaskListViewModel extends BaseNotifierViewModel {
     if (scrollController != null && scrollController!.hasClients) {
       scrollController?.removeListener(_onScroll);
     }
-    ref.read(tokenServiceProvider).stopService();
   }
 
   /// Function to add sorted items to selected list
@@ -321,6 +319,7 @@ class TaskListViewModel extends BaseNotifierViewModel {
             taskSortingPostModel: taskSortPostModel));
 
     taskResponse.fold((l) {
+
       _pageStatus = PageStatus.failure;
       notifyListeners();
       if (l is AuthorizationTokenExpiredFailure) {
@@ -343,7 +342,7 @@ class TaskListViewModel extends BaseNotifierViewModel {
             params: FetchTaskCountParams(filterId: filterId));
         taskCountResponse.fold((l) {}, (r) {
           _totalTaskCount = r.count ?? 0;
-          print(r.toJson());
+ 
           notifyListeners();
         });
       }
@@ -418,7 +417,7 @@ class TaskListViewModel extends BaseNotifierViewModel {
   }
 
   // Function to generate token if not added or expired
-  void generateFormioToken(
+  void generateFormioJWTToken(
       {required formioApi.FormioRolesResponse formioRolesResponse}) {
     try {
       formioApi.Form? reviewer = formioRolesResponse.form?.singleWhere(
@@ -428,12 +427,13 @@ class TaskListViewModel extends BaseNotifierViewModel {
           (element) => element.type == FormsFlowAIAPIConstants.RESOURCE_ID);
 
       if (reviewer != null) {
-        // Create a json web token
+        // Create a form jwt token
         List<String> roles = List.empty(growable: true);
         roles.add(reviewer.roleId ?? '');
+        appPreferences.setFormioRoleResponse(formioRolesResponse);
         appPreferences.setFormJWtToken(
             JwtTokenUtils.signJwtToken(resourceId?.roleId ?? '', roles, ''));
-        appPreferences.setJwtTokenAdded(true);
+        appPreferences.setFormJwtTokenAdded(true);
       }
     } catch (e) {}
   }
@@ -988,12 +988,12 @@ class TaskListViewModel extends BaseNotifierViewModel {
 
   /// Function to fetch formioRoles
   void fetchFormioRoles() {
-    if (!appPreferences.isJwtTokenAdded()) {
+    if (!appPreferences.isFormJwtTokenAdded()) {
       fetchFormioRolesUseCase
           .call(params: const FetchFormioRolesParams())
           .then((value) {
         value.fold((l) {}, (formioRolesResponse) {
-          generateFormioToken(formioRolesResponse: formioRolesResponse);
+          generateFormioJWTToken(formioRolesResponse: formioRolesResponse);
         });
       });
     }

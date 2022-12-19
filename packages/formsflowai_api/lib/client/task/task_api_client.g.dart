@@ -31,7 +31,7 @@ class _TaskApiClient implements TaskApiClient {
     )
             .compose(
               _dio.options,
-              'camunda/engine-rest-ext/filter?resourceType=Task&itemCount=true',
+              'camunda/engine-rest-ext/v1/filter?resourceType=Task&itemCount=true',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -56,7 +56,7 @@ class _TaskApiClient implements TaskApiClient {
     )
             .compose(
               _dio.options,
-              'camunda/engine-rest-ext/process-definition',
+              'camunda/engine-rest-ext/v1/process-definition',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -70,7 +70,6 @@ class _TaskApiClient implements TaskApiClient {
 
   @override
   Future<TaskListHalResponse> fetchTasks(
-    accessToken,
     acceptType,
     id,
     firstResult,
@@ -87,15 +86,12 @@ class _TaskApiClient implements TaskApiClient {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<TaskListHalResponse>(Options(
       method: 'POST',
-      headers: <String, dynamic>{
-        r'Authorization': accessToken,
-        r'Accept': acceptType,
-      },
+      headers: <String, dynamic>{r'Accept': acceptType},
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'camunda/engine-rest-ext/filter/$id/list?',
+              'camunda/engine-rest-ext/v1/filter/$id/list?',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -105,22 +101,19 @@ class _TaskApiClient implements TaskApiClient {
   }
 
   @override
-  Future<TaskCountResponse> fetchTaskCount(
-    accessToken,
-    id,
-  ) async {
+  Future<TaskCountResponse> fetchTaskCount(id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<TaskCountResponse>(Options(
       method: 'GET',
-      headers: <String, dynamic>{r'Authorization': accessToken},
+      headers: <String, dynamic>{},
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'camunda/engine-rest-ext/filter/$id/count',
+              'camunda/engine-rest-ext/v1/filter/$id/count',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -130,22 +123,19 @@ class _TaskApiClient implements TaskApiClient {
   }
 
   @override
-  Future<HttpResponse<TaskVariablesResponse>> fetchTaskVariables(
-    accessToken,
-    id,
-  ) async {
+  Future<HttpResponse<TaskVariablesResponse>> fetchTaskVariables(id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<TaskVariablesResponse>>(Options(
       method: 'GET',
-      headers: <String, dynamic>{r'Authorization': accessToken},
+      headers: <String, dynamic>{},
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'camunda/engine-rest-ext/task/$id/variables',
+              'camunda/engine-rest-ext/v1/task/$id/variables',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -156,22 +146,19 @@ class _TaskApiClient implements TaskApiClient {
   }
 
   @override
-  Future<TaskListResponse> fetchTaskById(
-    accessToken,
-    id,
-  ) async {
+  Future<TaskListResponse> fetchTaskById(id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<TaskListResponse>(Options(
       method: 'POST',
-      headers: <String, dynamic>{r'Authorization': accessToken},
+      headers: <String, dynamic>{},
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'camunda/engine-rest-ext/task/$id',
+              'camunda/engine-rest-ext/v1/task/$id',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -182,7 +169,6 @@ class _TaskApiClient implements TaskApiClient {
 
   @override
   Future<HttpResponse<void>> claimTask(
-    accessToken,
     id,
     body,
   ) async {
@@ -193,12 +179,12 @@ class _TaskApiClient implements TaskApiClient {
     final _result =
         await _dio.fetch<void>(_setStreamType<HttpResponse<void>>(Options(
       method: 'POST',
-      headers: <String, dynamic>{r'Authorization': accessToken},
+      headers: <String, dynamic>{},
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'camunda/engine-rest-ext/task/$id/claim',
+              'camunda/engine-rest-ext/v1/task/$id/claim',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -208,22 +194,19 @@ class _TaskApiClient implements TaskApiClient {
   }
 
   @override
-  Future<HttpResponse<void>> unclaimTask(
-    accessToken,
-    id,
-  ) async {
+  Future<HttpResponse<void>> unclaimTask(id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result =
         await _dio.fetch<void>(_setStreamType<HttpResponse<void>>(Options(
       method: 'POST',
-      headers: <String, dynamic>{r'Authorization': accessToken},
+      headers: <String, dynamic>{},
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'camunda/engine-rest-ext/task/$id/unclaim',
+              'camunda/engine-rest-ext/v1/task/$id/unclaim',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -234,7 +217,6 @@ class _TaskApiClient implements TaskApiClient {
 
   @override
   Future<HttpResponse<void>> submitForm(
-    accessToken,
     id,
     formSubmissionPostModel,
   ) async {
@@ -245,12 +227,12 @@ class _TaskApiClient implements TaskApiClient {
     final _result =
         await _dio.fetch<void>(_setStreamType<HttpResponse<void>>(Options(
       method: 'POST',
-      headers: <String, dynamic>{r'Authorization': accessToken},
+      headers: <String, dynamic>{},
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'camunda/engine-rest-ext/task/$id/submit-form',
+              'camunda/engine-rest-ext/v1/task/$id/submit-form',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -261,7 +243,6 @@ class _TaskApiClient implements TaskApiClient {
 
   @override
   Future<void> updateTask(
-    accessToken,
     id,
     updateTaskPostModel,
   ) async {
@@ -271,12 +252,12 @@ class _TaskApiClient implements TaskApiClient {
     _data.addAll(updateTaskPostModel.toJson());
     await _dio.fetch<void>(_setStreamType<void>(Options(
       method: 'PUT',
-      headers: <String, dynamic>{r'Authorization': accessToken},
+      headers: <String, dynamic>{},
       extra: _extra,
     )
         .compose(
           _dio.options,
-          'camunda/engine-rest-ext/task/$id',
+          'camunda/engine-rest-ext/v1/task/$id',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -285,22 +266,19 @@ class _TaskApiClient implements TaskApiClient {
   }
 
   @override
-  Future<HttpResponse<List<TaskGroupsResponse>>> fetchTaskGroups(
-    accessToken,
-    id,
-  ) async {
+  Future<HttpResponse<List<TaskGroupsResponse>>> fetchTaskGroups(id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<List<dynamic>>(
         _setStreamType<HttpResponse<List<TaskGroupsResponse>>>(Options(
       method: 'GET',
-      headers: <String, dynamic>{r'Authorization': accessToken},
+      headers: <String, dynamic>{},
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'camunda/engine-rest-ext/task/$id/identity-links?type=candidate',
+              'camunda/engine-rest-ext/v1/task/$id/identity-links?type=candidate',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -315,7 +293,6 @@ class _TaskApiClient implements TaskApiClient {
 
   @override
   Future<HttpResponse<void>> addGroup(
-    accessToken,
     id,
     addGroupPostModel,
   ) async {
@@ -326,12 +303,12 @@ class _TaskApiClient implements TaskApiClient {
     final _result =
         await _dio.fetch<void>(_setStreamType<HttpResponse<void>>(Options(
       method: 'POST',
-      headers: <String, dynamic>{r'Authorization': accessToken},
+      headers: <String, dynamic>{},
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'camunda/engine-rest-ext/task/$id/identity-links?type=candidate',
+              'camunda/engine-rest-ext/v1/task/$id/identity-links?type=candidate',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -342,21 +319,19 @@ class _TaskApiClient implements TaskApiClient {
 
   @override
   Future<HttpResponse<List<ListMembersResponse>>> fetchMembersList(
-    accessToken,
-    memberOfGroup,
-  ) async {
+      memberOfGroup) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'memberOfGroup': memberOfGroup};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<List<dynamic>>(
         _setStreamType<HttpResponse<List<ListMembersResponse>>>(Options(
       method: 'GET',
-      headers: <String, dynamic>{r'Authorization': accessToken},
+      headers: <String, dynamic>{},
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'camunda/engine-rest-ext/user',
+              'camunda/engine-rest-ext/v1/user',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -371,7 +346,6 @@ class _TaskApiClient implements TaskApiClient {
 
   @override
   Future<HttpResponse<void>> deleteGroup(
-    accessToken,
     id,
     deleteGroupPostModel,
   ) async {
@@ -382,12 +356,12 @@ class _TaskApiClient implements TaskApiClient {
     final _result =
         await _dio.fetch<void>(_setStreamType<HttpResponse<void>>(Options(
       method: 'POST',
-      headers: <String, dynamic>{r'Authorization': accessToken},
+      headers: <String, dynamic>{},
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'camunda/engine-rest-ext/task/$id/identity-links/delete',
+              'camunda/engine-rest-ext/v1/task/$id/identity-links/delete',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -398,7 +372,6 @@ class _TaskApiClient implements TaskApiClient {
 
   @override
   Future<HttpResponse<void>> updateAssignee(
-    accessToken,
     id,
     body,
   ) async {
@@ -409,12 +382,12 @@ class _TaskApiClient implements TaskApiClient {
     final _result =
         await _dio.fetch<void>(_setStreamType<HttpResponse<void>>(Options(
       method: 'POST',
-      headers: <String, dynamic>{r'Authorization': accessToken},
+      headers: <String, dynamic>{},
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'camunda/engine-rest-ext/task/$id/assignee',
+              'camunda/engine-rest-ext/v1/task/$id/assignee',
               queryParameters: queryParameters,
               data: _data,
             )

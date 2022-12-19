@@ -73,10 +73,10 @@ class FormioWebViewUtil {
     return '''
    {
    readOnly:$readOnly,
-           formioProjectUrl: '${ApiConstantUrl.FORMSFLOWAI_BASE_URL}${ApiConstantUrl.FORM}',
-           formioResourceUrl: '${ApiConstantUrl.FORMSFLOWAI_BASE_URL}${ApiConstantUrl.FORM}/$formResourceId',
-           formsflowaiUrl: '${ApiConstantUrl.FORMSFLOWAI_BASE_URL}',
-           formsflowaiApiUrl: '${"${ApiConstantUrl.FORMSFLOWAI_BASE_URL}api"}',
+           formioProjectUrl: '${ApiConstantUrl.FORMSFLOWAI_FORM_BASE_URL}${ApiConstantUrl.FORM}',
+           formioResourceUrl: '${ApiConstantUrl.FORMSFLOWAI_FORM_BASE_URL}${ApiConstantUrl.FORM}/$formResourceId',
+           formsflowaiUrl: '${ApiConstantUrl.FORMSFLOWAI_FORM_BASE_URL}',
+           formsflowaiApiUrl: '${"${ApiConstantUrl.FORMSFLOWAI_FORM_BASE_URL}api"}',
            userDetails: '$userInfoResponse',
            authToken : '$authToken',
            formioToken : '$formToken',

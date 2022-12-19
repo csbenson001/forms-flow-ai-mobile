@@ -208,7 +208,7 @@ class TaskFiltersDropdownView extends BaseConsumerWidget {
   /// Function to check if there are any filters added
   bool isFilterAdded(List<TaskVariableFilterDM> selectedVariablesList) {
     bool isFilterItemAdded = false;
-    print(selectedVariablesList.toString());
+
     if (selectedVariablesList.isEmpty) {
       return isFilterItemAdded;
     }

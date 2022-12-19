@@ -69,6 +69,10 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   Future<Either<Failure, AuthorizationTokenResponse>>
       loginUserUsingKeycloakAuthenticator(
           {required LoginKeycloakAuthenticatorParams params}) async {
+    const String _clientId = FormsFlowAIConstants.CLIENT_ID;
+    const String _redirectUrl = FormsFlowAIConstants.KEYCLOAK_REDIRECT_URL;
+    const List<String> _scopes = FormsFlowAIConstants.KEYCLOAK_SCOPES;
+
     AuthorizationServiceConfiguration _serviceConfiguration =
         const AuthorizationServiceConfiguration(
       authorizationEndpoint:
@@ -83,10 +87,10 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       final AuthorizationTokenResponse? result =
           await flutterAppAuth.authorizeAndExchangeCode(
         AuthorizationTokenRequest(
-          params.clientId,
-          params.redirectUrl,
+          _clientId,
+          _redirectUrl,
           serviceConfiguration: _serviceConfiguration,
-          scopes: params.scopes,
+          scopes: _scopes,
           preferEphemeralSession: false,
           allowInsecureConnections: false,
         ),
@@ -108,6 +112,10 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   @override
   Future<Either<Failure, TokenResponse>> refreshKeycloakToken(
       {required RefreshKeycloakTokenParams params}) async {
+    const String _clientId = FormsFlowAIConstants.CLIENT_ID;
+    const String _redirectUrl = FormsFlowAIConstants.KEYCLOAK_REDIRECT_URL;
+    const List<String> _scopes = FormsFlowAIConstants.KEYCLOAK_SCOPES;
+
     AuthorizationServiceConfiguration _serviceConfiguration =
         const AuthorizationServiceConfiguration(
       authorizationEndpoint:
@@ -121,26 +129,21 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     try {
       final TokenResponse? result = await flutterAppAuth.token(
         TokenRequest(
-          params.clientId,
-          params.redirectUrl,
+          _clientId,
+          _redirectUrl,
           refreshToken: params.refreshOfflineToken,
-          // grantType: 'refresh_token',
           serviceConfiguration: _serviceConfiguration,
-          scopes: params.scopes,
+          scopes: _scopes,
           allowInsecureConnections: false,
         ),
       );
-      print("---- Token refresh Result ----");
-      print(result?.accessToken);
-      print(result?.accessTokenExpirationDateTime);
+  
       if (result != null) {
         return Right(result);
       } else {
         return Left(ServerFailure());
       }
     } catch (e) {
-      print("---- Token Refresh Error ---");
-      print(e.toString());
       return Left(ServerFailure());
     }
   }

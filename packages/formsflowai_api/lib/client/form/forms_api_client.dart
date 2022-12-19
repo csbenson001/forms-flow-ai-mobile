@@ -15,14 +15,12 @@ abstract class FormsApiClient {
 
   @PUT(ApiConstantUrl.FETCH_FORM_SUBMISSION_DATA)
   Future<HttpResponse> submitFormData(
-      @Header("x-jwt-token") String jwtToken,
       @Path() String formResourceId,
       @Path() String formSubmissionId,
       @Body() FormSubmissionResponse formSubmissionResponse);
 
   @GET(ApiConstantUrl.FETCH_FORM_JSON)
-  Future<HttpResponse> getFormIoJson(
-      @Header("x-jwt-token") String jwtToken, @Path() String id);
+  Future<HttpResponse> getFormIoJson(@Path() String id);
 
   @GET(ApiConstantUrl.FETCH_FORMIO_ROLES)
   Future<FormioRolesResponse> getFormioRoles(
@@ -30,7 +28,6 @@ abstract class FormsApiClient {
 
   @GET(ApiConstantUrl.FETCH_FORM_SUBMISSION_DATA)
   Future<HttpResponse<FormSubmissionResponse>> fetchFormSubmissionData(
-      @Header("x-jwt-token") String jwtToken,
       @Path("formResourceId") String resourceId,
       @Path("formSubmissionId") String submissionId);
 }

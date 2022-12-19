@@ -11,6 +11,7 @@ import '../../../../../shared/app_strings.dart';
 import '../../../../../widgets/nointernet/no_internet_snackbar_view.dart';
 import '../../../../base/drawer/drawer_app_bar_scaffold.dart';
 import '../../../../base/widgets/base_hooks_consumer_widget.dart';
+import '../viewmodel/task_list_screen_providers.dart';
 import 'index.dart';
 
 /// [TaskListScreen] home screen to display the task sort filters
@@ -66,13 +67,13 @@ class TaskListScreen extends BaseHooksConsumerWidget {
   }
 
   void initListeners(WidgetRef ref, BuildContext context) {
-    // /// Listen for token expired failure
-    // ref.listen<bool>(authorizationExpiredFailureProvider, (previous, next) {
-    //   if (next) {
-    //     showErrorToast(
-    //         context: context, description: Strings.generalErrorSessionTimeout);
-    //     ref.read(taskListViewModelProvider).logoutUser(context: context);
-    //   }
-    // });
+    /// Listen for token expired failure
+    ref.listen<bool>(authorizationExpiredFailureProvider, (previous, next) {
+      if (next) {
+        showErrorToast(
+            context: context, description: Strings.generalErrorSessionTimeout);
+        ref.read(taskListViewModelProvider).logoutUser(context: context);
+      }
+    });
   }
 }

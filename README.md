@@ -1,8 +1,22 @@
+
+<div align="center"><img src="https://github.com/AOT-Technologies/forms-flow-ai-mobile/blob/main/assets/images/logoorginal.svg"/></div>
+<hr/> 
+
+
+[![Join the chat at https://gitter.im/forms-flow-ai/community](https://badges.gitter.im/forms-flow-ai/community.svg)](https://gitter.im/forms-flow-ai/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://stackoverflow.com/questions/tagged/formsflow.ai](https://img.shields.io/badge/ask%20-on%20%20stackoverflow-F47F24)](https://stackoverflow.com/questions/tagged/formsflow.ai?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+<img src="https://img.shields.io/badge/release-v1.0.0-blue"/>
+<img src="https://img.shields.io/badge/LICENSE-Apache%202-green"/>
+
+![Flutter](https://img.shields.io/badge/Flutter-3.3-blue) ![dart](https://img.shields.io/badge/dart-2.18.2-green)
+
+
+
 ## formsflow.ai Mobile Application
 
-formsflow.ai mobile application is a task management application developed with flutter version 3.3 and dart version 2.18.2.
+formsflow.ai mobile application is a task management application.
 
-Formsflow.ai mobile application uses formio version 2.1.0 to support online/offline form rendering.
+The application uses formio version 2.1.0 to support online/offline form rendering.
 
 
 ## Table of Content
@@ -148,3 +162,19 @@ Variable name | Meaning | Possible values | Expected value |
 | `actionComplete` | <li>Triggered for button components</li> |<li>type:The configured event type</li><li>component:The component json</li><li>actionType: Form submit action values</li> | form.emit('customEvent', { type: "actionComplete",    component: component, actionType: actionType }); |
 | `actionError` | <li>Triggrered on a failed form submission</li><li>Triggered for button components</li><li>Triggers callback when the form submission is failed</li> |<li>type:The configured event type</li>|form.emit('customEvent', {type: "actionError"}); |   
 | `cancelSubmission` | <li>Used in the create form page</li><li>Triggered for button components</li><li>Used for Canceling current submission and goin back to Form List Page</li> |<li>type:The configured event type</li>|form.emit('customEvent', {type: "cancelSubmission"}); |    
+
+## License
+
+Copyright 2020 AppsOnTime-Technologies 2020
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.

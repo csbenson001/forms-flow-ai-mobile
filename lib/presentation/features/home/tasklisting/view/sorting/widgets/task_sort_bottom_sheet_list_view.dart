@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
@@ -8,10 +7,11 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../../../../../../core/module/providers/view_model_provider.dart';
 import '../../../../../../../shared/app_text_styles.dart';
+import '../../../../../../base/widgets/base_consumer_widget.dart';
 import '../../../model/task_sort_filter_data_model.dart';
 
 /// [TaskSortBottomSheetListView] to display task sort list view
-class TaskSortBottomSheetListView extends ConsumerWidget {
+class TaskSortBottomSheetListView extends BaseConsumerWidget {
   const TaskSortBottomSheetListView({Key? key}) : super(key: key);
 
   @override
@@ -48,7 +48,7 @@ class TaskSortBottomSheetListView extends ConsumerWidget {
                   taskFilterDM.iconData,
                   size: Dimens.size_20,
                   color: taskFilterDM.isSelected
-                      ? AppColor.primarycolor
+                      ? AppColor.primaryColor
                       : Colors.black54,
                 ),
               ),
@@ -57,7 +57,7 @@ class TaskSortBottomSheetListView extends ConsumerWidget {
                 style: AppTextStyles.semiBoldTextStyle(
                     fontSize: Dimens.font_16,
                     textColor: taskFilterDM.isSelected
-                        ? AppColor.primarycolor
+                        ? AppColor.primaryColor
                         : Colors.black),
               ),
               const Spacer(),
@@ -68,7 +68,7 @@ class TaskSortBottomSheetListView extends ConsumerWidget {
                       ? "assets/images/ic_circle_check.svg"
                       : "assets/images/ic_circle_uncheck.svg",
                   color: taskFilterDM.isSelected
-                      ? AppColor.primarycolor
+                      ? AppColor.primaryColor
                       : Colors.grey,
                   width: Dimens.spacing_24,
                   height: Dimens.spacing_24,

@@ -1,11 +1,14 @@
-import 'package:formsflowai/presentation/features/taskdetails/usecases/save_form_submission_isolate_usecase.dart';
-import 'package:formsflowai/presentation/features/taskdetails/usecases/save_form_submission_usecase.dart';
-import 'package:formsflowai/presentation/features/taskdetails/usecases/submit_form_isolate_usecase.dart';
-import 'package:formsflowai/presentation/features/taskdetails/usecases/submit_form_usecase.dart';
+import 'package:formsflowai/presentation/features/taskdetails/usecases/form/save_form_submission_isolate_usecase.dart';
+import 'package:formsflowai/presentation/features/taskdetails/usecases/form/save_form_submission_usecase.dart';
+import 'package:formsflowai/presentation/features/taskdetails/usecases/form/submit_form_isolate_usecase.dart';
+import 'package:formsflowai/presentation/features/taskdetails/usecases/form/submit_form_usecase.dart';
 
+import '../../presentation/features/home/tasklisting/usecases/form/fetch_formio_roles_usecase.dart';
 import '../../presentation/features/home/tasklisting/usecases/index.dart';
+import '../../presentation/features/home/tasklisting/usecases/task/fetch_tasks_usecase.dart';
 import '../../presentation/features/login/usecases/index.dart';
-import '../../presentation/features/login/usecases/login_user_usecase.dart';
+import '../../presentation/features/login/usecases/login_keycloak_authenticator_usecase.dart';
+import '../../presentation/features/login/usecases/refresk_keycloak_token_usecase.dart';
 import '../../presentation/features/taskdetails/usecases/index.dart';
 import '../database/worker/database_worker.dart';
 import 'injection.dart';
@@ -13,8 +16,11 @@ import 'injection.dart';
 Future<void> registerUseCases() async {
   /// ------------------ USER USECASES ------------------ ///
   /// Remote
-  dl.registerLazySingleton(() => LoginUserCase(repository: dl()));
   dl.registerLazySingleton(() => FetchUserInfoUseCase(repository: dl()));
+  dl.registerLazySingleton(
+      () => LoginKeycloakAuthenticatorUserCase(repository: dl()));
+  dl.registerLazySingleton(
+      () => RefreshKeyCloakTokenUserCase(repository: dl()));
 
   /// Local
   dl.registerLazySingleton(() => SaveUserDetailsUseCase(repository: dl()));
@@ -41,7 +47,7 @@ Future<void> registerUseCases() async {
   dl.registerLazySingleton(() => FetchTasksUseCase(repository: dl()));
   dl.registerLazySingleton(() => FetchTaskCountUseCase(repository: dl()));
   dl.registerLazySingleton(() => FetchTaskVariablesUseCase(repository: dl()));
-  dl.registerLazySingleton(() => FetchIsolatedTaskUseCase(repository: dl()));
+  dl.registerLazySingleton(() => FetchTaskUseCase(repository: dl()));
   dl.registerLazySingleton(() => UpdateIsolatedTaskUseCase(repository: dl()));
   dl.registerLazySingleton(() => UpdateRemoteTaskUseCase(repository: dl()));
   dl.registerLazySingleton(() => ListTaskGroupsUseCase(repository: dl()));
@@ -66,6 +72,7 @@ Future<void> registerUseCases() async {
   dl.registerLazySingleton(
       () => SaveFormSubmissionIsolateUseCase(repository: dl()));
   dl.registerLazySingleton(() => SubmitFormIsolateUseCase(repository: dl()));
+  dl.registerLazySingleton(() => FetchFormioRolesUseCase(repository: dl()));
 
   /// ------------------ APPLICATION HISTORY USECASES ------------------ ///
 

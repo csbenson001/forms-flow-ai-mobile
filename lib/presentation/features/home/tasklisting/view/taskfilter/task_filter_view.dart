@@ -1,18 +1,20 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:formsflowai/core/module/providers/view_model_provider.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/view/variablefilters/widgets/task_variable_filter_view.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/view/variablefilters/widgets/task_variable_selected_filters_view.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/viewmodel/task_list_screen_providers.dart';
-import 'package:formsflowai_shared/core/base/base_consumer_widget.dart';
-import 'package:formsflowai_shared/shared/app_status.dart';
-import 'package:formsflowai_shared/shared/app_strings.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
 import 'package:formsflowai_shared/widgets/shimmer/shimmer_widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../../../../core/networkmanager/internet_connectivity_provider.dart';
+import '../../../../../../shared/app_status.dart';
+import '../../../../../../shared/app_strings.dart';
 import '../../../../../../shared/app_text_styles.dart';
 import '../../../../../../shared/imageassets/formsflowai_image_assets.dart';
+import '../../../../../base/widgets/base_consumer_widget.dart';
 
 /// [TaskFilterView] to show task filter views
 class TaskFilterView extends BaseConsumerWidget {
@@ -28,17 +30,23 @@ class TaskFilterView extends BaseConsumerWidget {
     final selectedVariablesList =
         ref.watch(taskListViewModelProvider).selectedVariablesFiltersList;
 
+    final connectivityResult = ref.watch(internetConnectivityProvider);
+
+    if (connectivityResult == ConnectivityResult.none) {
+      return const SizedBox.shrink();
+    }
+
     return isPageLoading == PageStatus.loading
         ? ShimmerWidgets.getShimmerContainer(
             width: Dimens.size_150,
             height: Dimens.size_20,
-            padding: const EdgeInsets.all(Dimens.spacing_none),
+            padding: const EdgeInsets.all(Dimens.none),
             margin: const EdgeInsets.only(
                 left: Dimens.spacing_24,
                 right: Dimens.spacing_24,
                 top: Dimens.spacing_16,
                 bottom: Dimens.spacing_8),
-            borderRadius: BorderRadius.circular(Dimens.radius_none))
+            borderRadius: BorderRadius.circular(Dimens.radiusNone))
         : showTaskFiltersView
             ? SizedBox(
                 width: MediaQuery.of(context).size.width,

@@ -3,28 +3,28 @@ import 'dart:convert';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:formsflowai/core/module/providers/view_model_provider.dart';
-import 'package:formsflowai/presentation/features/home/tasklisting/usecases/fetch_form_entity_usecase.dart';
-import 'package:formsflowai/presentation/features/home/tasklisting/usecases/fetch_isolated_form_data_usecase.dart';
-import 'package:formsflowai/presentation/features/taskdetails/usecases/save_form_submission_usecase.dart';
+import 'package:formsflowai/presentation/features/home/tasklisting/usecases/form/fetch_form_entity_usecase.dart';
+import 'package:formsflowai/presentation/features/home/tasklisting/usecases/form/fetch_isolated_form_data_usecase.dart';
+import 'package:formsflowai/presentation/features/taskdetails/usecases/form/save_form_submission_usecase.dart';
 import 'package:formsflowai/shared/toast/toast_message_provider.dart';
-import 'package:formsflowai_api/response/form/submission/form_submission_response.dart';
-import 'package:formsflowai_shared/core/base/base_notifier_view_model.dart';
-import 'package:formsflowai_shared/core/database/entity/form_entity.dart';
-import 'package:formsflowai_shared/core/networkmanager/network_manager_controller.dart';
-import 'package:formsflowai_shared/core/preferences/app_preference.dart';
-import 'package:formsflowai_shared/shared/app_strings.dart';
-import 'package:formsflowai_shared/shared/webview_constants.dart';
-import 'package:formsflowai_shared/utils/form/formio_webview_util.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../../../../core/api/response/form/submission/form_submission_response.dart';
+import '../../../../../../core/database/entity/form_entity.dart';
 import '../../../../../../core/database/worker/database_worker.dart';
 import '../../../../../../core/error/errors_failure.dart';
+import '../../../../../../core/networkmanager/network_manager_controller.dart';
+import '../../../../../../core/preferences/app_preference.dart';
+import '../../../../../../shared/app_strings.dart';
+import '../../../../../../shared/webview_constants.dart';
+import '../../../../../../utils/form/formio_webview_util.dart';
+import '../../../../../base/viewmodel/base_notifier_view_model.dart';
 import '../../../../home/tasklisting/viewmodel/task_list_screen_providers.dart';
 import '../../../model/form_dm.dart';
 import '../../../model/formio/formio_model.dart';
-import '../../../usecases/fetch_form_submission_data.dart';
-import '../../../usecases/fetch_forms_usecase.dart';
-import '../../../usecases/fetch_local_task_usecase.dart';
+import '../../../usecases/form/fetch_form_submission_data.dart';
+import '../../../usecases/form/fetch_forms_usecase.dart';
+import '../../../usecases/task/fetch_local_task_usecase.dart';
 import '../../../viewmodel/task_details_providers.dart';
 
 /// [FormsViewModel] ViewModel class contains business logic
@@ -66,13 +66,11 @@ class FormsViewModel extends BaseNotifierViewModel {
 
   FormSubmissionResponse? formSubmissionResponse;
 
-  // // value to show form webview loading indicator until webview loads
-  // int formViewIndexedStackPosition = 0;
   bool noFormResourceFound = false;
   final NetworkManagerController networkManagerController;
   final SaveFormSubmissionUseCase saveFormSubmissionUseCase;
 
-  ToastStateDM _toastStateDM = ToastStateDM();
+  ToastStateDM _toastStateDM = const ToastStateDM();
   ToastStateDM get toastStateDM => _toastStateDM;
 
   /// Function to fetch forms data
@@ -91,14 +89,12 @@ class FormsViewModel extends BaseNotifierViewModel {
         params: FetchFormParams(formResourceId: formResourceId));
 
     fetchFormResponse.fold((error) {
-
       noFormResourceFound = true;
       notifyListeners();
       if (error is AuthorizationTokenExpiredFailure) {
         ref.read(authorizationExpiredFailureProvider.notifier).state = true;
       }
     }, (right) async {
-      
       if (right != null) {
         _formDM = right;
         fetchFormSubmissionData(right);
@@ -189,12 +185,11 @@ class FormsViewModel extends BaseNotifierViewModel {
     formSubmissionResponse =
         formSubmissionResponse?.copyWith(data: formSubmissionData);
     if (networkManagerController.connectionType != ConnectivityResult.none &&
-        type == FormsFlowWebViewConstants.HANDLER_ACTION_COMPLETE) {
-      final _taskListingDM =
+        type == FormsFlowWebViewConstants.handlerActionComplete) {
+      final taskListingDM =
           ref.read(taskDetailsViewModelProvider).taskListingDM;
 
-      if (_taskListingDM == null ||
-          (_taskListingDM != null && _taskListingDM.taskId == null)) {
+      if (taskListingDM == null || (taskListingDM.taskId == null)) {
         return;
       }
       if (networkManagerController.connectionType != ConnectivityResult.none) {
@@ -224,7 +219,7 @@ class FormsViewModel extends BaseNotifierViewModel {
       }
     } else if (networkManagerController.connectionType ==
             ConnectivityResult.none &&
-        type == FormsFlowWebViewConstants.HANDLER_ACTION_ERROR) {
+        type == FormsFlowWebViewConstants.handlerActionError) {
       databaseWorker.updateTaskFormSubmissionDataInLocalDatabase(
           formSubmissionResponse: formSubmissionResponse,
           taskId:
@@ -249,10 +244,9 @@ class FormsViewModel extends BaseNotifierViewModel {
     formSubmissionResponse =
         formSubmissionResponse?.copyWith(data: formSubmissionData);
     if (networkManagerController.connectionType != ConnectivityResult.none) {
-      final _taskListingDM =
+      final taskListingDM =
           ref.read(taskDetailsViewModelProvider).taskListingDM;
-      if (_taskListingDM == null ||
-          (_taskListingDM != null && _taskListingDM.taskId == null)) {
+      if (taskListingDM == null || (taskListingDM.taskId == null)) {
         return;
       }
       if (networkManagerController.connectionType != ConnectivityResult.none) {
@@ -310,5 +304,9 @@ class FormsViewModel extends BaseNotifierViewModel {
             'createForm(${_formIoModel.formComponents}, ${_formIoModel.formData},'
             '${FormioWebViewUtil.fetchFormIoInputData(readOnly: _formIoModel.readOnly ?? false, formResourceId: _formIoModel.formResourceId, userInfoResponse: appPreferences.getUserInfo(), authToken: appPreferences.getAccessToken(), formToken: appPreferences.getFormJwtToken())}'
             ')');
+  }
+
+  void scrollPageToBottom({required int maxYPosition}) {
+    _webViewPluscontroller?.scrollTo(x: 0, y: maxYPosition);
   }
 }

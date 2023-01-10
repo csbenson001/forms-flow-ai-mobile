@@ -1,6 +1,6 @@
-import 'package:formsflowai_api/response/application/history/application_history_response.dart';
-import 'package:formsflowai_shared/core/database/entity/application_history_entity.dart';
-import 'package:formsflowai_shared/shared/api_constants_url.dart';
+import '../../../../core/api/response/application/history/application_history_response.dart';
+import '../../../../core/database/entity/application_history_entity.dart';
+import '../../../../shared/api_constants_url.dart';
 
 /// [ApplicationHistoryDM] data model class contains all application
 /// history related data fields
@@ -27,7 +27,7 @@ class ApplicationHistoryDM {
       {required ApplicationHistoryResponse applicationHistoryResponse}) {
     List<ApplicationHistoryDM> mData = List.empty(growable: true);
     if (applicationHistoryResponse.applications != null &&
-        applicationHistoryResponse.applications!.length > 0) {
+        applicationHistoryResponse.applications!.isNotEmpty) {
       for (Applications element in applicationHistoryResponse.applications!) {
         ApplicationHistoryDM dm = ApplicationHistoryDM();
         dm.created = element.created;
@@ -36,7 +36,7 @@ class ApplicationHistoryDM {
         dm.formId = element.formId;
         dm.submittedBy = element.submittedBy;
         dm.formUrl =
-            "${ApiConstantUrl.FORMSFLOWAI_BASE_URL}${ApiConstantUrl.FORM}/${element.formId}/${ApiConstantUrl.FORM_SUBMISSION}/${element.submissionId}";
+            "${ApiConstantUrl.formsflowaiBpmBaseUrl}${ApiConstantUrl.form}/${element.formId}/${ApiConstantUrl.formSubmission}/${element.submissionId}";
         mData.add(dm);
       }
     }
@@ -51,7 +51,7 @@ class ApplicationHistoryDM {
   static List<ApplicationHistoryDM> transformFromEntity(
       {required List<ApplicationHistoryEntity>? applicationHistorys}) {
     List<ApplicationHistoryDM> mData = List.empty(growable: true);
-    if (applicationHistorys!.length > 0) {
+    if (applicationHistorys!.isNotEmpty) {
       for (ApplicationHistoryEntity element in applicationHistorys) {
         ApplicationHistoryDM dm = ApplicationHistoryDM();
         dm.created = element.created;
@@ -78,7 +78,7 @@ class ApplicationHistoryDM {
       required int? applicationId,
       required String? taskId}) {
     List<ApplicationHistoryEntity> mData = List.empty(growable: true);
-    if (data != null && data.length > 0) {
+    if (data.isNotEmpty) {
       for (ApplicationHistoryDM element in data) {
         mData.add(ApplicationHistoryEntity(
             id: null,

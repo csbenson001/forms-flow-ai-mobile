@@ -1,14 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:formsflowai/presentation/features/taskdetails/view/addgroups/widgets/add_group_button.dart';
-import 'package:formsflowai_shared/core/base/base_consumer_widget.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
-import 'package:formsflowai_shared/shared/app_strings.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../../core/module/providers/view_model_provider.dart';
+import '../../../../../shared/app_strings.dart';
 import '../../../../../shared/app_text_styles.dart';
+import '../../../../base/widgets/base_consumer_widget.dart';
 import 'widgets/add_group_list_view.dart';
 
 class AddGroupDialog extends BaseConsumerWidget {
@@ -33,7 +32,7 @@ class AddGroupDialog extends BaseConsumerWidget {
           boxShadow: const [
             BoxShadow(
                 color: Colors.black,
-                offset: Offset(Dimens.offset_none, Dimens.offset_10),
+                offset: Offset(Dimens.offsetNone, Dimens.offset_10),
                 blurRadius: Dimens.radius_10),
           ]),
       child: SingleChildScrollView(
@@ -72,7 +71,7 @@ class AddGroupDialog extends BaseConsumerWidget {
                             Strings.taskDetailsLabelManageGroups,
                             style: AppTextStyles.semiBoldTextStyle(
                                 fontSize: Dimens.font_18,
-                                textColor: AppColor.primarycolor),
+                                textColor: AppColor.primaryColor),
                           ),
                         )),
                   ],

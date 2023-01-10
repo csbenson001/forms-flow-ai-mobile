@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:formsflowai/presentation/base/widgets/base_hooks_consumer_widget.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/view/variablefilters/widgets/added_filter_count_view.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/view/variablefilters/widgets/selected_variable_filter_list_view.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/viewmodel/task_list_screen_providers.dart';
-import 'package:formsflowai_shared/core/base/base_consumer_widget.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
-import 'package:formsflowai_shared/shared/app_strings.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
 import 'package:formsflowai_shared/widgets/checkbox/checkbox_group.dart';
 import 'package:formsflowai_shared/widgets/checkbox/checkbox_orientation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../../../../core/module/providers/view_model_provider.dart';
+import '../../../../../../../shared/app_strings.dart';
 import '../../../../../../../shared/app_text_styles.dart';
 import '../../../model/task_variable_filter_data_model.dart';
 
-class TaskVariableFiltersInputView extends BaseConsumerWidget {
+class TaskVariableFiltersInputView extends BaseHooksConsumerWidget {
   const TaskVariableFiltersInputView({Key? key}) : super(key: key);
 
   @override
@@ -24,6 +24,8 @@ class TaskVariableFiltersInputView extends BaseConsumerWidget {
         ref.watch(taskListViewModelProvider).uiVariablesFiltersList;
     final uiSelectedCheckList =
         ref.watch(taskListViewModelProvider).selectedCheckBoxList;
+
+    final isAllFilteredSelected = useState(true);
 
     return Padding(
         padding: const EdgeInsets.only(
@@ -40,7 +42,7 @@ class TaskVariableFiltersInputView extends BaseConsumerWidget {
                     top: Dimens.spacing_6, bottom: Dimens.spacing_16),
                 decoration: BoxDecoration(
                     color: Colors.white,
-                    border: Border.all(color: AppColor.primarycolor),
+                    border: Border.all(color: AppColor.primaryColor),
                     borderRadius: BorderRadius.circular(Dimens.radius_8),
                     shape: BoxShape.rectangle),
                 child: Column(
@@ -58,7 +60,7 @@ class TaskVariableFiltersInputView extends BaseConsumerWidget {
                             Strings.taskListingLabelFilterByTasks,
                             style: AppTextStyles.mediumTextStyle(
                                 fontSize: Dimens.font_15,
-                                textColor: AppColor.primarycolor),
+                                textColor: AppColor.primaryColor),
                           ),
                         ),
                         const Spacer(),
@@ -80,7 +82,7 @@ class TaskVariableFiltersInputView extends BaseConsumerWidget {
                                 child: Icon(
                                   Icons.close,
                                   size: Dimens.size_18,
-                                  color: AppColor.primarycolor,
+                                  color: AppColor.primaryColor,
                                 )))
                       ],
                     ),
@@ -94,23 +96,32 @@ class TaskVariableFiltersInputView extends BaseConsumerWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                                padding: const EdgeInsets.only(
-                                    left: Dimens.spacing_4,
-                                    right: Dimens.spacing_4,
-                                    top: Dimens.spacing_4,
-                                    bottom: Dimens.spacing_4),
-                                decoration: const BoxDecoration(
-                                    shape: BoxShape.rectangle,
-                                    color: AppColor.primarycolor,
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(Dimens.radius_10))),
-                                child: Text(
-                                  Strings.taskListingLabelAll.toUpperCase(),
-                                  style: AppTextStyles.mediumTextStyle(
-                                      fontSize: Dimens.font_13,
-                                      textColor: Colors.white),
-                                )),
+                            InkWell(
+                                onTap: () {
+                                  isAllFilteredSelected.value =
+                                      !isAllFilteredSelected.value;
+                                },
+                                child: Container(
+                                    padding: const EdgeInsets.only(
+                                        left: Dimens.spacing_4,
+                                        right: Dimens.spacing_4,
+                                        top: Dimens.spacing_4,
+                                        bottom: Dimens.spacing_4),
+                                    decoration: const BoxDecoration(
+                                        shape: BoxShape.rectangle,
+                                        color: AppColor.primaryColor,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(Dimens.radius_10))),
+                                    child: Text(
+                                      isAllFilteredSelected.value
+                                          ? Strings.taskListingLabelAll
+                                              .toUpperCase()
+                                          : Strings.taskListingLabelAny
+                                              .toUpperCase(),
+                                      style: AppTextStyles.mediumTextStyle(
+                                          fontSize: Dimens.font_13,
+                                          textColor: Colors.white),
+                                    ))),
                             Expanded(
                                 child: Container(
                               padding: const EdgeInsets.only(
@@ -162,9 +173,9 @@ class TaskVariableFiltersInputView extends BaseConsumerWidget {
                                   // taskListingController
                                   //     .updateSelectedCheckBoxString(value);
                                 },
-                                orientation: CheckboxOrientation.HORIZONTAL,
+                                orientation: CheckboxOrientation.horizontal,
                                 itemList: const ["name", "value"],
-                                activeColor: AppColor.primarycolor,
+                                activeColor: AppColor.primaryColor,
                                 checkedItemList: uiSelectedCheckList,
                                 chechBoxHeight: Dimens.size_18,
                                 chechBoxWidth: Dimens.size_18,
@@ -226,7 +237,7 @@ class TaskVariableFiltersInputView extends BaseConsumerWidget {
                         Container(
                             padding: const EdgeInsets.only(
                                 left: Dimens.spacing_10,
-                                right: Dimens.spacing_none,
+                                right: Dimens.none,
                                 top: Dimens.spacing_10,
                                 bottom: Dimens.spacing_10),
                             child: Text(
@@ -243,7 +254,7 @@ class TaskVariableFiltersInputView extends BaseConsumerWidget {
                           child: const Icon(
                             Icons.add_circle_rounded,
                             size: Dimens.size_20,
-                            color: AppColor.primarycolor,
+                            color: AppColor.primaryColor,
                           ),
                         )
                       ],

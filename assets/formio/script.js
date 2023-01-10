@@ -44,6 +44,7 @@ var gForm = null;
 
    /// Formio onCustomEvent callback method
       gForm.on("customEvent", (data) => {
+
            let submissionData = form.submission.data;
            let formJsonData = {
            "eventType" : 'customSubmissionEvent',

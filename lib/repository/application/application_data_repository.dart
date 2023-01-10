@@ -1,12 +1,14 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dartz/dartz.dart';
+import 'package:formsflowai/core/api/response/form/roles/formio_roles_response.dart';
 import 'package:formsflowai/core/error/errors_failure.dart';
 import 'package:formsflowai/presentation/features/taskdetails/model/application_history_data_model.dart';
 import 'package:formsflowai/repository/application/application_local_data_source_impl.dart';
 import 'package:formsflowai/repository/application/application_remote_data_source_impl.dart';
 import 'package:formsflowai/repository/application/application_repository.dart';
-import 'package:formsflowai_shared/core/database/entity/application_history_entity.dart';
-import 'package:formsflowai_shared/core/networkmanager/network_manager_controller.dart';
+
+import '../../core/database/entity/application_history_entity.dart';
+import '../../core/networkmanager/network_manager_controller.dart';
 
 class ApplicationHistoryDataRepository implements ApplicationHistoryRepository {
   final ApplicationLocalDataSourceImpl localDataSource;
@@ -55,5 +57,14 @@ class ApplicationHistoryDataRepository implements ApplicationHistoryRepository {
       {required List<ApplicationHistoryEntity> applicationEntityList}) {
     return localDataSource.insertAllApplicationHistory(
         applicationEntityList: applicationEntityList);
+  }
+
+  @override
+  Future<Either<Failure, FormioRolesResponse>> fetchFormioRoles() {
+    if (networkManagerController.connectionType != ConnectivityResult.none) {
+      return remoteDataSource.fetchFormioRoles();
+    } else {
+      return localDataSource.fetchFormioRoles();
+    }
   }
 }

@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_riverpod/src/consumer.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:formsflowai_api/response/task/details/task_group_response.dart';
-import 'package:formsflowai_shared/core/base/base_consumer_widget.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../../../../core/api/response/task/details/task_group_response.dart';
 import '../../../../../../core/module/providers/view_model_provider.dart';
 import '../../../../../../shared/app_text_styles.dart';
 import '../../../../../../shared/imageassets/formsflowai_image_assets.dart';
+import '../../../../../base/widgets/base_consumer_widget.dart';
 
 class AddGroupsListView extends BaseConsumerWidget {
   const AddGroupsListView({Key? key}) : super(key: key);

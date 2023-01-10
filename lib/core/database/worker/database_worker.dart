@@ -2,18 +2,10 @@ import 'dart:convert';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
+import 'package:formsflowai/core/database/entity/task_entity.dart';
 import 'package:formsflowai/core/error/errors_failure.dart';
-import 'package:formsflowai/presentation/features/taskdetails/usecases/save_form_submission_isolate_usecase.dart';
-import 'package:formsflowai/presentation/features/taskdetails/usecases/submit_form_isolate_usecase.dart';
-import 'package:formsflowai_api/post/form/form_submission_post_model.dart';
-import 'package:formsflowai_api/post/task/update_task_post_model.dart';
-import 'package:formsflowai_api/response/form/submission/form_submission_response.dart';
-import 'package:formsflowai_shared/core/database/entity/form_entity.dart';
-import 'package:formsflowai_shared/core/database/entity/task_entity.dart';
-import 'package:formsflowai_shared/core/networkmanager/network_manager_controller.dart';
-import 'package:formsflowai_shared/core/preferences/app_preference.dart';
-import 'package:formsflowai_shared/shared/formsflow_api_constants.dart';
-import 'package:formsflowai_shared/shared/formsflow_app_constants.dart';
+import 'package:formsflowai/presentation/features/taskdetails/usecases/form/save_form_submission_isolate_usecase.dart';
+import 'package:formsflowai/presentation/features/taskdetails/usecases/form/submit_form_isolate_usecase.dart';
 import 'package:formsflowai_shared/utils/datetime/timestamp_utils.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -21,8 +13,16 @@ import '../../../presentation/features/home/tasklisting/model/task_listing_data_
 import '../../../presentation/features/home/tasklisting/usecases/index.dart';
 import '../../../presentation/features/taskdetails/model/form_dm.dart';
 import '../../../presentation/features/taskdetails/usecases/index.dart';
+import '../../../shared/formsflow_api_constants.dart';
+import '../../../shared/formsflow_app_constants.dart';
 import '../../../utils/compute/app_compute_parse_json.dart';
 import '../../../utils/general_util.dart';
+import '../../api/post/form/form_submission_post_model.dart';
+import '../../api/post/task/update_task_post_model.dart';
+import '../../api/response/form/submission/form_submission_response.dart';
+import '../../networkmanager/network_manager_controller.dart';
+import '../../preferences/app_preference.dart';
+import '../entity/form_entity.dart';
 
 /// Database worker class to interact with the local data source
 class DatabaseWorker {
@@ -36,7 +36,7 @@ class DatabaseWorker {
   final FetchIsolatedFormSubmissionDataUseCase
       fetchIsolatedFormSubmissionDataUseCase;
   final UpdateLocalTaskUseCase updateLocalTaskUseCase;
-  final FetchIsolatedTaskUseCase fetchIsolatedTaskUseCase;
+  final FetchTaskUseCase fetchIsolatedTaskUseCase;
   final DeleteLocalTaskUseCase deleteLocalTaskUseCase;
   final UpdateIsolatedTaskUseCase updateIsolatedTaskUseCase;
   final FetchLocalTaskUseCase fetchLocalTaskUseCase;
@@ -160,9 +160,10 @@ class DatabaseWorker {
       /// split the formUrl string with the path to
       /// get [FormResourceId] and [FormSubmissionId]
       String formUrl = variableResponse.formUrl?.value ?? '';
+
       List<String> formData = formUrl.split('/');
       String formResourceId = formData[4];
-      if (formResourceId == FormsFlowAIConstants.FORMSFLOWAI_FORM) {
+      if (formResourceId == FormsFlowAIConstants.formsFlowAiForm) {
         formResourceId = formData[5];
       }
       String formSubmissionId = formData[formData.length - 1];
@@ -184,7 +185,9 @@ class DatabaseWorker {
                             formId: formResourceId,
                             formMapResponse: responseData.body)));
               });
-            } catch (e) {}
+            } catch (e) {
+              () {};
+            }
           }
         });
         if (!GeneralUtil.isStringEmpty(formSubmissionId)) {
@@ -272,8 +275,7 @@ class DatabaseWorker {
             ConnectivityResult.none) {
           try {
             final isolatedTaskResponse = await fetchIsolatedTaskUseCase.call(
-                params:
-                    FetchIsolatedTaskParams(taskId: taskEntity.taskId ?? ''));
+                params: FetchTaskParams(taskId: taskEntity.taskId ?? ''));
             isolatedTaskResponse.fold((error) async {
               if (error is TaskNotFoundFailure) {
                 var deleteTaskResponse = await deleteLocalTaskUseCase.call(
@@ -290,7 +292,7 @@ class DatabaseWorker {
                   response.statusCode ==
                       FormsFlowAIAPIConstants.statusCode204) {
                 final taskListResponse =
-                    await compute(parseTaskListDataResponse, response.body);
+                    await compute(parseTaskListDataResponse, response.data);
                 if (taskListResponse.assignee != taskEntity.assignee) {
                   var deleteTaskResponse = await deleteLocalTaskUseCase.call(
                       params: DeleteLocalTaskParams(task: taskEntity));
@@ -313,7 +315,9 @@ class DatabaseWorker {
                 });
               }
             });
-          } catch (e) {}
+          } catch (e) {
+            () {};
+          }
         } else {
           return;
         }
@@ -439,7 +443,9 @@ class DatabaseWorker {
             task.isFormSubmissionDataUpdated = true;
             updateLocalTaskUseCase.call(
                 params: UpdateLocalTaskParams(task: task));
-          } catch (e) {}
+          } catch (e) {
+            () {};
+          }
         }
       });
     });
@@ -510,15 +516,13 @@ class DatabaseWorker {
       }
 
       /// If task exists and assignee name not matches delete the task from local data source
-      else if (task != null &&
-          !GeneralUtil.isStringEmpty(task.taskId) &&
+      else if (!GeneralUtil.isStringEmpty(task.taskId) &&
           taskListingDM.assignee == appPreferences.getPreferredUserName()) {
         task.dueDate = taskListingDM.dueDate;
         task.followUp = taskListingDM.followUp;
         await updateLocalTaskUseCase.call(
             params: UpdateLocalTaskParams(task: task));
-      } else if (task != null &&
-          !GeneralUtil.isStringEmpty(task.taskId) &&
+      } else if (!GeneralUtil.isStringEmpty(task.taskId) &&
           taskListingDM.assignee != appPreferences.getPreferredUserName()) {
         deleteLocalTaskUseCase
             .call(params: DeleteLocalTaskParams(task: task))

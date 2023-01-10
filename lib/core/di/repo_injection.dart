@@ -1,3 +1,5 @@
+import 'package:flutter_appauth/flutter_appauth.dart';
+import 'package:formsflowai/core/dio/dio_di.dart';
 import 'package:formsflowai/repository/application/application_local_data_source_impl.dart';
 import 'package:formsflowai/repository/application/application_remote_data_source_impl.dart';
 import 'package:formsflowai/repository/form/form_data_repository.dart';
@@ -6,18 +8,17 @@ import 'package:formsflowai/repository/form/form_remote_data_source_impl.dart';
 import 'package:formsflowai/repository/task/task_data_repository.dart';
 import 'package:formsflowai/repository/task/task_local_data_source_impl.dart';
 import 'package:formsflowai/repository/task/task_remote_data_source_impl.dart';
-import 'package:formsflowai_api/client/application/application_api_client.dart';
-import 'package:formsflowai_api/client/form/forms_api_client.dart';
-import 'package:formsflowai_api/client/task/task_api_client.dart';
-import 'package:formsflowai_api/client/user/user_api_client.dart';
-import 'package:formsflowai_api/utils/dio_di.dart';
-import 'package:formsflowai_shared/core/networkmanager/network_manager_controller.dart';
 import 'package:isolated_http_client/isolated_http_client.dart';
 
 import '../../repository/application/application_data_repository.dart';
 import '../../repository/user/user_data_repository.dart';
 import '../../repository/user/user_local_data_source_impl.dart';
 import '../../repository/user/user_remote_data_source_impl.dart';
+import '../api/client/application/application_history_api_client.dart';
+import '../api/client/form/forms_api_client.dart';
+import '../api/client/task/task_api_client.dart';
+import '../api/client/user/user_api_client.dart';
+import '../networkmanager/network_manager_controller.dart';
 import 'injection.dart';
 
 /// Function to register repository and dats sources
@@ -25,18 +26,23 @@ Future<void> registerRepository() async {
   /// Register Network Manager Controller
   dl.registerLazySingleton(() => NetworkManagerController());
 
+  dl.registerLazySingleton(() => const FlutterAppAuth());
+
   /// Register User data sources and API client
-  dl.registerLazySingleton(() => UserApiClient(getDio()));
+  dl.registerLazySingleton(() => UserApiClient(dl<DioHelper>().getUserDio()));
   dl.registerLazySingleton(() => UserLocalDataSourceImpl(appPreferences: dl()));
-  dl.registerLazySingleton(() => UserRemoteDataSourceImpl(userApiClient: dl()));
+  dl.registerLazySingleton(() =>
+      UserRemoteDataSourceImpl(userApiClient: dl(), flutterAppAuth: dl()));
   dl.registerLazySingleton(
       () => UserDataRepository(remoteDataSource: dl(), localDataSource: dl()));
 
   // Register Task data sources and client
-  dl.registerLazySingleton(() => TaskApiClient(getDio()));
+  dl.registerLazySingleton(() => TaskApiClient(dl<DioHelper>().getTaskDio()));
   dl.registerLazySingleton(() => TaskRemoteDataSourceImpl(
+      flutterAppAuth: dl(),
       taskApiClient: dl(),
       appPreferences: dl(),
+      taskDio: dl<DioHelper>().getTaskDio(),
       isolatedHttpClient: dl(),
       userApiClient: dl()));
   dl.registerLazySingleton(() => TaskLocalDataSourceImpl(
@@ -50,9 +56,9 @@ Future<void> registerRepository() async {
       networkManagerController: dl()));
 
   // Register Form data source and client
-  dl.registerLazySingleton(() => FormsApiClient(getDio()));
-  dl.registerLazySingleton(
-      () => FormLocalDataSource(taskDao: dl(), formsDao: dl()));
+  dl.registerLazySingleton(() => FormsApiClient(dl<DioHelper>().getFormDio()));
+  dl.registerLazySingleton(() => FormLocalDataSource(
+      formsFlowDatabase: dl(), taskDao: dl(), formsDao: dl()));
   dl.registerLazySingleton(() => FormRemoteDataSource(
       formsApiClient: dl(), appPreferences: dl(), isolatedHttpClient: dl()));
   dl.registerLazySingleton(() => FormDataRepository(
@@ -61,9 +67,10 @@ Future<void> registerRepository() async {
       networkManagerController: dl()));
 
   // Register Application data sources and client
-  dl.registerLazySingleton(() => ApplicationApiClient(getDio()));
+  dl.registerLazySingleton(
+      () => ApplicationHistoryApiClient(dl<DioHelper>().getApplicationDio()));
   dl.registerLazySingleton(() => ApplicationRemoteDataSourceImpl(
-      userApiClient: dl(), appPreferences: dl(), applicationApiClient: dl()));
+      flutterAppAuth: dl(), appPreferences: dl(), applicationApiClient: dl()));
 
   dl.registerLazySingleton(() => ApplicationLocalDataSourceImpl(
       appPreferences: dl(), applicationHistoryDao: dl()));
@@ -74,9 +81,9 @@ Future<void> registerRepository() async {
       remoteDataSource: dl()));
 
   // Register Isolated Http Client for background API Calls
-  dl.registerLazySingleton(() => HttpClient(
-      log: false,
+  dl.registerLazySingleton(() => HttpClientIsolated(
+      log: true,
       timeout: const Duration(
-        seconds: 10,
+        seconds: 15,
       )));
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class Dimens {
   //Spacing  Size
 
-  static const double spacing_none = 0.0;
+  static const double none = 0.0;
   static const double spacing_2 = 2.0;
   static const double spacing_4 = 4.0;
   static const double spacing_5 = 5.0;
@@ -105,7 +105,7 @@ class Dimens {
   static const double radius_6 = 6.0;
   static const double radius_8 = 8.0;
   static const double radius_10 = 10.0;
-  static const double radius_none = 0;
+  static const double radiusNone = 0;
   static const double radius_30 = 30.0;
 
   /// Elevation
@@ -140,6 +140,6 @@ class Dimens {
 
   /// Offset
   static const double offset_4 = 4.0;
-  static const double offset_none = 0;
+  static const double offsetNone = 0;
   static const double offset_10 = 10.0;
 }

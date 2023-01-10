@@ -1,20 +1,22 @@
 import 'package:dartz/dartz.dart';
-import 'package:formsflowai_api/post/form/form_submission_post_model.dart';
-import 'package:formsflowai_api/post/task/add_group_post_model.dart';
-import 'package:formsflowai_api/post/task/delete_group_post_model.dart';
-import 'package:formsflowai_api/post/task/tasklist_sort.dart';
-import 'package:formsflowai_api/post/task/update_task_post_model.dart';
-import 'package:formsflowai_api/response/base/base_response.dart';
-import 'package:formsflowai_api/response/diagram/activity_instance_response.dart';
-import 'package:formsflowai_api/response/diagram/bpmn_diagram_response.dart';
-import 'package:formsflowai_api/response/filter/get_filters_response.dart';
-import 'package:formsflowai_api/response/filter/task_count_response.dart';
-import 'package:formsflowai_api/response/processdefinition/process_definition_response.dart';
-import 'package:formsflowai_api/response/task/details/list_members_response.dart';
-import 'package:formsflowai_api/response/task/details/task_group_response.dart';
-import 'package:formsflowai_shared/core/database/entity/task_entity.dart';
-import 'package:isolated_http_client/isolated_http_client.dart';
+import 'package:dio/dio.dart';
+import 'package:isolated_http_client/isolated_http_client.dart'
+    as isolated_httpclient;
 
+import '../../core/api/post/form/form_submission_post_model.dart';
+import '../../core/api/post/task/add_group_post_model.dart';
+import '../../core/api/post/task/delete_group_post_model.dart';
+import '../../core/api/post/task/tasklist_sort.dart';
+import '../../core/api/post/task/update_task_post_model.dart';
+import '../../core/api/response/base/base_response.dart';
+import '../../core/api/response/diagram/activity_instance_response.dart';
+import '../../core/api/response/diagram/bpmn_diagram_response.dart';
+import '../../core/api/response/filter/get_filters_response.dart';
+import '../../core/api/response/filter/task_count_response.dart';
+import '../../core/api/response/processdefinition/process_definition_response.dart';
+import '../../core/api/response/task/details/list_members_response.dart';
+import '../../core/api/response/task/details/task_group_response.dart';
+import '../../core/database/entity/task_entity.dart';
 import '../../core/error/errors_failure.dart';
 import '../../presentation/features/home/tasklisting/model/task_base_response.dart';
 import '../../presentation/features/home/tasklisting/model/task_listing_data_model.dart';
@@ -53,11 +55,10 @@ abstract class TaskRepository<T> {
       {required String id,
       required FormSubmissionPostModel formSubmissionPostModel});
 
-  Future<Either<Failure, Response>> fetchIsolatedTaskVariables(
-      {required String host});
+  Future<Either<Failure, isolated_httpclient.Response>>
+      fetchIsolatedTaskVariables({required String taskId});
 
-  Future<Either<Failure, Response>> fetchTaskWithIsolate(
-      {required String host, required String taskId});
+  Future<Either<Failure, Response>> fetchTask({required String taskId});
 
   Future<Either<Failure, BpmnDiagramResponse>> fetchBpmnDiagram();
 
@@ -68,9 +69,8 @@ abstract class TaskRepository<T> {
       {required String taskId,
       required UpdateTaskPostModel updateTaskPostModel});
 
-  Future<Either<Failure, Response>> updateTaskWithIsolates(
-      {required String url,
-      required String taskId,
+  Future<Either<Failure, isolated_httpclient.Response>> updateTaskWithIsolates(
+      {required String taskId,
       required UpdateTaskPostModel updateTaskPostModel});
 
   Future<Either<Failure, List<TaskGroupsResponse>>> fetchGroups(

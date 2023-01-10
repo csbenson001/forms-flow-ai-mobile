@@ -18,7 +18,8 @@ class CustomTextFormField extends StatelessWidget {
   final bool? enabled;
 
   const CustomTextFormField(
-      {this.hint,
+      {super.key,
+      this.hint,
       this.keyboardType,
       this.icon,
       this.obscureText = false,
@@ -32,10 +33,9 @@ class CustomTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: TextFormField(
+    return TextFormField(
       keyboardType: keyboardType,
-      cursorColor: AppColor.primarycolor,
+      cursorColor: AppColor.primaryColor,
       onChanged: onChanged,
       textInputAction: textInputAction,
       onFieldSubmitted: onFieldSubmitted,
@@ -57,6 +57,6 @@ class CustomTextFormField extends StatelessWidget {
         hintStyle: AppTextStyles.regularTextStyle(
             fontSize: Dimens.font_13, textColor: AppColor.grey4),
       ),
-    ));
+    );
   }
 }

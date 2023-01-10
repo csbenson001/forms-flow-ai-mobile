@@ -1,49 +1,50 @@
-import 'dart:io';
-
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' as dio;
+import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/model/task_base_response.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/model/task_listing_data_model.dart';
-import 'package:formsflowai/presentation/features/taskdetails/model/task_variable_dm.dart';
 import 'package:formsflowai/repository/task/task_repository.dart';
-import 'package:formsflowai_api/client/task/task_api_client.dart';
-import 'package:formsflowai_api/client/user/user_api_client.dart';
-import 'package:formsflowai_api/post/form/form_submission_post_model.dart';
-import 'package:formsflowai_api/post/task/add_group_post_model.dart';
-import 'package:formsflowai_api/post/task/delete_group_post_model.dart';
-import 'package:formsflowai_api/post/task/tasklist_sort.dart';
-import 'package:formsflowai_api/post/task/update_task_post_model.dart';
-import 'package:formsflowai_api/response/base/base_response.dart';
-import 'package:formsflowai_api/response/diagram/activity_instance_response.dart';
-import 'package:formsflowai_api/response/diagram/bpmn_diagram_response.dart';
-import 'package:formsflowai_api/response/filter/get_filters_response.dart';
-import 'package:formsflowai_api/response/filter/task_count_response.dart';
-import 'package:formsflowai_api/response/processdefinition/process_definition_response.dart';
-import 'package:formsflowai_api/response/task/details/list_members_response.dart';
-import 'package:formsflowai_api/response/task/details/task_group_response.dart';
-import 'package:formsflowai_api/response/user/login/keycloak_login_response.dart';
-import 'package:formsflowai_shared/core/database/entity/task_entity.dart';
-import 'package:formsflowai_shared/core/preferences/app_preference.dart';
-import 'package:formsflowai_shared/shared/api_constants_url.dart';
-import 'package:formsflowai_shared/shared/formsflow_api_constants.dart';
-import 'package:formsflowai_shared/shared/formsflow_app_constants.dart';
-import 'package:formsflowai_shared/utils/api/api_utils.dart';
+import 'package:isolated_http_client/isolated_http_client.dart'
+    as isolated_response;
 import 'package:isolated_http_client/isolated_http_client.dart';
-import 'package:isolated_http_client/src/response.dart' as isolatedResponse;
 
+import '../../core/api/client/task/task_api_client.dart';
+import '../../core/api/client/user/user_api_client.dart';
+import '../../core/api/post/form/form_submission_post_model.dart';
+import '../../core/api/post/task/add_group_post_model.dart';
+import '../../core/api/post/task/delete_group_post_model.dart';
+import '../../core/api/post/task/tasklist_sort.dart';
+import '../../core/api/post/task/update_task_post_model.dart';
+import '../../core/api/response/base/base_response.dart';
+import '../../core/api/response/diagram/activity_instance_response.dart';
+import '../../core/api/response/diagram/bpmn_diagram_response.dart';
+import '../../core/api/response/filter/get_filters_response.dart';
+import '../../core/api/response/filter/task_count_response.dart';
+import '../../core/api/response/processdefinition/process_definition_response.dart';
+import '../../core/api/response/task/details/list_members_response.dart';
+import '../../core/api/response/task/details/task_group_response.dart';
+import '../../core/api/utils/api_utils.dart';
+import '../../core/database/entity/task_entity.dart';
 import '../../core/error/errors_failure.dart';
-import '../../core/error/server_exception.dart';
+import '../../core/preferences/app_preference.dart';
+import '../../presentation/features/taskdetails/model/task_variable_dm.dart';
+import '../../shared/api_constants_url.dart';
+import '../../shared/formsflow_api_constants.dart';
 
 class TaskRemoteDataSourceImpl implements TaskRepository {
   final TaskApiClient taskApiClient;
   final UserApiClient userApiClient;
   final AppPreferences appPreferences;
-  final HttpClient isolatedHttpClient;
+  final HttpClientIsolated isolatedHttpClient;
+  final FlutterAppAuth flutterAppAuth;
+  final dio.Dio taskDio;
 
   TaskRemoteDataSourceImpl(
       {required this.taskApiClient,
       required this.appPreferences,
+      required this.flutterAppAuth,
       required this.userApiClient,
+      required this.taskDio,
       required this.isolatedHttpClient});
 
   /// Method to add group
@@ -54,36 +55,8 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
   Future<Either<Failure, void>> addGroup(
       {required String taskId,
       required AddGroupPostModel addGroupPostModel}) async {
-    try {
-      var response = await taskApiClient.addGroup(
-          appPreferences.getBearerAccessToken(), taskId, addGroupPostModel);
-      return Right(response.data);
-    } on SocketException {
-      return left(NoConnectionFailure());
-    } on ServerException {
-      return Left(ServerFailure());
-    } catch (e) {
-      if (e is TypeError) {
-        return Left(DataTypeFailure());
-      } else if (e is DioError) {
-        if (e.response?.statusCode == FormsFlowAIAPIConstants.statusCode401) {
-          // Check for the retry limit get data with the refresh token
-          // var newTokenResponse = await _fetchNewToken();
-          // newTokenResponse.fold((l) {
-          //   return Left(AuthorizationTokenExpiredFailure());
-          // }, (tokenResponse) {
-          //   appPreferences.setAccessToken(tokenResponse.accessToken);
-          //   appPreferences.setRefreshToken(tokenResponse.refreshToken);
-          //   return addGroup(
-          //       taskId: taskId, addGroupPostModel: addGroupPostModel);
-          // });
-          return Left(AuthorizationTokenExpiredFailure());
-        }
-        return Left(ServerFailure());
-      } else {
-        return Left(ServerFailure());
-      }
-    }
+    final response = await taskApiClient.addGroup(taskId, addGroupPostModel);
+    return Right(response.data);
   }
 
   /// Method to claim task
@@ -94,39 +67,19 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
   Future<Either<Failure, void>> claimTask(
       {required String taskId, required Map<String, String> payload}) async {
     try {
-      var response = await taskApiClient.claimTask(
-          appPreferences.getBearerAccessToken(), taskId, payload);
+      final response = await taskApiClient.claimTask(taskId, payload);
       if (response.response.statusCode ==
               FormsFlowAIAPIConstants.statusCode200 ||
           response.response.statusCode ==
               FormsFlowAIAPIConstants.statusCode204) {
         return Right(response.data);
+      } else if (response.response.statusCode == 401) {
+        return Left(AuthorizationTokenExpiredFailure());
       }
+
       return Left(ServerFailure());
-    } on SocketException {
-      return left(NoConnectionFailure());
-    } on ServerException {
-      return Left(ServerFailure());
-    } catch (e) {
-      if (e is TypeError) {
-        return Left(DataTypeFailure());
-      } else if (e is DioError) {
-        if (e.response?.statusCode == FormsFlowAIAPIConstants.statusCode401) {
-          // // Check for the retry limit get data with the refresh token
-          // var newTokenResponse = await _fetchNewToken();
-          // newTokenResponse.fold((l) {
-          //   return Left(AuthorizationTokenExpiredFailure());
-          // }, (tokenResponse) {
-          //   appPreferences.setAccessToken(tokenResponse.accessToken);
-          //   appPreferences.setRefreshToken(tokenResponse.refreshToken);
-          //   return claimTask(taskId: taskId, payload: payload);
-          // });
-          return Left(AuthorizationTokenExpiredFailure());
-        }
-        return Left(ServerFailure());
-      } else {
-        return Left(ServerFailure());
-      }
+    } catch (error) {
+      return _handleDioError(error.runtimeType);
     }
   }
 
@@ -139,33 +92,11 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
       {required String taskId,
       required DeleteGroupPostModel addGroupPostModel}) async {
     try {
-      var response = await taskApiClient.deleteGroup(
-          appPreferences.getBearerAccessToken(), taskId, addGroupPostModel);
+      final response =
+          await taskApiClient.deleteGroup(taskId, addGroupPostModel);
       return Right(response.data);
-    } on SocketException {
-      return left(NoConnectionFailure());
-    } on ServerException {
-      return Left(ServerFailure());
-    } catch (e) {
-      if (e is TypeError) {
-        return Left(DataTypeFailure());
-      } else if (e is DioError) {
-        if (e.response?.statusCode == FormsFlowAIAPIConstants.statusCode401) {
-          // var newTokenResponse = await _fetchNewToken();
-          // newTokenResponse.fold((l) {
-          //   return Left(AuthorizationTokenExpiredFailure());
-          // }, (tokenResponse) {
-          //   appPreferences.setAccessToken(tokenResponse.accessToken);
-          //   appPreferences.setRefreshToken(tokenResponse.refreshToken);
-          //   return deleteGroup(
-          //       taskId: taskId, addGroupPostModel: addGroupPostModel);
-          // });
-          return Left(AuthorizationTokenExpiredFailure());
-        }
-        return Left(ServerFailure());
-      } else {
-        return Left(ServerFailure());
-      }
+    } catch (error) {
+      return _handleDioError(error.runtimeType);
     }
   }
 
@@ -193,39 +124,10 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
   @override
   Future<Either<Failure, List<FiltersResponse>>> fetchFilters() async {
     try {
-      var response = await taskApiClient
-          .fetchFilters(appPreferences.getBearerAccessToken());
+      final response = await taskApiClient.fetchFilters();
       return Right(response);
-    } catch (e) {
-      if (e is TypeError) {
-        return Left(DataTypeFailure());
-      } else if (e is DioError) {
-        if (e.response?.statusCode == FormsFlowAIAPIConstants.statusCode401) {
-          //   var newTokenResponse =
-          //       await _fetchNewToken().onError((error, stackTrace) {
-          //     print("------ Error ------");
-          //     return Left(AuthorizationTokenExpiredFailure());
-          //   });
-          //   ;
-          //   newTokenResponse.fold((l) {
-          //     print("------ Error ------");
-          //     print(l.toString());
-          //     return Left(AuthorizationTokenExpiredFailure());
-          //   }, (tokenResponse) {
-          //     appPreferences.setAccessToken(tokenResponse.accessToken);
-          //     appPreferences.setRefreshToken(tokenResponse.refreshToken);
-          //     return fetchFilters();
-          //   });
-          // } else {
-          //   return Left(ServerFailure());
-          // }
-          return Left(AuthorizationTokenExpiredFailure());
-        } else {
-          return Left(ServerFailure());
-        }
-      } else {
-        return Left(ServerFailure());
-      }
+    } catch (error) {
+      return _handleDioError(error.runtimeType);
     }
   }
 
@@ -248,49 +150,30 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
   Future<Either<Failure, List<TaskGroupsResponse>>> fetchGroups(
       {required String taskId}) async {
     try {
-      var response = await taskApiClient.fetchTaskGroups(
-          appPreferences.getBearerAccessToken(), taskId);
+      final response = await taskApiClient.fetchTaskGroups(taskId);
 
-      if (response.response.statusCode !=
+      if (response.response.statusCode ==
           FormsFlowAIAPIConstants.statusCode200) {
-        return left(ServerFailure());
+        return Right(response.data);
+      } else if (response.response.statusCode == 401) {
+        return Left(AuthorizationTokenExpiredFailure());
       }
-      return Right(response.data);
-    } on SocketException {
-      return left(NoConnectionFailure());
-    } on ServerException {
-      return Left(ServerFailure());
-    } catch (e) {
-      if (e is TypeError) {
-        return Left(DataTypeFailure());
-      } else if (e is DioError) {
-        if (e.response?.statusCode == FormsFlowAIAPIConstants.statusCode401) {
-          // var newTokenResponse = await _fetchNewToken();
-          // newTokenResponse.fold((l) {
-          //   return Left(AuthorizationTokenExpiredFailure());
-          // }, (tokenResponse) {
-          //   appPreferences.setAccessToken(tokenResponse.accessToken);
-          //   appPreferences.setRefreshToken(tokenResponse.refreshToken);
-          //   return fetchGroups(taskId: taskId);
-          // });
-          return Left(AuthorizationTokenExpiredFailure());
-        }
-        return Left(ServerFailure());
-      } else {
-        return Left(ServerFailure());
-      }
+      return left(ServerFailure());
+    } catch (error) {
+      return _handleDioError(error.runtimeType);
     }
   }
 
-  /// Method to fetch task variables
+  /// Method to fetch task finaliables
   /// Parameters
-  /// ---> Returns [isolatedResponse.Response]
+  /// ---> Returns [isolated_response.Response]
   @override
-  Future<Either<Failure, isolatedResponse.Response>> fetchIsolatedTaskVariables(
-      {required String host}) async {
+  Future<Either<Failure, isolated_response.Response>>
+      fetchIsolatedTaskVariables({required String taskId}) async {
     try {
-      var response = await isolatedHttpClient.get(
-          host: host,
+      final response = await isolatedHttpClient.get(
+          host:
+              '${ApiConstantUrl.formsflowaiBpmBaseUrl}${ApiConstantUrl.camundaEngineRest}/${ApiConstantUrl.task}/$taskId/variables',
           headers: APIUtils.getTaskAuthorizationHeader(
               acessToken: appPreferences.getAccessToken()));
 
@@ -299,32 +182,8 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
         return Right(response);
       }
       return left(ServerFailure());
-    } on SocketException {
-      return left(NoConnectionFailure());
-    } on ServerException {
-      return Left(ServerFailure());
-    } catch (e) {
-      if (e is TypeError) {
-        return Left(DataTypeFailure());
-      } else if (e is DioError) {
-        if (e.response?.statusCode == FormsFlowAIAPIConstants.statusCode401) {
-          // var newTokenResponse =
-          //     await _fetchNewToken().onError((error, stackTrace) {
-          //   return Left(AuthorizationTokenExpiredFailure());
-          // });
-          // newTokenResponse.fold((l) {
-          //   return Left(AuthorizationTokenExpiredFailure());
-          // }, (tokenResponse) {
-          //   appPreferences.setAccessToken(tokenResponse.accessToken);
-          //   appPreferences.setRefreshToken(tokenResponse.refreshToken);
-          //   return fetchIsolatedTaskVariables(host: host);
-          // });
-          return Left(AuthorizationTokenExpiredFailure());
-        }
-        return Left(ServerFailure());
-      } else {
-        return Left(ServerFailure());
-      }
+    } catch (error) {
+      return _handleDioError(error.runtimeType);
     }
   }
 
@@ -333,9 +192,8 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
   @override
   Future<Either<Failure, List<ListMembersResponse>>> fetchMembers() async {
     try {
-      var response = await taskApiClient.fetchMembersList(
-          appPreferences.getBearerAccessToken(),
-          "formsflow/formsflow-reviewer");
+      final response =
+          await taskApiClient.fetchMembersList(ApiConstantUrl.fetchMemberList);
 
       if (response.response.statusCode !=
           FormsFlowAIAPIConstants.statusCode200) {
@@ -343,29 +201,8 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
       }
 
       return Right(response.data);
-    } on SocketException {
-      return left(NoConnectionFailure());
-    } on ServerException {
-      return Left(ServerFailure());
-    } catch (e) {
-      if (e is TypeError) {
-        return Left(DataTypeFailure());
-      } else if (e is DioError) {
-        if (e.response?.statusCode == FormsFlowAIAPIConstants.statusCode401) {
-          //   var newTokenResponse = await _fetchNewToken();
-          //   newTokenResponse.fold((l) {
-          //     return Left(AuthorizationTokenExpiredFailure());
-          //   }, (tokenResponse) {
-          //     appPreferences.setAccessToken(tokenResponse.accessToken);
-          //     appPreferences.setRefreshToken(tokenResponse.refreshToken);
-          //     return fetchMembers();
-          //   });
-          return Left(AuthorizationTokenExpiredFailure());
-        }
-        return Left(ServerFailure());
-      } else {
-        return Left(ServerFailure());
-      }
+    } catch (error) {
+      return _handleDioError(error.runtimeType);
     }
   }
 
@@ -375,29 +212,11 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
   Future<Either<Failure, List<ProcessDefinitionResponse>>>
       fetchProcessDefinitions() async {
     try {
-      var response = await taskApiClient
-          .fetchProcessDefinitions(appPreferences.getBearerAccessToken());
+      final response = await taskApiClient.fetchProcessDefinitions();
 
       return Right(response);
-    } catch (e) {
-      if (e is TypeError) {
-        return Left(DataTypeFailure());
-      } else if (e is DioError) {
-        if (e.response?.statusCode == FormsFlowAIAPIConstants.statusCode401) {
-          // var newTokenResponse = await _fetchNewToken();
-          // newTokenResponse.fold((l) {
-          //   return Left(AuthorizationTokenExpiredFailure());
-          // }, (tokenResponse) {
-          //   appPreferences.setAccessToken(tokenResponse.accessToken);
-          //   appPreferences.setRefreshToken(tokenResponse.refreshToken);
-          //   return fetchProcessDefinitions();
-          // });
-          return Left(AuthorizationTokenExpiredFailure());
-        }
-        return Left(ServerFailure());
-      } else {
-        return Left(ServerFailure());
-      }
+    } catch (error) {
+      return _handleDioError(error.runtimeType);
     }
   }
 
@@ -420,86 +239,42 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
   @override
   Future<Either<Failure, TaskCountResponse>> fetchTaskCount(String id) async {
     try {
-      var response = await taskApiClient.fetchTaskCount(
-          appPreferences.getBearerAccessToken(), id);
+      final response = await taskApiClient.fetchTaskCount(id);
       return Right(response);
-    } catch (e) {
-      if (e is TypeError) {
-        return Left(DataTypeFailure());
-      } else if (e is DioError) {
-        if (e.response?.statusCode == FormsFlowAIAPIConstants.statusCode401) {
-          //   var newTokenResponse = await _fetchNewToken();
-          //   newTokenResponse.fold((l) {
-          //     return Left(AuthorizationTokenExpiredFailure());
-          //   }, (tokenResponse) {
-          //     appPreferences.setAccessToken(tokenResponse.accessToken);
-          //     appPreferences.setRefreshToken(tokenResponse.refreshToken);
-          //     return fetchTaskCount(id);
-          //   });
-          // }
-          // return Left(ServerFailure());
-          return Left(AuthorizationTokenExpiredFailure());
-        } else {
-          return Left(ServerFailure());
-        }
-      } else {
-        return Left(ServerFailure());
-      }
+    } catch (error) {
+      return _handleDioError(error.runtimeType);
     }
   }
 
-  /// Method to fetch task variables
+  /// Method to fetch task finaliables
   /// Parameters
   /// [Id]
-  /// ---> Returns [TaskVariableDM]
+  /// ---> Returns [TaskfinaliableDM]
   @override
   Future<Either<Failure, TaskVariableDM>> fetchTaskVariables(
       {required String id}) async {
     try {
-      var response = await taskApiClient.fetchTaskVariables(
-          appPreferences.getBearerAccessToken(), id);
+      final response = await taskApiClient.fetchTaskVariables(id);
       return Right(TaskVariableDM.transform(response.data));
-    } catch (e) {
-      if (e is TypeError) {
-        return Left(DataTypeFailure());
-      } else if (e is DioError) {
-        if (e.response?.statusCode == FormsFlowAIAPIConstants.statusCode401) {
-          // var newTokenResponse = await _fetchNewToken();
-          // newTokenResponse.fold((l) {
-          //   return Left(AuthorizationTokenExpiredFailure());
-          // }, (tokenResponse) {
-          //   appPreferences.setAccessToken(tokenResponse.accessToken);
-          //   appPreferences.setRefreshToken(tokenResponse.refreshToken);
-          //   return fetchTaskVariables(id: id);
-          // });
-          return Left(AuthorizationTokenExpiredFailure());
-        }
-        return Left(ServerFailure());
-      } else {
-        return Left(ServerFailure());
-      }
+    } catch (error) {
+      return _handleDioError(error.runtimeType);
     }
   }
 
   /// Method to fetch task with isolate
   /// Parameters
   /// [TaskId]
-  /// ---> Returns [isolatedResponse.Response]
+  /// ---> Returns [Response]
   @override
-  Future<Either<Failure, isolatedResponse.Response>> fetchTaskWithIsolate(
-      {required String host, required String taskId}) async {
+  Future<Either<Failure, dio.Response>> fetchTask(
+      {required String taskId}) async {
     try {
-      var response = await isolatedHttpClient.get(
-          host: host,
-          path: taskId,
-          headers: APIUtils.getTaskAuthorizationHeader(
-              acessToken: appPreferences.getAccessToken()));
+      final response = await taskDio.get(
+        '${ApiConstantUrl.camundaEngineRest}/${ApiConstantUrl.task}/$taskId',
+      );
       return Right(response);
-    } catch (e) {
-      if (e is HttpClientException) {
-        return Left(TaskNotFoundFailure());
-      }
-      return Left(ServerFailure());
+    } catch (error) {
+      return _handleDioError(error.runtimeType);
     }
   }
 
@@ -519,37 +294,11 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
       TaskSortPostModel taskSortingPostModel,
       List<ProcessDefinitionResponse>? definitionResponse) async {
     try {
-      var data = await taskApiClient.fetchTasks(
-          appPreferences.getBearerAccessToken(),
-          // "application/hal+json",
-          id,
-          firstResult,
-          maxResults,
-          taskSortingPostModel);
+      final data = await taskApiClient.fetchTasks("application/hal+json", id,
+          firstResult, maxResults, taskSortingPostModel);
       return Right(TaskBaseDataResponse.transform(data, definitionResponse));
-    } catch (e) {
-      if (e is TypeError) {
-        return Left(DataTypeFailure());
-      } else if (e is DioError) {
-        if (e.response?.statusCode == 401) {
-          // var newTokenResponse =
-          //     await _fetchNewToken().onError((error, stackTrace) {
-          //   return Left(AuthorizationTokenExpiredFailure());
-          // });
-          // newTokenResponse.fold((l) {
-          //   return Left(AuthorizationTokenExpiredFailure());
-          // }, (tokenResponse) {
-          //   appPreferences.setAccessToken(tokenResponse.accessToken);
-          //   appPreferences.setRefreshToken(tokenResponse.refreshToken);
-          //   return fetchTasks(id, firstResult, maxResults, taskSortingPostModel,
-          //       definitionResponse);
-          // });
-          return Left(AuthorizationTokenExpiredFailure());
-        }
-        return Left(ServerFailure());
-      } else {
-        return Left(ServerFailure());
-      }
+    } catch (error) {
+      return _handleDioError(error.runtimeType);
     }
   }
 
@@ -563,8 +312,8 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
       {required String id,
       required FormSubmissionPostModel formSubmissionPostModel}) async {
     try {
-      var response = await taskApiClient.submitForm(
-          appPreferences.getBearerAccessToken(), id, formSubmissionPostModel);
+      final response =
+          await taskApiClient.submitForm(id, formSubmissionPostModel);
       if (response.response.statusCode ==
               FormsFlowAIAPIConstants.statusCode200 ||
           response.response.statusCode ==
@@ -574,26 +323,8 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
             message: FormsFlowAIAPIConstants.statusSuccessMessage));
       }
       return Left(ServerFailure());
-    } catch (e) {
-      if (e is TypeError) {
-        return Left(DataTypeFailure());
-      } else if (e is DioError) {
-        if (e.response?.statusCode == FormsFlowAIAPIConstants.statusCode401) {
-          // var newTokenResponse = await _fetchNewToken();
-          // newTokenResponse.fold((l) {
-          //   return Left(AuthorizationTokenExpiredFailure());
-          // }, (tokenResponse) {
-          //   appPreferences.setAccessToken(tokenResponse.accessToken);
-          //   appPreferences.setRefreshToken(tokenResponse.refreshToken);
-          //   return submitForm(
-          //       id: id, formSubmissionPostModel: formSubmissionPostModel);
-          // });
-          return Left(AuthorizationTokenExpiredFailure());
-        }
-        return Left(ServerFailure());
-      } else {
-        return Left(ServerFailure());
-      }
+    } catch (error) {
+      return _handleDioError(error.runtimeType);
     }
   }
 
@@ -603,8 +334,7 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
   @override
   Future<Either<Failure, void>> unClaimTask({required String taskId}) async {
     try {
-      var response = await taskApiClient.unclaimTask(
-          appPreferences.getBearerAccessToken(), taskId);
+      final response = await taskApiClient.unclaimTask(taskId);
       if (response.response.statusCode ==
               FormsFlowAIAPIConstants.statusCode200 ||
           response.response.statusCode ==
@@ -612,25 +342,8 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
         return Right(response.data);
       }
       return Left(ServerFailure());
-    } catch (e) {
-      if (e is TypeError) {
-        return Left(DataTypeFailure());
-      } else if (e is DioError) {
-        if (e.response?.statusCode == FormsFlowAIAPIConstants.statusCode401) {
-          // var newTokenResponse = await _fetchNewToken();
-          // newTokenResponse.fold((l) {
-          //   return Left(AuthorizationTokenExpiredFailure());
-          // }, (tokenResponse) {
-          //   appPreferences.setAccessToken(tokenResponse.accessToken);
-          //   appPreferences.setRefreshToken(tokenResponse.refreshToken);
-          //   return unClaimTask(taskId: taskId);
-          // });
-          return Left(AuthorizationTokenExpiredFailure());
-        }
-        return Left(ServerFailure());
-      } else {
-        return Left(ServerFailure());
-      }
+    } catch (error) {
+      return _handleDioError(error.runtimeType);
     }
   }
 
@@ -642,8 +355,7 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
   Future<Either<Failure, void>> updateAssignee(
       {required String taskId, required Map<String, String> payload}) async {
     try {
-      var response = await taskApiClient.updateAssignee(
-          appPreferences.getBearerAccessToken(), taskId, payload);
+      final response = await taskApiClient.updateAssignee(taskId, payload);
       if (response.response.statusCode ==
               FormsFlowAIAPIConstants.statusCode200 ||
           response.response.statusCode ==
@@ -651,25 +363,8 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
         return Right(response.data);
       }
       return Left(ServerFailure());
-    } catch (e) {
-      if (e is TypeError) {
-        return Left(DataTypeFailure());
-      } else if (e is DioError) {
-        if (e.response?.statusCode == FormsFlowAIAPIConstants.statusCode401) {
-          // var newTokenResponse = await _fetchNewToken();
-          // newTokenResponse.fold((l) {
-          //   return Left(AuthorizationTokenExpiredFailure());
-          // }, (tokenResponse) {
-          //   appPreferences.setAccessToken(tokenResponse.accessToken);
-          //   appPreferences.setRefreshToken(tokenResponse.refreshToken);
-          //   return updateAssignee(taskId: taskId, payload: payload);
-          // });
-          return Left(AuthorizationTokenExpiredFailure());
-        }
-        return Left(ServerFailure());
-      } else {
-        return Left(ServerFailure());
-      }
+    } catch (error) {
+      return _handleDioError(error.runtimeType);
     }
   }
 
@@ -682,29 +377,11 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
       {required String taskId,
       required UpdateTaskPostModel updateTaskPostModel}) async {
     try {
-      var response = await taskApiClient.updateTask(
-          appPreferences.getBearerAccessToken(), taskId, updateTaskPostModel);
+      final response =
+          await taskApiClient.updateTask(taskId, updateTaskPostModel);
       return Right(response);
-    } catch (e) {
-      if (e is TypeError) {
-        return Left(DataTypeFailure());
-      } else if (e is DioError) {
-        if (e.response?.statusCode == FormsFlowAIAPIConstants.statusCode401) {
-          // var newTokenResponse = await _fetchNewToken();
-          // newTokenResponse.fold((l) {
-          //   return Left(AuthorizationTokenExpiredFailure());
-          // }, (tokenResponse) {
-          //   appPreferences.setAccessToken(tokenResponse.accessToken);
-          //   appPreferences.setRefreshToken(tokenResponse.refreshToken);
-          //   return updateRemoteTask(
-          //       taskId: taskId, updateTaskPostModel: updateTaskPostModel);
-          // });
-          return Left(AuthorizationTokenExpiredFailure());
-        }
-        return Left(ServerFailure());
-      } else {
-        return Left(ServerFailure());
-      }
+    } catch (error) {
+      return _handleDioError(error.runtimeType);
     }
   }
 
@@ -712,15 +389,15 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
   /// Parameters
   /// [TaskId]
   /// [UpdateTaskPostModel]
-  ///   /// ---> Returns [isolatedResponse.Response]
+  ///   /// ---> Returns [isolated_response.Response]
   @override
-  Future<Either<Failure, isolatedResponse.Response>> updateTaskWithIsolates(
-      {required String url,
-      required String taskId,
+  Future<Either<Failure, isolated_response.Response>> updateTaskWithIsolates(
+      {required String taskId,
       required UpdateTaskPostModel updateTaskPostModel}) async {
     try {
-      var response = await isolatedHttpClient.put(
-          host: url,
+      final response = await isolatedHttpClient.put(
+          host:
+              "${ApiConstantUrl.formsflowaiBpmBaseUrl}${ApiConstantUrl.camundaEngineRest}/${ApiConstantUrl.task}/$taskId",
           body: updateTaskPostModel.toJson(),
           headers: APIUtils.getTaskAuthorizationHeader(
               acessToken: appPreferences.getAccessToken()));
@@ -730,44 +407,18 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
         return left(ServerFailure());
       }
       return Right(response);
-    } on SocketException {
-      return left(NoConnectionFailure());
-    } on ServerException {
-      return Left(ServerFailure());
-    } catch (e) {
-      if (e is TypeError) {
-        return Left(DataTypeFailure());
-      } else if (e is DioError) {
-        if (e.response?.statusCode == FormsFlowAIAPIConstants.statusCode401) {
-          // var newTokenResponse = await _fetchNewToken();
-          // newTokenResponse.fold((l) {
-          //   return Left(AuthorizationTokenExpiredFailure());
-          // }, (tokenResponse) {
-          //   appPreferences.setAccessToken(tokenResponse.accessToken);
-          //   appPreferences.setRefreshToken(tokenResponse.refreshToken);
-          //   return updateTaskWithIsolates(
-          //       url: url,
-          //       taskId: taskId,
-          //       updateTaskPostModel: updateTaskPostModel);
-          // });
-          return Left(AuthorizationTokenExpiredFailure());
-        }
-        return Left(ServerFailure());
-      } else {
-        return Left(ServerFailure());
-      }
+    } catch (error) {
+      return _handleDioError(error.runtimeType);
     }
   }
 
   @override
   Future<Either<Failure, void>> clearDatabaseData() {
-    // TODO: implement clearDatabaseData
     throw UnimplementedError();
   }
 
   @override
   Future<Either<Failure, void>> deleteTask({required TaskEntity task}) {
-    // TODO: implement deleteTask
     throw UnimplementedError();
   }
 
@@ -805,31 +456,6 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
     throw UnimplementedError();
   }
 
-  // Method to get the new access token with the refresh token
-
-  Future<Either<Failure, KeyCloakLoginResponse>> _fetchNewToken() async {
-    try {
-      var response = await userApiClient.fetchNewToken(
-          FormsFlowAIConstants.CLIENT_ID,
-          FormsFlowAIConstants.CLIENT_SECRET_KEY,
-          appPreferences.getRefreshToken(),
-          FormsFlowAIConstants.TOKEN_GRANT_TYPE_REFRESH_TOKEN);
-      return Right(response);
-    } catch (e) {
-      if (e is TypeError) {
-        return Left(DataTypeFailure());
-      } else if (e is DioError) {
-        if (e.response?.statusCode == 400) {
-          // Check for the retry limit get data with the refresh token
-          return Left(DataTypeFailure());
-        }
-        return Left(ServerFailure());
-      } else {
-        return Left(ServerFailure());
-      }
-    }
-  }
-
   /// Method to submit form in the background
   /// Parameters
   /// [Id]
@@ -839,26 +465,28 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
   Future<Either<Failure, BaseResponse>> submitFormIsolate(
       {required String id,
       required FormSubmissionPostModel formSubmissionPostModel}) async {
-    try {
-      var response = await isolatedHttpClient.post(
-          host:
-              "${ApiConstantUrl.FORMSFLOWAI_BASE_URL}${ApiConstantUrl.CAMUNDA_ENGINE_REST}/${ApiConstantUrl.TASK}/$id/submit-form",
-          body: formSubmissionPostModel.toJson(),
-          headers: APIUtils.getTaskAuthorizationHeader(
-              acessToken: appPreferences.getAccessToken()));
-      if (response.statusCode == FormsFlowAIAPIConstants.statusCode200 ||
-          response.statusCode == FormsFlowAIAPIConstants.statusCode204) {
-        return Right(BaseResponse(
-            statusCode: response.statusCode,
-            message: FormsFlowAIAPIConstants.statusSuccessMessage));
-      }
-      return Left(ServerFailure());
-    } on SocketException {
-      return left(NoConnectionFailure());
-    } on ServerException {
-      return Left(ServerFailure());
-    } catch (e) {
-      return Left(ServerFailure());
+    final response = await isolatedHttpClient
+        .post(
+            host:
+                "${ApiConstantUrl.formsflowaiBpmBaseUrl}${ApiConstantUrl.camundaEngineRest}/${ApiConstantUrl.task}/$id/submit-form",
+            body: formSubmissionPostModel.toJson(),
+            headers: APIUtils.getTaskAuthorizationHeader(
+                acessToken: appPreferences.getAccessToken()))
+        .then((value) {});
+    if (response != null &&
+            response.statusCode == FormsFlowAIAPIConstants.statusCode200 ||
+        response.statusCode == FormsFlowAIAPIConstants.statusCode204) {
+      return Right(BaseResponse(
+          statusCode: response.statusCode,
+          message: FormsFlowAIAPIConstants.statusSuccessMessage));
     }
+    return Left(ServerFailure());
+  }
+
+  Left<Failure, T> _handleDioError<T>(Type runtimeType) {
+    if (runtimeType == RefreshTokenExpiredException) {
+      return Left(AuthorizationTokenExpiredFailure());
+    }
+    return Left(ServerFailure());
   }
 }

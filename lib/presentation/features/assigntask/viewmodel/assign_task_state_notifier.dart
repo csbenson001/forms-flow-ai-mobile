@@ -1,7 +1,7 @@
 import 'package:formsflowai/presentation/features/assigntask/state/assign_task_state.dart';
-import 'package:formsflowai_shared/shared/formsflow_app_constants.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../../shared/formsflow_app_constants.dart';
 import '../model/memebers_data_model.dart';
 import '../model/view_members_filter_data_model.dart';
 
@@ -34,7 +34,7 @@ class AssignTaskStateNotifier extends StateNotifier<AssignTaskState> {
   /// Method to update selected member filter
   /// Input Parameter
   /// [SelectedItem]
-  void updateSelectedMemberFilter({dynamic? selectedItem}) {
+  void updateSelectedMemberFilter({dynamic selectedItem}) {
     state = state.copyWith(selectedMemberFilter: selectedItem);
   }
 

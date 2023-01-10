@@ -10,4 +10,6 @@ contains the core components for the formsflow.ai mobile application.
 
 ## Providers
    contains all view model providers injection.
-   
+
+## Preferences
+   contains userId, userName all current logged in session details

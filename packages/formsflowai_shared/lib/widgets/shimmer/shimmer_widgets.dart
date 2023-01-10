@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
 import 'package:shimmer/shimmer.dart';
@@ -74,7 +73,7 @@ class ShimmerWidgets {
   static Widget itemInflateShimmer() {
     return Container(
       height: Dimens.size_140,
-      padding: new EdgeInsets.all(Dimens.spacing_10),
+      padding: const EdgeInsets.all(Dimens.spacing_10),
       child: Card(
           color: Colors.white,
           shape: RoundedRectangleBorder(

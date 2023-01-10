@@ -1,9 +1,14 @@
 // service locator
 import 'package:formsflowai/core/di/repo_injection.dart';
 import 'package:formsflowai/core/di/usecase_injection.dart';
+import 'package:formsflowai/core/dio/dio_di.dart';
 import 'package:formsflowai/utils/eventbus/formsflowai_eventbus.dart';
-import 'package:formsflowai_shared/formsflowui.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../database/formsflow_database.dart';
+import '../preferences/app_preference.dart';
+import '../socket/socket_service.dart';
 
 // Injection locator
 final dl = GetIt.instance;
@@ -11,7 +16,7 @@ final dl = GetIt.instance;
 Future<void> registerServices() async {
   /// Build FormsFlowAI database
   FormsFlowDatabase database = await $FloorFormsFlowDatabase
-      .databaseBuilder(FormsFlowDatabase.DATABASE_NAME)
+      .databaseBuilder(FormsFlowDatabase.databaseName)
       .build();
 
   /// Register Shared Preferences
@@ -27,6 +32,9 @@ Future<void> registerServices() async {
 
   /// Register socket service
   dl.registerLazySingleton(() => SocketService(dl()));
+
+  /// Register dio helper
+  dl.registerLazySingleton(() => DioHelper());
 
   /// Register event bus
   dl.registerSingleton(() => FormsFlowEventBus());

@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:formsflowai/presentation/features/taskdetails/view/applicationhistory/task_application_history_view.dart';
-import 'package:formsflowai/presentation/features/taskdetails/view/diagram/task_bpmn_diagram_view.dart';
 import 'package:formsflowai/presentation/features/taskdetails/view/widgets/task_details_header_view.dart';
 import 'package:formsflowai/presentation/features/taskdetails/viewmodel/task_details_providers.dart';
-import 'package:formsflowai_shared/core/base/base_hooks_consumer_widget.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
-import 'package:formsflowai_shared/shared/app_strings.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
-import 'package:formsflowai_shared/utils/router/router_utils.dart';
+import 'package:formsflowai_shared/widgets/extended_scroll_view/extended_nested_scroll_view.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../core/module/providers/view_model_provider.dart';
+import '../../../../shared/app_strings.dart';
 import '../../../../shared/toast/toast_message_provider.dart';
-import '../../../base/toolbar_app_scaffold.dart';
+import '../../../../utils/router/router_utils.dart';
+import '../../../base/toolbar/toolbar_app_scaffold.dart';
+import '../../../base/widgets/base_hooks_consumer_widget.dart';
 import '../../home/tasklisting/model/task_listing_data_model.dart';
 import '../../home/tasklisting/viewmodel/task_list_screen_providers.dart';
+import 'applicationhistory/task_application_history_view.dart';
+import 'diagram/task_bpmn_diagram_view.dart';
 import 'form/task_details_forms_view.dart';
 
 class TaskDetailsScreen extends BaseHooksConsumerWidget {
@@ -30,25 +30,40 @@ class TaskDetailsScreen extends BaseHooksConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     /// initialize Tab Controller
     final tabController = useTabController(initialLength: 3, initialIndex: 0);
+
+    /// initialize scroll controller
+    final scrollController = useScrollController();
     initListeners(ref, context);
 
     // call onInit method in task details view model to initialize the page data
     useEffect(() {
       ref.read(taskDetailsViewModelProvider).onInit(data: taskListingDM);
+      return null;
     }, []);
 
-    return ToolbarAppScaffold(
-        pageTitle: Strings.taskDetailsTitle,
-        body: NestedScrollView(
-            physics: const ClampingScrollPhysics(),
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) {
-              return <Widget>[
-                SliverList(
-                  delegate: SliverChildListDelegate([
-                    Container(
-                        color: AppColor.grey7,
-                        child: const TaskDetailsHeaderView()),
+    return SafeArea(
+        child: ToolbarAppScaffold(
+            pageTitle: Strings.taskDetailsTitle,
+            resizeToAvoidBottomInset: true,
+            body: ExtendedNestedScrollView(
+                controller: scrollController,
+                onlyOneScrollInBody: true,
+                floatHeaderSlivers: true,
+                physics: const NeverScrollableScrollPhysics(),
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
+                headerSliverBuilder:
+                    (BuildContext context, bool innerBoxIsScrolled) {
+                  return <Widget>[
+                    SliverToBoxAdapter(
+                      child: Container(
+                          color: AppColor.grey7,
+                          child: const TaskDetailsHeaderView()),
+                    )
+                  ];
+                },
+                body: Column(
+                  children: [
                     Card(
                         color: Colors.white,
                         elevation: Dimens.radius_2,
@@ -69,8 +84,8 @@ class TaskDetailsScreen extends BaseHooksConsumerWidget {
                                 .read(taskDetailsViewModelProvider)
                                 .updateSelectedTabIndex(index);
                           },
-                          labelColor: AppColor.primarycolor,
-                          indicatorColor: AppColor.primarycolor,
+                          labelColor: AppColor.primaryColor,
+                          indicatorColor: AppColor.primaryColor,
                           unselectedLabelColor: Colors.black54,
                           isScrollable: false,
                           physics: const NeverScrollableScrollPhysics(),
@@ -81,25 +96,21 @@ class TaskDetailsScreen extends BaseHooksConsumerWidget {
                             Tab(text: Strings.taskDetailsTabTitleDiagram),
                           ],
                         )),
-                  ]),
-                ),
-              ];
-            },
-            body: Container(
-                color: Colors.white,
-                width: MediaQuery.of(context).size.width,
-                child: TabBarView(
-                  physics: const ClampingScrollPhysics(),
-                  controller: tabController,
-                  children: const [
-                    TaskDetailsFormsView(),
-                    TaskApplicationHistoryView(),
-                    TaskBpmnDiagramView()
+                    Expanded(
+                        child: TabBarView(
+                      controller: tabController,
+                      children: const [
+                        TaskDetailsFormsView(),
+                        TaskApplicationHistoryView(),
+                        TaskBpmnDiagramView()
+                      ],
+                    ))
                   ],
                 ))));
   }
 
   void initListeners(WidgetRef ref, BuildContext context) {
+    /// listener to validate 401 Unauthorized error
     ref.listen<bool>(authorizationExpiredFailureProvider, (previous, next) {
       if (next) {
         showErrorToast(
@@ -108,12 +119,15 @@ class TaskDetailsScreen extends BaseHooksConsumerWidget {
       }
     });
 
+    /// Listener to check if task is completed and if the task is completed
+    /// goes to the previous screen
     ref.listen<bool>(currentTaskCompletedSocketProvider, (previous, next) {
       if (next) {
         RouterUtils.popRoute(context: context);
       }
     });
 
+    /// Listener to show toast messages in task details screen
     ref.listen<ToastStateDM>(
         taskDetailsViewModelProvider.select((value) => value.toastStateDM),
         (previous, next) {

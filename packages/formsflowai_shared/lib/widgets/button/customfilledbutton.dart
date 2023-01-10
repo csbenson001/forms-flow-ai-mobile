@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
 
@@ -10,19 +9,23 @@ class CustomFilledButton extends StatelessWidget {
   final String? buttonText;
   final EdgeInsetsGeometry? margin;
 
-  CustomFilledButton(
-      {this.onPressed, this.buttonText, this.margin, IconData? icon});
+  const CustomFilledButton(
+      {super.key,
+      this.onPressed,
+      this.buttonText,
+      this.margin,
+      IconData? icon});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: this.margin,
+      margin: margin,
       height: 50.0,
       child: InkWell(
         child: ElevatedButton(
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
-            primary: AppColor.primarycolor,
+            backgroundColor: AppColor.primaryColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20.0),
             ),
@@ -32,7 +35,11 @@ class CustomFilledButton extends StatelessWidget {
           child: Ink(
             decoration: BoxDecoration(
                 gradient: const LinearGradient(
-                  colors: [AppColor.purple, AppColor.purple, AppColor.purple2],
+                  colors: [
+                    AppColor.primaryColor,
+                    AppColor.primaryColor,
+                    AppColor.purple
+                  ],
                 ),
                 borderRadius: BorderRadius.circular(15.0)),
             child: Container(
@@ -44,7 +51,7 @@ class CustomFilledButton extends StatelessWidget {
                   style: const TextStyle(
                       fontSize: Dimens.font_16,
                       color: Colors.white,
-                      fontFamily: AppFont.FONT_MONTERSERAT,
+                      fontFamily: AppFont.fontMontserrat,
                       fontWeight: FontWeight.w800),
                 ),
               ),

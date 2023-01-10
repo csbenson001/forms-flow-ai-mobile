@@ -9,13 +9,13 @@ class CustomBottomFilledButton extends StatelessWidget {
   final Color? backgroundColor;
 
   const CustomBottomFilledButton(
-      {this.onPressed, this.buttonText, this.backgroundColor});
+      {super.key, this.onPressed, this.buttonText, this.backgroundColor});
 
   @override
   Widget build(BuildContext context) {
     if (buttonText != null) {
       return Positioned(
-          bottom: Dimens.spacing_none,
+          bottom: Dimens.none,
           child: InkWell(
               onTap: onPressed,
               child: Container(
@@ -26,7 +26,7 @@ class CustomBottomFilledButton extends StatelessWidget {
                       alignment: Alignment.center,
                       child: Text(
                         buttonText!,
-                        style: AppTextStyles.whiteTextStyle_Bold_16,
+                        style: AppTextStyles.whiteTextStyleBold_16,
                       )))));
     }
     return const SizedBox();

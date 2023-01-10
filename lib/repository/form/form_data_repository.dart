@@ -5,11 +5,12 @@ import 'package:formsflowai/presentation/features/taskdetails/model/form_dm.dart
 import 'package:formsflowai/repository/form/form_local_data_source_impl.dart';
 import 'package:formsflowai/repository/form/form_remote_data_source_impl.dart';
 import 'package:formsflowai/repository/form/form_repository.dart';
-import 'package:formsflowai_api/response/base/base_response.dart';
-import 'package:formsflowai_api/response/form/submission/form_submission_response.dart';
-import 'package:formsflowai_shared/core/database/entity/form_entity.dart';
-import 'package:formsflowai_shared/core/networkmanager/network_manager_controller.dart';
-import 'package:isolated_http_client/src/response.dart';
+import 'package:isolated_http_client/isolated_http_client.dart';
+
+import '../../core/api/response/base/base_response.dart';
+import '../../core/api/response/form/submission/form_submission_response.dart';
+import '../../core/database/entity/form_entity.dart';
+import '../../core/networkmanager/network_manager_controller.dart';
 
 class FormDataRepository implements FormRepository {
   final FormLocalDataSource localDataSource;
@@ -62,11 +63,13 @@ class FormDataRepository implements FormRepository {
   /// ---> Returns [Response]
   @override
   Future<Either<Failure, Response>> fetchFormSubmissionIsolatedData(
-      {required String host,
+      {required String formResourceId,
       required String taskId,
       required String formSubmissionId}) {
     return remoteDataSource.fetchFormSubmissionIsolatedData(
-        host: host, taskId: taskId, formSubmissionId: formSubmissionId);
+        taskId: taskId,
+        formSubmissionId: formSubmissionId,
+        formResourceId: formResourceId);
   }
 
   /// Method to fetch formsData
@@ -88,8 +91,8 @@ class FormDataRepository implements FormRepository {
   /// ---> Return [Response]
   @override
   Future<Either<Failure, Response>> fetchIsolatedFormData(
-      {required String host, required String path}) {
-    return remoteDataSource.fetchIsolatedFormData(host: host, path: path);
+      {required String formId}) {
+    return remoteDataSource.fetchIsolatedFormData(formId: formId);
   }
 
   /// Method to insert form data
@@ -130,7 +133,7 @@ class FormDataRepository implements FormRepository {
   /// [FormSubmissionId]
   /// [FormSubmissionResponse]
   @override
-  Future<Either<Failure, void>> submitFormDataIsolate(
+  Future<Either<Failure, BaseResponse>> submitFormDataIsolate(
       {required String formResourceId,
       required String formSubmissionId,
       required FormSubmissionResponse formSubmissionResponse}) {

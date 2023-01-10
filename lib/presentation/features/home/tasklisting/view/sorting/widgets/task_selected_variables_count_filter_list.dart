@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_riverpod/src/consumer.dart';
 import 'package:formsflowai/core/module/providers/view_model_provider.dart';
-import 'package:formsflowai_shared/core/base/base_consumer_widget.dart';
-import 'package:formsflowai_shared/shared/app_strings.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../../../../../shared/app_strings.dart';
 import '../../../../../../../shared/app_text_styles.dart';
+import '../../../../../../base/widgets/base_consumer_widget.dart';
 
 /// [TaskSelectedVariablesCountView] to display selected
 /// task variables count

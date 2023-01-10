@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 
 import 'checkbox_orientation.dart';
@@ -184,8 +186,9 @@ class GroupedCheckbox extends StatefulWidget {
 
   final double chechBoxHeight;
 
-  GroupedCheckbox(
-      {required this.itemList,
+  const GroupedCheckbox(
+      {super.key,
+      required this.itemList,
       required this.orientation,
       required this.onChanged,
       this.checkedItemList,
@@ -231,13 +234,13 @@ class _GroupedCheckboxState extends State<GroupedCheckbox> {
     for (int i = 0; i < widget.itemList.length; i++) {
       widgetList.add(item(i));
     }
-    if (widget.orientation == CheckboxOrientation.VERTICAL) {
+    if (widget.orientation == CheckboxOrientation.vertical) {
       for (final item in widgetList) {
         content.add(Row(children: <Widget>[item]));
       }
       finalWidget = SingleChildScrollView(
           scrollDirection: Axis.vertical, child: Column(children: content));
-    } else if (widget.orientation == CheckboxOrientation.HORIZONTAL) {
+    } else if (widget.orientation == CheckboxOrientation.horizontal) {
       for (final item in widgetList) {
         content.add(Column(children: <Widget>[item]));
       }
@@ -246,7 +249,6 @@ class _GroupedCheckboxState extends State<GroupedCheckbox> {
     } else {
       finalWidget = SingleChildScrollView(
         child: Wrap(
-            children: widgetList,
             spacing: widget.wrapSpacing,
             runSpacing: widget.wrapRunSpacing,
             textDirection: widget.wrapTextDirection,
@@ -254,7 +256,8 @@ class _GroupedCheckboxState extends State<GroupedCheckbox> {
             verticalDirection: widget.wrapVerticalDirection,
             alignment: widget.wrapAlignment,
             direction: Axis.horizontal,
-            runAlignment: widget.wrapRunAlignment),
+            runAlignment: widget.wrapRunAlignment,
+            children: widgetList),
       );
     }
     return finalWidget;
@@ -262,7 +265,7 @@ class _GroupedCheckboxState extends State<GroupedCheckbox> {
 
   Widget item(int index) {
     return Padding(
-        padding: EdgeInsets.only(left: 6.0),
+        padding: const EdgeInsets.only(left: 6.0),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -292,7 +295,7 @@ class _GroupedCheckboxState extends State<GroupedCheckbox> {
                         }),
             ),
             Container(
-              margin: EdgeInsets.only(left: 4.0),
+              margin: const EdgeInsets.only(left: 4.0),
               child: Text(
                 widget.itemList[index].isEmpty ? '' : widget.itemList[index],
                 style: widget.disabled != null &&

@@ -1,9 +1,8 @@
-import 'package:formsflowai_shared/shared/formsflow_app_constants.dart';
 import 'package:intl/intl.dart';
 
 class TimeStampUtils {
   static String convertDateToString(DateTime date) {
-    final sFormatter = DateFormat(FormsFlowAIConstants.dateYearFormat);
+    final sFormatter = DateFormat('yyyy-MM-dd');
     return sFormatter.format(date);
   }
 
@@ -20,7 +19,7 @@ class TimeStampUtils {
   }
 
   static DateTime convertStringToDate(String date) {
-    final sFormatter = DateFormat(FormsFlowAIConstants.dateYearFormat);
+    final sFormatter = DateFormat('yyyy-MM-dd');
     return sFormatter.parse(date);
   }
 
@@ -32,11 +31,9 @@ class TimeStampUtils {
   static String? formatISOTime(DateTime? date) {
     final duration = date?.timeZoneOffset;
     if (date != null && duration != null && duration.isNegative) {
-      return (date.toIso8601String().replaceAll("Z", "").trim() +
-          "-${duration.inHours.toString().padLeft(2, '0')}${(duration.inMinutes - (duration.inHours * 60)).toString().padLeft(2, '0')}");
+      return ("${date.toIso8601String().replaceAll("Z", "").trim()}-${duration.inHours.toString().padLeft(2, '0')}${(duration.inMinutes - (duration.inHours * 60)).toString().padLeft(2, '0')}");
     } else if (date != null && duration != null) {
-      return (date.toIso8601String().replaceAll("Z", "").trim() +
-          "+${duration.inHours.toString().padLeft(2, '0')}${(duration.inMinutes - (duration.inHours * 60)).toString().padLeft(2, '0')}");
+      return ("${date.toIso8601String().replaceAll("Z", "").trim()}+${duration.inHours.toString().padLeft(2, '0')}${(duration.inMinutes - (duration.inHours * 60)).toString().padLeft(2, '0')}");
     } else {
       return null;
     }

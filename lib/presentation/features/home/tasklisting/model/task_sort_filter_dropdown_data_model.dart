@@ -4,7 +4,7 @@ class TaskSortFilterDropDownDM {
   var filterName = "";
   bool isAscending = false;
 
-  TaskSortFilterDropDownDM() {}
+  TaskSortFilterDropDownDM();
 
   TaskSortFilterDropDownDM.named(
       {required this.filterName, required this.isAscending});

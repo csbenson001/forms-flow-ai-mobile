@@ -17,8 +17,8 @@
  Core contains core classes used in formsflow.ai mobile application.
 
 ## Packages
-  --> formsflowai.api - package to handle network calls and transformations.
-  --> formsflowai.shared - contains all shared UI components, color codes and app constants.
+  --> formsflowai_shared - contains all shared UI components, color codes and app constants.
+  --> stomp_dart_client - package to integrate stomp socket client in dart.
 
 ## Assets
 Assets

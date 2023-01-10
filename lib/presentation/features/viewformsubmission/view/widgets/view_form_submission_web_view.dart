@@ -1,23 +1,22 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:flutter_riverpod/src/consumer.dart';
 import 'package:formsflowai/core/module/providers/view_model_provider.dart';
 import 'package:formsflowai/presentation/features/viewformsubmission/viewmodel/view_form_submission_state_notifier.dart';
-import 'package:formsflowai_shared/core/base/base_consumer_widget.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
-import 'package:formsflowai_shared/utils/form/formio_webview_util.dart';
 import 'package:formsflowai_shared/widgets/formsflow_circular_progress_indicator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../../../utils/form/formio_webview_util.dart';
 import '../../../../../utils/general_util.dart';
+import '../../../../base/widgets/base_consumer_widget.dart';
 
+// ignore: must_be_immutable
 class ViewFormSubmissionWebView extends BaseConsumerWidget {
-  ViewFormSubmissionWebView({Key? key}) : super(key: key);
-
   final GlobalKey formSubmissionWebKey = GlobalKey();
+
+  ViewFormSubmissionWebView({Key? key}) : super(key: key);
 
   InAppWebViewController? webViewController;
 
@@ -36,7 +35,9 @@ class ViewFormSubmissionWebView extends BaseConsumerWidget {
                 right: Dimens.spacing_10),
             child: InAppWebView(
               key: formSubmissionWebKey,
-              gestureRecognizers: Set()
+              gestureRecognizers: {}
+                ..add(Factory<VerticalDragGestureRecognizer>(
+                    () => VerticalDragGestureRecognizer()))
                 ..add(Factory<VerticalDragGestureRecognizer>(
                     () => VerticalDragGestureRecognizer())),
               initialFile: "assets/formio/form.html",
@@ -70,13 +71,9 @@ class ViewFormSubmissionWebView extends BaseConsumerWidget {
                     resources: resources,
                     action: PermissionRequestResponseAction.GRANT);
               },
-              onConsoleMessage: (controller, consoleMessage) {
-                
-              },
+              onConsoleMessage: (controller, consoleMessage) {},
               onLoadStop:
                   (InAppWebViewController inappController, Uri? uri) async {
-   
-
                 webViewController?.evaluateJavascript(
                     source:
                         'loadForm(${formIoModel?.formComponents}, ${formIoModel?.formData},'

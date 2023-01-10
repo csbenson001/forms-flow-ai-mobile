@@ -17,7 +17,7 @@ class FormsFlowPrimaryButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: enabled ? onPressed : null,
       style: ElevatedButton.styleFrom(
-          primary: const Color(0xFF34C3A7),
+          backgroundColor: const Color(0xFF34C3A7),
           padding: const EdgeInsets.all(10),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class FormsflowAIDateTimePicker {
@@ -25,7 +24,7 @@ class FormsflowAIDateTimePicker {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
+      firstDate: DateTime.now().subtract(const Duration(days: 365)),
       lastDate: DateTime.now().add(const Duration(days: 365)),
       builder: (context, child) {
         return Theme(data: ThemeData.light(), child: child!);
@@ -59,49 +58,45 @@ class FormsflowAIDateTimePicker {
   }
 
   /// This builds cupertino date picker in iOS
-  static Future<DateTime?>? _buildCupertinoDatePicker(
-      {required BuildContext context}) {
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext builder) {
-          return Container(
-            height: MediaQuery.of(context).copyWith().size.height / 3,
-            color: Colors.white,
-            child: CupertinoDatePicker(
-              mode: CupertinoDatePickerMode.date,
-              onDateTimeChanged: (picked) {
-                if (picked != null) {
-                  _buildCupertinoTimePicker(
-                      context: context, selectedDate: picked);
-                }
-              },
-              initialDateTime: DateTime.now(),
-              minimumYear: DateTime.now().year,
-              maximumYear: DateTime.now().add(const Duration(days: 365)).year,
-            ),
-          );
-        });
-    return null;
-  }
+  // static Future<DateTime?>? _buildCupertinoDatePicker(
+  //     {required BuildContext context}) {
+  //   showModalBottomSheet(
+  //       context: context,
+  //       builder: (BuildContext builder) {
+  //         return Container(
+  //           height: MediaQuery.of(context).copyWith().size.height / 3,
+  //           color: Colors.white,
+  //           child: CupertinoDatePicker(
+  //             mode: CupertinoDatePickerMode.date,
+  //             onDateTimeChanged: (picked) {
+  //               _buildCupertinoTimePicker(
+  //                   context: context, selectedDate: picked);
+  //             },
+  //             initialDateTime: DateTime.now(),
+  //             minimumYear: DateTime.now().year,
+  //             maximumYear: DateTime.now().add(const Duration(days: 365)).year,
+  //           ),
+  //         );
+  //       });
+  //   return null;
+  // }
 
   /// This builds cupertino time picker in iOS
-  static Future<DateTime?>? _buildCupertinoTimePicker(
-      {required BuildContext context, required DateTime selectedDate}) {
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext builder) {
-          return Container(
-            height: MediaQuery.of(context).copyWith().size.height / 3,
-            color: Colors.white,
-            child: CupertinoTimerPicker(
-              mode: CupertinoTimerPickerMode.hm,
-              onTimerDurationChanged: (Duration value) {
-                
-                ;
-              },
-            ),
-          );
-        });
-    return null;
-  }
+  // static Future<DateTime?>? _buildCupertinoTimePicker(
+  //     {required BuildContext context, required DateTime selectedDate}) {
+  //   showModalBottomSheet(
+  //       context: context,
+  //       builder: (BuildContext builder) {
+  //         return Container(
+  //           height: MediaQuery.of(context).copyWith().size.height / 3,
+  //           color: Colors.white,
+  //           child: CupertinoTimerPicker(
+  //             mode: CupertinoTimerPickerMode.hm,
+  //             onTimerDurationChanged: (Duration value) {
+  //             },
+  //           ),
+  //         );
+  //       });
+  //   return null;
+  // }
 }

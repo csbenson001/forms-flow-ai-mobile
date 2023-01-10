@@ -5,11 +5,12 @@ import 'package:formsflowai/core/module/providers/view_model_provider.dart';
 import 'package:formsflowai/core/router/app_routes.dart';
 import 'package:formsflowai/presentation/features/splash/viewmodel/splash_state_notifier.dart';
 import 'package:formsflowai/shared/imageassets/formsflowai_image_assets.dart';
-import 'package:formsflowai_shared/core/base/base_hooks_consumer_widget.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
-import 'package:formsflowai_shared/utils/router/router_utils.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../../utils/router/router_utils.dart';
+import '../../../base/widgets/base_hooks_consumer_widget.dart';
 
 class SplashScreen extends BaseHooksConsumerWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -22,6 +23,7 @@ class SplashScreen extends BaseHooksConsumerWidget {
     /// call onInit method in the viewModel
     useEffect(() {
       ref.read(splashViewModelProvider).onInit();
+      return null;
     }, []);
 
     return Scaffold(

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_riverpod/src/consumer.dart';
-import 'package:formsflowai_shared/core/base/base_consumer_widget.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
-import 'package:formsflowai_shared/shared/task_constants.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../../../../core/module/providers/view_model_provider.dart';
+import '../../../../../../../shared/task_constants.dart';
+import '../../../../../../base/widgets/base_consumer_widget.dart';
 import '../../../model/task_variable_filter_data_model.dart';
 import 'filter_input_date_inflate_row.dart';
 import 'filter_input_like_equal_operator_inflate_row.dart';
@@ -46,21 +45,21 @@ class SelectedVariableFilterListView extends BaseConsumerWidget {
       required int index,
       required TaskVariableFilterDM filterDM}) {
     switch (filterDM.key) {
-      case TaskConstants.FILTER_KEY_TASK_VARIABLES:
-      case TaskConstants.FILTER_KEY_PROCESS_VARIABLES:
+      case TaskConstants.filterKeyTaskVariables:
+      case TaskConstants.filterKeyProcessVariables:
         return FilterInflateTaskProcessView(filterDM: filterDM, index: index);
-      case TaskConstants.FILTER_KEY_PROCESS_DEFINITION_NAME:
-      case TaskConstants.FILTER_KEY_ASSIGNEE:
-      case TaskConstants.FILTER_KEY_CANDIDATE_GROUP:
-      case TaskConstants.FILTER_KEY_CANDIDATE_USER:
-      case TaskConstants.FILTER_KEY_NAME:
-      case TaskConstants.FILTER_KEY_DESCRIPTION:
-      case TaskConstants.FILTER_KEY_PRIORITY:
+      case TaskConstants.filterKeyProcessDefinitionName:
+      case TaskConstants.filterKeyAssignee:
+      case TaskConstants.filterKeyCandidateGroup:
+      case TaskConstants.filterKeyCandidateUser:
+      case TaskConstants.filterKeyName:
+      case TaskConstants.filterKeyDescription:
+      case TaskConstants.filterKeyPriority:
         return FilterInflateLikeEqOperatorViews(
             taskFilterDM: filterDM, index: index);
-      case TaskConstants.FILTER_KEY_DUEDATE:
-      case TaskConstants.FILTER_KEY_CREATED:
-      case TaskConstants.FILTER_KEY_FOLLOWUP:
+      case TaskConstants.filterKeyDuedate:
+      case TaskConstants.filterKeyCreated:
+      case TaskConstants.filterKeyFollowup:
         return FilterInflateDateOperatorViews(
             taskFilterDM: filterDM, index: index);
 

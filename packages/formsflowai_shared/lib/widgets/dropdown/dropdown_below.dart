@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -130,13 +132,13 @@ class _DropdownMenuState<T> extends State<_DropdownMenu<T>> {
 
     _fadeOpacity = CurvedAnimation(
       parent: widget.route!.animation!,
-      curve: Interval(0.0, 0.25),
-      reverseCurve: Interval(0.75, 1.0),
+      curve: const Interval(0.0, 0.25),
+      reverseCurve: const Interval(0.75, 1.0),
     );
     _resize = CurvedAnimation(
       parent: widget.route!.animation!,
-      curve: Interval(0.25, 0.5),
-      reverseCurve: Threshold(0.0),
+      curve: const Interval(0.25, 0.5),
+      reverseCurve: const Threshold(0.0),
     );
   }
 
@@ -150,8 +152,8 @@ class _DropdownMenuState<T> extends State<_DropdownMenu<T>> {
     for (int itemIndex = 0; itemIndex < route.items!.length; ++itemIndex) {
       CurvedAnimation opacity;
       if (itemIndex == route.selectedIndex) {
-        opacity =
-            CurvedAnimation(parent: route.animation!, curve: Threshold(0.0));
+        opacity = CurvedAnimation(
+            parent: route.animation!, curve: const Threshold(0.0));
       } else {
         final double start = (0.5 + (itemIndex + 1) * unit).clamp(0.0, 1.0);
         final double end = (start + 1.5 * unit).clamp(0.0, 1.0);
@@ -191,7 +193,7 @@ class _DropdownMenuState<T> extends State<_DropdownMenu<T>> {
             type: MaterialType.transparency,
             textStyle: route.style,
             child: ScrollConfiguration(
-              behavior: _DropdownScrollBehavior(),
+              behavior: const _DropdownScrollBehavior(),
               child: Scrollbar(
                 child: ListView(
                   controller: widget.route!.scrollController,
@@ -573,7 +575,7 @@ class _DropdownBelowState<T> extends State<DropdownBelow<T>>
       selectedIndex: -1,
       elevation: widget.elevation,
       dropdownColor: widget.dropdownColor,
-      style: widget.itemTextstyle ?? TextStyle(),
+      style: widget.itemTextstyle ?? const TextStyle(),
       barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
     );
 
@@ -597,8 +599,8 @@ class _DropdownBelowState<T> extends State<DropdownBelow<T>>
       items.add(DefaultTextStyle(
         style: widget.boxTextstyle!,
         child: IgnorePointer(
-          child: widget.hint,
           ignoringSemantics: false,
+          child: widget.hint,
         ),
       ));
     }

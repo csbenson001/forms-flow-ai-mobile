@@ -1,8 +1,22 @@
+
+<div align="center"><img src="https://github.com/AOT-Technologies/forms-flow-ai-mobile/blob/main/assets/images/logoorginal.svg"/></div>
+<hr/> 
+
+[![FormsFlow Mobile CI](https://github.com/AOT-Technologies/forms-flow-ai-mobile/actions/workflows/forms-flow-mobile-ci.yml/badge.svg)](https://github.com/AOT-Technologies/forms-flow-ai-mobile/actions)
+[![Join the chat at https://gitter.im/forms-flow-ai/community](https://badges.gitter.im/forms-flow-ai/community.svg)](https://gitter.im/forms-flow-ai/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://stackoverflow.com/questions/tagged/formsflow.ai](https://img.shields.io/badge/ask%20-on%20%20stackoverflow-F47F24)](https://stackoverflow.com/questions/tagged/formsflow.ai?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+<img src="https://img.shields.io/badge/release-v1.0.0-blue"/>
+<img src="https://img.shields.io/badge/LICENSE-Apache%202-green"/>
+
+![Flutter](https://img.shields.io/badge/Flutter-3.3-blue) ![dart](https://img.shields.io/badge/dart-2.18.2-green)
+
+
+
 ## formsflow.ai Mobile Application
 
-formsflow.ai mobile application is a task management application developed with flutter version 3.3 and dart version 2.18.2.
+formsflow.ai mobile application is a task management application.
 
-Formsflow.ai mobile application uses formio version 2.1.0 to support online/offline form rendering.
+The application uses formio version 2.1.0 to support online/offline form rendering.
 
 
 ## Table of Content
@@ -19,7 +33,7 @@ Formsflow.ai mobile application uses formio version 2.1.0 to support online/offl
 
 ## Prerequisites
 
-* Please make sure the [Formsflowai](https://github.com/AOT-Technologies/forms-flow-ai/blob/master/forms-flow-web) is up and running.
+* Please make sure the [formsflowai](https://github.com/AOT-Technologies/forms-flow-ai/blob/master/forms-flow-web) is up and running.
 * Admin access to a [Keycloak](https://www.keycloak.org/) server. For local development / testing follow [Keycloak installation](https://github.com/AOT-Technologies/forms-flow-ai/tree/master/forms-flow-idm/keycloak).
 * Please make sure the [Formio server](https://github.com/AOT-Technologies/forms-flow-ai/tree/master/forms-flow-forms) is up and running.
 
@@ -28,11 +42,11 @@ Formsflow.ai mobile application uses formio version 2.1.0 to support online/offl
 
 ### Flutter Setup
 
-Configure the Flutter development environment on your machine, see https://flutter.dev/docs/get-started/install
+Configure the Flutter development environment on your machine, checkout [here](https://flutter.dev/docs/get-started/install).
 
-After completing the installation run the below command to check the flutter version
+After completing the installation run the below command to check the flutter version.
 
-flutter --version
+ `flutter --version`
 
 ### Installation
 
@@ -57,34 +71,42 @@ Variable name | Meaning | Possible values | Default value |
 
 ### Running the application
 
-    For installing dependencies run command: $ flutter pub get
+**For installing dependencies run command**
+   
+   `flutter pub get`
     
-    For creating the generated files run: $ flutter pub run build_runner build
-    
-    If you have a conflict in generated files run command : $ flutter pub run build_runner build --delete-conflicting-outputs
-    
-    For running the app run command : $ flutter run
+**For creating the generated files run command** 
+
+   `flutter pub run build_runner build`
+   
+**Fix conflict in generated files run command** 
+
+   `flutter pub run build_runner build --delete-conflicting-outputs`
+   
+**For running the app run command** 
+
+   `flutter run`    
 
 ### Logo Change
 
-     For Android:
+   **For Android**
      
-     update mipmap folders launcher images in android with your custom -> app -> src -> main -> res -> mipmap
+   update mipmap folders launcher images in android with your custom logo -> app -> src -> main -> res -> mipmap
      
-     For iOS:
+   **For iOS**
      
-     update Asset Appicon with your custom logo
+   update Asset Appicon with your custom logo
 
 ### Offline Access
 
-Formsflowai mobile app supports complete offline access.
+* Formsflowai mobile app supports complete offline access.
 
-Only tasks assigned to the loggedin user will be stored and rendered when there is no
+* Only tasks assigned to the loggedin user will be stored and rendered when there is no
 internet connectivity.
 
-Users can submit the forms or update the tasks due-date, follow-up date offline.
+* Users can submit the forms or update the tasks due-date, follow-up date offline.
 
-To enable offline access please update the following in your keycloak realm
+* To enable offline access please update the following in your keycloak realm
 
 Variable name | Meaning | Possible values | Expected value |
    --- | --- | --- | ---
@@ -148,3 +170,19 @@ Variable name | Meaning | Possible values | Expected value |
 | `actionComplete` | <li>Triggered for button components</li> |<li>type:The configured event type</li><li>component:The component json</li><li>actionType: Form submit action values</li> | form.emit('customEvent', { type: "actionComplete",    component: component, actionType: actionType }); |
 | `actionError` | <li>Triggrered on a failed form submission</li><li>Triggered for button components</li><li>Triggers callback when the form submission is failed</li> |<li>type:The configured event type</li>|form.emit('customEvent', {type: "actionError"}); |   
 | `cancelSubmission` | <li>Used in the create form page</li><li>Triggered for button components</li><li>Used for Canceling current submission and goin back to Form List Page</li> |<li>type:The configured event type</li>|form.emit('customEvent', {type: "cancelSubmission"}); |    
+
+## License
+
+Copyright 2020 AppsOnTime-Technologies 2020
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.

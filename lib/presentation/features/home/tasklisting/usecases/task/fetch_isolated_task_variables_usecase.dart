@@ -1,8 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:formsflowai_shared/shared/api_constants_url.dart';
 import 'package:isolated_http_client/isolated_http_client.dart'
-    as isolatedResponse;
+    as isolated_response;
 
 import '../../../../../../core/error/errors_failure.dart';
 import '../../../../../../core/usecase/usecase.dart';
@@ -11,20 +10,18 @@ import '../../../../../../repository/task/task_data_repository.dart';
 /// [FetchIsolatedTaskVariablesUseCase] to fetch task variables response in isolate
 /// interacts with [TaskDataRepository] to complete the operation
 /// [FetchIsolatedTaskVariablesParams]
-/// [isolatedResponse.Response]
+/// [isolated_response.Response]
 class FetchIsolatedTaskVariablesUseCase
     implements
-        UseCase<isolatedResponse.Response, FetchIsolatedTaskVariablesParams> {
+        UseCase<isolated_response.Response, FetchIsolatedTaskVariablesParams> {
   const FetchIsolatedTaskVariablesUseCase({required this.repository});
 
   final TaskDataRepository repository;
 
   @override
-  Future<Either<Failure, isolatedResponse.Response>> call(
+  Future<Either<Failure, isolated_response.Response>> call(
       {required FetchIsolatedTaskVariablesParams params}) {
-    return repository.fetchIsolatedTaskVariables(
-        host:
-            '${ApiConstantUrl.FORMSFLOWAI_BASE_URL}${ApiConstantUrl.CAMUNDA_ENGINE_REST}/${ApiConstantUrl.TASK}/${params.taskId}/variables');
+    return repository.fetchIsolatedTaskVariables(taskId: params.taskId);
   }
 }
 

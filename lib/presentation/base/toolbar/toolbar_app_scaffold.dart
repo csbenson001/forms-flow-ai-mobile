@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'app_bar_widget.dart';
@@ -10,16 +9,21 @@ import 'app_bar_widget.dart';
 /// [PageTitle]
 /// Widget [Body]
 class ToolbarAppScaffold extends StatelessWidget {
-  const ToolbarAppScaffold({this.pageTitle, this.body, Key? key})
+  const ToolbarAppScaffold(
+      {this.pageTitle,
+      this.body,
+      this.resizeToAvoidBottomInset = false,
+      Key? key})
       : super(key: key);
 
   final Widget? body;
   final String? pageTitle;
+  final bool? resizeToAvoidBottomInset;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: resizeToAvoidBottomInset ?? false,
         appBar: AppBarWidget(
           pageTitle: pageTitle!,
           iconData:

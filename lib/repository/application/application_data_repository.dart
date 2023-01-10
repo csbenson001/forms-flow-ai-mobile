@@ -1,5 +1,6 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dartz/dartz.dart';
+import 'package:formsflowai/core/api/response/form/roles/formio_roles_response.dart';
 import 'package:formsflowai/core/error/errors_failure.dart';
 import 'package:formsflowai/presentation/features/taskdetails/model/application_history_data_model.dart';
 import 'package:formsflowai/repository/application/application_local_data_source_impl.dart';
@@ -56,5 +57,14 @@ class ApplicationHistoryDataRepository implements ApplicationHistoryRepository {
       {required List<ApplicationHistoryEntity> applicationEntityList}) {
     return localDataSource.insertAllApplicationHistory(
         applicationEntityList: applicationEntityList);
+  }
+
+  @override
+  Future<Either<Failure, FormioRolesResponse>> fetchFormioRoles() {
+    if (networkManagerController.connectionType != ConnectivityResult.none) {
+      return remoteDataSource.fetchFormioRoles();
+    } else {
+      return localDataSource.fetchFormioRoles();
+    }
   }
 }

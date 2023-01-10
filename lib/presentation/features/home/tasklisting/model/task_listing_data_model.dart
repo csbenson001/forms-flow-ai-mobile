@@ -1,9 +1,9 @@
 import 'package:formsflowai/presentation/features/taskdetails/model/task_variable_dm.dart';
-import 'package:formsflowai_api/formsflowai_api.dart';
-import 'package:formsflowai_api/response/processdefinition/process_definition_response.dart';
-import 'package:formsflowai_api/response/task/tasklist/task_list_response.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../../core/api/response/processdefinition/process_definition_response.dart';
+import '../../../../../core/api/response/task/tasklist/task_list_response.dart';
+import '../../../../../core/api/response/task/tasklist_hal/task_list_hal_response.dart';
 import '../../../../../core/database/entity/task_entity.dart';
 import '../../../../../utils/database/database_query_util.dart';
 import '../../../../../utils/general_util.dart';

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_riverpod/src/consumer.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
 import 'package:formsflowai_shared/widgets/custom_text_formfield.dart';
@@ -86,7 +84,7 @@ class FilterInflateTaskProcessView extends BaseConsumerWidget {
                       height: Dimens.size_25,
                       margin: const EdgeInsets.only(
                           left: Dimens.spacing_2,
-                          top: Dimens.spacing_none,
+                          top: Dimens.none,
                           right: Dimens.spacing_2),
                       child: Text(
                         Strings.taskListingLabelOperatorText,
@@ -131,7 +129,7 @@ class FilterInflateTaskProcessView extends BaseConsumerWidget {
                                 boxHeight: Dimens.size_40,
                                 icon: const Icon(
                                   Icons.keyboard_arrow_down_rounded,
-                                  color: AppColor.primarycolor,
+                                  color: AppColor.primaryColor,
                                   size: Dimens.size_20,
                                 ),
                                 // reversedIcon: const Icon(
@@ -149,7 +147,7 @@ class FilterInflateTaskProcessView extends BaseConsumerWidget {
                                   Strings.taskListingLabelOperatorKey,
                                   style: TextStyle(
                                       fontSize: Dimens.font_13,
-                                      color: AppColor.hint_grey),
+                                      color: AppColor.hintGrey),
                                 ),
                                 items: filterDM.variableDropDownItems,
                                 value: filterDM.selectedOperatorLabel ?? "",

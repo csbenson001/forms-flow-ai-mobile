@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 
 /// [Failure] base class to specify exception type
 abstract class Failure extends Equatable {
-  Failure([List properties = const <dynamic>[]]) : super();
+  const Failure([List properties = const <dynamic>[]]) : super();
 }
 
 /// [ServerFailure] specifies server exception

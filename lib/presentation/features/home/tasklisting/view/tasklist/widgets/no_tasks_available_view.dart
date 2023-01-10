@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
 
@@ -25,8 +24,8 @@ class NoTasksAvailableView extends BaseStatelessWidget {
               height: Dimens.size_200,
               fit: BoxFit.contain,
             ),
-            const Padding(
-              padding: EdgeInsets.only(top: 16.0),
+            Padding(
+              padding: const EdgeInsets.only(top: 16.0),
               child: Text(
                 Strings.generalNoData,
                 style: AppTextStyles.blackTextStyle_24,

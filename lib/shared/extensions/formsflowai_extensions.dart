@@ -1,8 +1,9 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
-import 'package:formsflowai_shared/shared/formsflow_app_constants.dart';
 import 'package:jiffy/jiffy.dart';
+
+import '../formsflow_app_constants.dart';
 
 /// [DateTimeExtension] extension on datetime to get time from now
 extension DateTimeExtension on DateTime {

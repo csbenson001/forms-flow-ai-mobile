@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_riverpod/src/consumer.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:formsflowai/presentation/features/assigntask/model/view_members_filter_data_model.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../../core/module/providers/view_model_provider.dart';
 import '../../../../../shared/app_text_styles.dart';
@@ -59,7 +58,7 @@ class MemberListInflateRow extends BaseConsumerWidget {
                       ? "assets/images/ic_circle_check.svg"
                       : "assets/images/ic_circle_uncheck.svg",
                   color: memberDM.isSelected ?? false
-                      ? AppColor.primarycolor
+                      ? AppColor.primaryColor
                       : Colors.grey,
                   width: Dimens.size_24,
                   height: Dimens.size_24,

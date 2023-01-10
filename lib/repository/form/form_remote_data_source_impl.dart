@@ -1,26 +1,25 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-import 'package:formsflowai_api/client/form/forms_api_client.dart';
-import 'package:formsflowai_api/formsflowai_api.dart';
-import 'package:formsflowai_api/response/base/base_response.dart';
-import 'package:formsflowai_api/response/form/submission/form_submission_response.dart';
-import 'package:formsflowai_shared/shared/api_constants_url.dart';
-import 'package:formsflowai_shared/shared/formsflow_api_constants.dart';
-import 'package:formsflowai_shared/utils/api/api_utils.dart';
 import 'package:isolated_http_client/isolated_http_client.dart';
 
+import '../../core/api/client/form/forms_api_client.dart';
+import '../../core/api/response/base/base_response.dart';
+import '../../core/api/response/form/submission/form_submission_response.dart';
+import '../../core/api/utils/api_utils.dart';
 import '../../core/database/entity/form_entity.dart';
 import '../../core/error/errors_failure.dart';
 import '../../core/error/server_exception.dart';
 import '../../core/preferences/app_preference.dart';
 import '../../presentation/features/taskdetails/model/form_dm.dart';
+import '../../shared/api_constants_url.dart';
+import '../../shared/formsflow_api_constants.dart';
 import 'form_repository.dart';
 
 class FormRemoteDataSource implements FormRepository {
   final FormsApiClient formsApiClient;
   final AppPreferences appPreferences;
-  final HttpClient isolatedHttpClient;
+  final HttpClientIsolated isolatedHttpClient;
 
   FormRemoteDataSource(
       {required this.formsApiClient,
@@ -71,12 +70,13 @@ class FormRemoteDataSource implements FormRepository {
   /// ---> Returns [Response]
   @override
   Future<Either<Failure, Response>> fetchFormSubmissionIsolatedData(
-      {required String host,
-      required String taskId,
+      {required String taskId,
+      required String formResourceId,
       required String formSubmissionId}) async {
     try {
       var response = await isolatedHttpClient.get(
-          host: host,
+          host:
+              '${ApiConstantUrl.formsflowaiFormBaseUrl}${ApiConstantUrl.form}/$formResourceId/${ApiConstantUrl.formSubmission}/$formSubmissionId',
           headers: APIUtils.getFormsJwtTokenHeader(
               jwtToken: appPreferences.getFormJwtToken()));
 
@@ -124,11 +124,12 @@ class FormRemoteDataSource implements FormRepository {
   /// ---> Return [Response]
   @override
   Future<Either<Failure, Response>> fetchIsolatedFormData(
-      {required String host, required String path}) async {
+      {required String formId}) async {
     try {
       var response = await isolatedHttpClient.get(
-          host: host,
-          path: path,
+          host:
+              '${ApiConstantUrl.formsflowaiFormBaseUrl}${ApiConstantUrl.form}/',
+          path: formId,
           headers: APIUtils.getFormsJwtTokenHeader(
               jwtToken: appPreferences.getFormJwtToken()));
 
@@ -196,12 +197,12 @@ class FormRemoteDataSource implements FormRepository {
   /// [FormSubmissionId]
   /// [FormSubmissionResponse]
   @override
-  Future<Either<Failure, void>> submitFormDataIsolate(
+  Future<Either<Failure, BaseResponse>> submitFormDataIsolate(
       {required String formResourceId,
       required String formSubmissionId,
       required FormSubmissionResponse formSubmissionResponse}) async {
     String apiUrl =
-        "${ApiConstantUrl.FORMSFLOWAI_FORM_BASE_URL}${ApiConstantUrl.FORM}/${formResourceId}/${ApiConstantUrl.FORM_SUBMISSION}/${formSubmissionId}";
+        "${ApiConstantUrl.formsflowaiFormBaseUrl}${ApiConstantUrl.form}/$formResourceId/${ApiConstantUrl.formSubmission}/$formSubmissionId";
     try {
       var response = await isolatedHttpClient.put(
           host: apiUrl,
@@ -211,7 +212,8 @@ class FormRemoteDataSource implements FormRepository {
 
       if (response.statusCode == FormsFlowAIAPIConstants.statusCode200 ||
           response.statusCode == FormsFlowAIAPIConstants.statusCode204) {
-        return Right(response);
+        return Right(BaseResponse(
+            message: FormsFlowAIAPIConstants.statusSuccessMessage));
       }
       return left(ServerFailure());
     } on SocketException {
@@ -220,25 +222,6 @@ class FormRemoteDataSource implements FormRepository {
       return Left(ServerFailure());
     } catch (e) {
       return left(NoResourceFoundFailure());
-    }
-  }
-
-  @override
-  Future<Either<Failure, FormioRolesResponse>> fetchFormioRoles() async {
-    try {
-      var response = await formsApiClient
-          .getFormioRoles(appPreferences.getBearerAccessToken());
-
-      if (response.form != null) {
-        return Right(response);
-      }
-      return Left(ServerFailure());
-    } on SocketException {
-      return Left(NoConnectionFailure());
-    } on RefreshTokenFailureException {
-      return Left(ServerFailure());
-    } catch (e) {
-      return Left(NoResourceFoundFailure());
     }
   }
 }

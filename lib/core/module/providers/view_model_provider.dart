@@ -18,7 +18,6 @@ import '../../di/injection.dart';
 /// provider ref object for the [ViewModel] class [LoginViewModel]
 final loginViewModelProvider = ChangeNotifierProvider.autoDispose(
   (ref) => LoginViewModel(
-      loginUserCase: dl(),
       appPreferences: dl(),
       fetchUserInfoUseCase: dl(),
       loginKeycloakAuthenticatorUserCase: dl(),
@@ -82,6 +81,7 @@ final viewFormSubmissionViewModelProvider = ChangeNotifierProvider.autoDispose(
     (ref) => ViewFormSubmissionViewModel(
         ref: ref,
         fetchFormSubmissionUseCase: dl(),
+        socketService: dl(),
         networkManagerController: dl(),
         appPreferences: dl(),
         fetchFormUseCase: dl()));

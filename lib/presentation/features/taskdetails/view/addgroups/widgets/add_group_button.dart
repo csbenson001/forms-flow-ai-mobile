@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_riverpod/src/consumer.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -29,7 +27,7 @@ class AddGroupButton extends BaseConsumerWidget {
                 right: Dimens.spacing_18),
             padding: const EdgeInsets.only(left: Dimens.spacing_4),
             decoration: const ShapeDecoration(
-              color: AppColor.primarycolor,
+              color: AppColor.primaryColor,
               shape: OutlineInputBorder(
                 borderSide: BorderSide.none,
                 borderRadius:

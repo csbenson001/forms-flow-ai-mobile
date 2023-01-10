@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:formsflowai/core/router/app_routes.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
-import 'package:formsflowai_shared/utils/router/router_utils.dart';
 import 'package:formsflowai_shared/widgets/formsflow_circular_progress_indicator.dart';
 import 'package:formsflowai_shared/widgets/nodata/no_data_view.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -14,6 +13,7 @@ import '../../../../../shared/app_status.dart';
 import '../../../../../shared/app_strings.dart';
 import '../../../../../shared/app_text_styles.dart';
 import '../../../../../shared/extensions/formsflowai_extensions.dart';
+import '../../../../../utils/router/router_utils.dart';
 import '../../../../base/widgets/base_hooks_consumer_widget.dart';
 import '../../model/application_history_data_model.dart';
 
@@ -35,7 +35,7 @@ class TaskApplicationHistoryView extends BaseHooksConsumerWidget {
         alignment: Alignment.center,
         height: MediaQuery.of(context).size.height,
         padding: const EdgeInsets.only(top: Dimens.spacing_4),
-        child: Center(
+        child: const Center(
             child: NoDataView(
           heading: Strings.taskDetailsErrorApplicationHistoryNotFound,
           description: Strings.taskDetailsErrorApplicationHistoryDescription,
@@ -47,7 +47,7 @@ class TaskApplicationHistoryView extends BaseHooksConsumerWidget {
       return SizedBox(
           height: MediaQuery.of(context).size.height,
           child: const Center(
-            child: const FormsFlowCircularProgressIndicator(),
+            child: FormsFlowCircularProgressIndicator(),
           ));
     }
   }
@@ -62,7 +62,7 @@ class TaskApplicationHistoryView extends BaseHooksConsumerWidget {
         child: Timeline.tileBuilder(
           theme: TimelineThemeData(
             nodePosition: 0,
-            color: AppColor.hint_grey2,
+            color: AppColor.hintGrey2,
             connectorTheme: const ConnectorThemeData(
               thickness: 3.0,
             ),
@@ -70,14 +70,14 @@ class TaskApplicationHistoryView extends BaseHooksConsumerWidget {
           builder: TimelineTileBuilder.connected(
             indicatorBuilder: (context, index) {
               return const DotIndicator(
-                color: AppColor.primarycolor,
+                color: AppColor.primaryColor,
               );
             },
             connectorBuilder: (_, index, connectorType) {
               return SolidLineConnector(
                 indent: connectorType == ConnectorType.start ? 0 : 1.0,
                 endIndent: connectorType == ConnectorType.end ? 0 : 1.0,
-                color: AppColor.primarycolor,
+                color: AppColor.primaryColor,
               );
             },
             contentsBuilder: (context, index) {
@@ -154,13 +154,12 @@ class TaskApplicationHistoryView extends BaseHooksConsumerWidget {
                                                   .viewFormSubmissionScreen,
                                               extra: dm,
                                               params: {
-                                                "id": dm.applicationId
-                                                        .toString() ??
-                                                    ''
+                                                "id":
+                                                    dm.applicationId.toString()
                                               });
                                         },
                                         style: ElevatedButton.styleFrom(
-                                          primary: AppColor.blue3,
+                                          backgroundColor: AppColor.blue3,
                                           shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.circular(
                                                 Dimens.spacing_20),

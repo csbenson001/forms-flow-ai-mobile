@@ -1,5 +1,4 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/model/task_variable_filter_data_model.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/viewmodel/task_list_screen_providers.dart';
@@ -42,9 +41,7 @@ class TaskFiltersDropdownView extends BaseConsumerWidget {
     final selectedVariablesList =
         ref.watch(taskListViewModelProvider).selectedVariablesFiltersList;
 
-    final taskList = ref.watch(taskListViewModelProvider).taskList;
-
-    return isLoading != null && isLoading == PageStatus.success
+    return isLoading == PageStatus.success
         ? Container(
             alignment: Alignment.topLeft,
             margin: const EdgeInsets.only(
@@ -89,7 +86,7 @@ class TaskFiltersDropdownView extends BaseConsumerWidget {
                       return Container(
                         margin: const EdgeInsets.only(
                             left: Dimens.spacing_24,
-                            top: Dimens.spacing_none,
+                            top: Dimens.none,
                             right: Dimens.spacing_24),
                         decoration: ShapeDecoration(
                           shadows: [
@@ -141,7 +138,7 @@ class TaskFiltersDropdownView extends BaseConsumerWidget {
                           boxHeight: Dimens.size_40,
                           icon: const Icon(
                             Icons.keyboard_arrow_down_rounded,
-                            color: AppColor.primarycolor,
+                            color: AppColor.primaryColor,
                             size: Dimens.size_20,
                           ),
                           onChanged: (selectedItem) {

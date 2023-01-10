@@ -1,11 +1,12 @@
 import 'dart:convert';
 
-import 'package:formsflowai_shared/shared/api_constants_url.dart';
-import 'package:formsflowai_shared/shared/formsflow_api_constants.dart';
+import 'package:formsflowai/core/socket/crypto_utils.dart';
 import 'package:stomp_dart_client/stomp.dart';
 import 'package:stomp_dart_client/stomp_config.dart';
 import 'package:stomp_dart_client/stomp_frame.dart';
 
+import '../../shared/api_constants_url.dart';
+import '../../shared/formsflow_api_constants.dart';
 import '../preferences/app_preference.dart';
 
 class SocketService {
@@ -13,8 +14,6 @@ class SocketService {
 
   // Inject preferences
   final AppPreferences _preferences;
-
-  final _bpmSocketUrl = ApiConstantUrl.SOCKET_URL;
 
   // Stomp socket client
   StompClient? _stompClient;
@@ -46,22 +45,11 @@ class SocketService {
   /// Method to get Stomp Client
   StompClient _getStompClient() {
     return StompClient(
-      config: StompConfig.SockJS(
-          url: '${_bpmSocketUrl}}',
-          webSocketConnectHeaders: {
-            'Connection': 'Upgrade',
-            'Upgrade': 'websocket',
-            'Cookie': 'access_token=${_preferences.getAccessToken()}',
-            'Host': 'https://bpm2.aot-technologies.com'
-          },
+      config: StompConfig.sockJS(
+          url:
+              "${ApiConstantUrl.socketUrl}?accesstoken=${CryptoUtils.encryptAESCrypt(_preferences.getAccessToken())}",
           onConnect: onConnect,
-          onWebSocketError: (dynamic error) {
-
-          },
-          stompConnectHeaders: {
-            FormsFlowAIAPIConstants.socketAccessToken:
-                _preferences.getAccessToken()
-          },
+          onWebSocketError: (dynamic error) {},
           onStompError: onStompClientError,
           onDisconnect: onDisConnect),
     );
@@ -75,18 +63,17 @@ class SocketService {
   /// OnSocket Connect Callback Function
   void onConnect(StompFrame frame) {
     _stompClient?.subscribe(
-      destination: FormsFlowAIAPIConstants.socketTopicTaskEvent,
-      callback: (frame) {
-        Map<String, dynamic>? result = json.decode(frame.body!);
-        String eventName = result![FormsFlowAIAPIConstants.socketKeyEventName];
-        String taskId = result[FormsFlowAIAPIConstants.socketKeyTaskId];
-        try {
+        destination: FormsFlowAIAPIConstants.socketTopicTaskEvent,
+        callback: (frame) {
+          Map<String, dynamic>? result = json.decode(frame.body!);
+          String eventName =
+              result![FormsFlowAIAPIConstants.socketKeyEventName];
+          String taskId = result[FormsFlowAIAPIConstants.socketKeyTaskId];
+
           if (_socketEventCallback != null) {
             _socketEventCallback!(taskId, eventName);
           }
-        } catch (exception) {}
-      },
-    );
+        });
   }
 
   /// OnSocket Stomp Client Error Function

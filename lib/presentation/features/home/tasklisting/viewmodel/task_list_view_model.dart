@@ -1,3 +1,5 @@
+// ignore_for_file: empty_catches
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -7,33 +9,35 @@ import 'package:formsflowai/core/error/errors_failure.dart';
 import 'package:formsflowai/core/router/app_routes.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/usecases/form/fetch_formio_roles_usecase.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/viewmodel/task_list_screen_providers.dart';
-import 'package:formsflowai_api/formsflowai_api.dart' as formioApi;
-import 'package:formsflowai_api/post/task/tasklist_sort.dart';
-import 'package:formsflowai_api/response/filter/get_filters_response.dart';
-import 'package:formsflowai_api/response/processdefinition/process_definition_response.dart';
-import 'package:formsflowai_api/response/task/tasklist/task_list_response.dart';
-import 'package:formsflowai_shared/shared/formsflow_api_constants.dart';
-import 'package:formsflowai_shared/shared/formsflow_app_constants.dart';
-import 'package:formsflowai_shared/shared/task_constants.dart';
-import 'package:formsflowai_shared/utils/form/jwttoken/jwt_token_util.dart';
-import 'package:formsflowai_shared/utils/router/router_utils.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../../core/api/post/task/tasklist_sort.dart';
+import '../../../../../core/api/response/filter/get_filters_response.dart';
+import '../../../../../core/api/response/form/roles/formio_roles_response.dart'
+    as roles_response;
+import '../../../../../core/api/response/processdefinition/process_definition_response.dart';
+import '../../../../../core/api/response/task/tasklist/task_list_response.dart';
 import '../../../../../core/networkmanager/internet_connectivity_provider.dart';
 import '../../../../../core/networkmanager/network_manager_controller.dart';
 import '../../../../../core/preferences/app_preference.dart';
 import '../../../../../core/socket/socket_service.dart';
 import '../../../../../shared/app_status.dart';
 import '../../../../../shared/app_strings.dart';
+import '../../../../../shared/formsflow_api_constants.dart';
+import '../../../../../shared/formsflow_app_constants.dart';
+import '../../../../../shared/task_constants.dart';
 import '../../../../../shared/toast/toast_message_provider.dart';
 import '../../../../../utils/database/database_query_util.dart';
+import '../../../../../utils/form/jwttoken/jwt_token_util.dart';
 import '../../../../../utils/general_util.dart';
+import '../../../../../utils/router/router_utils.dart';
 import '../../../../base/viewmodel/base_notifier_view_model.dart';
 import '../../../taskdetails/usecases/index.dart';
 import '../../../taskdetails/viewmodel/task_details_providers.dart';
 import '../model/index.dart';
 import '../usecases/index.dart';
+import '../usecases/task/fetch_tasks_usecase.dart';
 
 /// [TaskListViewModel] viewmodel class to hold business logic related to
 /// task list screen
@@ -54,7 +58,7 @@ class TaskListViewModel extends BaseNotifierViewModel {
   final FetchProcessDefinitionUseCase fetchProcessDefinitionUseCase;
   final FetchTasksUseCase fetchTasksUseCase;
   final FetchTaskCountUseCase fetchTaskCountUseCase;
-  final FetchIsolatedTaskUseCase fetchIsolatedTaskUseCase;
+  final FetchTaskUseCase fetchIsolatedTaskUseCase;
   final ClearLocalDatabaseUseCase clearLocalDatabaseUseCase;
   final FetchFormioRolesUseCase fetchFormioRolesUseCase;
 
@@ -95,7 +99,7 @@ class TaskListViewModel extends BaseNotifierViewModel {
   List<String> get selectedCheckBoxList => _selectedCheckBoxList;
 
   // Tasks List
-  List<TaskListingDM> _taskList = List.empty(growable: true);
+  final List<TaskListingDM> _taskList = List.empty(growable: true);
   List<TaskListingDM> get taskList => _taskList;
 
   // Selected sort filter item
@@ -311,17 +315,17 @@ class TaskListViewModel extends BaseNotifierViewModel {
       notifyListeners();
     }
     final taskResponse = await fetchTasksUseCase.call(
-        params: FetchTaskParams(
-            id: filterId ?? '',
+        params: FetchTasksParams(
+            id: filterId,
             firstResult: _start,
             maxResults: _limit,
             definitionResponse: _processDefinitionResponse,
             taskSortingPostModel: taskSortPostModel));
 
     taskResponse.fold((l) {
-
       _pageStatus = PageStatus.failure;
       notifyListeners();
+
       if (l is AuthorizationTokenExpiredFailure) {
         ref.read(authorizationExpiredFailureProvider.notifier).state = true;
       }
@@ -335,14 +339,14 @@ class TaskListViewModel extends BaseNotifierViewModel {
         notifyListeners();
         databaseWorker.insertTasksIntoLocalSource(
             data: data.taskData ?? [],
-            filterId: filterId ?? '',
+            filterId: filterId,
             assigneeName: appPreferences.getPreferredUserName());
       } else {
         final taskCountResponse = await fetchTaskCountUseCase.call(
             params: FetchTaskCountParams(filterId: filterId));
         taskCountResponse.fold((l) {}, (r) {
           _totalTaskCount = r.count ?? 0;
- 
+
           notifyListeners();
         });
       }
@@ -408,7 +412,7 @@ class TaskListViewModel extends BaseNotifierViewModel {
     FiltersResponse? filtersResponse;
     for (int i = 0; i < filterList.length; i++) {
       if (filterList[i].name!.toLowerCase() ==
-          FormsFlowAIAPIConstants.ALL_TASKS.toLowerCase()) {
+          FormsFlowAIAPIConstants.allTasks.toLowerCase()) {
         filtersResponse = filterList[i];
         break;
       }
@@ -416,26 +420,35 @@ class TaskListViewModel extends BaseNotifierViewModel {
     return filtersResponse;
   }
 
-  // Function to generate token if not added or expired
+  // Function to generate Formio JWT token if not added
   void generateFormioJWTToken(
-      {required formioApi.FormioRolesResponse formioRolesResponse}) {
-    try {
-      formioApi.Form? reviewer = formioRolesResponse.form?.singleWhere(
-          (element) => element.type == FormsFlowAIAPIConstants.REVIEWER);
+      {required roles_response.FormioRolesResponse formioRolesResponse}) {
+    if (formioRolesResponse.form != null &&
+        formioRolesResponse.form!.isNotEmpty) {
+      try {
+        roles_response.Form? reviewer = formioRolesResponse.form?.singleWhere(
+            (element) => element.type == FormsFlowAIAPIConstants.reviewer);
 
-      formioApi.Form? resourceId = formioRolesResponse.form?.singleWhere(
-          (element) => element.type == FormsFlowAIAPIConstants.RESOURCE_ID);
+        roles_response.Form? resourceId = formioRolesResponse.form?.singleWhere(
+            (element) => element.type == FormsFlowAIAPIConstants.resourceId);
 
-      if (reviewer != null) {
-        // Create a form jwt token
-        List<String> roles = List.empty(growable: true);
-        roles.add(reviewer.roleId ?? '');
-        appPreferences.setFormioRoleResponse(formioRolesResponse);
-        appPreferences.setFormJWtToken(
-            JwtTokenUtils.signJwtToken(resourceId?.roleId ?? '', roles, ''));
+        if (reviewer != null) {
+          // Create a form jwt token
+          List<String> roles = List.empty(growable: true);
+          roles.add(reviewer.roleId ?? '');
+          appPreferences.setFormioRoleResponse(formioRolesResponse);
+          appPreferences.setFormJWtToken(JwtTokenUtils.signJwtToken(
+              userResourceId: resourceId?.roleId ?? '', roles: roles));
+          appPreferences.setFormJwtTokenAdded(true);
+        }
+      } catch (e) {
+        appPreferences.setFormJWtToken(JwtTokenUtils.signJwtToken());
         appPreferences.setFormJwtTokenAdded(true);
       }
-    } catch (e) {}
+    } else {
+      appPreferences.setFormJWtToken(JwtTokenUtils.signJwtToken());
+      appPreferences.setFormJwtTokenAdded(true);
+    }
   }
 
   /// Function to get task post model
@@ -527,10 +540,10 @@ class TaskListViewModel extends BaseNotifierViewModel {
     if (taskId == null) {
       return;
     }
-    int index = FormsFlowAIConstants.NO_POSITION;
+    int index = FormsFlowAIConstants.noPosition;
     index = _taskList.indexWhere((element) => element.taskId == taskId);
 
-    if (index != FormsFlowAIConstants.NO_POSITION) {
+    if (index != FormsFlowAIConstants.noPosition) {
       try {
         _taskList.removeAt(index);
         notifyListeners();
@@ -551,16 +564,17 @@ class TaskListViewModel extends BaseNotifierViewModel {
     if (taskId == null) {
       return;
     }
-    int index = FormsFlowAIConstants.NO_POSITION;
+    int index = FormsFlowAIConstants.noPosition;
+
     final fetchIsolatedTaskResponse = await fetchIsolatedTaskUseCase.call(
-        params: FetchIsolatedTaskParams(taskId: taskId));
+        params: FetchTaskParams(taskId: taskId));
     fetchIsolatedTaskResponse.fold((l) => {}, (response) async {
       if (response.statusCode == FormsFlowAIAPIConstants.statusCode200 &&
-          response.body.isNotEmpty) {
-        var taskData = await compute(parseTaskIdResponse, response.body);
+          response.data.isNotEmpty) {
+        var taskData = await compute(parseTaskIdResponse, response.data);
         index = _taskList.indexWhere((element) => element.taskId == taskId);
         if (eventName == FormsFlowAIAPIConstants.socketEventUpdate &&
-            index != FormsFlowAIConstants.NO_POSITION) {
+            index != FormsFlowAIConstants.noPosition) {
           _taskList[index] = _taskList[index].copyWith(
               assignee: taskData.assignee,
               dueDate: DatabaseQueryUtil.decode(taskData.due),
@@ -593,14 +607,16 @@ class TaskListViewModel extends BaseNotifierViewModel {
     showProgressLoading();
     final clearDatabaseResponse = await clearLocalDatabaseUseCase.call(
         params: const ClearLocalDatabaseUseCaseParams());
-    clearDatabaseResponse.fold((l) {
+    clearDatabaseResponse.fold((l) async {
       dismissProgressLoading();
-      appPreferences.clear();
+      await appPreferences.clear();
+      socketService.deActivateSocket();
       RouterUtils.logoutUser(
           context: context, routeName: AppRoutes.loginScreen);
-    }, (r) {
+    }, (r) async {
       dismissProgressLoading();
-      appPreferences.clear();
+      await appPreferences.clear();
+      socketService.deActivateSocket();
       RouterUtils.logoutUser(
           context: context, routeName: AppRoutes.loginScreen);
     });
@@ -886,73 +902,73 @@ class TaskListViewModel extends BaseNotifierViewModel {
     taskSortPostModel.sorting = sorting;
     for (TaskVariableFilterDM element in taskVariables) {
       switch (element.key) {
-        case TaskConstants.FILTER_KEY_TASK_VARIABLES:
+        case TaskConstants.filterKeyTaskVariables:
           taskSortPostModel.taskVariableFilters ??= [];
           taskSortPostModel.taskVariableFilters?.add(VariableFilters(
               value: element.selectedVariableValue,
               name: element.selectedVariableProperty,
               operator: element.selectedOperatorValue));
           break;
-        case TaskConstants.FILTER_KEY_PROCESS_VARIABLES:
+        case TaskConstants.filterKeyProcessVariables:
           taskSortPostModel.processVariableFilters ??= [];
           taskSortPostModel.processVariableFilters?.add(VariableFilters(
               value: element.selectedVariableValue,
               name: element.selectedVariableProperty,
               operator: element.selectedOperatorValue));
           break;
-        case TaskConstants.FILTER_KEY_PROCESS_DEFINITION_NAME:
+        case TaskConstants.filterKeyProcessDefinitionName:
           taskSortPostModel.processDefinitionFilters ??= [];
           taskSortPostModel.processDefinitionFilters?.add(VariableFilters(
               value: element.selectedVariableValue,
               name: "",
               operator: element.selectedOperatorValue));
           break;
-        case TaskConstants.FILTER_KEY_ASSIGNEE:
+        case TaskConstants.filterKeyAssignee:
           taskSortPostModel.assigneeFilters ??= [];
           taskSortPostModel.assigneeFilters?.add(VariableFilters(
               value: element.selectedVariableValue,
               name: "",
               operator: element.selectedOperatorValue));
           break;
-        case TaskConstants.FILTER_KEY_CANDIDATE_GROUP:
+        case TaskConstants.filterKeyCandidateGroup:
           taskSortPostModel.candidateGroup = element.selectedVariableValue;
           break;
-        case TaskConstants.FILTER_KEY_CANDIDATE_USER:
+        case TaskConstants.filterKeyCandidateUser:
           taskSortPostModel.candidateUser = element.selectedVariableValue;
           break;
-        case TaskConstants.FILTER_KEY_NAME:
+        case TaskConstants.filterKeyName:
           taskSortPostModel.nameFilters ??= [];
           taskSortPostModel.nameFilters?.add(VariableFilters(
               value: element.selectedVariableValue,
               name: "",
               operator: element.selectedOperatorValue));
           break;
-        case TaskConstants.FILTER_KEY_DESCRIPTION:
+        case TaskConstants.filterKeyDescription:
           taskSortPostModel.descriptionFilters ??= [];
           taskSortPostModel.descriptionFilters?.add(VariableFilters(
               value: element.selectedVariableValue,
               name: "",
               operator: element.selectedOperatorValue));
           break;
-        case TaskConstants.FILTER_KEY_PRIORITY:
+        case TaskConstants.filterKeyPriority:
           String data = element.selectedVariableValue ?? '-1';
           taskSortPostModel.priority = int.parse(data);
           break;
-        case TaskConstants.FILTER_KEY_DUEDATE:
+        case TaskConstants.filterKeyDuedate:
           taskSortPostModel.dueDateFilters ??= [];
           taskSortPostModel.dueDateFilters?.add(VariableFilters(
               value: element.selectedVariableValue,
               name: "",
               operator: element.selectedOperatorValue));
           break;
-        case TaskConstants.FILTER_KEY_FOLLOWUP:
+        case TaskConstants.filterKeyFollowup:
           taskSortPostModel.followUpFilters ??= [];
           taskSortPostModel.followUpFilters?.add(VariableFilters(
               value: element.selectedVariableValue,
               name: "",
               operator: element.selectedOperatorValue));
           break;
-        case TaskConstants.FILTER_KEY_CREATED:
+        case TaskConstants.filterKeyCreated:
           taskSortPostModel.createdDateFilters ??= [];
           taskSortPostModel.createdDateFilters?.add(VariableFilters(
               value: element.selectedVariableValue,
@@ -966,7 +982,7 @@ class TaskListViewModel extends BaseNotifierViewModel {
 
   /// Function to open launcher to load terms and conditions webpage
   void openTermsAndConditionsUrlLauncher() {
-    launch("https://formsflow.ai/service/");
+    launchUrl(Uri.parse("https://formsflow.ai/service/"));
   }
 
   /// Function to clear all local database cache data
@@ -1000,8 +1016,8 @@ class TaskListViewModel extends BaseNotifierViewModel {
   }
 }
 
-/// Compute Function to parse [IsolatedTaskResponse]
+/// Compute Function to parse [Response]
 
-TaskListResponse parseTaskIdResponse(Map<String, dynamic> value) {
+TaskListResponse parseTaskIdResponse(dynamic value) {
   return TaskListResponse.fromJson(value);
 }

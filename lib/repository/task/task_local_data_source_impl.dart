@@ -1,25 +1,26 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:floor/floor.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/model/task_base_response.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/model/task_listing_data_model.dart';
 import 'package:formsflowai/presentation/features/taskdetails/model/task_variable_dm.dart';
 import 'package:formsflowai/repository/task/task_repository.dart';
-import 'package:formsflowai_api/post/form/form_submission_post_model.dart';
-import 'package:formsflowai_api/post/task/add_group_post_model.dart';
-import 'package:formsflowai_api/post/task/delete_group_post_model.dart';
-import 'package:formsflowai_api/post/task/tasklist_sort.dart';
-import 'package:formsflowai_api/post/task/update_task_post_model.dart';
-import 'package:formsflowai_api/response/base/base_response.dart';
-import 'package:formsflowai_api/response/diagram/activity_instance_response.dart';
-import 'package:formsflowai_api/response/diagram/bpmn_diagram_response.dart';
-import 'package:formsflowai_api/response/filter/get_filters_response.dart';
-import 'package:formsflowai_api/response/filter/task_count_response.dart';
-import 'package:formsflowai_api/response/processdefinition/process_definition_response.dart';
-import 'package:formsflowai_api/response/task/details/list_members_response.dart';
-import 'package:formsflowai_api/response/task/details/task_group_response.dart';
-import 'package:isolated_http_client/isolated_http_client.dart';
-import 'package:isolated_http_client/src/response.dart';
+import 'package:isolated_http_client/isolated_http_client.dart'
+    as isolated_response;
 
+import '../../core/api/post/form/form_submission_post_model.dart';
+import '../../core/api/post/task/add_group_post_model.dart';
+import '../../core/api/post/task/delete_group_post_model.dart';
+import '../../core/api/post/task/tasklist_sort.dart';
+import '../../core/api/post/task/update_task_post_model.dart';
+import '../../core/api/response/base/base_response.dart';
+import '../../core/api/response/diagram/activity_instance_response.dart';
+import '../../core/api/response/diagram/bpmn_diagram_response.dart';
+import '../../core/api/response/filter/get_filters_response.dart';
+import '../../core/api/response/filter/task_count_response.dart';
+import '../../core/api/response/processdefinition/process_definition_response.dart';
+import '../../core/api/response/task/details/list_members_response.dart';
+import '../../core/api/response/task/details/task_group_response.dart';
 import '../../core/database/dao/application_history_dao.dart';
 import '../../core/database/dao/task_dao.dart';
 import '../../core/database/entity/task_entity.dart';
@@ -137,8 +138,8 @@ class TaskLocalDataSourceImpl implements TaskRepository {
   }
 
   @override
-  Future<Either<Failure, Response>> fetchIsolatedTaskVariables(
-      {required String host}) {
+  Future<Either<Failure, isolated_response.Response>>
+      fetchIsolatedTaskVariables({required String taskId}) {
     // TODO: implement fetchIsolatedTaskVariables
     throw UnimplementedError();
   }
@@ -199,9 +200,7 @@ class TaskLocalDataSourceImpl implements TaskRepository {
   }
 
   @override
-  Future<Either<Failure, Response>> fetchTaskWithIsolate(
-      {required String host, required String taskId}) {
-    // TODO: implement fetchTaskWithIsolate
+  Future<Either<Failure, Response>> fetchTask({required String taskId}) {
     throw UnimplementedError();
   }
 
@@ -294,7 +293,15 @@ class TaskLocalDataSourceImpl implements TaskRepository {
   /// ---> Returns [Int]
   @override
   Future<Either<Failure, int>> insertTask({required TaskEntity task}) async {
-    return Right(await taskDao.insertTask(task));
+    final results = await formsFlowDatabase.database
+        .rawQuery(DatabaseQueryUtil.generateTaskAddedSqlQuery(task: task));
+    final int? taskCount = results[0]['COUNT(id)'] as int?;
+    if (taskCount == null || taskCount == 0) {
+      return Right(await taskDao.insertTask(task));
+    } else {
+      // await taskDao.updateTask(task);
+      return const Right(0);
+    }
   }
 
   @override
@@ -336,9 +343,8 @@ class TaskLocalDataSourceImpl implements TaskRepository {
   }
 
   @override
-  Future<Either<Failure, Response>> updateTaskWithIsolates(
-      {required String url,
-      required String taskId,
+  Future<Either<Failure, isolated_response.Response>> updateTaskWithIsolates(
+      {required String taskId,
       required UpdateTaskPostModel updateTaskPostModel}) {
     // TODO: implement updateTaskWithIsolates
     throw UnimplementedError();

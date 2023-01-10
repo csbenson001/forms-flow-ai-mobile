@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/view/tasklist/widgets/task_list_floating_button.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
@@ -31,6 +29,7 @@ class TaskListScreen extends BaseHooksConsumerWidget {
       ref
           .read(taskListViewModelProvider)
           .onInit(scrollController: scrollController);
+      return null;
     }, []);
 
     return DrawerAppScaffold(
@@ -39,7 +38,7 @@ class TaskListScreen extends BaseHooksConsumerWidget {
         floatingActionButton: const TaskListFloatingButton(),
         body: SafeArea(
             child: RefreshIndicator(
-                color: AppColor.primarycolor,
+                color: AppColor.primaryColor,
                 triggerMode: RefreshIndicatorTriggerMode.onEdge,
                 onRefresh: () async {
                   await ref.read(taskListViewModelProvider).pullToRefresh();

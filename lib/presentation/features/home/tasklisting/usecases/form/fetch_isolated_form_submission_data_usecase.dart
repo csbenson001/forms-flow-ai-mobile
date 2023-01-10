@@ -1,9 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formsflowai/repository/form/form_data_repository.dart';
-import 'package:formsflowai_shared/shared/api_constants_url.dart';
 import 'package:isolated_http_client/isolated_http_client.dart'
-    as isolatedResponse;
+    as isolated_response;
 
 import '../../../../../../core/error/errors_failure.dart';
 import '../../../../../../core/usecase/usecase.dart';
@@ -12,21 +11,20 @@ import '../../../../../../core/usecase/usecase.dart';
 /// submission data in isolate
 /// interacts with [FormDataRepository] to complete the operation
 /// [FetchIsolatedFormSubmissionDataParams]
-/// [isolatedResponse.Response]
+/// [isolated_response.Response]
 class FetchIsolatedFormSubmissionDataUseCase
     implements
-        UseCase<isolatedResponse.Response,
+        UseCase<isolated_response.Response,
             FetchIsolatedFormSubmissionDataParams> {
   const FetchIsolatedFormSubmissionDataUseCase({required this.repository});
 
   final FormDataRepository repository;
 
   @override
-  Future<Either<Failure, isolatedResponse.Response>> call(
+  Future<Either<Failure, isolated_response.Response>> call(
       {required FetchIsolatedFormSubmissionDataParams params}) {
     return repository.fetchFormSubmissionIsolatedData(
-        host:
-            '${ApiConstantUrl.FORMSFLOWAI_FORM_BASE_URL}${ApiConstantUrl.FORM}/${params.formResourceId}/${ApiConstantUrl.FORM_SUBMISSION}/${params.formSubmissionId}',
+        formResourceId: params.formResourceId,
         formSubmissionId: params.formSubmissionId,
         taskId: params.taskId);
   }

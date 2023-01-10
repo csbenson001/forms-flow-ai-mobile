@@ -1,3 +1,3 @@
 class AppFont {
-  static const FONT_MONTERSERAT = "Montserrat";
+  static const fontMontserrat = "Montserrat";
 }

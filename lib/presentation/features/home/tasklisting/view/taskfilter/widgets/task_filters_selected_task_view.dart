@@ -1,5 +1,4 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:formsflowai/shared/app_status.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
@@ -35,7 +34,7 @@ class TaskFiltersListView extends BaseConsumerWidget {
 
     final isInternetAvailable = ref.watch(internetConnectivityProvider);
 
-    return isLoading != null && isLoading == PageStatus.success
+    return isLoading == PageStatus.success
         ? Container(
             alignment: Alignment.topLeft,
             margin: const EdgeInsets.only(

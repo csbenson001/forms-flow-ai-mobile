@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_riverpod/src/consumer.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:formsflowai/core/module/providers/view_model_provider.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
@@ -32,11 +30,12 @@ class LoginFormExternalView extends BaseConsumerWidget {
                 FormsFlowAIImageAssets.imagesFormsflowaiIcon,
                 width: Dimens.size_200,
                 height: Dimens.size_120,
+                color: Colors.white,
                 fit: BoxFit.cover,
               )),
-          const Text(
+          Text(
             Strings.loginTitle,
-            style: AppTextStyles.blackTextStyle_24,
+            style: AppTextStyles.whiteTextStyle_24,
           ),
           isLoading == LoginStatus.loading ||
                   isLoading == LoginStatus.success ||
@@ -46,13 +45,15 @@ class LoginFormExternalView extends BaseConsumerWidget {
                       const EdgeInsets.symmetric(vertical: Dimens.spacing_16),
                   child: Column(
                     children: [
-                      const FormsFlowCircularProgressIndicator(),
+                      const FormsFlowCircularProgressIndicator(
+                        progressColor: Colors.white,
+                      ),
                       const SizedBox(height: Dimens.size_16),
                       if (isLoading == LoginStatus.success)
-                        const Text(
+                        Text(
                           Strings.loginLabelLoggingIn,
                           style:
-                              AppTextStyles.blackRegularTextStyleWithHeight_14,
+                              AppTextStyles.whiteRegularTextStyleWithHeight_14,
                         )
                     ],
                   ))

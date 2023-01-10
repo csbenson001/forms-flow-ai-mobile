@@ -7,6 +7,6 @@ class ToastStateDM {
 
   ToastStateDM copyWith({String? error, String? info}) {
     return ToastStateDM(
-        error: error ?? this.error, success: info ?? this.success);
+        error: error ?? this.error, success: info ?? success);
   }
 }

@@ -16,7 +16,7 @@ final dl = GetIt.instance;
 Future<void> registerServices() async {
   /// Build FormsFlowAI database
   FormsFlowDatabase database = await $FloorFormsFlowDatabase
-      .databaseBuilder(FormsFlowDatabase.DATABASE_NAME)
+      .databaseBuilder(FormsFlowDatabase.databaseName)
       .build();
 
   /// Register Shared Preferences

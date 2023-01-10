@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:formsflowai/core/api/response/form/roles/formio_roles_response.dart';
 import 'package:formsflowai/core/error/errors_failure.dart';
 import 'package:formsflowai/presentation/features/taskdetails/model/application_history_data_model.dart';
 import 'package:formsflowai/repository/application/application_repository.dart';
@@ -47,5 +48,13 @@ class ApplicationLocalDataSourceImpl implements ApplicationHistoryRepository {
       {required List<ApplicationHistoryEntity> applicationEntityList}) async {
     return Right(await applicationHistoryDao
         .insertApplicationHistorys(applicationEntityList));
+  }
+
+  @override
+  Future<Either<Failure, FormioRolesResponse>> fetchFormioRoles() async {
+    if (appPreferences.getFormioRoleResponse() != null) {
+      return Right(appPreferences.getFormioRoleResponse()!);
+    }
+    return Left(ServerFailure());
   }
 }

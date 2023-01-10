@@ -1,5 +1,4 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:formsflowai/core/router/app_routes.dart';
@@ -9,15 +8,12 @@ import 'package:formsflowai/presentation/features/taskdetails/model/eventbusdm/s
 import 'package:formsflowai/presentation/features/taskdetails/model/update_post_model_transformation.dart';
 import 'package:formsflowai/presentation/features/taskdetails/view/task_details_screen.dart';
 import 'package:formsflowai/presentation/features/taskdetails/viewmodel/task_details_providers.dart';
-import 'package:formsflowai_api/post/form/form_submission_post_model.dart';
-import 'package:formsflowai_api/response/task/details/task_group_response.dart';
-import 'package:formsflowai_shared/shared/formsflow_api_constants.dart';
-import 'package:formsflowai_shared/shared/formsflow_app_constants.dart';
-import 'package:formsflowai_shared/utils/api/api_utils.dart';
-import 'package:formsflowai_shared/utils/router/router_utils.dart';
 import 'package:formsflowai_shared/widgets/datetimepicker/formsflowai_date_time_picker.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../../core/api/post/form/form_submission_post_model.dart';
+import '../../../../core/api/response/task/details/task_group_response.dart';
+import '../../../../core/api/utils/api_utils.dart';
 import '../../../../core/database/entity/task_entity.dart';
 import '../../../../core/database/worker/database_worker.dart';
 import '../../../../core/error/errors_failure.dart';
@@ -25,9 +21,12 @@ import '../../../../core/module/providers/view_model_provider.dart';
 import '../../../../core/networkmanager/network_manager_controller.dart';
 import '../../../../core/preferences/app_preference.dart';
 import '../../../../shared/app_strings.dart';
+import '../../../../shared/formsflow_api_constants.dart';
+import '../../../../shared/formsflow_app_constants.dart';
 import '../../../../shared/toast/toast_message_provider.dart';
 import '../../../../utils/database/database_query_util.dart';
 import '../../../../utils/general_util.dart';
+import '../../../../utils/router/router_utils.dart';
 import '../../../base/viewmodel/base_notifier_view_model.dart';
 import '../../home/tasklisting/model/index.dart';
 import '../../home/tasklisting/model/task_listing_data_model.dart';
@@ -59,7 +58,7 @@ class TaskDetailsViewModel extends BaseNotifierViewModel {
   final UpdateAssigneeUseCase updateAssigneeUseCase;
   final ClaimTaskUseCase claimTaskUseCase;
   final UnClaimTaskUseCase unClaimTaskUseCase;
-  final FetchIsolatedTaskUseCase fetchIsolatedTaskUseCase;
+  final FetchTaskUseCase fetchIsolatedTaskUseCase;
   final SubmitFormUseCase submitFormUseCase;
 
   /// Network manager to handle network connectivity
@@ -88,7 +87,7 @@ class TaskDetailsViewModel extends BaseNotifierViewModel {
   ToastStateDM get toastStateDM => _toastStateDM;
 
   /// variable to hold task groups
-  List<TaskGroupsResponse> _taskGroupsList = <TaskGroupsResponse>[];
+  final List<TaskGroupsResponse> _taskGroupsList = <TaskGroupsResponse>[];
   List<TaskGroupsResponse> get taskGroupsList => _taskGroupsList;
 
   TaskDetailsViewModel(
@@ -153,11 +152,11 @@ class TaskDetailsViewModel extends BaseNotifierViewModel {
   Future<void> onReceiveChangedTaskDataFromSocket(
       {required String taskId, required String eventName}) async {
     final fetchIsolatedTaskResponse = await fetchIsolatedTaskUseCase.call(
-        params: FetchIsolatedTaskParams(taskId: taskId));
+        params: FetchTaskParams(taskId: taskId));
     fetchIsolatedTaskResponse.fold((l) => {}, (response) async {
       if (response.statusCode == FormsFlowAIAPIConstants.statusCode200 &&
-          response.body.isNotEmpty) {
-        var taskData = await compute(parseTaskIdResponse, response.body);
+          response.data.isNotEmpty) {
+        var taskData = await compute(parseTaskIdResponse, response.data);
         _taskListingDM = _taskListingDM?.copyWith(
             assignee: taskData.assignee,
             dueDate: DatabaseQueryUtil.decode(taskData.due),

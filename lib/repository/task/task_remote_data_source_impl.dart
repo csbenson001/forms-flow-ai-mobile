@@ -1,46 +1,50 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart' as dio;
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/model/task_base_response.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/model/task_listing_data_model.dart';
 import 'package:formsflowai/repository/task/task_repository.dart';
-import 'package:formsflowai_api/client/task/task_api_client.dart';
-import 'package:formsflowai_api/client/user/user_api_client.dart';
-import 'package:formsflowai_api/post/form/form_submission_post_model.dart';
-import 'package:formsflowai_api/post/task/add_group_post_model.dart';
-import 'package:formsflowai_api/post/task/delete_group_post_model.dart';
-import 'package:formsflowai_api/post/task/tasklist_sort.dart';
-import 'package:formsflowai_api/post/task/update_task_post_model.dart';
-import 'package:formsflowai_api/response/base/base_response.dart';
-import 'package:formsflowai_api/response/diagram/activity_instance_response.dart';
-import 'package:formsflowai_api/response/diagram/bpmn_diagram_response.dart';
-import 'package:formsflowai_api/response/filter/get_filters_response.dart';
-import 'package:formsflowai_api/response/filter/task_count_response.dart';
-import 'package:formsflowai_api/response/processdefinition/process_definition_response.dart';
-import 'package:formsflowai_api/response/task/details/list_members_response.dart';
-import 'package:formsflowai_api/response/task/details/task_group_response.dart';
-import 'package:formsflowai_shared/shared/api_constants_url.dart';
-import 'package:formsflowai_shared/shared/formsflow_api_constants.dart';
-import 'package:formsflowai_shared/utils/api/api_utils.dart';
+import 'package:isolated_http_client/isolated_http_client.dart'
+    as isolated_response;
 import 'package:isolated_http_client/isolated_http_client.dart';
-import 'package:isolated_http_client/src/response.dart' as isolatedResponse;
 
+import '../../core/api/client/task/task_api_client.dart';
+import '../../core/api/client/user/user_api_client.dart';
+import '../../core/api/post/form/form_submission_post_model.dart';
+import '../../core/api/post/task/add_group_post_model.dart';
+import '../../core/api/post/task/delete_group_post_model.dart';
+import '../../core/api/post/task/tasklist_sort.dart';
+import '../../core/api/post/task/update_task_post_model.dart';
+import '../../core/api/response/base/base_response.dart';
+import '../../core/api/response/diagram/activity_instance_response.dart';
+import '../../core/api/response/diagram/bpmn_diagram_response.dart';
+import '../../core/api/response/filter/get_filters_response.dart';
+import '../../core/api/response/filter/task_count_response.dart';
+import '../../core/api/response/processdefinition/process_definition_response.dart';
+import '../../core/api/response/task/details/list_members_response.dart';
+import '../../core/api/response/task/details/task_group_response.dart';
+import '../../core/api/utils/api_utils.dart';
 import '../../core/database/entity/task_entity.dart';
 import '../../core/error/errors_failure.dart';
 import '../../core/preferences/app_preference.dart';
 import '../../presentation/features/taskdetails/model/task_variable_dm.dart';
+import '../../shared/api_constants_url.dart';
+import '../../shared/formsflow_api_constants.dart';
 
 class TaskRemoteDataSourceImpl implements TaskRepository {
   final TaskApiClient taskApiClient;
   final UserApiClient userApiClient;
   final AppPreferences appPreferences;
-  final HttpClient isolatedHttpClient;
+  final HttpClientIsolated isolatedHttpClient;
   final FlutterAppAuth flutterAppAuth;
+  final dio.Dio taskDio;
 
   TaskRemoteDataSourceImpl(
       {required this.taskApiClient,
       required this.appPreferences,
       required this.flutterAppAuth,
       required this.userApiClient,
+      required this.taskDio,
       required this.isolatedHttpClient});
 
   /// Method to add group
@@ -69,7 +73,10 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
           response.response.statusCode ==
               FormsFlowAIAPIConstants.statusCode204) {
         return Right(response.data);
+      } else if (response.response.statusCode == 401) {
+        return Left(AuthorizationTokenExpiredFailure());
       }
+
       return Left(ServerFailure());
     } catch (error) {
       return _handleDioError(error.runtimeType);
@@ -117,8 +124,7 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
   @override
   Future<Either<Failure, List<FiltersResponse>>> fetchFilters() async {
     try {
-      final response = await taskApiClient
-          .fetchFilters(appPreferences.getBearerAccessToken());
+      final response = await taskApiClient.fetchFilters();
       return Right(response);
     } catch (error) {
       return _handleDioError(error.runtimeType);
@@ -146,11 +152,13 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
     try {
       final response = await taskApiClient.fetchTaskGroups(taskId);
 
-      if (response.response.statusCode !=
+      if (response.response.statusCode ==
           FormsFlowAIAPIConstants.statusCode200) {
-        return left(ServerFailure());
+        return Right(response.data);
+      } else if (response.response.statusCode == 401) {
+        return Left(AuthorizationTokenExpiredFailure());
       }
-      return Right(response.data);
+      return left(ServerFailure());
     } catch (error) {
       return _handleDioError(error.runtimeType);
     }
@@ -158,13 +166,14 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
 
   /// Method to fetch task finaliables
   /// Parameters
-  /// ---> Returns [isolatedResponse.Response]
+  /// ---> Returns [isolated_response.Response]
   @override
-  Future<Either<Failure, isolatedResponse.Response>> fetchIsolatedTaskVariables(
-      {required String host}) async {
+  Future<Either<Failure, isolated_response.Response>>
+      fetchIsolatedTaskVariables({required String taskId}) async {
     try {
       final response = await isolatedHttpClient.get(
-          host: host,
+          host:
+              '${ApiConstantUrl.formsflowaiBpmBaseUrl}${ApiConstantUrl.camundaEngineRest}/${ApiConstantUrl.task}/$taskId/variables',
           headers: APIUtils.getTaskAuthorizationHeader(
               acessToken: appPreferences.getAccessToken()));
 
@@ -184,7 +193,7 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
   Future<Either<Failure, List<ListMembersResponse>>> fetchMembers() async {
     try {
       final response =
-          await taskApiClient.fetchMembersList("formsflow/formsflow-reviewer");
+          await taskApiClient.fetchMembersList(ApiConstantUrl.fetchMemberList);
 
       if (response.response.statusCode !=
           FormsFlowAIAPIConstants.statusCode200) {
@@ -203,8 +212,7 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
   Future<Either<Failure, List<ProcessDefinitionResponse>>>
       fetchProcessDefinitions() async {
     try {
-      final response = await taskApiClient
-          .fetchProcessDefinitions(appPreferences.getBearerAccessToken());
+      final response = await taskApiClient.fetchProcessDefinitions();
 
       return Right(response);
     } catch (error) {
@@ -256,16 +264,18 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
   /// Method to fetch task with isolate
   /// Parameters
   /// [TaskId]
-  /// ---> Returns [isolatedResponse.Response]
+  /// ---> Returns [Response]
   @override
-  Future<Either<Failure, isolatedResponse.Response>> fetchTaskWithIsolate(
-      {required String host, required String taskId}) async {
-    final response = await isolatedHttpClient.get(
-        host: host,
-        path: taskId,
-        headers: APIUtils.getTaskAuthorizationHeader(
-            acessToken: appPreferences.getAccessToken()));
-    return Right(response);
+  Future<Either<Failure, dio.Response>> fetchTask(
+      {required String taskId}) async {
+    try {
+      final response = await taskDio.get(
+        '${ApiConstantUrl.camundaEngineRest}/${ApiConstantUrl.task}/$taskId',
+      );
+      return Right(response);
+    } catch (error) {
+      return _handleDioError(error.runtimeType);
+    }
   }
 
   /// Method to fetch tasks
@@ -379,15 +389,15 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
   /// Parameters
   /// [TaskId]
   /// [UpdateTaskPostModel]
-  ///   /// ---> Returns [isolatedResponse.Response]
+  ///   /// ---> Returns [isolated_response.Response]
   @override
-  Future<Either<Failure, isolatedResponse.Response>> updateTaskWithIsolates(
-      {required String url,
-      required String taskId,
+  Future<Either<Failure, isolated_response.Response>> updateTaskWithIsolates(
+      {required String taskId,
       required UpdateTaskPostModel updateTaskPostModel}) async {
     try {
       final response = await isolatedHttpClient.put(
-          host: url,
+          host:
+              "${ApiConstantUrl.formsflowaiBpmBaseUrl}${ApiConstantUrl.camundaEngineRest}/${ApiConstantUrl.task}/$taskId",
           body: updateTaskPostModel.toJson(),
           headers: APIUtils.getTaskAuthorizationHeader(
               acessToken: appPreferences.getAccessToken()));
@@ -404,13 +414,11 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
 
   @override
   Future<Either<Failure, void>> clearDatabaseData() {
-    // TODO: implement clearDatabaseData
     throw UnimplementedError();
   }
 
   @override
   Future<Either<Failure, void>> deleteTask({required TaskEntity task}) {
-    // TODO: implement deleteTask
     throw UnimplementedError();
   }
 
@@ -460,7 +468,7 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
     final response = await isolatedHttpClient
         .post(
             host:
-                "${ApiConstantUrl.FORMSFLOWAI_BASE_URL}${ApiConstantUrl.CAMUNDA_ENGINE_REST}/${ApiConstantUrl.TASK}/$id/submit-form",
+                "${ApiConstantUrl.formsflowaiBpmBaseUrl}${ApiConstantUrl.camundaEngineRest}/${ApiConstantUrl.task}/$id/submit-form",
             body: formSubmissionPostModel.toJson(),
             headers: APIUtils.getTaskAuthorizationHeader(
                 acessToken: appPreferences.getAccessToken()))

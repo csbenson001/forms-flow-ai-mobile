@@ -3,13 +3,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/viewmodel/task_list_screen_providers.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
-import 'package:formsflowai_shared/shared/formsflow_api_constants.dart';
 import 'package:formsflowai_shared/widgets/shimmer/shimmer_widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../../../core/module/providers/view_model_provider.dart';
 import '../../../../../../shared/app_status.dart';
 import '../../../../../../shared/app_text_styles.dart';
+import '../../../../../../shared/formsflow_api_constants.dart';
 import '../../../../../base/widgets/base_consumer_widget.dart';
 import '../../model/task_sort_filter_data_model.dart';
 
@@ -48,9 +48,9 @@ class TaskSortView extends BaseConsumerWidget {
             child: Wrap(
               direction: Axis.horizontal,
               alignment: WrapAlignment.start,
-              spacing: Dimens.spacing_none,
+              spacing: Dimens.none,
               runAlignment: WrapAlignment.start,
-              runSpacing: Dimens.spacing_none,
+              runSpacing: Dimens.none,
               crossAxisAlignment: WrapCrossAlignment.start,
               verticalDirection: VerticalDirection.down,
               children: getSortItems(sortedFilterList, ref),
@@ -139,14 +139,14 @@ class TaskSortView extends BaseConsumerWidget {
                             decoration: BoxDecoration(
                               shape: BoxShape.rectangle,
                               borderRadius: BorderRadius.circular(6),
-                              color: AppColor.primarycolor,
+                              color: AppColor.primaryColor,
                             ),
                             child: Padding(
                               padding:
                                   const EdgeInsets.only(left: Dimens.spacing_2),
                               child: SvgPicture.asset(
                                 dm.sortOrder ==
-                                        FormsFlowAIAPIConstants.ASCENDING_ORDER
+                                        FormsFlowAIAPIConstants.ascendingOrder
                                     ? "assets/images/ic_ascending.svg"
                                     : "assets/images/ic_descending.svg",
                                 width: Dimens.size_18,

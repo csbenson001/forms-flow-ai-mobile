@@ -2,11 +2,11 @@ import 'package:floor/floor.dart';
 
 class DateTimeNullableConverter extends TypeConverter<DateTime?, String?> {
   @override
-  DateTime? decode(String? state) {
-    if (state == null) {
+  DateTime? decode(String? databaseValue) {
+    if (databaseValue == null) {
       return null;
     }
-    return DateTime.parse(state).toUtc();
+    return DateTime.parse(databaseValue).toUtc();
   }
 
   @override

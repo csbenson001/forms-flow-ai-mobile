@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:formsflowai_api/post/form/form_submission_post_model.dart';
-import 'package:formsflowai_api/response/base/base_response.dart';
 
+import '../../../../../core/api/post/form/form_submission_post_model.dart';
+import '../../../../../core/api/response/base/base_response.dart';
 import '../../../../../core/error/errors_failure.dart';
 import '../../../../../core/usecase/usecase.dart';
 import '../../../../../repository/task/task_data_repository.dart';

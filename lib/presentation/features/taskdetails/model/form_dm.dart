@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:dio/src/response.dart';
+import 'package:dio/dio.dart';
 
 import '../../../../core/database/entity/form_entity.dart';
 

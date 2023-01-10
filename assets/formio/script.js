@@ -1,4 +1,4 @@
-var formsFlowForm = null;
+var gForm = null;
 
     function createForm(json, data,formioInputData) {
 
@@ -12,7 +12,7 @@ var formsFlowForm = null;
     readOnly: formioInputData['readOnly']
     }
    ).then((form) => {
-    formsFlowForm = form;
+    gForm = form;
     form.submission = data;
     form.nosubmit = true;
     var formio = new Formio();
@@ -20,12 +20,12 @@ var formsFlowForm = null;
     form.formio = formio;
 
     // Formio onChange Callback method
-    formsFlowForm.on("change", (component, value) => {
+    gForm.on("change", (component, value) => {
       let jsonData = JSON.stringify(form.submission.data);
     });
 
     // Formio onSubmit Callback method
-      formsFlowForm.on('submit', (submission) => {
+      gForm.on('submit', (submission) => {
          let submissionData = form.submission.data;
          let formJsonData = {
          "eventType" :  "submissionEvent",
@@ -37,13 +37,13 @@ var formsFlowForm = null;
 
 
    /// Formio onSubmitDone callback method
-    formsFlowForm.on('submitDone', (submission) => {
+    gForm.on('submitDone', (submission) => {
      let jsonData = JSON.stringify(submission);
     window.flutter_inappwebview.callHandler('submissionData', jsonData);
     });
 
    /// Formio onCustomEvent callback method
-      formsFlowForm.on("customEvent", (data) => {
+      gForm.on("customEvent", (data) => {
 
            let submissionData = form.submission.data;
            let formJsonData = {
@@ -70,13 +70,13 @@ var formsFlowForm = null;
 
 /// Function to update form json data
  function updateForm(json, data) {
-  formsFlowForm.form = json;
+  gForm.form = json;
  }
 
 /// Function to update form json configuration
  function updateFormConfig(json, readOnly){
- formsFlowForm.options.readOnly = readOnly;
- formsFlowForm.redraw();
+ gForm.options.readOnly = readOnly;
+ gForm.redraw();
  }
 
 
@@ -91,7 +91,7 @@ var formsFlowForm = null;
      }
  ).then(function(form) {
    // Default the submission.
-     formsFlowForm = form;
+     gForm = form;
    form.submission = {
      data: data['data']
    };

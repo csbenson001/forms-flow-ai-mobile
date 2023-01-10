@@ -27,7 +27,7 @@ class FetchTaskVariablesUseCase
 class FetchTaskVariablesParams extends Equatable {
   final String taskId;
 
-  FetchTaskVariablesParams({required this.taskId});
+  const FetchTaskVariablesParams({required this.taskId});
 
   @override
   List<Object?> get props => [taskId];

@@ -1,4 +1,4 @@
-import 'package:formsflowai_api/response/task/details/list_members_response.dart';
+import '../../../../core/api/response/task/details/list_members_response.dart';
 
 /// [MembersDM] data class contains member related data fields
 /// used in the assign task screen to display
@@ -17,14 +17,14 @@ class MembersDM {
   /// Method to transform [ListMembersResponse] into [MembersDM]
   static List<MembersDM> transform(List<ListMembersResponse> data) {
     List<MembersDM> mData = List.empty(growable: true);
-    data.forEach((element) {
+    for (var element in data) {
       mData.add(MembersDM.name(
           id: element.id,
           email: element.email,
           firstName: element.firstName,
           lastName: element.lastName,
           isSelected: false));
-    });
+    }
     return mData;
   }
 

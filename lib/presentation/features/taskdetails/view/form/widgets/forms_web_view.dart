@@ -1,17 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:flutter_riverpod/src/consumer.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
-import 'package:formsflowai_shared/shared/webview_constants.dart';
 import 'package:formsflowai_shared/widgets/formsflow_circular_progress_indicator.dart';
 import 'package:formsflowai_shared/widgets/nodata/no_data_view.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../../../core/module/providers/view_model_provider.dart';
 import '../../../../../../shared/app_strings.dart';
+import '../../../../../../shared/webview_constants.dart';
 import '../../../../../../utils/general_util.dart';
 import '../../../../../base/widgets/base_consumer_widget.dart';
 import '../../../viewmodel/task_details_providers.dart';
@@ -30,7 +28,7 @@ class FormsWebView extends BaseConsumerWidget {
     final isLoadingForm = ref.watch(formViewLoadingProvider);
 
     return noFormResourceFound
-        ? NoDataView(
+        ? const NoDataView(
             heading: Strings.taskDetailsNoResourceFound,
             description: Strings.taskDetailsErrorSelectedFormResourceNotFound,
           )
@@ -45,9 +43,9 @@ class FormsWebView extends BaseConsumerWidget {
                 child: InAppWebView(
                   key: webViewKey,
                   initialFile: 'assets/formio/form.html',
-                  gestureRecognizers: Set()
-                    ..add(Factory<VerticalDragGestureRecognizer>(
-                        () => VerticalDragGestureRecognizer())),
+                  gestureRecognizers: {}..add(
+                      Factory<VerticalDragGestureRecognizer>(
+                          () => VerticalDragGestureRecognizer())),
                   initialOptions: InAppWebViewGroupOptions(
                       crossPlatform: InAppWebViewOptions(
                           useShouldOverrideUrlLoading: true,
@@ -74,7 +72,7 @@ class FormsWebView extends BaseConsumerWidget {
                         .webViewPluscontroller
                         ?.addJavaScriptHandler(
                             handlerName:
-                                FormsFlowWebViewConstants.HANDLER_IS_LOADING,
+                                FormsFlowWebViewConstants.handlerIsLoading,
                             callback: (data) {
                               if (data[0] == false) {}
                             });
@@ -83,59 +81,54 @@ class FormsWebView extends BaseConsumerWidget {
                         .webViewPluscontroller
                         ?.addJavaScriptHandler(
                             handlerName: FormsFlowWebViewConstants
-                                .HANDLER_ON_SUBMISSION_CHANGED,
-                            callback: (data) {
-
-
-                            });
+                                .handlerOnSubmissionChanged,
+                            callback: (data) {});
 
                     ref
                         .read(formsTabViewModelProvider)
                         .webViewPluscontroller
                         ?.addJavaScriptHandler(
                             handlerName: FormsFlowWebViewConstants
-                                .HANDLER_ON_VALIDITY_CHECKED,
+                                .handlerOnValidityChecked,
                             callback: (data) {});
                     ref
                         .read(formsTabViewModelProvider)
                         .webViewPluscontroller
                         ?.addJavaScriptHandler(
-                            handlerName: FormsFlowWebViewConstants
-                                .HANDLER_SUBMISSION_DATA,
+                            handlerName:
+                                FormsFlowWebViewConstants.handlerSubmissionData,
                             callback: (data) {
-  
-
                               dynamic formData = data[0];
                               if (formData[FormsFlowWebViewConstants
-                                      .FORM_KEY_EVENT_TYPE] ==
+                                      .formKeyEventType] ==
                                   FormsFlowWebViewConstants
-                                      .HANDLER_ACTION_CUSTOM_SUBMISSION_EVENT) {
+                                      .handlerActionCustomSubmissionEvent) {
                                 ref
                                     .read(formsTabViewModelProvider)
                                     .onClickSubmitCustomFormEvent(
                                         formSubmissionData: formData[
                                             FormsFlowWebViewConstants
-                                                .FORM_KEY_SUBMISSION_DATA],
+                                                .formKeySubmissionData],
                                         type: formData[FormsFlowWebViewConstants
-                                            .FORM_KEY_TYPE],
+                                            .formKeyType],
                                         formActionType: formData[
                                             FormsFlowWebViewConstants
-                                                .FORM_KEY_ACTION_TYPE]);
+                                                .formKeyActionType]);
                               } else {
                                 ref
                                     .read(formsTabViewModelProvider)
                                     .onClickSubmitFormEvent(
                                         formSubmissionData: formData[
                                             FormsFlowWebViewConstants
-                                                .FORM_KEY_SUBMISSION_DATA]);
+                                                .formKeySubmissionData]);
                               }
                             });
                     ref
                         .read(formsTabViewModelProvider)
                         .webViewPluscontroller
                         ?.addJavaScriptHandler(
-                            handlerName: FormsFlowWebViewConstants
-                                .HANDLER_ON_RENDERED_DATA,
+                            handlerName:
+                                FormsFlowWebViewConstants.handlerOnRenderedData,
                             callback: (data) {});
                   },
                   androidOnPermissionRequest:

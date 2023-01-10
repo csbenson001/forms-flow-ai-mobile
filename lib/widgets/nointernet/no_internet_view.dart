@@ -10,7 +10,9 @@ class NoInternetView extends StatelessWidget {
   final String? heading;
   final String? description;
 
-  NoInternetView({required this.heading, required this.description});
+  const NoInternetView(
+      {Key? key, required this.heading, required this.description})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

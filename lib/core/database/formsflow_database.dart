@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'dart:async';
 
 import 'package:floor/floor.dart';
@@ -18,16 +20,16 @@ part 'formsflow_database.g.dart';
 // Database with the entity values
 @Database(
     entities: [TaskEntity, FormEntity, ApplicationHistoryEntity],
-    version: FormsFlowDatabase.NEW_DB_VERSION)
+    version: FormsFlowDatabase.newDBVersion)
 abstract class FormsFlowDatabase extends FloorDatabase {
   // Database name
-  static const String DATABASE_NAME = "formsflowai.db";
+  static const String databaseName = "formsflowai.db";
 
   // Old Database Version
-  static const OLD_DB_VERSION = 0;
+  static const oldDBVersion = 0;
 
   // New database version
-  static const int NEW_DB_VERSION = 1;
+  static const int newDBVersion = 1;
 
   // Variable to get taskDao
   TaskDao get taskDao;

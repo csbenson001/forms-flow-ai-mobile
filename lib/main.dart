@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:formsflowai/shared/formsflow_app_constants.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
-import 'package:formsflowai_shared/shared/formsflow_app_constants.dart';
 import 'package:formsflowai_shared/widgets/progress/progress_custom_animation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:isolated_http_client/isolated_http_client.dart';
@@ -15,16 +16,13 @@ import 'core/router/app_pages.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  /// Call function[RegisterServices] to inject services/useCases/repos
-  await registerServices();
-
   /// Init executor
   await Executor().warmUp(log: false);
-  // await dotenv.load(fileName: AppConstants.env_File_Name);
-  /// call function [SetAppOverlay] to set system bar color brightness
+  await dotenv.load(fileName: FormsFlowAIConstants.envFileName);
   await setAppOverlay();
 
-  // dl<DioHelper>().addInterceptors();
+  /// Call function[RegisterServices] to inject services/useCases/repos
+  await registerServices();
 
   /// call function [InitEasyLoading] to initialize overlay progress loading
   initEasyLoading();
@@ -58,8 +56,8 @@ void initEasyLoading() {
     ..indicatorSize = Dimens.size_45
     ..radius = Dimens.radius_10
     ..progressColor = Colors.white
-    ..backgroundColor = AppColor.primarycolor
-    ..indicatorColor = AppColor.primarycolor
+    ..backgroundColor = AppColor.primaryColor
+    ..indicatorColor = AppColor.primaryColor
     ..textColor = Colors.white
     ..maskColor = Colors.blue.withOpacity(0.5)
     ..userInteractions = false

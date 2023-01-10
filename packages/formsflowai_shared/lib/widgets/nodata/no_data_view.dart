@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../assets.dart';
@@ -11,7 +9,8 @@ class NoDataView extends StatelessWidget {
   final String? heading;
   final String? description;
 
-  NoDataView({required this.heading, required this.description});
+  const NoDataView(
+      {super.key, required this.heading, required this.description});
 
   @override
   Widget build(BuildContext context) {

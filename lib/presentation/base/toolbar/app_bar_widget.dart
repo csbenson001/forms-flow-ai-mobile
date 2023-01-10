@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
+import 'package:formsflowai_shared/shared/app_text_styles.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
-import 'package:formsflowai_shared/utils/router/router_utils.dart';
 
 import '../../../shared/app_strings.dart';
-import '../../../shared/app_text_styles.dart';
+import '../../../utils/router/router_utils.dart';
 
 /// [AppBarWidget] is the custom created app bar used in the formsFlow.AI
 /// Mobile application
@@ -25,7 +24,7 @@ class AppBarWidget extends AppBar {
             style: AppTextStyles.boldTextStyle(
                 fontSize: Dimens.font_18, textColor: Colors.white),
           ),
-          backgroundColor: AppColor.primarycolor,
+          backgroundColor: AppColor.primaryColor,
           toolbarHeight: Dimens.size_55,
           leading: IconButton(
               onPressed: () async {

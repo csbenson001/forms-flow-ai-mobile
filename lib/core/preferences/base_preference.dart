@@ -1,5 +1,5 @@
-import 'package:formsflowai_api/formsflowai_api.dart';
-import 'package:formsflowai_api/response/filter/get_filters_response.dart';
+import '../api/response/filter/get_filters_response.dart';
+import '../api/response/form/roles/formio_roles_response.dart';
 
 abstract class BasePreference<T> {
   void setUserLoggedIn(bool value);

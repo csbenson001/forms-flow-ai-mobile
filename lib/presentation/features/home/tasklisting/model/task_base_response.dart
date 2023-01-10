@@ -1,7 +1,7 @@
 import 'package:formsflowai/presentation/features/home/tasklisting/model/task_listing_data_model.dart';
-import 'package:formsflowai_api/formsflowai_api.dart';
-import 'package:formsflowai_api/response/processdefinition/process_definition_response.dart';
 
+import '../../../../../core/api/response/processdefinition/process_definition_response.dart';
+import '../../../../../core/api/response/task/tasklist_hal/task_list_hal_response.dart';
 import '../../../../../core/database/entity/task_entity.dart';
 import '../../../../../shared/app_strings.dart';
 
@@ -52,7 +52,7 @@ class TaskBaseDataResponse {
   static TaskBaseDataResponse transformFromEntity(
       {required List<TaskEntity>? data}) {
     TaskBaseDataResponse taskBaseResponse = TaskBaseDataResponse();
-    if (data != null && data.length > 0) {
+    if (data != null && data.isNotEmpty) {
       taskBaseResponse.errorMessage = Strings.generalLabelSuccess;
       taskBaseResponse.taskCount = data.length;
       taskBaseResponse.errorCode = 200;

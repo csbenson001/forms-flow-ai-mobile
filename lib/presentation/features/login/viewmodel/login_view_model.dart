@@ -1,15 +1,13 @@
 import 'package:flutter/scheduler.dart';
-import 'package:formsflowai/core/error/errors_failure.dart';
 import 'package:formsflowai/presentation/base/viewmodel/base_notifier_view_model.dart';
 import 'package:formsflowai/presentation/features/login/usecases/fetch_user_info_usecase.dart';
-import 'package:formsflowai/presentation/features/login/usecases/login_user_usecase.dart';
 import 'package:formsflowai/presentation/features/login/usecases/save_user_details_usecase.dart';
 import 'package:formsflowai/presentation/features/login/viewmodel/login_state_notifier.dart';
 import 'package:formsflowai/shared/app_status.dart';
-import 'package:formsflowai_shared/utils/api/api_utils.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../core/api/utils/api_utils.dart';
 import '../../../../core/preferences/app_preference.dart';
 import '../../../../shared/app_strings.dart';
 import '../usecases/login_keycloak_authenticator_usecase.dart';
@@ -19,14 +17,11 @@ import '../usecases/login_keycloak_authenticator_usecase.dart';
 class LoginViewModel extends BaseNotifierViewModel {
   LoginViewModel(
       {required this.appPreferences,
-      required this.loginUserCase,
       required this.fetchUserInfoUseCase,
       required this.saveUserDetailsUsecase,
       required this.loginKeycloakAuthenticatorUserCase,
       required this.ref});
 
-  /// UseCases
-  final LoginUserCase loginUserCase;
   final FetchUserInfoUseCase fetchUserInfoUseCase;
   final AppPreferences appPreferences;
   final LoginKeycloakAuthenticatorUserCase loginKeycloakAuthenticatorUserCase;
@@ -53,39 +48,6 @@ class LoginViewModel extends BaseNotifierViewModel {
     ref
         .read(loginStateProvider.notifier)
         .updateAgreedToTermsAndConditions(isAgreed: isAgreed);
-  }
-
-  /// Function to call api to login User
-  /// fold response and handle the on recieve response on right
-  /// after successful login call [_fetchUserInfo] function to get
-  /// user info response
-  /// Input Parameters
-  /// [UserName]
-  /// [Password]
-  void loginUser({required String userName, required String password}) {
-    showProgressLoading();
-    loginUserCase
-        .call(
-            params: LoginParams(
-                userName: userName.trim(), password: password.trim()))
-        .then((value) {
-      value.fold((error) {
-        dismissProgressLoading();
-        if (error is NoConnectionFailure) {
-          ref
-              .read(loginStateProvider.notifier)
-              .showToastMessage(error: Strings.loginErrorNoInternet);
-        } else {
-          ref
-              .read(loginStateProvider.notifier)
-              .showToastMessage(error: Strings.loginErrorInvalidCredentials);
-        }
-      }, (tokenResponse) async {
-        await _fetchUserInfo(
-            accessToken: tokenResponse.accessToken ?? '',
-            refreshToken: tokenResponse.refreshToken ?? '');
-      });
-    });
   }
 
   /// Function to call api to login User
@@ -158,6 +120,6 @@ class LoginViewModel extends BaseNotifierViewModel {
 
   /// Function to open launcher to load terms and conditions webpage
   void openTermsAndConditionsUrlLauncher() {
-    launch("https://formsflow.ai/service/");
+    launchUrl(Uri.parse("https://formsflow.ai/service/"));
   }
 }

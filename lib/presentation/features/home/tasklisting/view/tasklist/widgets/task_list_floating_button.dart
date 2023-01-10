@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_riverpod/src/consumer.dart';
 import 'package:formsflowai/core/module/providers/view_model_provider.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/viewmodel/task_list_screen_providers.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../../../base/widgets/base_consumer_widget.dart';
 
@@ -17,7 +15,7 @@ class TaskListFloatingButton extends BaseConsumerWidget {
 
     return showFloatingButton
         ? FloatingActionButton(
-            backgroundColor: AppColor.primarycolor,
+            backgroundColor: AppColor.primaryColor,
             child: const Icon(
               Icons.arrow_upward_rounded,
               color: Colors.white,

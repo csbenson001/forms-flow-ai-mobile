@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:formsflowai/core/module/providers/view_model_provider.dart';
 import 'package:formsflowai/presentation/features/assigntask/view/widgets/assign_task_button.dart';
@@ -30,6 +29,7 @@ class AssignTaskScreen extends BaseHooksConsumerWidget {
     /// Call [AssignTaskViewModel] onInit method to fetch members data from remote
     useEffect(() {
       ref.read(assignTaskViewModelProvider).onInit(data: taskListingDM);
+      return null;
     }, []);
 
     return ToolbarAppScaffold(

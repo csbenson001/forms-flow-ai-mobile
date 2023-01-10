@@ -24,7 +24,7 @@ class FetchFormUseCase implements UseCase<FormDM?, FetchFormParams> {
 class FetchFormParams extends Equatable {
   final String formResourceId;
 
-  FetchFormParams({required this.formResourceId});
+  const FetchFormParams({required this.formResourceId});
 
   @override
   List<Object?> get props => [formResourceId];

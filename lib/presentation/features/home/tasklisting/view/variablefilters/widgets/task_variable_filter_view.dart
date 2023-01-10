@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:formsflowai/presentation/base/widgets/base_hooks_consumer_widget.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/view/variablefilters/widgets/added_filter_count_view.dart';
@@ -43,7 +42,7 @@ class TaskVariableFiltersInputView extends BaseHooksConsumerWidget {
                     top: Dimens.spacing_6, bottom: Dimens.spacing_16),
                 decoration: BoxDecoration(
                     color: Colors.white,
-                    border: Border.all(color: AppColor.primarycolor),
+                    border: Border.all(color: AppColor.primaryColor),
                     borderRadius: BorderRadius.circular(Dimens.radius_8),
                     shape: BoxShape.rectangle),
                 child: Column(
@@ -61,7 +60,7 @@ class TaskVariableFiltersInputView extends BaseHooksConsumerWidget {
                             Strings.taskListingLabelFilterByTasks,
                             style: AppTextStyles.mediumTextStyle(
                                 fontSize: Dimens.font_15,
-                                textColor: AppColor.primarycolor),
+                                textColor: AppColor.primaryColor),
                           ),
                         ),
                         const Spacer(),
@@ -83,7 +82,7 @@ class TaskVariableFiltersInputView extends BaseHooksConsumerWidget {
                                 child: Icon(
                                   Icons.close,
                                   size: Dimens.size_18,
-                                  color: AppColor.primarycolor,
+                                  color: AppColor.primaryColor,
                                 )))
                       ],
                     ),
@@ -110,7 +109,7 @@ class TaskVariableFiltersInputView extends BaseHooksConsumerWidget {
                                         bottom: Dimens.spacing_4),
                                     decoration: const BoxDecoration(
                                         shape: BoxShape.rectangle,
-                                        color: AppColor.primarycolor,
+                                        color: AppColor.primaryColor,
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(Dimens.radius_10))),
                                     child: Text(
@@ -174,9 +173,9 @@ class TaskVariableFiltersInputView extends BaseHooksConsumerWidget {
                                   // taskListingController
                                   //     .updateSelectedCheckBoxString(value);
                                 },
-                                orientation: CheckboxOrientation.HORIZONTAL,
+                                orientation: CheckboxOrientation.horizontal,
                                 itemList: const ["name", "value"],
-                                activeColor: AppColor.primarycolor,
+                                activeColor: AppColor.primaryColor,
                                 checkedItemList: uiSelectedCheckList,
                                 chechBoxHeight: Dimens.size_18,
                                 chechBoxWidth: Dimens.size_18,
@@ -238,7 +237,7 @@ class TaskVariableFiltersInputView extends BaseHooksConsumerWidget {
                         Container(
                             padding: const EdgeInsets.only(
                                 left: Dimens.spacing_10,
-                                right: Dimens.spacing_none,
+                                right: Dimens.none,
                                 top: Dimens.spacing_10,
                                 bottom: Dimens.spacing_10),
                             child: Text(
@@ -255,7 +254,7 @@ class TaskVariableFiltersInputView extends BaseHooksConsumerWidget {
                           child: const Icon(
                             Icons.add_circle_rounded,
                             size: Dimens.size_20,
-                            color: AppColor.primarycolor,
+                            color: AppColor.primaryColor,
                           ),
                         )
                       ],

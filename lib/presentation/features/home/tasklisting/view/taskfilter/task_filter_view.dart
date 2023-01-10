@@ -33,20 +33,20 @@ class TaskFilterView extends BaseConsumerWidget {
     final connectivityResult = ref.watch(internetConnectivityProvider);
 
     if (connectivityResult == ConnectivityResult.none) {
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     }
 
     return isPageLoading == PageStatus.loading
         ? ShimmerWidgets.getShimmerContainer(
             width: Dimens.size_150,
             height: Dimens.size_20,
-            padding: const EdgeInsets.all(Dimens.spacing_none),
+            padding: const EdgeInsets.all(Dimens.none),
             margin: const EdgeInsets.only(
                 left: Dimens.spacing_24,
                 right: Dimens.spacing_24,
                 top: Dimens.spacing_16,
                 bottom: Dimens.spacing_8),
-            borderRadius: BorderRadius.circular(Dimens.radius_none))
+            borderRadius: BorderRadius.circular(Dimens.radiusNone))
         : showTaskFiltersView
             ? SizedBox(
                 width: MediaQuery.of(context).size.width,

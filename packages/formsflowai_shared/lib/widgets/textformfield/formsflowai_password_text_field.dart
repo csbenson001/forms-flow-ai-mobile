@@ -19,7 +19,8 @@ class FormsFlowAIPasswordTextField extends StatelessWidget {
   final bool? submitted;
 
   const FormsFlowAIPasswordTextField(
-      {this.hint,
+      {super.key,
+      this.hint,
       this.keyboardType,
       this.icon,
       this.obscureText,
@@ -37,7 +38,7 @@ class FormsFlowAIPasswordTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       keyboardType: keyboardType,
-      cursorColor: AppColor.primarycolor,
+      cursorColor: AppColor.primaryColor,
       onChanged: onChanged,
       controller: controller,
       textInputAction: textInputAction,
@@ -51,7 +52,7 @@ class FormsFlowAIPasswordTextField extends StatelessWidget {
         fillColor: Colors.white,
         filled: true,
         prefixIcon:
-            Icon(icon, color: AppColor.primarycolor, size: Dimens.size_20),
+            Icon(icon, color: AppColor.primaryColor, size: Dimens.size_20),
         hintText: hint,
         isDense: true,
         contentPadding: const EdgeInsets.symmetric(

@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:formsflowai/presentation/features/assigntask/viewmodel/assign_task_state_notifier.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
@@ -81,7 +79,7 @@ class ViewMembersFilterDropDownView extends BaseConsumerWidget {
                     boxHeight: Dimens.size_40,
                     icon: const Icon(
                       Icons.keyboard_arrow_down_rounded,
-                      color: AppColor.primarycolor,
+                      color: AppColor.primaryColor,
                       size: Dimens.size_20,
                     ),
                     // reversedIcon: const Icon(

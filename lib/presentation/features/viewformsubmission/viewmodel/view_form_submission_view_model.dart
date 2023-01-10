@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:formsflowai/core/module/providers/view_model_provider.dart';
 import 'package:formsflowai/presentation/features/viewformsubmission/view/view_form_submission_screen.dart';
 import 'package:formsflowai/presentation/features/viewformsubmission/viewmodel/view_form_submission_state_notifier.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -9,6 +11,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../core/networkmanager/internet_connectivity_provider.dart';
 import '../../../../core/networkmanager/network_manager_controller.dart';
 import '../../../../core/preferences/app_preference.dart';
+import '../../../../core/socket/socket_service.dart';
 import '../../../../utils/general_util.dart';
 import '../../../base/viewmodel/base_notifier_view_model.dart';
 import '../../taskdetails/model/application_history_data_model.dart';
@@ -28,11 +31,14 @@ class ViewFormSubmissionViewModel extends BaseNotifierViewModel {
   ApplicationHistoryDM? _applicationHistoryDM;
   ApplicationHistoryDM? get applicationHistoryDM => _applicationHistoryDM;
 
+  final SocketService socketService;
+
   ViewFormSubmissionViewModel(
       {required this.ref,
       required this.fetchFormUseCase,
       required this.networkManagerController,
       required this.appPreferences,
+      required this.socketService,
       required this.fetchFormSubmissionUseCase});
 
   /// OnInit Method
@@ -123,5 +129,9 @@ class ViewFormSubmissionViewModel extends BaseNotifierViewModel {
         fetchForms();
       }
     });
+  }
+
+  Future<void> clearAppSession({required BuildContext context}) async {
+    ref.read(taskListViewModelProvider).logoutUser(context: context);
   }
 }

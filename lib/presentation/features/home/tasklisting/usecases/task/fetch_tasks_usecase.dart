@@ -1,26 +1,26 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/model/task_base_response.dart';
-import 'package:formsflowai_api/post/task/tasklist_sort.dart';
-import 'package:formsflowai_api/response/processdefinition/process_definition_response.dart';
 
+import '../../../../../../core/api/post/task/tasklist_sort.dart';
+import '../../../../../../core/api/response/processdefinition/process_definition_response.dart';
 import '../../../../../../core/error/errors_failure.dart';
 import '../../../../../../core/usecase/usecase.dart';
 import '../../../../../../repository/task/task_data_repository.dart';
 
 /// [FetchTasksUseCase] to fetch tasks from remote
-/// [FetchTaskParams]
+/// [FetchTasksParams]
 /// interacts with [TaskDataRepository] to complete the operation
 /// ---> Returns[TaskBaseDataResponse]
 class FetchTasksUseCase
-    implements UseCase<TaskBaseDataResponse, FetchTaskParams> {
+    implements UseCase<TaskBaseDataResponse, FetchTasksParams> {
   const FetchTasksUseCase({required this.repository});
 
   final TaskDataRepository repository;
 
   @override
   Future<Either<Failure, TaskBaseDataResponse>> call({
-    required FetchTaskParams params,
+    required FetchTasksParams params,
   }) {
     return repository.fetchTasks(
         params.id,
@@ -31,14 +31,14 @@ class FetchTasksUseCase
   }
 }
 
-class FetchTaskParams extends Equatable {
+class FetchTasksParams extends Equatable {
   final String id;
   final int firstResult;
   final int maxResults;
   final TaskSortPostModel taskSortingPostModel;
   final List<ProcessDefinitionResponse>? definitionResponse;
 
-  const FetchTaskParams(
+  const FetchTasksParams(
       {required this.id,
       required this.firstResult,
       required this.maxResults,

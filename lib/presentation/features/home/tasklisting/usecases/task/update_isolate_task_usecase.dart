@@ -1,10 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:formsflowai_api/post/task/update_task_post_model.dart';
-import 'package:formsflowai_shared/shared/api_constants_url.dart';
 import 'package:isolated_http_client/isolated_http_client.dart'
-    as isolatedResponse;
+    as isolated_response;
 
+import '../../../../../../core/api/post/task/update_task_post_model.dart';
 import '../../../../../../core/error/errors_failure.dart';
 import '../../../../../../core/usecase/usecase.dart';
 import '../../../../../../repository/task/task_data_repository.dart';
@@ -12,23 +11,19 @@ import '../../../../../../repository/task/task_data_repository.dart';
 /// [UpdateIsolatedTaskUseCase] to update the task in remote isolate
 /// interacts with [TaskDataRepository] to complete the operation
 /// [UpdateIsolatedTaskParams]
-/// ---> Returns[isolatedResponse.Response]
+/// ---> Returns[isolated_response.Response]
 
 class UpdateIsolatedTaskUseCase
-    implements UseCase<isolatedResponse.Response, UpdateIsolatedTaskParams> {
+    implements UseCase<isolated_response.Response, UpdateIsolatedTaskParams> {
   const UpdateIsolatedTaskUseCase({required this.repository});
 
   final TaskDataRepository repository;
 
   @override
-  Future<Either<Failure, isolatedResponse.Response>> call(
+  Future<Either<Failure, isolated_response.Response>> call(
       {required UpdateIsolatedTaskParams params}) {
-    String url =
-        "${ApiConstantUrl.FORMSFLOWAI_BASE_URL}${ApiConstantUrl.CAMUNDA_ENGINE_REST}/${ApiConstantUrl.TASK}/${params.taskId}";
     return repository.updateTaskWithIsolates(
-        url: url,
-        updateTaskPostModel: params.updateTaskPostModel,
-        taskId: params.taskId);
+        updateTaskPostModel: params.updateTaskPostModel, taskId: params.taskId);
   }
 }
 

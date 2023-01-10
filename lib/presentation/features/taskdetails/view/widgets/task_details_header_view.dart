@@ -1,22 +1,20 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_riverpod/src/consumer.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/model/task_listing_data_model.dart';
 import 'package:formsflowai/presentation/features/taskdetails/viewmodel/task_details_providers.dart';
-import 'package:formsflowai_api/response/task/details/task_group_response.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
-import 'package:formsflowai_shared/shared/formsflow_app_constants.dart';
 import 'package:formsflowai_shared/widgets/shimmer/shimmer_widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../../core/api/response/task/details/task_group_response.dart';
 import '../../../../../core/module/providers/view_model_provider.dart';
 import '../../../../../shared/app_strings.dart';
 import '../../../../../shared/app_text_styles.dart';
+import '../../../../../shared/formsflow_app_constants.dart';
 import '../../../../../shared/imageassets/formsflowai_image_assets.dart';
 import '../../../../../utils/general_util.dart';
 import '../../../../../widgets/nointernet/no_internet_snackbar_view.dart';
@@ -76,8 +74,7 @@ class TaskDetailsHeaderView extends BaseConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                            padding: const EdgeInsets.only(
-                                left: Dimens.spacing_none),
+                            padding: const EdgeInsets.only(left: Dimens.none),
                             child: Text(
                               taskInfoDM.created != null
                                   ? Strings.taskDetailsLabelCreated +
@@ -197,12 +194,12 @@ class TaskDetailsHeaderView extends BaseConsumerWidget {
                                                   right: SizerUtil.deviceType ==
                                                           DeviceType.mobile
                                                       ? Dimens.spacing_2
-                                                      : Dimens.spacing_none,
+                                                      : Dimens.none,
                                                 ),
                                                 child: const Icon(
                                                   Icons.calendar_today_sharp,
                                                   size: 16.0,
-                                                  color: AppColor.primarycolor,
+                                                  color: AppColor.primaryColor,
                                                 )))
                                       ],
                                     )),
@@ -319,13 +316,12 @@ class TaskDetailsHeaderView extends BaseConsumerWidget {
                                                       : const EdgeInsets.only(
                                                           left:
                                                               Dimens.spacing_10,
-                                                          right: Dimens
-                                                              .spacing_none),
+                                                          right: Dimens.none),
                                                   child: const Icon(
                                                     Icons.calendar_today_sharp,
                                                     size: Dimens.size_16,
                                                     color:
-                                                        AppColor.primarycolor,
+                                                        AppColor.primaryColor,
                                                   )))
                                         ],
                                       )),
@@ -352,7 +348,7 @@ class TaskDetailsHeaderView extends BaseConsumerWidget {
                                   child: Container(
                                     width: 150.0,
                                     decoration: BoxDecoration(
-                                      color: AppColor.primarycolor,
+                                      color: AppColor.primaryColor,
                                       border: Border.all(
                                           color: AppColor.grey4, width: 0.75),
                                       borderRadius: const BorderRadius.all(
@@ -545,7 +541,7 @@ class TaskDetailsHeaderView extends BaseConsumerWidget {
                                             },
                                             child: Container(
                                               decoration: BoxDecoration(
-                                                color: AppColor.primarycolor,
+                                                color: AppColor.primaryColor,
                                                 border: Border.all(
                                                     color: AppColor.grey4,
                                                     width: 0.75),
@@ -630,7 +626,7 @@ class TaskDetailsHeaderView extends BaseConsumerWidget {
                 children: [
                   ShimmerWidgets.getShimmerContainer(
                       margin: const EdgeInsets.only(
-                          top: Dimens.spacing_none, left: Dimens.spacing_none),
+                          top: Dimens.none, left: Dimens.none),
                       padding: const EdgeInsets.all(Dimens.spacing_8),
                       width: Dimens.size_100,
                       height: Dimens.size_20,

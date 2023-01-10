@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:formsflowai/presentation/features/taskdetails/view/addgroups/widgets/add_group_button.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
@@ -33,7 +32,7 @@ class AddGroupDialog extends BaseConsumerWidget {
           boxShadow: const [
             BoxShadow(
                 color: Colors.black,
-                offset: Offset(Dimens.offset_none, Dimens.offset_10),
+                offset: Offset(Dimens.offsetNone, Dimens.offset_10),
                 blurRadius: Dimens.radius_10),
           ]),
       child: SingleChildScrollView(
@@ -72,7 +71,7 @@ class AddGroupDialog extends BaseConsumerWidget {
                             Strings.taskDetailsLabelManageGroups,
                             style: AppTextStyles.semiBoldTextStyle(
                                 fontSize: Dimens.font_18,
-                                textColor: AppColor.primarycolor),
+                                textColor: AppColor.primaryColor),
                           ),
                         )),
                   ],

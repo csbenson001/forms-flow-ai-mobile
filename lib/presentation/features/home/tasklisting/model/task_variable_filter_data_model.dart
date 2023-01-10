@@ -6,7 +6,7 @@ class TaskVariableFilterDM {
   List<String>? comparess;
   String? key;
   List<String>? values;
-  dynamic? type;
+  dynamic type;
   String? name;
   bool? isSelected = false;
   List<DropdownMenuItem<Object?>> variableDropDownItems;

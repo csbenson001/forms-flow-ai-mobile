@@ -3,13 +3,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:formsflowai_shared/shared/webview_constants.dart';
-import 'package:formsflowai_shared/utils/form/formsflowai_webview_utils.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../../core/module/providers/view_model_provider.dart';
 import '../../../../../core/networkmanager/internet_connectivity_provider.dart';
 import '../../../../../shared/app_strings.dart';
+import '../../../../../shared/webview_constants.dart';
+import '../../../../../utils/form/formsflowai_webview_utils.dart';
 import '../../../../../widgets/nointernet/no_internet_view.dart';
 import '../../../../base/widgets/base_hooks_consumer_widget.dart';
 
@@ -33,14 +33,14 @@ class TaskBpmnDiagramView extends BaseHooksConsumerWidget {
       index: diagramVIewIndexedStackPosition,
       children: [
         connectivity == ConnectivityResult.none
-            ? NoInternetView(
+            ? const NoInternetView(
                 heading: Strings.generalNoInternet,
                 description: Strings.taskDetailsErrorNoInterenetDescription,
               )
             : InAppWebView(
-                gestureRecognizers: Set()
-                  ..add(Factory<VerticalDragGestureRecognizer>(
-                      () => VerticalDragGestureRecognizer())),
+                gestureRecognizers: {}..add(
+                    Factory<VerticalDragGestureRecognizer>(
+                        () => VerticalDragGestureRecognizer())),
                 initialData: FormsFlowAIWebViewUtils.loadBpmnDiagram(
                     bearerToken: appPreferences.getBearerAccessToken(),
                     processDefinitionResponse: processDefinitionResponse,
@@ -75,7 +75,7 @@ class TaskBpmnDiagramView extends BaseHooksConsumerWidget {
                       .bpmnDiagramWebViewController
                       .addJavaScriptHandler(
                           handlerName:
-                              FormsFlowWebViewConstants.HANDLER_IS_LOADING,
+                              FormsFlowWebViewConstants.handlerIsLoading,
                           callback: (data) {
                             if (data[0] == false) {
                               ref

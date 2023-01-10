@@ -17,7 +17,8 @@ class FormsFlowAICustomTextField extends StatelessWidget {
   final bool? submitted;
 
   const FormsFlowAICustomTextField(
-      {this.hint,
+      {super.key,
+      this.hint,
       this.keyboardType,
       this.icon,
       this.obscureText = false,
@@ -34,7 +35,7 @@ class FormsFlowAICustomTextField extends StatelessWidget {
     return TextFormField(
       keyboardType: keyboardType,
       controller: controller,
-      cursorColor: AppColor.primarycolor,
+      cursorColor: AppColor.primaryColor,
       onChanged: onChanged,
       textInputAction: textInputAction,
       onFieldSubmitted: onFieldSubmitted,
@@ -46,7 +47,7 @@ class FormsFlowAICustomTextField extends StatelessWidget {
         fillColor: Colors.white,
         filled: true,
         prefixIcon:
-            Icon(icon, color: AppColor.primarycolor, size: Dimens.size_20),
+            Icon(icon, color: AppColor.primaryColor, size: Dimens.size_20),
         hintText: hint,
         isDense: true,
         contentPadding: const EdgeInsets.symmetric(

@@ -1,7 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:formsflowai/core/module/providers/view_model_provider.dart';
 import 'package:formsflowai/presentation/base/widgets/base_consumer_widget.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
@@ -9,11 +7,11 @@ import 'package:formsflowai_shared/shared/dimens.dart';
 import 'package:formsflowai_shared/widgets/formsflow_image_view.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../../../shared/app_text_styles.dart';
 import '../../../core/di/injection.dart';
 import '../../../core/preferences/app_preference.dart';
 import '../../../core/router/app_routes.dart';
 import '../../../shared/app_strings.dart';
+import '../../../shared/app_text_styles.dart';
 
 /// [AppDrawer] shows the drawer navigation menu
 
@@ -26,7 +24,7 @@ class AppDrawer extends BaseConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Material(
-        color: AppColor.primarycolor,
+        color: AppColor.primaryColor,
         child: Drawer(
           backgroundColor: AppColor.white,
           child: ListView(
@@ -35,7 +33,7 @@ class AppDrawer extends BaseConsumerWidget {
                 padding: EdgeInsets.zero,
                 child: Container(
                     padding: const EdgeInsets.only(left: Dimens.spacing_16),
-                    color: AppColor.primarycolor,
+                    color: AppColor.primaryColor,
                     child: _buildHeader(
                         context,
                         appPreferences.getUserImage(),

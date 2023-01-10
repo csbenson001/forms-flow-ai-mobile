@@ -11,6 +11,7 @@ import 'base_view.dart';
 abstract class BaseStatelessWidget extends StatelessWidget implements BaseView {
   const BaseStatelessWidget({Key? key}) : super(key: key);
 
+  @override
   void showSuccessToast(
       {required BuildContext context, required String description}) {
     MotionToast.success(
@@ -27,6 +28,7 @@ abstract class BaseStatelessWidget extends StatelessWidget implements BaseView {
         .show(context);
   }
 
+  @override
   void showErrorToast(
       {required BuildContext context, required String description}) {
     MotionToast.error(

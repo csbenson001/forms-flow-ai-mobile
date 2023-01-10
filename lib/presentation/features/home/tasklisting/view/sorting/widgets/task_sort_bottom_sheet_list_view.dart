@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
@@ -49,7 +48,7 @@ class TaskSortBottomSheetListView extends BaseConsumerWidget {
                   taskFilterDM.iconData,
                   size: Dimens.size_20,
                   color: taskFilterDM.isSelected
-                      ? AppColor.primarycolor
+                      ? AppColor.primaryColor
                       : Colors.black54,
                 ),
               ),
@@ -58,7 +57,7 @@ class TaskSortBottomSheetListView extends BaseConsumerWidget {
                 style: AppTextStyles.semiBoldTextStyle(
                     fontSize: Dimens.font_16,
                     textColor: taskFilterDM.isSelected
-                        ? AppColor.primarycolor
+                        ? AppColor.primaryColor
                         : Colors.black),
               ),
               const Spacer(),
@@ -69,7 +68,7 @@ class TaskSortBottomSheetListView extends BaseConsumerWidget {
                       ? "assets/images/ic_circle_check.svg"
                       : "assets/images/ic_circle_uncheck.svg",
                   color: taskFilterDM.isSelected
-                      ? AppColor.primarycolor
+                      ? AppColor.primaryColor
                       : Colors.grey,
                   width: Dimens.spacing_24,
                   height: Dimens.spacing_24,

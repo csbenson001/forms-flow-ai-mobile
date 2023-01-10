@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:formsflowai_api/response/filter/get_filters_response.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../../../core/api/response/filter/get_filters_response.dart';
 import '../../../../../shared/app_status.dart';
 
 /// [taskFilterDropDownItemsProvider] to handle dropdown task filters
@@ -33,7 +33,8 @@ final showTaskVariablesViewProvider = StateProvider<bool>((ref) {
 });
 
 /// [authorizationExpiredFailureProvider] provider to listen to token expiry
-final authorizationExpiredFailureProvider = StateProvider<bool>((ref) {
+final authorizationExpiredFailureProvider =
+    StateProvider.autoDispose<bool>((ref) {
   return false;
 });
 

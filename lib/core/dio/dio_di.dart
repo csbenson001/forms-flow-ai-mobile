@@ -1,46 +1,25 @@
 import 'package:dio/dio.dart';
+import 'package:formsflowai/core/dio/dio_application_history_auth_interceptor.dart';
 import 'package:formsflowai/core/dio/dio_form_auth_interceptor.dart';
+import 'package:formsflowai/shared/api_constants_url.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../di/injection.dart';
 import 'dio_task_auth_interceptor.dart';
 
 class DioHelper {
-  final _userDio = Dio(
-    BaseOptions(
-      receiveTimeout: 15000, // 15 seconds
-      connectTimeout: 15000,
-      sendTimeout: 15000,
-    ),
-  );
-
-  final _taskDio = Dio(
-    BaseOptions(
-      receiveTimeout: 15000, // 5 seconds
-      connectTimeout: 15000,
-      sendTimeout: 15000,
-    ),
-  );
-
-  final _formDio = Dio(
-    BaseOptions(
-      receiveTimeout: 15000, // 5 seconds
-      connectTimeout: 15000,
-      sendTimeout: 15000,
-    ),
-  );
-
-  final _applicationDio = Dio(
-    BaseOptions(
-      receiveTimeout: 15000, // 15 seconds
-      connectTimeout: 15000,
-      sendTimeout: 15000,
-    ),
-  );
-
   Dio getUserDio() {
+    final userDio = Dio(
+      BaseOptions(
+        baseUrl: ApiConstantUrl.keycloakAuthBaseUrl,
+        receiveTimeout: 15000, // 15 seconds
+        connectTimeout: 15000,
+        sendTimeout: 15000,
+      ),
+    );
+
     // customization
-    _userDio.interceptors.add(PrettyDioLogger(
+    userDio.interceptors.add(PrettyDioLogger(
       requestHeader: true,
       requestBody: true,
       responseBody: true,
@@ -50,12 +29,20 @@ class DioHelper {
       compact: true,
     ));
 
-    return _userDio;
+    return userDio;
   }
 
   Dio getApplicationDio() {
+    final applicationDio = Dio(
+      BaseOptions(
+        baseUrl: ApiConstantUrl.formsflowaiBaseUrl,
+        receiveTimeout: 15000, // 15 seconds
+        connectTimeout: 15000,
+        sendTimeout: 15000,
+      ),
+    );
     // customization
-    _applicationDio.interceptors.add(PrettyDioLogger(
+    applicationDio.interceptors.add(PrettyDioLogger(
       requestHeader: true,
       requestBody: true,
       responseBody: true,
@@ -65,15 +52,23 @@ class DioHelper {
       compact: true,
     ));
 
-    _applicationDio.interceptors.add(TaskAuthorizationInterceptor(
+    applicationDio.interceptors.add(ApplicationHistoryAuthorizationInterceptor(
         flutterAppAuth: dl(), appPreferences: dl()));
 
-    return _applicationDio;
+    return applicationDio;
   }
 
   Dio getFormDio() {
+    final formDio = Dio(
+      BaseOptions(
+        baseUrl: ApiConstantUrl.formsflowaiBaseUrl,
+        receiveTimeout: 15000, // 5 seconds
+        connectTimeout: 15000,
+        sendTimeout: 15000,
+      ),
+    );
     // customization
-    _formDio.interceptors.add(PrettyDioLogger(
+    formDio.interceptors.add(PrettyDioLogger(
       requestHeader: true,
       requestBody: true,
       responseBody: true,
@@ -83,15 +78,24 @@ class DioHelper {
       compact: true,
     ));
 
-    _formDio.interceptors.add(FormsAuthorizationInterceptor(
+    formDio.interceptors.add(FormsAuthorizationInterceptor(
         flutterAppAuth: dl(), appPreferences: dl()));
 
-    return _formDio;
+    return formDio;
   }
 
   Dio getTaskDio() {
+    final taskDio = Dio(
+      BaseOptions(
+        baseUrl: ApiConstantUrl.formsflowaiBpmBaseUrl,
+        receiveTimeout: 15000, // 5 seconds
+        connectTimeout: 15000,
+        sendTimeout: 15000,
+      ),
+    );
+
     // customization
-    _taskDio.interceptors.add(PrettyDioLogger(
+    taskDio.interceptors.add(PrettyDioLogger(
       requestHeader: true,
       requestBody: true,
       responseBody: true,
@@ -100,8 +104,8 @@ class DioHelper {
       error: true,
       compact: true,
     ));
-    _taskDio.interceptors.add(TaskAuthorizationInterceptor(
+    taskDio.interceptors.add(TaskAuthorizationInterceptor(
         flutterAppAuth: dl(), appPreferences: dl()));
-    return _taskDio;
+    return taskDio;
   }
 }

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/view/sorting/widgets/task_sort_bottom_sheet.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/viewmodel/task_list_screen_providers.dart';
@@ -42,7 +41,7 @@ class AddSortButtonView extends BaseConsumerWidget {
                 right: Dimens.spacing_18),
             padding: const EdgeInsets.only(left: Dimens.spacing_4),
             decoration: const ShapeDecoration(
-              color: AppColor.primarycolor,
+              color: AppColor.primaryColor,
               shape: OutlineInputBorder(
                 borderSide: BorderSide.none,
                 borderRadius:

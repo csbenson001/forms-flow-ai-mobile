@@ -6,7 +6,6 @@ part of 'formsflow_database.dart';
 // FloorGenerator
 // **************************************************************************
 
-// ignore: avoid_classes_with_only_static_members
 class $FloorFormsFlowDatabase {
   /// Creates a database builder for a persistent database.
   /// Once a database is built, you should keep a reference to it and re-use it.
@@ -67,8 +66,11 @@ class _$FormsFlowDatabase extends FormsFlowDatabase {
 
   ApplicationHistoryDao? _applicationHistoryDaoInstance;
 
-  Future<sqflite.Database> open(String path, List<Migration> migrations,
-      [Callback? callback]) async {
+  Future<sqflite.Database> open(
+    String path,
+    List<Migration> migrations, [
+    Callback? callback,
+  ]) async {
     final databaseOptions = sqflite.OpenDatabaseOptions(
       version: 1,
       onConfigure: (database) async {
@@ -121,8 +123,10 @@ class _$FormsFlowDatabase extends FormsFlowDatabase {
 }
 
 class _$TaskDao extends TaskDao {
-  _$TaskDao(this.database, this.changeListener)
-      : _queryAdapter = QueryAdapter(database),
+  _$TaskDao(
+    this.database,
+    this.changeListener,
+  )   : _queryAdapter = QueryAdapter(database),
         _taskEntityInsertionAdapter = InsertionAdapter(
             database,
             'task',
@@ -377,7 +381,9 @@ class _$TaskDao extends TaskDao {
 
   @override
   Future<List<TaskEntity>> fetchAllTasksWithPagination(
-      int offset, int count) async {
+    int offset,
+    int count,
+  ) async {
     return _queryAdapter.queryList('SELECT * FROM task LIMIT ?2 OFFSET ?1',
         mapper: (Map<String, Object?> row) => TaskEntity(
             id: row['id'] as int?,
@@ -521,8 +527,10 @@ class _$TaskDao extends TaskDao {
 }
 
 class _$FormsFlowFormsDao extends FormsFlowFormsDao {
-  _$FormsFlowFormsDao(this.database, this.changeListener)
-      : _queryAdapter = QueryAdapter(database),
+  _$FormsFlowFormsDao(
+    this.database,
+    this.changeListener,
+  )   : _queryAdapter = QueryAdapter(database),
         _formEntityInsertionAdapter = InsertionAdapter(
             database,
             'formsflowform',
@@ -634,8 +642,10 @@ class _$FormsFlowFormsDao extends FormsFlowFormsDao {
 }
 
 class _$ApplicationHistoryDao extends ApplicationHistoryDao {
-  _$ApplicationHistoryDao(this.database, this.changeListener)
-      : _queryAdapter = QueryAdapter(database),
+  _$ApplicationHistoryDao(
+    this.database,
+    this.changeListener,
+  )   : _queryAdapter = QueryAdapter(database),
         _applicationHistoryEntityInsertionAdapter = InsertionAdapter(
             database,
             'applicationhistory',

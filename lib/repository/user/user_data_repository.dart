@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_appauth_platform_interface/src/authorization_token_response.dart';
-import 'package:flutter_appauth_platform_interface/src/token_response.dart';
+import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:formsflowai/core/error/errors_failure.dart';
 import 'package:formsflowai/presentation/features/login/usecases/fetch_user_info_usecase.dart';
 import 'package:formsflowai/presentation/features/login/usecases/login_keycloak_authenticator_usecase.dart';
@@ -10,10 +9,8 @@ import 'package:formsflowai/repository/user/user_local_data_source.dart';
 import 'package:formsflowai/repository/user/user_local_data_source_impl.dart';
 import 'package:formsflowai/repository/user/user_remote_data_source.dart';
 import 'package:formsflowai/repository/user/user_remote_data_source_impl.dart';
-import 'package:formsflowai_api/response/user/info/user_info_response.dart';
-import 'package:formsflowai_api/response/user/login/keycloak_login_response.dart';
 
-import '../../presentation/features/login/usecases/login_user_usecase.dart';
+import '../../core/api/response/user/info/user_info_response.dart';
 
 class UserDataRepository implements UserRemoteDataSource, UserLocalDataSource {
   final UserRemoteDataSourceImpl remoteDataSource;
@@ -21,16 +18,6 @@ class UserDataRepository implements UserRemoteDataSource, UserLocalDataSource {
 
   UserDataRepository(
       {required this.localDataSource, required this.remoteDataSource});
-
-  /// Method to login user
-  /// Parameters
-  /// [LoginParams]
-  /// ---> Returns [KeyCloakLoginResponse]
-  @override
-  Future<Either<Failure, KeyCloakLoginResponse>> loginUser(
-      {required LoginParams loginParams}) {
-    return remoteDataSource.loginUser(loginParams: loginParams);
-  }
 
   /// Method to save user details
   /// Parameters

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/src/consumer.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:formsflowai_api/response/filter/get_filters_response.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
+import '../../../../../../../../core/api/response/filter/get_filters_response.dart';
 import '../../../../../../../../shared/app_text_styles.dart';
 import '../../../../../../../base/widgets/base_consumer_widget.dart';
 import '../../../../viewmodel/task_list_screen_providers.dart';
@@ -35,7 +35,7 @@ class _TaskFilterBottomSheetListItem extends BaseConsumerWidget {
   final FiltersResponse filtersResponse;
   final int index;
 
-  _TaskFilterBottomSheetListItem(
+  const _TaskFilterBottomSheetListItem(
       {required this.filtersResponse, required this.index});
 
   @override
@@ -51,7 +51,7 @@ class _TaskFilterBottomSheetListItem extends BaseConsumerWidget {
                 style: AppTextStyles.semiBoldTextStyle(
                     fontSize: Dimens.font_16,
                     textColor: filtersResponse.isSelected
-                        ? AppColor.primarycolor
+                        ? AppColor.primaryColor
                         : Colors.black),
               ),
               const Spacer(),
@@ -62,7 +62,7 @@ class _TaskFilterBottomSheetListItem extends BaseConsumerWidget {
                       ? "assets/images/ic_circle_check.svg"
                       : "assets/images/ic_circle_uncheck.svg",
                   color: filtersResponse.isSelected
-                      ? AppColor.primarycolor
+                      ? AppColor.primaryColor
                       : Colors.grey,
                   width: Dimens.spacing_24,
                   height: Dimens.spacing_24,

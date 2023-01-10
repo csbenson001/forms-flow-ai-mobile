@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 import '../../presentation/base/widgets/base_stateless_widget.dart';
 import '../../shared/app_strings.dart';

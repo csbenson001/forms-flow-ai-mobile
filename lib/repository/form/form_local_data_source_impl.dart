@@ -1,24 +1,30 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
+import 'package:formsflowai/core/api/response/base/base_response.dart';
 import 'package:formsflowai/repository/form/form_repository.dart';
-import 'package:formsflowai_api/response/form/roles/formio_roles_response.dart';
-import 'package:formsflowai_api/response/form/submission/form_submission_response.dart';
 import 'package:isolated_http_client/isolated_http_client.dart';
 
+import '../../core/api/response/form/submission/form_submission_response.dart';
 import '../../core/database/dao/formsflowforms_dao.dart';
 import '../../core/database/dao/task_dao.dart';
 import '../../core/database/entity/form_entity.dart';
+import '../../core/database/formsflow_database.dart';
 import '../../core/error/errors_failure.dart';
 import '../../presentation/features/taskdetails/model/form_dm.dart';
+import '../../utils/database/database_query_util.dart';
 import '../../utils/general_util.dart';
 
 class FormLocalDataSource implements FormRepository {
   final FormsFlowFormsDao formsDao;
 
   final TaskDao taskDao;
+  final FormsFlowDatabase formsFlowDatabase;
 
-  FormLocalDataSource({required this.formsDao, required this.taskDao});
+  FormLocalDataSource(
+      {required this.formsDao,
+      required this.taskDao,
+      required this.formsFlowDatabase});
 
   /// Method to fetch form entity
   /// Parameters
@@ -62,13 +68,17 @@ class FormLocalDataSource implements FormRepository {
 
   @override
   Future<Either<Failure, Response>> fetchFormSubmissionIsolatedData(
-      {required String host,
-      required String taskId,
+      {required String taskId,
+      required String formResourceId,
       required String formSubmissionId}) {
     // TODO: implement fetchFormSubmissionIsolatedData
     throw UnimplementedError();
   }
 
+  /// Method to fetch forms data from local entity
+  /// Params
+  /// [id] - formId
+  /// ---> returns [FormDM]
   @override
   Future<Either<Failure, FormDM?>> fetchFormsData({required String id}) async {
     var formData = await formsDao.findFormByFormId(id);
@@ -81,7 +91,7 @@ class FormLocalDataSource implements FormRepository {
 
   @override
   Future<Either<Failure, Response>> fetchIsolatedFormData(
-      {required String host, required String path}) {
+      {required String formId}) {
     // TODO: implement fetchIsolatedFormData
     throw UnimplementedError();
   }
@@ -89,7 +99,14 @@ class FormLocalDataSource implements FormRepository {
   @override
   Future<Either<Failure, void>> insertFormData(
       {required FormEntity formsFlowForm}) async {
-    return Right(await formsDao.insertForm(formsFlowForm));
+    final results = await formsFlowDatabase.database.rawQuery(
+        DatabaseQueryUtil.generateFormAddedSqlQuery(formEntity: formsFlowForm));
+    final int? formCount = results[0]['COUNT(id)'] as int?;
+    if (formCount == null || formCount == 0) {
+      return Right(await formsDao.insertForm(formsFlowForm));
+    } else {
+      return Right(await formsDao.updateForm(formsFlowForm));
+    }
   }
 
   @override
@@ -108,16 +125,11 @@ class FormLocalDataSource implements FormRepository {
   }
 
   @override
-  Future<Either<Failure, void>> submitFormDataIsolate(
+  Future<Either<Failure, BaseResponse>> submitFormDataIsolate(
       {required String formResourceId,
       required String formSubmissionId,
       required FormSubmissionResponse formSubmissionResponse}) {
     // TODO: implement submitFormDataIsolate
     throw UnimplementedError();
-  }
-
-  @override
-  Future<Either<Failure, FormioRolesResponse>> fetchFormioRoles() {
-    return Future(() => Left(NoConnectionFailure()));
   }
 }

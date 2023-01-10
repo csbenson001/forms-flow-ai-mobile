@@ -2,7 +2,7 @@
 <div align="center"><img src="https://github.com/AOT-Technologies/forms-flow-ai-mobile/blob/main/assets/images/logoorginal.svg"/></div>
 <hr/> 
 
-
+[![FormsFlow Mobile CI](https://github.com/AOT-Technologies/forms-flow-ai-mobile/actions/workflows/forms-flow-mobile-ci.yml/badge.svg)](https://github.com/AOT-Technologies/forms-flow-ai-mobile/actions)
 [![Join the chat at https://gitter.im/forms-flow-ai/community](https://badges.gitter.im/forms-flow-ai/community.svg)](https://gitter.im/forms-flow-ai/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Join the chat at https://stackoverflow.com/questions/tagged/formsflow.ai](https://img.shields.io/badge/ask%20-on%20%20stackoverflow-F47F24)](https://stackoverflow.com/questions/tagged/formsflow.ai?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 <img src="https://img.shields.io/badge/release-v1.0.0-blue"/>
@@ -33,7 +33,7 @@ The application uses formio version 2.1.0 to support online/offline form renderi
 
 ## Prerequisites
 
-* Please make sure the [Formsflowai](https://github.com/AOT-Technologies/forms-flow-ai/blob/master/forms-flow-web) is up and running.
+* Please make sure the [formsflowai](https://github.com/AOT-Technologies/forms-flow-ai/blob/master/forms-flow-web) is up and running.
 * Admin access to a [Keycloak](https://www.keycloak.org/) server. For local development / testing follow [Keycloak installation](https://github.com/AOT-Technologies/forms-flow-ai/tree/master/forms-flow-idm/keycloak).
 * Please make sure the [Formio server](https://github.com/AOT-Technologies/forms-flow-ai/tree/master/forms-flow-forms) is up and running.
 

@@ -42,11 +42,11 @@ The application uses formio version 2.1.0 to support online/offline form renderi
 
 ### Flutter Setup
 
-Configure the Flutter development environment on your machine, see https://flutter.dev/docs/get-started/install
+Configure the Flutter development environment on your machine, checkout [here](https://flutter.dev/docs/get-started/install).
 
-After completing the installation run the below command to check the flutter version
+After completing the installation run the below command to check the flutter version.
 
-flutter --version
+ `flutter --version`
 
 ### Installation
 
@@ -71,34 +71,42 @@ Variable name | Meaning | Possible values | Default value |
 
 ### Running the application
 
-    For installing dependencies run command: $ flutter pub get
+**For installing dependencies run command**
+   
+   `flutter pub get`
     
-    For creating the generated files run: $ flutter pub run build_runner build
-    
-    If you have a conflict in generated files run command : $ flutter pub run build_runner build --delete-conflicting-outputs
-    
-    For running the app run command : $ flutter run
+**For creating the generated files run command** 
+
+   `flutter pub run build_runner build`
+   
+**Fix conflict in generated files run command** 
+
+   `flutter pub run build_runner build --delete-conflicting-outputs`
+   
+**For running the app run command** 
+
+   `flutter run`    
 
 ### Logo Change
 
-     For Android:
+   **For Android**
      
-     update mipmap folders launcher images in android with your custom -> app -> src -> main -> res -> mipmap
+   update mipmap folders launcher images in android with your custom logo -> app -> src -> main -> res -> mipmap
      
-     For iOS:
+   **For iOS**
      
-     update Asset Appicon with your custom logo
+   update Asset Appicon with your custom logo
 
 ### Offline Access
 
-Formsflowai mobile app supports complete offline access.
+* Formsflowai mobile app supports complete offline access.
 
-Only tasks assigned to the loggedin user will be stored and rendered when there is no
+* Only tasks assigned to the loggedin user will be stored and rendered when there is no
 internet connectivity.
 
-Users can submit the forms or update the tasks due-date, follow-up date offline.
+* Users can submit the forms or update the tasks due-date, follow-up date offline.
 
-To enable offline access please update the following in your keycloak realm
+* To enable offline access please update the following in your keycloak realm
 
 Variable name | Meaning | Possible values | Expected value |
    --- | --- | --- | ---

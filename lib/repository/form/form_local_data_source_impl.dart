@@ -100,7 +100,8 @@ class FormLocalDataSource implements FormRepository {
   Future<Either<Failure, void>> insertFormData(
       {required FormEntity formsFlowForm}) async {
     final results = await formsFlowDatabase.database.rawQuery(
-        DatabaseQueryUtil.generateFormAddedSqlQuery(formEntity: formsFlowForm));
+        DatabaseQueryUtil.generateFormAddedSqlQuery(
+            formId: formsFlowForm.formId));
     final int? formCount = results[0]['COUNT(id)'] as int?;
     if (formCount == null || formCount == 0) {
       return Right(await formsDao.insertForm(formsFlowForm));

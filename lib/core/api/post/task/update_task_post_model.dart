@@ -1,3 +1,9 @@
+import 'package:formsflowai/utils/general_util.dart';
+import 'package:formsflowai_shared/utils/datetime/timestamp_utils.dart';
+
+import '../../../../presentation/features/taskdetails/model/form_dm.dart';
+import '../../../database/entity/task_entity.dart';
+
 class UpdateTaskPostModel {
   final String? id;
   final String? name;
@@ -116,76 +122,45 @@ class UpdateTaskPostModel {
         'applicationId': applicationId
       };
 
-  // static UpdateTaskPostModel transform(
-  //     {required TaskListingDM taskListingDM,
-  //     required FormDM formDM,
-  //     required TaskInfoDM taskInfoDM}) {
-  //   UpdateTaskPostModel updateTaskPostModel = UpdateTaskPostModel(
-  //     name: taskListingDM.name,
-  //     id: taskListingDM.taskId,
-  //     followUp: TimeStampUtils.formatISOTime(taskListingDM.followUp),
-  //     due: TimeStampUtils.formatISOTime(taskListingDM.dueDate),
-  //     suspended: taskListingDM.suspended,
-  //     priority: taskListingDM.priority,
-  //     executionId: taskListingDM.executionId,
-  //     taskDefinitionKey: taskListingDM.taskDefinitionKey,
-  //     processInstanceId: taskListingDM.processInstanceId,
-  //     processDefinitionId: taskListingDM.processDefinitionId,
-  //     created: TimeStampUtils.formatISOTime(taskListingDM.created),
-  //     assignee: taskListingDM.assignee,
-  //     applicationId: taskInfoDM.applicationId,
-  //     applicationStatus: taskInfoDM.applicationStatus,
-  //     formUrl: taskInfoDM.formUrl,
-  //     delegationState: null,
-  //     caseExecutionId: null,
-  //     caseDefinitionId: null,
-  //     caseInstanceId: null,
-  //     description: null,
-  //     formKey: formDM.formsMapResponse?['type'],
-  //     formName: formDM.formsMapResponse?['name'],
-  //     owner: formDM.formsMapResponse?['owner'],
-  //     parentTaskId: null,
-  //     submitterName: null,
-  //     tenantId: null,
-  //     submissionDate: taskInfoDM.submissionDate,
-  //   );
-  //   return updateTaskPostModel;
-  // }
-  //
-  // static UpdateTaskPostModel transformFromEntity(
-  //     {required TaskEntity task, required FormDM formDM}) {
-  //   String formUrl = task.formUrl! + "/submission/${task.formSubmissionId}";
-  //
-  //   UpdateTaskPostModel updateTaskPostModel = UpdateTaskPostModel(
-  //     name: task.name,
-  //     id: task.taskId,
-  //     followUp: TimeStampUtils.formatISOTime(task.followUp),
-  //     due: TimeStampUtils.formatISOTime(task.dueDate),
-  //     suspended: task.suspended,
-  //     priority: task.priority,
-  //     executionId: task.executionId,
-  //     taskDefinitionKey: task.taskDefinitionKey,
-  //     processInstanceId: task.processInstanceId,
-  //     processDefinitionId: task.processDefinitionId,
-  //     created: TimeStampUtils.formatISOTime(task.created),
-  //     assignee: task.assignee,
-  //     applicationId: task.formApplicationId,
-  //     applicationStatus: task.applicationStatus,
-  //     formUrl: formUrl,
-  //     delegationState: null,
-  //     caseExecutionId: null,
-  //     caseDefinitionId: null,
-  //     caseInstanceId: null,
-  //     description: null,
-  //     formKey: formDM.formsMapResponse?['type'],
-  //     formName: formDM.formsMapResponse?['name'],
-  //     owner: formDM.formsMapResponse?['owner'],
-  //     parentTaskId: null,
-  //     submitterName: null,
-  //     tenantId: null,
-  //     submissionDate: task.formSubmissionDate,
-  //   );
-  //
-  //   return updateTaskPostModel;
-  // }
+  /// Method to transform update task post model
+  /// gets task entity and form data model
+  /// and converts it to update task post model
+  /// Parameters
+  /// [TaskEntity]
+  /// [FormDM]
+  static UpdateTaskPostModel transformUpdateTaskPostModelFromEntity(
+      {required TaskEntity task, required FormDM formDM}) {
+    return UpdateTaskPostModel(
+      name: task.name,
+      id: task.taskId,
+      followUp: TimeStampUtils.formatISOTime(task.followUp),
+      due: TimeStampUtils.formatISOTime(task.dueDate),
+      suspended: task.suspended,
+      priority: task.priority,
+      executionId: task.executionId,
+      taskDefinitionKey: !GeneralUtil.isStringEmpty(task.taskDefinitionKey)
+          ? task.taskDefinitionKey
+          : null,
+      processInstanceId: task.processInstanceId,
+      processDefinitionId: task.processDefinitionId,
+      created: TimeStampUtils.formatISOTime(task.created),
+      assignee:
+          !GeneralUtil.isStringEmpty(task.assignee) ? task.assignee : null,
+      applicationId: task.formApplicationId,
+      applicationStatus: task.applicationStatus,
+      formUrl: task.formUrl ?? '',
+      delegationState: null,
+      caseExecutionId: null,
+      caseDefinitionId: null,
+      caseInstanceId: null,
+      description: null,
+      formKey: formDM.formsMapResponse?['type'],
+      formName: formDM.formsMapResponse?['name'],
+      owner: formDM.formsMapResponse?['owner'],
+      parentTaskId: null,
+      submitterName: null,
+      tenantId: null,
+      submissionDate: task.formSubmissionDate,
+    );
+  }
 }

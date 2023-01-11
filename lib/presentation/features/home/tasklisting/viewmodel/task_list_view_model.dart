@@ -1,5 +1,3 @@
-// ignore_for_file: empty_catches
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -213,7 +211,9 @@ class TaskListViewModel extends BaseNotifierViewModel {
         notifyListeners();
         resetTaskSortPostModel();
         refreshPageData();
-      } catch (e) {}
+      } catch (e) {
+        return;
+      }
     }
   }
 
@@ -227,7 +227,9 @@ class TaskListViewModel extends BaseNotifierViewModel {
         _selectedVariablesFiltersList.removeAt(index);
         notifyListeners();
         updateFiltersPostModelAndRefreshPage();
-      } catch (e) {}
+      } catch (e) {
+        return;
+      }
     }
   }
 
@@ -551,7 +553,9 @@ class TaskListViewModel extends BaseNotifierViewModel {
           _totalTaskCount--;
           notifyListeners();
         }
-      } catch (e) {}
+      } catch (e) {
+        return;
+      }
     }
   }
 

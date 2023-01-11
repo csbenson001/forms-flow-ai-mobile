@@ -176,12 +176,10 @@ class AppDrawer extends BaseConsumerWidget {
       );
 
   /// Method to close app drawer
-  /// since we have used drawer from the end
-  /// open drawer closes the drawer
   /// Parameters
   /// [BuildContext]
   void closeDrawer(BuildContext context) {
-    Scaffold.of(context).openDrawer();
+    Scaffold.of(context).closeDrawer();
   }
 
   /// Method to show Logout Popup Dialog

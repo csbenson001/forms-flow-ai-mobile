@@ -6,7 +6,6 @@ import 'package:formsflowai/core/database/entity/task_entity.dart';
 import 'package:formsflowai/core/error/errors_failure.dart';
 import 'package:formsflowai/presentation/features/taskdetails/usecases/form/save_form_submission_isolate_usecase.dart';
 import 'package:formsflowai/presentation/features/taskdetails/usecases/form/submit_form_isolate_usecase.dart';
-import 'package:formsflowai_shared/utils/datetime/timestamp_utils.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../presentation/features/home/tasklisting/model/task_listing_data_model.dart';
@@ -355,7 +354,7 @@ class DatabaseWorker {
         if (formsflowForm != null) {
           FormDM formDM = FormDM.transformFromFromData(formsflowForm);
           UpdateTaskPostModel updateTaskPostModel =
-              transformUpdateTaskPostModelFromEntity(
+              UpdateTaskPostModel.transformUpdateTaskPostModelFromEntity(
                   task: task, formDM: formDM);
           var response = await updateIsolatedTaskUseCase.call(
               params: UpdateIsolatedTaskParams(
@@ -379,7 +378,7 @@ class DatabaseWorker {
         if (formsflowForm != null) {
           FormDM formDM = FormDM.transformFromFromData(formsflowForm);
           UpdateTaskPostModel updateTaskPostModel =
-              transformUpdateTaskPostModelFromEntity(
+              UpdateTaskPostModel.transformUpdateTaskPostModelFromEntity(
                   task: task, formDM: formDM);
 
           var response = await updateIsolatedTaskUseCase.call(
@@ -637,44 +636,5 @@ class DatabaseWorker {
         });
       });
     }
-  }
-
-  /// Method to transform update task post model
-  /// gets task entity and form data model
-  /// and converts it to update task post model
-  /// Parameters
-  /// [TaskEntity]
-  /// [FormDM]
-  UpdateTaskPostModel transformUpdateTaskPostModelFromEntity(
-      {required TaskEntity task, required FormDM formDM}) {
-    return UpdateTaskPostModel(
-      name: task.name,
-      id: task.taskId,
-      followUp: TimeStampUtils.formatISOTime(task.followUp),
-      due: TimeStampUtils.formatISOTime(task.dueDate),
-      suspended: task.suspended,
-      priority: task.priority,
-      executionId: task.executionId,
-      taskDefinitionKey: task.taskDefinitionKey,
-      processInstanceId: task.processInstanceId,
-      processDefinitionId: task.processDefinitionId,
-      created: TimeStampUtils.formatISOTime(task.created),
-      assignee: task.assignee,
-      applicationId: task.formApplicationId,
-      applicationStatus: task.applicationStatus,
-      formUrl: task.formUrl ?? '',
-      delegationState: null,
-      caseExecutionId: null,
-      caseDefinitionId: null,
-      caseInstanceId: null,
-      description: null,
-      formKey: formDM.formsMapResponse?['type'],
-      formName: formDM.formsMapResponse?['name'],
-      owner: formDM.formsMapResponse?['owner'],
-      parentTaskId: null,
-      submitterName: null,
-      tenantId: null,
-      submissionDate: task.formSubmissionDate,
-    );
   }
 }

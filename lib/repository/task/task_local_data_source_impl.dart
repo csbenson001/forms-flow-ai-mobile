@@ -293,13 +293,13 @@ class TaskLocalDataSourceImpl implements TaskRepository {
   /// ---> Returns [Int]
   @override
   Future<Either<Failure, int>> insertTask({required TaskEntity task}) async {
-    final results = await formsFlowDatabase.database
-        .rawQuery(DatabaseQueryUtil.generateTaskAddedSqlQuery(task: task));
+    final results = await formsFlowDatabase.database.rawQuery(
+        DatabaseQueryUtil.generateTaskAddedSqlQuery(taskId: task.taskId));
     final int? taskCount = results[0]['COUNT(id)'] as int?;
+
     if (taskCount == null || taskCount == 0) {
       return Right(await taskDao.insertTask(task));
     } else {
-      // await taskDao.updateTask(task);
       return const Right(0);
     }
   }

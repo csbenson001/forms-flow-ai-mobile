@@ -12,7 +12,7 @@ import '../../../../../utils/form/formio_webview_util.dart';
 import '../../../../../utils/general_util.dart';
 import '../../../../base/widgets/base_consumer_widget.dart';
 
-// ignore: must_be_immutable
+
 class ViewFormSubmissionWebView extends BaseConsumerWidget {
   final GlobalKey formSubmissionWebKey = GlobalKey();
 

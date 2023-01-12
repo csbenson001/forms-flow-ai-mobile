@@ -3,7 +3,7 @@ class EnvKeyConstants {
 
   static const String envBpmApiUrlKey = "BPM_API_URL";
 
-  static const String envFormioProjectUrl = " FORMIO_DEFAULT_PROJECT_URL";
+  static const String envFormioProjectUrl = "FORMIO_DEFAULT_PROJECT_URL";
 
   static const String envFormsflowaiBaseUrlKey = "FORMSFLOW_API_URL";
 

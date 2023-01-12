@@ -13,7 +13,8 @@ class ApiConstantUrl {
   static final String formsflowaiBpmBaseUrl =
       '${dotenv.get(EnvKeyConstants.envBpmApiUrlKey)}/';
 
-  static final String formsflowaiFormBaseUrl = formsflowaiBaseUrl;
+  static final String formsflowaiFormBaseUrl =
+      '${dotenv.get(EnvKeyConstants.envFormioProjectUrl)}/';
 
   static const String bpmV1 = 'engine-rest-ext/v1';
 
@@ -84,7 +85,7 @@ class ApiConstantUrl {
 
   // ----------------------- FORMS ---------------------
 
-  static const String fetchFormioRoles = 'api/formio/roles';
+  static const String fetchFormioRoles = 'formio/roles';
 
   static const String fetchFormSubmissionData =
       '$form/{formResourceId}/submission/{formSubmissionId}';
@@ -98,9 +99,9 @@ class ApiConstantUrl {
 
   // ----------------------- APPLICATION HISTORY ---------------------
 
-  static const String fetchApplicationHistory = 'api/application/{id}/history';
+  static const String fetchApplicationHistory = 'application/{id}/history';
 
-  static const String fetchBpmnDiagram = 'api/process/onestepapproval/xml';
+  static const String fetchBpmnDiagram = 'process/onestepapproval/xml';
 
   static const String fetchBpmnInstances =
       'api/process/process-instance/$pathId}/activity-instances';

@@ -175,7 +175,7 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
     try {
       final response = await isolatedHttpClient.get(
           host:
-              '${ApiConstantUrl.formsflowaiBpmBaseUrl}${ApiConstantUrl.bpmV1}/${ApiConstantUrl.task}/variables',
+              '${ApiConstantUrl.formsflowaiBpmBaseUrl}${ApiConstantUrl.bpmV1}/${ApiConstantUrl.task}/$taskId/variables',
           headers: ApiUtils.fetchTaskAuthorizationHeader(
               acessToken: appPreferences.getAccessToken()));
 

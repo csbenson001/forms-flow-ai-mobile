@@ -22,6 +22,7 @@ class TaskSortPostModel {
   String? candidateUser;
   bool? variableNamesIgnoreCase;
   bool? variableValuesIgnoreCase;
+  bool? isAllFiltersApplied;
 
   TaskSortPostModel({
     this.sorting,
@@ -32,6 +33,7 @@ class TaskSortPostModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = <String, dynamic>{};
+
     json['sorting'] = sorting?.map((e) => e.toJson()).toList();
     if (variableNamesIgnoreCase != null) {
       json['variableNamesIgnoreCase'] = variableNamesIgnoreCase;
@@ -213,6 +215,17 @@ class TaskSortPostModel {
         }
       }
     }
+    if (!(isAllFiltersApplied ?? true)) {
+      final Map<String, dynamic> allFiltersJson = <String, dynamic>{};
+      allFiltersJson['sorting'] = sorting?.map((e) => e.toJson()).toList();
+      Map<String, dynamic> queryJson = <String, dynamic>{};
+      for (final dm in json.entries) {
+        queryJson[dm.key] = dm.value;
+      }
+      allFiltersJson['orQueries'] = [queryJson];
+      return allFiltersJson;
+    }
+
     return json;
   }
 }

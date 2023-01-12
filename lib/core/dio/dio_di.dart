@@ -60,7 +60,7 @@ class DioHelper {
   Dio getFormDio() {
     final formDio = Dio(
       BaseOptions(
-        baseUrl: ApiConstantUrl.formsflowaiBaseUrl,
+        baseUrl: ApiConstantUrl.formsflowaiFormBaseUrl,
         receiveTimeout: 15000, // 5 seconds
         connectTimeout: 15000,
         sendTimeout: 15000,

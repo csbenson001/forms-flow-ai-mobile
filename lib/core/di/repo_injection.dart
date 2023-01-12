@@ -86,7 +86,7 @@ Future<void> registerRepository() async {
 
   // Register Isolated Http Client for background API Calls
   dl.registerLazySingleton(() => HttpClientIsolated(
-      log: false,
+      log: true,
       timeout: const Duration(
         seconds: 15,
       )));

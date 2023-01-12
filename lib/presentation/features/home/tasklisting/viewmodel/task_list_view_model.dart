@@ -67,7 +67,7 @@ class TaskListViewModel extends BaseNotifierViewModel {
 
   /// List[Sorting] sort post model list
   List<Sorting> sortPostModel = List.empty(growable: true);
-  TaskSortPostModel taskSortPostModel = TaskSortPostModel();
+  TaskSortPostModel _taskSortPostModel = TaskSortPostModel();
 
   // list to show available sort filters with the state filters
   final List<TaskSortFilterDM> _uiSortFiltersList = [];
@@ -123,6 +123,10 @@ class TaskListViewModel extends BaseNotifierViewModel {
   int _totalTaskCount = 0;
   int get totalTaskCount => _totalTaskCount;
 
+  // All filters applied
+  bool _allFiltersApplied = true;
+  bool get allFiltersApplied => _allFiltersApplied;
+
   TaskListViewModel(
       {required this.fetchFiltersUseCase,
       required this.fetchProcessDefinitionUseCase,
@@ -140,8 +144,7 @@ class TaskListViewModel extends BaseNotifierViewModel {
   /// OnInit method to initialise listeners and to fetch initial data
   Future<void> onInit({required ScrollController scrollController}) async {
     this.scrollController = scrollController;
-    // ref.read(tokenServiceProvider).startService();
-    _startLocalDatabaseRemoteSync();
+    _startDatabaseRemoteSync();
     fetchFilters();
     fetchFormioRoles();
     scrollController.addListener(_onScroll);
@@ -192,6 +195,7 @@ class TaskListViewModel extends BaseNotifierViewModel {
     _selectedVariablesFiltersList.clear();
     _selectedVariableCountList.clear();
     _selectedCheckBoxList.clear();
+    _allFiltersApplied = true;
     notifyListeners();
     updateFiltersPostModelAndRefreshPage();
   }
@@ -322,7 +326,7 @@ class TaskListViewModel extends BaseNotifierViewModel {
             firstResult: _start,
             maxResults: _limit,
             definitionResponse: _processDefinitionResponse,
-            taskSortingPostModel: taskSortPostModel));
+            taskSortingPostModel: _taskSortPostModel));
 
     taskResponse.fold((l) {
       _pageStatus = PageStatus.failure;
@@ -495,7 +499,7 @@ class TaskListViewModel extends BaseNotifierViewModel {
   }
 
   // Function to start offline sync and to validate completed tasks
-  void _startLocalDatabaseRemoteSync() {
+  void _startDatabaseRemoteSync() {
     databaseWorker.startTasksOfflineSync();
   }
 
@@ -510,7 +514,7 @@ class TaskListViewModel extends BaseNotifierViewModel {
           socketService.deActivateSocket();
         } else {
           _initWebSocket();
-          _startLocalDatabaseRemoteSync();
+          _startDatabaseRemoteSync();
         }
       }
     });
@@ -658,32 +662,30 @@ class TaskListViewModel extends BaseNotifierViewModel {
   /// Function to refresh page data
   void refreshPageData() {
     fetchTasks(filterId: _selectedSortFilterItemProvider.id, refresh: true);
-    // fetchTaskCount(filterId: _selectedSortFilterItemProvider.id);
   }
 
   /// Function to handle pull to refresh
   Future<void> pullToRefresh() async {
     fetchTasks(filterId: _selectedSortFilterItemProvider.id, refresh: true);
-    // fetchTaskCount(filterId: _selectedSortFilterItemProvider.id);
   }
 
   /// Function to clear and reset task sort post model
   void resetTaskSortPostModel() {
     sortPostModel.clear();
     sortPostModel = getTaskPostModel();
-    taskSortPostModel.sorting = sortPostModel;
+    _taskSortPostModel.sorting = sortPostModel;
   }
 
   /// Function to clear and reset task filters post model
   void updateFiltersPostModelAndRefreshPage() {
-    taskSortPostModel = transformVariableFilters(
-        _selectedVariablesFiltersList, taskSortPostModel.sorting);
+    _taskSortPostModel = transformVariableFilters(
+        _selectedVariablesFiltersList, _taskSortPostModel.sorting);
     if (_selectedCheckBoxList.isNotEmpty) {
       for (var element in _selectedCheckBoxList) {
         if (element == 'name') {
-          taskSortPostModel.variableNamesIgnoreCase = true;
+          _taskSortPostModel.variableNamesIgnoreCase = true;
         } else if (element == 'value') {
-          taskSortPostModel.variableValuesIgnoreCase = true;
+          _taskSortPostModel.variableValuesIgnoreCase = true;
         }
       }
     }
@@ -714,7 +716,8 @@ class TaskListViewModel extends BaseNotifierViewModel {
       _selectedSortFilterList.add(_uiSortFiltersList[0]);
     }
     sortPostModel = getTaskPostModel();
-    taskSortPostModel.sorting = sortPostModel;
+    _taskSortPostModel.sorting = sortPostModel;
+    _taskSortPostModel.isAllFiltersApplied = _allFiltersApplied;
     appPreferences.setFiltersResponse(value);
   }
 
@@ -904,6 +907,7 @@ class TaskListViewModel extends BaseNotifierViewModel {
       List<TaskVariableFilterDM> taskVariables, List<Sorting>? sorting) {
     TaskSortPostModel taskSortPostModel = TaskSortPostModel();
     taskSortPostModel.sorting = sorting;
+    taskSortPostModel.isAllFiltersApplied = _allFiltersApplied;
     for (TaskVariableFilterDM element in taskVariables) {
       switch (element.key) {
         case TaskConstants.filterKeyTaskVariables:
@@ -1017,6 +1021,32 @@ class TaskListViewModel extends BaseNotifierViewModel {
         });
       });
     }
+  }
+
+  /// Function to update all or any filters is applied
+  void updateAllFiltersApplied() {
+    _allFiltersApplied = !_allFiltersApplied;
+    notifyListeners();
+    final isTaskFiltersAdded = isFilterAdded(_selectedVariablesFiltersList);
+    if (isTaskFiltersAdded) {
+      updateFiltersPostModelAndRefreshPage();
+    }
+  }
+
+  /// Function to check if there are any filters added
+  bool isFilterAdded(List<TaskVariableFilterDM> selectedVariablesList) {
+    bool isFilterItemAdded = false;
+
+    if (selectedVariablesList.isEmpty) {
+      return isFilterItemAdded;
+    }
+    for (int i = 0; i < selectedVariablesList.length; i++) {
+      if (selectedVariablesList[i].filterSaved ?? false) {
+        isFilterItemAdded = true;
+        break;
+      }
+    }
+    return isFilterItemAdded;
   }
 }
 

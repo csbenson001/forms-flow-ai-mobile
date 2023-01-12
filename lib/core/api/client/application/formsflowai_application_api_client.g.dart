@@ -30,7 +30,7 @@ class _FormsFlowAIApplicationApiClient
     )
             .compose(
               _dio.options,
-              'api/application/$id/history',
+              'application/$id/history',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -52,7 +52,7 @@ class _FormsFlowAIApplicationApiClient
     )
             .compose(
               _dio.options,
-              'api/process/onestepapproval/xml',
+              'process/onestepapproval/xml',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -96,7 +96,7 @@ class _FormsFlowAIApplicationApiClient
     )
             .compose(
               _dio.options,
-              'api/formio/roles',
+              'formio/roles',
               queryParameters: queryParameters,
               data: _data,
             )

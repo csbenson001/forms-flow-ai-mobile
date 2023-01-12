@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:flutter_appauth/flutter_appauth.dart';
@@ -169,7 +171,7 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
   /// ---> Returns [isolated_response.Response]
   @override
   Future<Either<Failure, isolated_response.Response>>
-      fetchIsolatedTaskVariables({required String taskId}) async {
+      fetchTaskVariablesIsolated({required String taskId}) async {
     try {
       final response = await isolatedHttpClient.get(
           host:
@@ -391,7 +393,7 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
   /// [UpdateTaskPostModel]
   ///   /// ---> Returns [isolated_response.Response]
   @override
-  Future<Either<Failure, isolated_response.Response>> updateTaskWithIsolates(
+  Future<Either<Failure, isolated_response.Response>> updateTaskIsolated(
       {required String taskId,
       required UpdateTaskPostModel updateTaskPostModel}) async {
     try {
@@ -462,25 +464,25 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
   /// [FormSubmissionPostModel]
   /// ---> Returns [BaseResponse]
   @override
-  Future<Either<Failure, BaseResponse>> submitFormIsolate(
+  Future<Either<Failure, BaseResponse>> submitFormIsolated(
       {required String id,
       required FormSubmissionPostModel formSubmissionPostModel}) async {
-    final response = await isolatedHttpClient
-        .post(
-            host:
-                "${ApiConstantUrl.formsflowaiBpmBaseUrl}${ApiConstantUrl.camundaEngineRest}/${ApiConstantUrl.task}/$id/submit-form",
-            body: formSubmissionPostModel.toJson(),
-            headers: APIUtils.getTaskAuthorizationHeader(
-                acessToken: appPreferences.getAccessToken()))
-        .then((value) {});
-    if (response != null &&
-            response.statusCode == FormsFlowAIAPIConstants.statusCode200 ||
-        response.statusCode == FormsFlowAIAPIConstants.statusCode204) {
-      return Right(BaseResponse(
-          statusCode: response.statusCode,
-          message: FormsFlowAIAPIConstants.statusSuccessMessage));
+    try {
+      final response = await taskDio.post(
+          '${ApiConstantUrl.camundaEngineRest}/${ApiConstantUrl.task}/$id/submit-form',
+          data: json.encode(formSubmissionPostModel.toJson()));
+      if (response != null &&
+              response.statusCode == FormsFlowAIAPIConstants.statusCode200 ||
+          response.statusCode == FormsFlowAIAPIConstants.statusCode204) {
+        return Right(BaseResponse(
+            statusCode: response.statusCode,
+            message: FormsFlowAIAPIConstants.statusSuccessMessage));
+      }
+      return Left(ServerFailure());
+    } catch (e) {
+      print(e.toString());
+      return Left(ServerFailure());
     }
-    return Left(ServerFailure());
   }
 
   Left<Failure, T> _handleDioError<T>(Type runtimeType) {

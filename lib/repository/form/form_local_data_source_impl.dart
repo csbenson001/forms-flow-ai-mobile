@@ -67,7 +67,7 @@ class FormLocalDataSource implements FormRepository {
   }
 
   @override
-  Future<Either<Failure, Response>> fetchFormSubmissionIsolatedData(
+  Future<Either<Failure, Response>> fetchFormSubmissionIsolated(
       {required String taskId,
       required String formResourceId,
       required String formSubmissionId}) {
@@ -126,7 +126,7 @@ class FormLocalDataSource implements FormRepository {
   }
 
   @override
-  Future<Either<Failure, BaseResponse>> submitFormDataIsolate(
+  Future<Either<Failure, BaseResponse>> submitFormDataIsolated(
       {required String formResourceId,
       required String formSubmissionId,
       required FormSubmissionResponse formSubmissionResponse}) {

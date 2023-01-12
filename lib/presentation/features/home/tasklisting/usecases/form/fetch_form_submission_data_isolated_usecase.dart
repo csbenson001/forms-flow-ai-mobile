@@ -7,23 +7,23 @@ import 'package:isolated_http_client/isolated_http_client.dart'
 import '../../../../../../core/error/errors_failure.dart';
 import '../../../../../../core/usecase/usecase.dart';
 
-/// [FetchIsolatedFormSubmissionDataUseCase] to fetch form
+/// [FetchFormSubmissionDataIsolatedUseCase] to fetch form
 /// submission data in isolate
 /// interacts with [FormDataRepository] to complete the operation
 /// [FetchIsolatedFormSubmissionDataParams]
 /// [isolated_response.Response]
-class FetchIsolatedFormSubmissionDataUseCase
+class FetchFormSubmissionDataIsolatedUseCase
     implements
         UseCase<isolated_response.Response,
             FetchIsolatedFormSubmissionDataParams> {
-  const FetchIsolatedFormSubmissionDataUseCase({required this.repository});
+  const FetchFormSubmissionDataIsolatedUseCase({required this.repository});
 
   final FormDataRepository repository;
 
   @override
   Future<Either<Failure, isolated_response.Response>> call(
       {required FetchIsolatedFormSubmissionDataParams params}) {
-    return repository.fetchFormSubmissionIsolatedData(
+    return repository.fetchFormSubmissionIsolated(
         formResourceId: params.formResourceId,
         formSubmissionId: params.formSubmissionId,
         taskId: params.taskId);

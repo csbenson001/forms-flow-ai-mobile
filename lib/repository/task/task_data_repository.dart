@@ -131,8 +131,8 @@ class TaskDataRepository implements TaskRepository {
   /// ---> Returns [Response]
   @override
   Future<Either<Failure, isolated_response.Response>>
-      fetchIsolatedTaskVariables({required String taskId}) {
-    return remoteDataSource.fetchIsolatedTaskVariables(taskId: taskId);
+      fetchTaskVariablesIsolated({required String taskId}) {
+    return remoteDataSource.fetchTaskVariablesIsolated(taskId: taskId);
   }
 
   /// Method to fetch members
@@ -270,10 +270,10 @@ class TaskDataRepository implements TaskRepository {
   /// [UpdateTaskPostModel]
   /// ---> Returns [Response]
   @override
-  Future<Either<Failure, isolated_response.Response>> updateTaskWithIsolates(
+  Future<Either<Failure, isolated_response.Response>> updateTaskIsolated(
       {required String taskId,
       required UpdateTaskPostModel updateTaskPostModel}) {
-    return remoteDataSource.updateTaskWithIsolates(
+    return remoteDataSource.updateTaskIsolated(
         taskId: taskId, updateTaskPostModel: updateTaskPostModel);
   }
 
@@ -347,10 +347,10 @@ class TaskDataRepository implements TaskRepository {
   /// [FormSubmissionPostModel]
   /// ---> Returns [BaseResponse]
   @override
-  Future<Either<Failure, BaseResponse>> submitFormIsolate(
+  Future<Either<Failure, BaseResponse>> submitFormIsolated(
       {required String id,
       required FormSubmissionPostModel formSubmissionPostModel}) {
-    return remoteDataSource.submitFormIsolate(
+    return remoteDataSource.submitFormIsolated(
         id: id, formSubmissionPostModel: formSubmissionPostModel);
   }
 }

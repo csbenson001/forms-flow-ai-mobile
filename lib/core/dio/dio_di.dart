@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:formsflowai/core/dio/dio_application_history_auth_interceptor.dart';
 import 'package:formsflowai/core/dio/dio_form_auth_interceptor.dart';
 import 'package:formsflowai/shared/api_constants_url.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../di/injection.dart';
 import 'dio_task_auth_interceptor.dart';
@@ -18,16 +17,16 @@ class DioHelper {
       ),
     );
 
-    // customization
-    userDio.interceptors.add(PrettyDioLogger(
-      requestHeader: true,
-      requestBody: true,
-      responseBody: true,
-      responseHeader: false,
-      request: true,
-      error: true,
-      compact: true,
-    ));
+    // // customization
+    // userDio.interceptors.add(PrettyDioLogger(
+    //   requestHeader: true,
+    //   requestBody: true,
+    //   responseBody: true,
+    //   responseHeader: false,
+    //   request: true,
+    //   error: true,
+    //   compact: true,
+    // ));
 
     return userDio;
   }
@@ -41,16 +40,16 @@ class DioHelper {
         sendTimeout: 15000,
       ),
     );
-    // customization
-    applicationDio.interceptors.add(PrettyDioLogger(
-      requestHeader: true,
-      requestBody: true,
-      responseBody: true,
-      responseHeader: false,
-      request: true,
-      error: true,
-      compact: true,
-    ));
+    // // customization
+    // applicationDio.interceptors.add(PrettyDioLogger(
+    //   requestHeader: true,
+    //   requestBody: true,
+    //   responseBody: true,
+    //   responseHeader: false,
+    //   request: true,
+    //   error: true,
+    //   compact: true,
+    // ));
 
     applicationDio.interceptors.add(ApplicationHistoryAuthorizationInterceptor(
         flutterAppAuth: dl(), appPreferences: dl()));
@@ -67,16 +66,16 @@ class DioHelper {
         sendTimeout: 15000,
       ),
     );
-    // customization
-    formDio.interceptors.add(PrettyDioLogger(
-      requestHeader: true,
-      requestBody: true,
-      responseBody: true,
-      responseHeader: false,
-      request: true,
-      error: true,
-      compact: true,
-    ));
+    // // customization
+    // formDio.interceptors.add(PrettyDioLogger(
+    //   requestHeader: true,
+    //   requestBody: true,
+    //   responseBody: true,
+    //   responseHeader: false,
+    //   request: true,
+    //   error: true,
+    //   compact: true,
+    // ));
 
     formDio.interceptors.add(FormsAuthorizationInterceptor(
         flutterAppAuth: dl(), appPreferences: dl()));
@@ -94,16 +93,16 @@ class DioHelper {
       ),
     );
 
-    // customization
-    taskDio.interceptors.add(PrettyDioLogger(
-      requestHeader: true,
-      requestBody: true,
-      responseBody: true,
-      responseHeader: false,
-      request: true,
-      error: true,
-      compact: true,
-    ));
+    // // customization
+    // taskDio.interceptors.add(PrettyDioLogger(
+    //   requestHeader: true,
+    //   requestBody: true,
+    //   responseBody: true,
+    //   responseHeader: false,
+    //   request: true,
+    //   error: true,
+    //   compact: true,
+    // ));
     taskDio.interceptors.add(TaskAuthorizationInterceptor(
         flutterAppAuth: dl(), appPreferences: dl()));
     return taskDio;

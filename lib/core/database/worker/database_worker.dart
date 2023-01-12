@@ -28,16 +28,16 @@ class DatabaseWorker {
   /// useCases
   final InsertAllTaskUseCase insertAllTaskUseCase;
   final FetchLocalAllTasksUseCase fetchLocalAllTasksUseCase;
-  final FetchIsolatedTaskVariablesUseCase fetchIsolatedTaskVariablesUseCase;
+  final FetchTaskVariablesIsolatedUseCase fetchIsolatedTaskVariablesUseCase;
   final FetchFormEntityUseCase fetchFormEntityUseCase;
-  final FetchIsolatedFormDataUseCase fetchIsolatedFormDataUseCase;
+  final FetchFormDataIsolatedUseCase fetchIsolatedFormDataUseCase;
   final InsertFormDataUseCase insertFormDataUseCase;
-  final FetchIsolatedFormSubmissionDataUseCase
+  final FetchFormSubmissionDataIsolatedUseCase
       fetchIsolatedFormSubmissionDataUseCase;
   final UpdateLocalTaskUseCase updateLocalTaskUseCase;
   final FetchTaskUseCase fetchIsolatedTaskUseCase;
   final DeleteLocalTaskUseCase deleteLocalTaskUseCase;
-  final UpdateIsolatedTaskUseCase updateIsolatedTaskUseCase;
+  final UpdateTaskIsolatedUseCase updateIsolatedTaskUseCase;
   final FetchLocalTaskUseCase fetchLocalTaskUseCase;
   final InsertLocalTaskUseCase insertLocalTaskUseCase;
   final SaveFormSubmissionIsolateUseCase saveFormSubmissionIsolateUseCase;

@@ -8,21 +8,21 @@ import '../../../../../../core/error/errors_failure.dart';
 import '../../../../../../core/usecase/usecase.dart';
 import '../../../../../../repository/task/task_data_repository.dart';
 
-/// [UpdateIsolatedTaskUseCase] to update the task in remote isolate
+/// [UpdateTaskIsolatedUseCase] to update the task in remote isolate
 /// interacts with [TaskDataRepository] to complete the operation
 /// [UpdateIsolatedTaskParams]
 /// ---> Returns[isolated_response.Response]
 
-class UpdateIsolatedTaskUseCase
+class UpdateTaskIsolatedUseCase
     implements UseCase<isolated_response.Response, UpdateIsolatedTaskParams> {
-  const UpdateIsolatedTaskUseCase({required this.repository});
+  const UpdateTaskIsolatedUseCase({required this.repository});
 
   final TaskDataRepository repository;
 
   @override
   Future<Either<Failure, isolated_response.Response>> call(
       {required UpdateIsolatedTaskParams params}) {
-    return repository.updateTaskWithIsolates(
+    return repository.updateTaskIsolated(
         updateTaskPostModel: params.updateTaskPostModel, taskId: params.taskId);
   }
 }

@@ -56,7 +56,7 @@ abstract class TaskRepository<T> {
       required FormSubmissionPostModel formSubmissionPostModel});
 
   Future<Either<Failure, isolated_httpclient.Response>>
-      fetchIsolatedTaskVariables({required String taskId});
+      fetchTaskVariablesIsolated({required String taskId});
 
   Future<Either<Failure, Response>> fetchTask({required String taskId});
 
@@ -69,7 +69,7 @@ abstract class TaskRepository<T> {
       {required String taskId,
       required UpdateTaskPostModel updateTaskPostModel});
 
-  Future<Either<Failure, isolated_httpclient.Response>> updateTaskWithIsolates(
+  Future<Either<Failure, isolated_httpclient.Response>> updateTaskIsolated(
       {required String taskId,
       required UpdateTaskPostModel updateTaskPostModel});
 
@@ -108,7 +108,7 @@ abstract class TaskRepository<T> {
 
   Future<Either<Failure, void>> clearDatabaseData();
 
-  Future<Either<Failure, BaseResponse>> submitFormIsolate(
+  Future<Either<Failure, BaseResponse>> submitFormIsolated(
       {required String id,
       required FormSubmissionPostModel formSubmissionPostModel});
 }

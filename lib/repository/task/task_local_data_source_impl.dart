@@ -139,7 +139,7 @@ class TaskLocalDataSourceImpl implements TaskRepository {
 
   @override
   Future<Either<Failure, isolated_response.Response>>
-      fetchIsolatedTaskVariables({required String taskId}) {
+      fetchTaskVariablesIsolated({required String taskId}) {
     // TODO: implement fetchIsolatedTaskVariables
     throw UnimplementedError();
   }
@@ -343,7 +343,7 @@ class TaskLocalDataSourceImpl implements TaskRepository {
   }
 
   @override
-  Future<Either<Failure, isolated_response.Response>> updateTaskWithIsolates(
+  Future<Either<Failure, isolated_response.Response>> updateTaskIsolated(
       {required String taskId,
       required UpdateTaskPostModel updateTaskPostModel}) {
     // TODO: implement updateTaskWithIsolates
@@ -351,7 +351,7 @@ class TaskLocalDataSourceImpl implements TaskRepository {
   }
 
   @override
-  Future<Either<Failure, BaseResponse>> submitFormIsolate(
+  Future<Either<Failure, BaseResponse>> submitFormIsolated(
       {required String id,
       required FormSubmissionPostModel formSubmissionPostModel}) {
     // TODO: implement submitFormIsolate

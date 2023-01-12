@@ -1,7 +1,10 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-import 'package:isolated_http_client/isolated_http_client.dart';
+import 'package:dio/dio.dart';
+import 'package:isolated_http_client/isolated_http_client.dart'
+    as isolated_response;
 
 import '../../core/api/client/form/forms_api_client.dart';
 import '../../core/api/response/base/base_response.dart';
@@ -19,11 +22,13 @@ import 'form_repository.dart';
 class FormRemoteDataSource implements FormRepository {
   final FormsApiClient formsApiClient;
   final AppPreferences appPreferences;
-  final HttpClientIsolated isolatedHttpClient;
+  final isolated_response.HttpClientIsolated isolatedHttpClient;
+  final Dio formDio;
 
   FormRemoteDataSource(
       {required this.formsApiClient,
       required this.appPreferences,
+      required this.formDio,
       required this.isolatedHttpClient});
 
   @override
@@ -69,10 +74,11 @@ class FormRemoteDataSource implements FormRepository {
   /// [TaskId]
   /// ---> Returns [Response]
   @override
-  Future<Either<Failure, Response>> fetchFormSubmissionIsolatedData(
-      {required String taskId,
-      required String formResourceId,
-      required String formSubmissionId}) async {
+  Future<Either<Failure, isolated_response.Response>>
+      fetchFormSubmissionIsolated(
+          {required String taskId,
+          required String formResourceId,
+          required String formSubmissionId}) async {
     try {
       var response = await isolatedHttpClient.get(
           host:
@@ -123,7 +129,7 @@ class FormRemoteDataSource implements FormRepository {
   /// [Path]
   /// ---> Return [Response]
   @override
-  Future<Either<Failure, Response>> fetchIsolatedFormData(
+  Future<Either<Failure, isolated_response.Response>> fetchIsolatedFormData(
       {required String formId}) async {
     try {
       var response = await isolatedHttpClient.get(
@@ -197,18 +203,14 @@ class FormRemoteDataSource implements FormRepository {
   /// [FormSubmissionId]
   /// [FormSubmissionResponse]
   @override
-  Future<Either<Failure, BaseResponse>> submitFormDataIsolate(
+  Future<Either<Failure, BaseResponse>> submitFormDataIsolated(
       {required String formResourceId,
       required String formSubmissionId,
       required FormSubmissionResponse formSubmissionResponse}) async {
-    String apiUrl =
-        "${ApiConstantUrl.formsflowaiFormBaseUrl}${ApiConstantUrl.form}/$formResourceId/${ApiConstantUrl.formSubmission}/$formSubmissionId";
     try {
-      var response = await isolatedHttpClient.put(
-          host: apiUrl,
-          body: formSubmissionResponse.toJson(),
-          headers: APIUtils.getFormsJwtTokenHeader(
-              jwtToken: appPreferences.getFormJwtToken()));
+      var response = await formDio.put(
+          "${ApiConstantUrl.form}/$formResourceId/${ApiConstantUrl.formSubmission}/$formSubmissionId",
+          data: json.encode(formSubmissionResponse.toJson()));
 
       if (response.statusCode == FormsFlowAIAPIConstants.statusCode200 ||
           response.statusCode == FormsFlowAIAPIConstants.statusCode204) {

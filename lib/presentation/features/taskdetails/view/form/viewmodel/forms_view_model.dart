@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:formsflowai/core/module/providers/view_model_provider.dart';
+import 'package:formsflowai/presentation/features/home/tasklisting/usecases/form/fetch_form_data_isolated_usecase.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/usecases/form/fetch_form_entity_usecase.dart';
-import 'package:formsflowai/presentation/features/home/tasklisting/usecases/form/fetch_isolated_form_data_usecase.dart';
 import 'package:formsflowai/presentation/features/taskdetails/usecases/form/save_form_submission_usecase.dart';
 import 'package:formsflowai/shared/toast/toast_message_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -49,7 +49,7 @@ class FormsViewModel extends BaseNotifierViewModel {
   final FetchLocalTaskUseCase fetchLocalTaskUseCase;
   final FetchFormUseCase fetchFormUseCase;
   final AppPreferences appPreferences;
-  final FetchIsolatedFormDataUseCase fetchIsolatedFormDataUseCase;
+  final FetchFormDataIsolatedUseCase fetchIsolatedFormDataUseCase;
   final Ref ref;
 
   // WebView Plus View Controller

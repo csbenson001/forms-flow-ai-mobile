@@ -7,14 +7,14 @@ import 'package:isolated_http_client/isolated_http_client.dart'
 import '../../../../../../core/error/errors_failure.dart';
 import '../../../../../../core/usecase/usecase.dart';
 
-/// [FetchIsolatedFormDataUseCase] to fetch form data in isolate
+/// [FetchFormDataIsolatedUseCase] to fetch form data in isolate
 /// interacts with [FormDataRepository] to complete the operation
 /// [FetchIsolatedFormDataParams]
 /// [isolated_response.Response]
-class FetchIsolatedFormDataUseCase
+class FetchFormDataIsolatedUseCase
     implements
         UseCase<isolated_response.Response, FetchIsolatedFormDataParams> {
-  const FetchIsolatedFormDataUseCase({required this.repository});
+  const FetchFormDataIsolatedUseCase({required this.repository});
 
   final FormDataRepository repository;
 

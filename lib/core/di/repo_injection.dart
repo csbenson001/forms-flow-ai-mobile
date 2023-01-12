@@ -60,7 +60,10 @@ Future<void> registerRepository() async {
   dl.registerLazySingleton(() => FormLocalDataSource(
       formsFlowDatabase: dl(), taskDao: dl(), formsDao: dl()));
   dl.registerLazySingleton(() => FormRemoteDataSource(
-      formsApiClient: dl(), appPreferences: dl(), isolatedHttpClient: dl()));
+      formDio: dl<DioHelper>().getFormDio(),
+      formsApiClient: dl(),
+      appPreferences: dl(),
+      isolatedHttpClient: dl()));
   dl.registerLazySingleton(() => FormDataRepository(
       remoteDataSource: dl(),
       localDataSource: dl(),
@@ -82,7 +85,7 @@ Future<void> registerRepository() async {
 
   // Register Isolated Http Client for background API Calls
   dl.registerLazySingleton(() => HttpClientIsolated(
-      log: true,
+      log: false,
       timeout: const Duration(
         seconds: 15,
       )));

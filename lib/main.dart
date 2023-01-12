@@ -19,7 +19,7 @@ Future<void> main() async {
   /// Init executor
   await Executor().warmUp(log: false);
   await dotenv.load(fileName: FormsFlowAIConstants.envFileName);
-  await setAppOverlay();
+  await setAppStatusBarOverlay();
 
   /// Call function[RegisterServices] to inject services/useCases/repos
   await registerServices();
@@ -39,7 +39,7 @@ Future<void> main() async {
 }
 
 /// Function to set overlay [StatusBar] color and brightness
-Future<void> setAppOverlay() async {
+Future<void> setAppStatusBarOverlay() async {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.black,
     statusBarBrightness: Brightness.light,

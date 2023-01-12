@@ -1,11 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.aot.formsflowai">
+
+    package="com.formsflowai.sample">  // Update your app package name
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
+
         android:label="FormsFlow.ai"
         android:name="${applicationName}"
        android:usesCleartextTraffic="true"
-       android:icon="@drawable/formsflow">
+       android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -1,4 +1,4 @@
-import '../../shared/api_constants_url.dart';
+import '../../core/api/utils/api_constants_url.dart';
 import '../../shared/webview_constants.dart';
 
 class FormioWebViewUtil {
@@ -80,7 +80,7 @@ class FormioWebViewUtil {
            authToken : '$authToken',
            formioToken : '$formToken',
            formResourceId : '$formResourceId',
-           bpmApiUrl: '${FormsFlowWebViewConstants.localStorageBpmApiUrl}${ApiConstantUrl.fetchTasks}${ApiConstantUrl.camundaEngineRest}',
+           bpmApiUrl: '${FormsFlowWebViewConstants.localStorageBpmApiUrl}${ApiConstantUrl.bpmV1}',
           }
   ''';
   }

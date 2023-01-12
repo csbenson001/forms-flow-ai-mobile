@@ -1,5 +1,7 @@
 import 'package:formsflowai_shared/utils/shared_general_util.dart';
 
+/// [FormSubmissionPostModel] class to send the application/json
+/// POST body on the form submission api call
 class FormSubmissionPostModel {
   final Variables? variables;
 

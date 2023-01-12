@@ -52,7 +52,7 @@ class FormsViewModel extends BaseNotifierViewModel {
   final FetchFormDataIsolatedUseCase fetchIsolatedFormDataUseCase;
   final Ref ref;
 
-  // WebView Plus View Controller
+  // InApp webview View Controller
   InAppWebViewController? _webViewPluscontroller;
   InAppWebViewController? get webViewPluscontroller => _webViewPluscontroller;
 
@@ -304,9 +304,5 @@ class FormsViewModel extends BaseNotifierViewModel {
             'createForm(${_formIoModel.formComponents}, ${_formIoModel.formData},'
             '${FormioWebViewUtil.fetchFormIoInputData(readOnly: _formIoModel.readOnly ?? false, formResourceId: _formIoModel.formResourceId, userInfoResponse: appPreferences.getUserInfo(), authToken: appPreferences.getAccessToken(), formToken: appPreferences.getFormJwtToken())}'
             ')');
-  }
-
-  void scrollPageToBottom({required int maxYPosition}) {
-    _webViewPluscontroller?.scrollTo(x: 0, y: maxYPosition);
   }
 }

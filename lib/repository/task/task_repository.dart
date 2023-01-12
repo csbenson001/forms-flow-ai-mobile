@@ -11,7 +11,7 @@ import '../../core/api/post/task/update_task_post_model.dart';
 import '../../core/api/response/base/base_response.dart';
 import '../../core/api/response/diagram/activity_instance_response.dart';
 import '../../core/api/response/diagram/bpmn_diagram_response.dart';
-import '../../core/api/response/filter/get_filters_response.dart';
+import '../../core/api/response/filter/filters_response.dart';
 import '../../core/api/response/filter/task_count_response.dart';
 import '../../core/api/response/processdefinition/process_definition_response.dart';
 import '../../core/api/response/task/details/list_members_response.dart';

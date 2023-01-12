@@ -1,5 +1,5 @@
 class Strings {
-  // ----------------------- GENERAL ---------------------------
+  // ----------------------- GENERAL --------------------------- //
 
   static const String generalErrorInvalidCredentials = 'Invalid Credentials';
   static const String generalTextSpacer = '';
@@ -19,7 +19,7 @@ class Strings {
   static const String generalErrorSessionTimeout = 'Session timed out';
   static const String generalErrorNoRoutesAvailable = 'No Routes Available';
 
-  // ----------------------- NAV DRAWER -----------------------------
+  // ----------------------- NAV DRAWER ----------------------------- //
 
   static const String navTitleHome = 'Home';
   static const String navTitleTasks = 'Tasks';
@@ -31,7 +31,7 @@ class Strings {
   static const String navHeaderErrorNoRoleAvailable =
       'No Role Information Available';
 
-  // ----------------------- HOME -----------------------------
+  // ----------------------- HOME ----------------------------- //
 
   static const String homeTitleLogout = 'Logout';
   static const String homeButtonLogout = 'Logout';
@@ -39,7 +39,7 @@ class Strings {
   static const String homeLabelLogoutDescription =
       'Are you sure you want to logout?';
 
-  // ----------------------- LOGIN -----------------------------
+  // ----------------------- LOGIN ----------------------------- //
 
   static const String loginLabelSuccess = 'Login Successful';
   static const String loginTitle = 'Login to your account';
@@ -58,7 +58,7 @@ class Strings {
       'No Internet. Please connect to an active network to continue';
   static const String loginLabelLoggingIn = 'Logging in';
 
-  // ----------------------- TASK LISTING ---------------------
+  // ----------------------- TASK LISTING --------------------- //
 
   static const String taskListingTitle = 'Task List';
   static const String taskListingLabelCreated = 'Created ';
@@ -92,7 +92,7 @@ class Strings {
   static const String taskListingClearCacheSuccess =
       "Successfully cleared cache";
 
-// ----------------------- TASK DETAILS ---------------------
+// ----------------------- TASK DETAILS --------------------- //
 
   static const taskDetailsTabTitleForm = "Form";
   static const taskDetailsTabTitleHistory = "History";
@@ -132,13 +132,13 @@ class Strings {
   static const taskDetailsLabelManageGroups = 'Manage Groups';
   static const taskDetailsLabelFormSubmitted = 'Form Submitted';
 
-  // ----------------------- VIEW FORM SUBMISSION ---------------------
+  // ----------------------- VIEW FORM SUBMISSION --------------------- //
 
   static const String viewFormSubmissionTitle = 'Form Submission';
   static const String viewFormSubmissionErrorNoInternetDescription =
       'Form resource cannot be loaded without internet';
 
-// ----------------------- ASSIGN TASK ---------------------
+// ----------------------- ASSIGN TASK --------------------- //
 
   static const String assignTaskTitle = "Assign Task";
   static const String assignButtonTitle = "Assign";

@@ -10,7 +10,7 @@ import 'package:isolated_http_client/isolated_http_client.dart'
     as isolated_response;
 import 'package:isolated_http_client/isolated_http_client.dart';
 
-import '../../core/api/client/task/task_api_client.dart';
+import '../../core/api/client/task/bpm_task_api_client.dart';
 import '../../core/api/client/user/user_api_client.dart';
 import '../../core/api/post/form/form_submission_post_model.dart';
 import '../../core/api/post/task/add_group_post_model.dart';
@@ -20,21 +20,21 @@ import '../../core/api/post/task/update_task_post_model.dart';
 import '../../core/api/response/base/base_response.dart';
 import '../../core/api/response/diagram/activity_instance_response.dart';
 import '../../core/api/response/diagram/bpmn_diagram_response.dart';
-import '../../core/api/response/filter/get_filters_response.dart';
+import '../../core/api/response/filter/filters_response.dart';
 import '../../core/api/response/filter/task_count_response.dart';
 import '../../core/api/response/processdefinition/process_definition_response.dart';
 import '../../core/api/response/task/details/list_members_response.dart';
 import '../../core/api/response/task/details/task_group_response.dart';
+import '../../core/api/utils/api_constants_url.dart';
 import '../../core/api/utils/api_utils.dart';
 import '../../core/database/entity/task_entity.dart';
 import '../../core/error/errors_failure.dart';
 import '../../core/preferences/app_preference.dart';
 import '../../presentation/features/taskdetails/model/task_variable_dm.dart';
-import '../../shared/api_constants_url.dart';
 import '../../shared/formsflow_api_constants.dart';
 
 class TaskRemoteDataSourceImpl implements TaskRepository {
-  final TaskApiClient taskApiClient;
+  final BpmTaskApiClient taskApiClient;
   final UserApiClient userApiClient;
   final AppPreferences appPreferences;
   final HttpClientIsolated isolatedHttpClient;
@@ -71,9 +71,9 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
     try {
       final response = await taskApiClient.claimTask(taskId, payload);
       if (response.response.statusCode ==
-              FormsFlowAIAPIConstants.statusCode200 ||
+              FormsFlowAIApiConstants.statusCode200 ||
           response.response.statusCode ==
-              FormsFlowAIAPIConstants.statusCode204) {
+              FormsFlowAIApiConstants.statusCode204) {
         return Right(response.data);
       } else if (response.response.statusCode == 401) {
         return Left(AuthorizationTokenExpiredFailure());
@@ -155,7 +155,7 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
       final response = await taskApiClient.fetchTaskGroups(taskId);
 
       if (response.response.statusCode ==
-          FormsFlowAIAPIConstants.statusCode200) {
+          FormsFlowAIApiConstants.statusCode200) {
         return Right(response.data);
       } else if (response.response.statusCode == 401) {
         return Left(AuthorizationTokenExpiredFailure());
@@ -166,7 +166,7 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
     }
   }
 
-  /// Method to fetch task finaliables
+  /// Method to fetch task fetch task variable response
   /// Parameters
   /// ---> Returns [isolated_response.Response]
   @override
@@ -175,12 +175,12 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
     try {
       final response = await isolatedHttpClient.get(
           host:
-              '${ApiConstantUrl.formsflowaiBpmBaseUrl}${ApiConstantUrl.camundaEngineRest}/${ApiConstantUrl.task}/$taskId/variables',
-          headers: APIUtils.getTaskAuthorizationHeader(
+              '${ApiConstantUrl.formsflowaiBpmBaseUrl}${ApiConstantUrl.bpmV1}/${ApiConstantUrl.task}/variables',
+          headers: ApiUtils.fetchTaskAuthorizationHeader(
               acessToken: appPreferences.getAccessToken()));
 
-      if (response.statusCode == FormsFlowAIAPIConstants.statusCode200 ||
-          response.statusCode == FormsFlowAIAPIConstants.statusCode204) {
+      if (response.statusCode == FormsFlowAIApiConstants.statusCode200 ||
+          response.statusCode == FormsFlowAIApiConstants.statusCode204) {
         return Right(response);
       }
       return left(ServerFailure());
@@ -198,7 +198,7 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
           await taskApiClient.fetchMembersList(ApiConstantUrl.fetchMemberList);
 
       if (response.response.statusCode !=
-          FormsFlowAIAPIConstants.statusCode200) {
+          FormsFlowAIApiConstants.statusCode200) {
         return Left(ServerFailure());
       }
 
@@ -272,7 +272,7 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
       {required String taskId}) async {
     try {
       final response = await taskDio.get(
-        '${ApiConstantUrl.camundaEngineRest}/${ApiConstantUrl.task}/$taskId',
+        '${ApiConstantUrl.bpmV1}/${ApiConstantUrl.task}/$taskId',
       );
       return Right(response);
     } catch (error) {
@@ -296,8 +296,12 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
       TaskSortPostModel taskSortingPostModel,
       List<ProcessDefinitionResponse>? definitionResponse) async {
     try {
-      final data = await taskApiClient.fetchTasks("application/hal+json", id,
-          firstResult, maxResults, taskSortingPostModel);
+      final data = await taskApiClient.fetchTasks(
+          FormsFlowAIApiConstants.acceptTypeHalJson,
+          id,
+          firstResult,
+          maxResults,
+          taskSortingPostModel);
       return Right(TaskBaseDataResponse.transform(data, definitionResponse));
     } catch (error) {
       return _handleDioError(error.runtimeType);
@@ -317,12 +321,12 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
       final response =
           await taskApiClient.submitForm(id, formSubmissionPostModel);
       if (response.response.statusCode ==
-              FormsFlowAIAPIConstants.statusCode200 ||
+              FormsFlowAIApiConstants.statusCode200 ||
           response.response.statusCode ==
-              FormsFlowAIAPIConstants.statusCode204) {
+              FormsFlowAIApiConstants.statusCode204) {
         return Right(BaseResponse(
             statusCode: response.response.statusCode,
-            message: FormsFlowAIAPIConstants.statusSuccessMessage));
+            message: FormsFlowAIApiConstants.statusSuccessMessage));
       }
       return Left(ServerFailure());
     } catch (error) {
@@ -336,11 +340,11 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
   @override
   Future<Either<Failure, void>> unClaimTask({required String taskId}) async {
     try {
-      final response = await taskApiClient.unclaimTask(taskId);
+      final response = await taskApiClient.unClaimTask(taskId);
       if (response.response.statusCode ==
-              FormsFlowAIAPIConstants.statusCode200 ||
+              FormsFlowAIApiConstants.statusCode200 ||
           response.response.statusCode ==
-              FormsFlowAIAPIConstants.statusCode204) {
+              FormsFlowAIApiConstants.statusCode204) {
         return Right(response.data);
       }
       return Left(ServerFailure());
@@ -359,9 +363,9 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
     try {
       final response = await taskApiClient.updateAssignee(taskId, payload);
       if (response.response.statusCode ==
-              FormsFlowAIAPIConstants.statusCode200 ||
+              FormsFlowAIApiConstants.statusCode200 ||
           response.response.statusCode ==
-              FormsFlowAIAPIConstants.statusCode204) {
+              FormsFlowAIApiConstants.statusCode204) {
         return Right(response.data);
       }
       return Left(ServerFailure());
@@ -399,13 +403,13 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
     try {
       final response = await isolatedHttpClient.put(
           host:
-              "${ApiConstantUrl.formsflowaiBpmBaseUrl}${ApiConstantUrl.camundaEngineRest}/${ApiConstantUrl.task}/$taskId",
+              "${ApiConstantUrl.formsflowaiBpmBaseUrl}${ApiConstantUrl.bpmV1}/${ApiConstantUrl.task}/$taskId",
           body: updateTaskPostModel.toJson(),
-          headers: APIUtils.getTaskAuthorizationHeader(
+          headers: ApiUtils.fetchTaskAuthorizationHeader(
               acessToken: appPreferences.getAccessToken()));
 
-      if (response.statusCode != FormsFlowAIAPIConstants.statusCode200 ||
-          response.statusCode != FormsFlowAIAPIConstants.statusCode204) {
+      if (response.statusCode != FormsFlowAIApiConstants.statusCode200 ||
+          response.statusCode != FormsFlowAIApiConstants.statusCode204) {
         return left(ServerFailure());
       }
       return Right(response);
@@ -469,18 +473,16 @@ class TaskRemoteDataSourceImpl implements TaskRepository {
       required FormSubmissionPostModel formSubmissionPostModel}) async {
     try {
       final response = await taskDio.post(
-          '${ApiConstantUrl.camundaEngineRest}/${ApiConstantUrl.task}/$id/submit-form',
+          '${ApiConstantUrl.bpmV1}/${ApiConstantUrl.task}/$id/submit-form',
           data: json.encode(formSubmissionPostModel.toJson()));
-      if (response != null &&
-              response.statusCode == FormsFlowAIAPIConstants.statusCode200 ||
-          response.statusCode == FormsFlowAIAPIConstants.statusCode204) {
+      if (response.statusCode == FormsFlowAIApiConstants.statusCode200 ||
+          response.statusCode == FormsFlowAIApiConstants.statusCode204) {
         return Right(BaseResponse(
             statusCode: response.statusCode,
-            message: FormsFlowAIAPIConstants.statusSuccessMessage));
+            message: FormsFlowAIApiConstants.statusSuccessMessage));
       }
       return Left(ServerFailure());
     } catch (e) {
-      print(e.toString());
       return Left(ServerFailure());
     }
   }

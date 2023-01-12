@@ -69,7 +69,7 @@ class AssignTaskViewModel extends BaseViewModel {
       }
       final result = await listMembersUseCase.call(
           params: const ListMembersParams(
-              FormsFlowAIAPIConstants.formsflowReviewerRole));
+              FormsFlowAIApiConstants.formsflowReviewerRole));
       result.fold((left) {
         ref
             .read(assignTaskStateProvider.notifier)

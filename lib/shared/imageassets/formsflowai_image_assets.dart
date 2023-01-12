@@ -1,18 +1,6 @@
 /// [FormsFlowAIImageAssets] contains All Image Assets used in the
 /// formsFlow.ai mobile application
 class FormsFlowAIImageAssets {
-  static const String fontMontserratBlack = 'assets/font/Montserrat_Black.ttf';
-  static const String fontMontserratBold = 'assets/font/Montserrat_Bold.ttf';
-  static const String fontMontserratExtraBold =
-      'assets/font/Montserrat_ExtraBold.ttf';
-  static const String fontMontserratMedium =
-      'assets/font/Montserrat_Medium.ttf';
-  static const String fontMontserratRegular =
-      'assets/font/Montserrat_Regular.ttf';
-  static const String fontMontserratSemiBold =
-      'assets/font/Montserrat_SemiBold.ttf';
-  static const String imagesDoubleRingLoadingIo =
-      'assets/images/double_ring_loading_io.gif';
   static const String imagesFilter = 'assets/images/filter.svg';
   static const String imagesFormsflowMobileBackgroundImage =
       'assets/images/FormsflowMobileBackgroundImage.svg';
@@ -46,7 +34,6 @@ class FormsFlowAIImageAssets {
   static const String imagesImgNoTasks = 'assets/images/img_no_tasks.png';
   static const String imagesLogoorginal = 'assets/images/logoorginal.svg';
   static const String imagesLogout = 'assets/images/logout.svg';
-  static const String imagesSimpleLogo = 'assets/images/simple_logo.svg';
-  static const String imagesUser = 'assets/images/user.svg';
   static const String imagesCloseFilled = 'assets/images/ic_close_filled.svg';
+  static const String imagesUserAvatar = 'assets/images/ic_user.png';
 }

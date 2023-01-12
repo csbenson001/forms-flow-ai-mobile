@@ -23,7 +23,8 @@ import '../../networkmanager/network_manager_controller.dart';
 import '../../preferences/app_preference.dart';
 import '../entity/form_entity.dart';
 
-/// Database worker class to interact with the local data source
+/// [DatabaseWorker] class to interact with the local data source
+/// fetch, insert, update and delete local data source entities data
 class DatabaseWorker {
   /// useCases
   final InsertAllTaskUseCase insertAllTaskUseCase;
@@ -287,9 +288,9 @@ class DatabaseWorker {
               }
             }, (response) async {
               if (response.statusCode ==
-                      FormsFlowAIAPIConstants.statusCode200 ||
+                      FormsFlowAIApiConstants.statusCode200 ||
                   response.statusCode ==
-                      FormsFlowAIAPIConstants.statusCode204) {
+                      FormsFlowAIApiConstants.statusCode204) {
                 final taskListResponse =
                     await compute(parseTaskListDataResponse, response.data);
                 if (taskListResponse.assignee != taskEntity.assignee) {
@@ -304,7 +305,7 @@ class DatabaseWorker {
                   await syncChangedTaskDataWithRemote(task: taskEntity);
                 }
               } else if (response.statusCode ==
-                  FormsFlowAIAPIConstants.statusCode404) {
+                  FormsFlowAIApiConstants.statusCode404) {
                 var deleteTaskResponse = await deleteLocalTaskUseCase.call(
                     params: DeleteLocalTaskParams(task: taskEntity));
                 deleteTaskResponse.fold((l) {}, (r) {

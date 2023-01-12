@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:formsflowai/core/module/providers/view_model_provider.dart';
 import 'package:formsflowai/presentation/features/viewformsubmission/view/view_form_submission_screen.dart';
 import 'package:formsflowai/presentation/features/viewformsubmission/viewmodel/view_form_submission_state_notifier.dart';
@@ -12,6 +13,7 @@ import '../../../../core/networkmanager/internet_connectivity_provider.dart';
 import '../../../../core/networkmanager/network_manager_controller.dart';
 import '../../../../core/preferences/app_preference.dart';
 import '../../../../core/socket/socket_service.dart';
+import '../../../../utils/form/formio_webview_util.dart';
 import '../../../../utils/general_util.dart';
 import '../../../base/viewmodel/base_notifier_view_model.dart';
 import '../../taskdetails/model/application_history_data_model.dart';
@@ -28,8 +30,14 @@ class ViewFormSubmissionViewModel extends BaseNotifierViewModel {
   final FetchFormUseCase fetchFormUseCase;
   final FetchFormSubmissionUseCase fetchFormSubmissionUseCase;
   final NetworkManagerController networkManagerController;
+
+  /// Application History data model
   ApplicationHistoryDM? _applicationHistoryDM;
   ApplicationHistoryDM? get applicationHistoryDM => _applicationHistoryDM;
+
+  // InAppwebview View Controller
+  InAppWebViewController? _webViewPluscontroller;
+  InAppWebViewController? get webViewPluscontroller => _webViewPluscontroller;
 
   final SocketService socketService;
 
@@ -57,7 +65,7 @@ class ViewFormSubmissionViewModel extends BaseNotifierViewModel {
             .updateFormLoading(isLoading: true);
       });
 
-      var formUrl = _applicationHistoryDM?.formUrl ?? '';
+      final formUrl = _applicationHistoryDM?.formUrl ?? '';
       String formResourceId = _applicationHistoryDM?.formId ?? '';
       String formSubmissionId = _applicationHistoryDM?.formSubmissionId ?? '';
 
@@ -131,7 +139,33 @@ class ViewFormSubmissionViewModel extends BaseNotifierViewModel {
     });
   }
 
+  /// Function to clear App session
+  /// calls home task list view model to clear the session
+  /// clear the database data
+  /// navigates to login screen after logout
   Future<void> clearAppSession({required BuildContext context}) async {
     ref.read(taskListViewModelProvider).logoutUser(context: context);
+  }
+
+  /// Function to update webview controller to object in the
+  /// view form submission view model
+  /// webview controller objects are used to load forms, get webview callbacks
+  /// in the app
+  void updateWebViewController(
+      {required InAppWebViewController webViewController}) {
+    _webViewPluscontroller = webViewController;
+  }
+
+  /// Function to load form
+  loadForm({FormIoModel? formIoModel}) {
+    if (formIoModel == null) {
+      return;
+    }
+    _webViewPluscontroller?.evaluateJavascript(
+        source:
+            'loadForm(${formIoModel.formComponents}, ${formIoModel.formData},'
+            '${FormioWebViewUtil.fetchFormIoInputData(readOnly: formIoModel.readOnly ?? false, formResourceId: formIoModel.formResourceId, userInfoResponse: appPreferences.getUserInfo(), authToken: appPreferences.getAccessToken(), formToken: appPreferences.getFormJwtToken())}'
+            ')');
+    notifyListeners();
   }
 }

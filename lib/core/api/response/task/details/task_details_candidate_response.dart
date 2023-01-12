@@ -1,3 +1,5 @@
+/// [TaskDetailsCandidateResponse] class to parse
+/// candidate response
 class TaskDetailsCandidateResponse {
   final dynamic userId;
   final String? groupId;

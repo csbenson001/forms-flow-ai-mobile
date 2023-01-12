@@ -4,7 +4,6 @@ import 'package:formsflowai/core/module/providers/view_model_provider.dart';
 import 'package:formsflowai/presentation/base/widgets/base_consumer_widget.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
-import 'package:formsflowai_shared/widgets/formsflow_image_view.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../core/di/injection.dart';
@@ -12,6 +11,7 @@ import '../../../core/preferences/app_preference.dart';
 import '../../../core/router/app_routes.dart';
 import '../../../shared/app_strings.dart';
 import '../../../shared/app_text_styles.dart';
+import '../../../shared/imageassets/formsflowai_image_assets.dart';
 
 /// [AppDrawer] shows the drawer navigation menu
 
@@ -145,11 +145,8 @@ class AppDrawer extends BaseConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              FormsFlowImageView(
-                  imageUrl: imageUrl,
-                  height: Dimens.size_80,
-                  width: Dimens.size_80,
-                  boxShape: BoxShape.circle),
+              Image.asset(FormsFlowAIImageAssets.imagesUserAvatar,
+                  height: Dimens.size_80, width: Dimens.size_80),
               Padding(
                 padding: const EdgeInsets.only(left: Dimens.spacing_16),
                 child: Column(

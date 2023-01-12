@@ -3,7 +3,7 @@ import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:formsflowai/utils/general_util.dart';
 import 'package:formsflowai/utils/jwttoken/jwttoken_utils.dart';
 
-import '../../shared/api_constants_url.dart';
+import '../../shared/flutter_auth_utils.dart';
 import '../../shared/formsflow_app_constants.dart';
 import '../error/errors_failure.dart';
 import '../preferences/app_preference.dart';
@@ -107,15 +107,8 @@ class TaskAuthorizationInterceptor extends QueuedInterceptorsWrapper {
     const String redirectUrl = FormsFlowAIConstants.keycloakRedirectUrl;
     const List<String> scopes = FormsFlowAIConstants.keycloakScopes;
 
-    AuthorizationServiceConfiguration serviceConfiguration =
-        AuthorizationServiceConfiguration(
-      authorizationEndpoint:
-          '${ApiConstantUrl.keycloakAuthBaseUrl}${ApiConstantUrl.fetchTokenOpenIdConnect}/auth',
-      tokenEndpoint:
-          '${ApiConstantUrl.keycloakAuthBaseUrl}${ApiConstantUrl.fetchTokenOpenIdConnect}/token',
-      endSessionEndpoint:
-          '${ApiConstantUrl.keycloakAuthBaseUrl}${ApiConstantUrl.fetchTokenOpenIdConnect}/logout',
-    );
+    final serviceConfiguration =
+        FlutterAuthUtils.fetchAuthorizationConfiguration();
 
     return await flutterAppAuth.token(
       TokenRequest(

@@ -1,5 +1,3 @@
-
-
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
@@ -20,7 +18,7 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
   /// Parameters
   /// [SaveUserDetailsParams]
   @override
-  Future<Either<Failure, void>> saveUserDetails(
+  Future<Either<Failure, bool>> saveUserDetails(
       {required SaveUserDetailsParams params}) async {
     // Set User info and token values into the shared preferences
     appPreferences.setAccessToken(params.accessToken);
@@ -35,8 +33,6 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
         GeneralUtil.getUserRole(params.userInfoResponse.role ?? []));
     UserInfoResponse userInfoResponse = params.userInfoResponse;
     appPreferences.setUserInfo(json.encode(userInfoResponse));
-    appPreferences.setUserImage(
-        "https://img.icons8.com/fluency/344/user-male-circle.png");
     return const Right(true);
   }
 }

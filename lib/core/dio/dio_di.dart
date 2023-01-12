@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:formsflowai/core/api/utils/api_constants_url.dart';
 import 'package:formsflowai/core/dio/dio_application_history_auth_interceptor.dart';
 import 'package:formsflowai/core/dio/dio_form_auth_interceptor.dart';
-import 'package:formsflowai/shared/api_constants_url.dart';
 
 import '../di/injection.dart';
 import 'dio_task_auth_interceptor.dart';

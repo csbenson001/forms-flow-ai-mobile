@@ -3,6 +3,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'form_submission_response.freezed.dart';
 part 'form_submission_response.g.dart';
 
+/// [FormSubmissionResponse] class to parse
+/// form submission data
 @freezed
 class FormSubmissionResponse with _$FormSubmissionResponse {
   const factory FormSubmissionResponse({

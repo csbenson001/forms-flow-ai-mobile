@@ -42,7 +42,7 @@ class FormsWebView extends BaseConsumerWidget {
                     bottom: Dimens.spacing_8),
                 child: InAppWebView(
                   key: webViewKey,
-                  initialFile: 'assets/formio/form.html',
+                  initialFile: FormsFlowWebViewConstants.formsAssetUrl,
                   gestureRecognizers: {}..add(
                       Factory<VerticalDragGestureRecognizer>(
                           () => VerticalDragGestureRecognizer())),

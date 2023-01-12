@@ -11,7 +11,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../core/api/post/task/tasklist_sort.dart';
-import '../../../../../core/api/response/filter/get_filters_response.dart';
+import '../../../../../core/api/response/filter/filters_response.dart';
 import '../../../../../core/api/response/form/roles/formio_roles_response.dart'
     as roles_response;
 import '../../../../../core/api/response/processdefinition/process_definition_response.dart';
@@ -414,7 +414,7 @@ class TaskListViewModel extends BaseNotifierViewModel {
     FiltersResponse? filtersResponse;
     for (int i = 0; i < filterList.length; i++) {
       if (filterList[i].name!.toLowerCase() ==
-          FormsFlowAIAPIConstants.allTasks.toLowerCase()) {
+          FormsFlowAIApiConstants.allTasks.toLowerCase()) {
         filtersResponse = filterList[i];
         break;
       }
@@ -429,10 +429,10 @@ class TaskListViewModel extends BaseNotifierViewModel {
         formioRolesResponse.form!.isNotEmpty) {
       try {
         roles_response.Form? reviewer = formioRolesResponse.form?.singleWhere(
-            (element) => element.type == FormsFlowAIAPIConstants.reviewer);
+            (element) => element.type == FormsFlowAIApiConstants.reviewer);
 
         roles_response.Form? resourceId = formioRolesResponse.form?.singleWhere(
-            (element) => element.type == FormsFlowAIAPIConstants.resourceId);
+            (element) => element.type == FormsFlowAIApiConstants.resourceId);
 
         if (reviewer != null) {
           // Create a form jwt token
@@ -525,7 +525,7 @@ class TaskListViewModel extends BaseNotifierViewModel {
             .read(socketCallbackProvider.notifier)
             .state
             .copyWith(taskId: taskId, eventName: eventName);
-        if (eventName == FormsFlowAIAPIConstants.socketEventComplete) {
+        if (eventName == FormsFlowAIApiConstants.socketEventComplete) {
           removeCompletedTaskItem(taskId: taskId);
         } else {
           onReceiveChangedTaskDataFromSocket(
@@ -573,11 +573,11 @@ class TaskListViewModel extends BaseNotifierViewModel {
     final fetchIsolatedTaskResponse = await fetchIsolatedTaskUseCase.call(
         params: FetchTaskParams(taskId: taskId));
     fetchIsolatedTaskResponse.fold((l) => {}, (response) async {
-      if (response.statusCode == FormsFlowAIAPIConstants.statusCode200 &&
+      if (response.statusCode == FormsFlowAIApiConstants.statusCode200 &&
           response.data.isNotEmpty) {
         var taskData = await compute(parseTaskIdResponse, response.data);
         index = _taskList.indexWhere((element) => element.taskId == taskId);
-        if (eventName == FormsFlowAIAPIConstants.socketEventUpdate &&
+        if (eventName == FormsFlowAIApiConstants.socketEventUpdate &&
             index != FormsFlowAIConstants.noPosition) {
           _taskList[index] = _taskList[index].copyWith(
               assignee: taskData.assignee,
@@ -591,7 +591,7 @@ class TaskListViewModel extends BaseNotifierViewModel {
           } else {
             databaseWorker.deleteTaskFromLocalDb(taskId: taskId);
           }
-        } else if (eventName == FormsFlowAIAPIConstants.socketEventCreate) {
+        } else if (eventName == FormsFlowAIApiConstants.socketEventCreate) {
           _taskList.insert(
               0,
               TaskListingDM.transformSingle(

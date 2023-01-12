@@ -33,7 +33,7 @@ class FormLocalDataSource implements FormRepository {
   @override
   Future<Either<Failure, FormEntity?>> fetchFormEntity(
       {required String formId}) async {
-    var formData = await formsDao.findFormByFormId(formId);
+    var formData = await formsDao.fetchFormByFormId(formId);
     if (formData != null) {
       return Right(formData);
     }
@@ -51,7 +51,7 @@ class FormLocalDataSource implements FormRepository {
       {required String formResourceId,
       required String formSubmissionId,
       required String taskId}) async {
-    var task = await taskDao.findTaskByTaskId(taskId);
+    var task = await taskDao.fetchTaskByTaskId(taskId);
     if (task != null &&
         task.isFormSubmissionDataUpdated != null &&
         !GeneralUtil.isStringEmpty(task.formSubmissionData)) {
@@ -81,7 +81,7 @@ class FormLocalDataSource implements FormRepository {
   /// ---> returns [FormDM]
   @override
   Future<Either<Failure, FormDM?>> fetchFormsData({required String id}) async {
-    var formData = await formsDao.findFormByFormId(id);
+    var formData = await formsDao.fetchFormByFormId(id);
     if (formData != null && !GeneralUtil.isStringEmpty(formData.formId)) {
       return Right(FormDM.transformFromFromData(formData));
     } else {

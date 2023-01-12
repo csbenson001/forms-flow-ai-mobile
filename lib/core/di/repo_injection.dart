@@ -14,9 +14,9 @@ import '../../repository/application/application_data_repository.dart';
 import '../../repository/user/user_data_repository.dart';
 import '../../repository/user/user_local_data_source_impl.dart';
 import '../../repository/user/user_remote_data_source_impl.dart';
-import '../api/client/application/application_history_api_client.dart';
+import '../api/client/application/formsflowai_application_api_client.dart';
 import '../api/client/form/forms_api_client.dart';
-import '../api/client/task/task_api_client.dart';
+import '../api/client/task/bpm_task_api_client.dart';
 import '../api/client/user/user_api_client.dart';
 import '../networkmanager/network_manager_controller.dart';
 import 'injection.dart';
@@ -37,7 +37,8 @@ Future<void> registerRepository() async {
       () => UserDataRepository(remoteDataSource: dl(), localDataSource: dl()));
 
   // Register Task data sources and client
-  dl.registerLazySingleton(() => TaskApiClient(dl<DioHelper>().getTaskDio()));
+  dl.registerLazySingleton(
+      () => BpmTaskApiClient(dl<DioHelper>().getTaskDio()));
   dl.registerLazySingleton(() => TaskRemoteDataSourceImpl(
       flutterAppAuth: dl(),
       taskApiClient: dl(),
@@ -70,8 +71,8 @@ Future<void> registerRepository() async {
       networkManagerController: dl()));
 
   // Register Application data sources and client
-  dl.registerLazySingleton(
-      () => ApplicationHistoryApiClient(dl<DioHelper>().getApplicationDio()));
+  dl.registerLazySingleton(() =>
+      FormsFlowAIApplicationApiClient(dl<DioHelper>().getApplicationDio()));
   dl.registerLazySingleton(() => ApplicationRemoteDataSourceImpl(
       flutterAppAuth: dl(), appPreferences: dl(), applicationApiClient: dl()));
 

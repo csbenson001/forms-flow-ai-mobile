@@ -1,3 +1,5 @@
+/// [FiltersResponse] class to parse
+/// filters data from remote
 class FiltersResponse {
   final String? id;
   final String? resourceType;

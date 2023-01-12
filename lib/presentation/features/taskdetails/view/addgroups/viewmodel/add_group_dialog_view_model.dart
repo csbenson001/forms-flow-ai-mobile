@@ -48,7 +48,7 @@ class AddGroupDialogViewModel extends BaseNotifierViewModel {
           params: AddGroupParams(
               addGroupPostModel: AddGroupPostModel(
                   groupId: groupName,
-                  type: FormsFlowAIAPIConstants.groupCandidate),
+                  type: FormsFlowAIApiConstants.groupCandidate),
               taskId: ref
                       .read(taskDetailsViewModelProvider)
                       .taskListingDM

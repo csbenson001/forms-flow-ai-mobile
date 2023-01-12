@@ -9,13 +9,13 @@ import 'package:isolated_http_client/isolated_http_client.dart'
 import '../../core/api/client/form/forms_api_client.dart';
 import '../../core/api/response/base/base_response.dart';
 import '../../core/api/response/form/submission/form_submission_response.dart';
+import '../../core/api/utils/api_constants_url.dart';
 import '../../core/api/utils/api_utils.dart';
 import '../../core/database/entity/form_entity.dart';
 import '../../core/error/errors_failure.dart';
 import '../../core/error/server_exception.dart';
 import '../../core/preferences/app_preference.dart';
 import '../../presentation/features/taskdetails/model/form_dm.dart';
-import '../../shared/api_constants_url.dart';
 import '../../shared/formsflow_api_constants.dart';
 import 'form_repository.dart';
 
@@ -52,9 +52,9 @@ class FormRemoteDataSource implements FormRepository {
       var response = await formsApiClient.fetchFormSubmissionData(
           formResourceId, formSubmissionId);
       if (response.response.statusCode ==
-              FormsFlowAIAPIConstants.statusCode200 ||
+              FormsFlowAIApiConstants.statusCode200 ||
           response.response.statusCode ==
-              FormsFlowAIAPIConstants.statusCode204) {
+              FormsFlowAIApiConstants.statusCode204) {
         return Right(response.data);
       } else {
         return Left(ServerFailure());
@@ -83,11 +83,11 @@ class FormRemoteDataSource implements FormRepository {
       var response = await isolatedHttpClient.get(
           host:
               '${ApiConstantUrl.formsflowaiFormBaseUrl}${ApiConstantUrl.form}/$formResourceId/${ApiConstantUrl.formSubmission}/$formSubmissionId',
-          headers: APIUtils.getFormsJwtTokenHeader(
+          headers: ApiUtils.fetchFormsJwtTokenHeader(
               jwtToken: appPreferences.getFormJwtToken()));
 
-      if (response.statusCode == FormsFlowAIAPIConstants.statusCode200 ||
-          response.statusCode == FormsFlowAIAPIConstants.statusCode204) {
+      if (response.statusCode == FormsFlowAIApiConstants.statusCode200 ||
+          response.statusCode == FormsFlowAIApiConstants.statusCode204) {
         return Right(response);
       }
       return left(ServerFailure());
@@ -109,9 +109,9 @@ class FormRemoteDataSource implements FormRepository {
     try {
       var response = await formsApiClient.getFormIoJson(id);
       if (response.response.statusCode ==
-              FormsFlowAIAPIConstants.statusCode200 ||
+              FormsFlowAIApiConstants.statusCode200 ||
           response.response.statusCode ==
-              FormsFlowAIAPIConstants.statusCode204) {
+              FormsFlowAIApiConstants.statusCode204) {
         return Right(FormDM.transform(response.response));
       }
       return Left(ServerFailure());
@@ -136,11 +136,11 @@ class FormRemoteDataSource implements FormRepository {
           host:
               '${ApiConstantUrl.formsflowaiFormBaseUrl}${ApiConstantUrl.form}/',
           path: formId,
-          headers: APIUtils.getFormsJwtTokenHeader(
+          headers: ApiUtils.fetchFormsJwtTokenHeader(
               jwtToken: appPreferences.getFormJwtToken()));
 
-      if (response.statusCode == FormsFlowAIAPIConstants.statusCode200 ||
-          response.statusCode == FormsFlowAIAPIConstants.statusCode204) {
+      if (response.statusCode == FormsFlowAIApiConstants.statusCode200 ||
+          response.statusCode == FormsFlowAIApiConstants.statusCode204) {
         return Right(response);
       }
       return left(ServerFailure());
@@ -174,9 +174,9 @@ class FormRemoteDataSource implements FormRepository {
       var response = await formsApiClient.submitFormData(
           formResourceId, formSubmissionId, formSubmissionResponse);
       if (response.response.statusCode ==
-              FormsFlowAIAPIConstants.statusCode200 ||
+              FormsFlowAIApiConstants.statusCode200 ||
           response.response.statusCode ==
-              FormsFlowAIAPIConstants.statusCode204) {
+              FormsFlowAIApiConstants.statusCode204) {
         return Right(BaseResponse(
             statusCode: response.response.statusCode, message: "Success"));
       }
@@ -212,10 +212,10 @@ class FormRemoteDataSource implements FormRepository {
           "${ApiConstantUrl.form}/$formResourceId/${ApiConstantUrl.formSubmission}/$formSubmissionId",
           data: json.encode(formSubmissionResponse.toJson()));
 
-      if (response.statusCode == FormsFlowAIAPIConstants.statusCode200 ||
-          response.statusCode == FormsFlowAIAPIConstants.statusCode204) {
+      if (response.statusCode == FormsFlowAIApiConstants.statusCode200 ||
+          response.statusCode == FormsFlowAIApiConstants.statusCode204) {
         return Right(BaseResponse(
-            message: FormsFlowAIAPIConstants.statusSuccessMessage));
+            message: FormsFlowAIApiConstants.statusSuccessMessage));
       }
       return left(ServerFailure());
     } on SocketException {

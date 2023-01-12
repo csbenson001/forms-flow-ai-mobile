@@ -1,3 +1,5 @@
+/// [ApplicationHistoryResponse] class to parse
+/// application history api response
 class ApplicationHistoryResponse {
   final List<Applications>? applications;
 
@@ -40,7 +42,7 @@ class Applications {
         'submissionId': submissionId,
         'formId': formId,
         'created': created,
-    'submittedBy':submittedBy,
+        'submittedBy': submittedBy,
         'applicationStatus': applicationStatus
       };
 }

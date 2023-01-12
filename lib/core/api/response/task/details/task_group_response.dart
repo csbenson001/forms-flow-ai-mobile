@@ -1,3 +1,5 @@
+/// [TaskGroupsResponse ] class to parse
+/// task groups response data
 class TaskGroupsResponse {
   final dynamic userId;
   final String? groupId;

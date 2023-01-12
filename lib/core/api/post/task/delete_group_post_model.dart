@@ -1,3 +1,5 @@
+/// [DeleteGroupPostModel] class to send the application/json
+/// POST body on the delete group api call
 class DeleteGroupPostModel {
   final String? groupId;
   final String? type;

@@ -1,6 +1,6 @@
 import '../../core/api/response/processdefinition/process_definition_response.dart';
+import '../../core/api/utils/api_constants_url.dart';
 import '../../core/api/utils/api_utils.dart';
-import '../../shared/api_constants_url.dart';
 import '../formsflowai_shared_util.dart';
 
 class BpmnDiagramWebUtil {
@@ -35,7 +35,7 @@ class BpmnDiagramWebUtil {
   <!-- BPMN diagram container -->
 	<div id="canvas"></div>
 
-  ${_generateDiagramScript(bearerToken, processInstanceId, processName, processDefinitionResponse, _getProcessXml(processName, processDefinitionResponse), APIUtils.getProcessInstancesUrl(processInstanceId))}
+  ${_generateDiagramScript(bearerToken, processInstanceId, processName, processDefinitionResponse, _getProcessXml(processName, processDefinitionResponse), ApiUtils.getProcessInstancesUrl(processInstanceId))}
   </body>
   </html>
     ''';
@@ -106,7 +106,7 @@ class BpmnDiagramWebUtil {
         processName: processName,
         definitionResponse: processDefinitionResponse);
     var processXMl =
-        '${ApiConstantUrl.formsflowaiBpmBaseUrl}${ApiConstantUrl.camundaEngineRest}/${ApiConstantUrl.processDefinitionKey}/$processKey/${ApiConstantUrl.processXml}';
+        '${ApiConstantUrl.formsflowaiBpmBaseUrl}${ApiConstantUrl.bpmV1}/${ApiConstantUrl.processDefinitionKey}/$processKey/${ApiConstantUrl.processXml}';
     return processXMl;
   }
 }

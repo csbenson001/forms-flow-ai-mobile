@@ -4,6 +4,8 @@ import 'package:formsflowai_shared/utils/datetime/timestamp_utils.dart';
 import '../../../../presentation/features/taskdetails/model/form_dm.dart';
 import '../../../database/entity/task_entity.dart';
 
+/// [UpdateTaskPostModel] class to send the application/json
+/// POST body on the update task api call
 class UpdateTaskPostModel {
   final String? id;
   final String? name;

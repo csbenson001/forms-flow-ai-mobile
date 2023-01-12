@@ -4,6 +4,8 @@ import 'package:formsflowai_shared/utils/shared_general_util.dart';
 import '../../../../shared/formsflow_app_constants.dart';
 import '../../../../shared/task_constants.dart';
 
+/// [TaskSortPostModel] class to send the application/json
+/// POST body on the fetch tasks api call
 class TaskSortPostModel {
   List<Sorting>? sorting;
   List<VariableFilters>? taskVariableFilters;

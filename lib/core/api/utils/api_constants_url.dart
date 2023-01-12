@@ -5,17 +5,17 @@ class ApiConstantUrl {
   // ------------------- BASE URLS AND BASE PROVIDERS  ---------------------
 
   static final String keycloakAuthBaseUrl =
-      dotenv.get(EnvKeyConstants.envKeycloakUrlKey);
+      "${dotenv.get(EnvKeyConstants.envKeycloakUrlKey)}/";
 
   static final String formsflowaiBaseUrl =
-      dotenv.get(EnvKeyConstants.envFormsflowaiBaseUrlKey);
+      '${dotenv.get(EnvKeyConstants.envFormsflowaiBaseUrlKey)}/';
 
   static final String formsflowaiBpmBaseUrl =
-      dotenv.get(EnvKeyConstants.envBpmApiUrlKey);
+      '${dotenv.get(EnvKeyConstants.envBpmApiUrlKey)}/';
 
   static final String formsflowaiFormBaseUrl = formsflowaiBaseUrl;
 
-  static const String camundaEngineRest = 'camunda/engine-rest-ext/v1';
+  static const String bpmV1 = 'engine-rest-ext/v1';
 
   static const String filter = 'filter';
 
@@ -46,45 +46,41 @@ class ApiConstantUrl {
 
   // ----------------------- TASK  ---------------------
 
-  static const String fetchTasks = '$camundaEngineRest/$filter/$pathId/list?';
+  static const String fetchTasks = '$bpmV1/$filter/$pathId/list?';
 
-  static const String fetchTasksById = '$camundaEngineRest/$task/$pathId';
+  static const String fetchTasksById = '$bpmV1/$task/$pathId';
 
-  static const String fetchTasksListCount =
-      '$camundaEngineRest/$filter/$pathId/count';
+  static const String fetchTasksListCount = '$bpmV1/$filter/$pathId/count';
 
   static const String fetchFilters =
-      '$camundaEngineRest/$filter?resourceType=Task&itemCount=true';
+      '$bpmV1/$filter?resourceType=Task&itemCount=true';
 
-  static const String fetchProcessDeifinition =
-      '$camundaEngineRest/process-definition';
+  static const String fetchProcessDefinition = '$bpmV1/process-definition';
 
-  static const String fetchTasksDetailsById = '$camundaEngineRest/$pathId/';
+  static const String fetchTasksDetailsById = '$bpmV1/$pathId/';
 
   static const String fetchTasksDetailsVariables =
-      '$camundaEngineRest/$task/$pathId/variables';
+      '$bpmV1/$task/$pathId/variables';
 
-  static const String claimTask = '$camundaEngineRest/$task/$pathId/claim';
+  static const String claimTask = '$bpmV1/$task/$pathId/claim';
 
-  static const String updateAssignee =
-      '$camundaEngineRest/$task/$pathId/assignee';
+  static const String updateAssignee = '$bpmV1/$task/$pathId/assignee';
 
-  static const String unclaimTask = '$camundaEngineRest/$task/$pathId/unclaim';
+  static const String unclaimTask = '$bpmV1/$task/$pathId/unclaim';
 
-  static const String updateTask = '$camundaEngineRest/$task/$pathId';
+  static const String updateTask = '$bpmV1/$task/$pathId';
 
   static const String taskGroup =
-      '$camundaEngineRest/$task/$pathId/identity-links?type=candidate';
+      '$bpmV1/$task/$pathId/identity-links?type=candidate';
 
   static const String deleteGroup =
-      '$camundaEngineRest/$task/$pathId/identity-links/delete';
+      '$bpmV1/$task/$pathId/identity-links/delete';
 
-  static const String fetchMembers = '$camundaEngineRest/user';
+  static const String fetchMembers = '$bpmV1/user';
 
   static const String fetchMemberList = 'formsflow/formsflow-reviewer';
 
-  static const String submitForm =
-      '$camundaEngineRest/$task/$pathId/submit-form';
+  static const String submitForm = '$bpmV1/$task/$pathId/submit-form';
 
   // ----------------------- FORMS ---------------------
 
@@ -111,6 +107,5 @@ class ApiConstantUrl {
 
 // ------------------- SOCKET  ---------------------
 
-  static final socketUrl =
-      "$formsflowaiBpmBaseUrl/camunda/forms-flow-bpm-socket";
+  static final socketUrl = "${formsflowaiBpmBaseUrl}forms-flow-bpm-socket";
 }

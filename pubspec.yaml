@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.17.0 <3.0.0"
+  sdk: ">=2.18.2 <3.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -30,8 +30,6 @@ dependencies:
   flutter:
     sdk: flutter
   json_annotation: ^4.0.1
-
-
     # The following adds the Cupertino Icons font to your application.
     # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.3
@@ -52,17 +50,51 @@ dependencies:
   auto_size_text: ^3.0.0
   url_launcher: ^6.1.2
   overlay_builder: ^1.1.0
-  # internal packages
+  flutter_inappwebview: ^5.4.3+7
+  sizer: ^2.0.15
+  flutter_svg: ^1.0.3
+  hooks_riverpod: ^1.0.3
+  internet_connection_checker: ^0.0.1+3
+  shared_preferences: ^2.0.7
+  flutter_hooks: ^0.18.2+1
+  flutter_appauth: ^4.2.1
+  jwt_decoder: ^2.0.1
+  connectivity_plus:
+  retrofit: ^2.0.1
+  freezed_annotation: ^0.14.2
+  pretty_dio_logger: ^1.2.0-beta-1
+  kt_dart: ^0.10.0
+  dartz: ^0.10.1
+  encrypt: ^5.0.1
+  crypto: ^3.0.2
+  tuple: ^2.0.1
+  floor: ^1.1.0
+  motion_toast: ^2.1.9
+  logger: ^1.1.0
+  go_router: ^3.1.0
+  flutter_easyloading: ^3.0.3
+  shimmer: ^2.0.0
+  dart_jsonwebtoken: ^2.4.0
+
+  #Internal packages
   formsflowai_shared:
     path: packages/formsflowai_shared
+  stomp_dart_client:
+    path: packages/stomp_dart_client
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   meta: ^1.7.0
+
   build_runner: ^2.1.11
-  flutter_lints: ^1.0.4
+  flutter_lints: ^2.0.0
+  freezed: ^0.14.2
+  retrofit_generator:
+  json_serializable: ^4.1.4
+  floor_generator:
+
 
 
 analyzer:
@@ -105,7 +137,27 @@ flutter:
   assets:
     - assets/images/
     - assets/font/
-
+    - assets/formio/
+    - assets/formio/form.html
+    - assets/formio/script.js
+    - assets/formio/dist/formio.full.min.css
+    - assets/formio/app/jquery/jquery.min.js
+    - assets/formio/app/jquery/jquery.slim.min.js
+    - assets/formio/app/bootstrap/js/bootstrap.bundle.min.js
+    - assets/formio/dist/formio.full.min.js
+    - assets/formio/app/bootstrap/css/bootstrap.min.css
+    - assets/formio/dist/fonts/fontawesome-webfont.ttf
+    - assets/formio/dist/fonts/
+    - assets/formio/app/bootstrap/fonts/glyphicons-halflings-regular.eot
+    - assets/formio/app/fontawesome/fonts/fontawesome-webfont.eot
+    - assets/formio/app/fontawesome/fonts/FontAwesome.otf
+    - assets/formio/app/fontawesome/less/icons.less
+    - assets/formio/app/fontawesome/less/larger.less
+    - assets/formio/app/fontawesome/less/list.less
+    - assets/formio/app/fontawesome/less/mixins.less
+    - assets/formio/app/fontawesome/less/rotated-flipped.less
+    - assets/formio/app/fontawesome/scss/_icons.scss
+    - sample.env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -113,22 +165,5 @@ flutter:
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
 
-  # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # formsflowai:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

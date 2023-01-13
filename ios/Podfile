@@ -1,5 +1,5 @@
 # Uncomment this line to define a global platform for your project
-# platform :ios, '9.0'
+ platform :ios, '14.0'
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
@@ -9,6 +9,7 @@ project 'Runner', {
   'Profile' => :release,
   'Release' => :release,
 }
+
 
 def flutter_root
   generated_xcode_build_settings_path = File.expand_path(File.join('..', 'Flutter', 'Generated.xcconfig'), __FILE__)
@@ -30,6 +31,7 @@ flutter_ios_podfile_setup
 target 'Runner' do
   use_frameworks!
   use_modular_headers!
+  
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end
@@ -38,4 +40,21 @@ post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
   end
+#end
+
+
+#post_install do |installer|
+#  installer.pods_project.targets.each do |target|
+#    flutter_additional_ios_build_settings(target)
+#
+#   target_is_resource_bundle = target.respond_to?(:product_type) && target.product_type == 'com.apple.product-type.bundle'
+#   target.build_configurations.each do |build_configuration|
+#     if target_is_resource_bundle
+#      build_configuration.build_settings['CODE_SIGNING_ALLOWED'] = 'NO'
+#       build_configuration.build_settings['CODE_SIGNING_REQUIRED'] = 'NO'
+#       build_configuration.build_settings['CODE_SIGNING_IDENTITY'] = '-'
+#       build_configuration.build_settings['EXPANDED_CODE_SIGN_IDENTITY'] = '-'
+#    end
+#   end
+#  end
 end

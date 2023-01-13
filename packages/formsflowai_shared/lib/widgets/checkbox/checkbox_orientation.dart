@@ -1,1 +1,1 @@
-enum CheckboxOrientation { HORIZONTAL, VERTICAL, WRAP }
+enum CheckboxOrientation { horizontal, vertical, wrap }

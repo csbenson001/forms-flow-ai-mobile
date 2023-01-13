@@ -2,17 +2,17 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:formsflowai/core/module/providers/view_model_provider.dart';
-import 'package:formsflowai_shared/core/base/base_view_model.dart';
-import 'package:formsflowai_shared/core/networkmanager/internet_connectivity_provider.dart';
-import 'package:formsflowai_shared/core/networkmanager/network_manager_controller.dart';
-import 'package:formsflowai_shared/core/preferences/app_preference.dart';
-import 'package:formsflowai_shared/shared/formsflow_api_constants.dart';
-import 'package:formsflowai_shared/shared/formsflow_app_constants.dart';
-import 'package:formsflowai_shared/utils/router/router_utils.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../../core/networkmanager/internet_connectivity_provider.dart';
+import '../../../../core/networkmanager/network_manager_controller.dart';
+import '../../../../core/preferences/app_preference.dart';
+import '../../../../shared/formsflow_api_constants.dart';
+import '../../../../shared/formsflow_app_constants.dart';
+import '../../../../utils/router/router_utils.dart';
+import '../../../base/viewmodel/base_view_model.dart';
 import '../../home/tasklisting/model/task_listing_data_model.dart';
-import '../../taskdetails/usecases/list_members_usecase.dart';
+import '../../taskdetails/usecases/task/list_members_usecase.dart';
 import '../model/memebers_data_model.dart';
 import '../model/view_members_filter_data_model.dart';
 import 'assign_task_state_notifier.dart';
@@ -69,7 +69,7 @@ class AssignTaskViewModel extends BaseViewModel {
       }
       final result = await listMembersUseCase.call(
           params: const ListMembersParams(
-              FormsFlowAIAPIConstants.FORMSFLOW_REVIEWER_ROLE));
+              FormsFlowAIApiConstants.formsflowReviewerRole));
       result.fold((left) {
         ref
             .read(assignTaskStateProvider.notifier)
@@ -87,7 +87,7 @@ class AssignTaskViewModel extends BaseViewModel {
   /// Function to handle filter change
   /// Input Param
   /// [SelectedItem]
-  void onChangeDropdownTests(dynamic? selectedItem) {
+  void onChangeDropdownTests(dynamic selectedItem) {
     ref
         .read(assignTaskStateProvider.notifier)
         .updateSelectedMemberFilter(selectedItem: selectedItem);

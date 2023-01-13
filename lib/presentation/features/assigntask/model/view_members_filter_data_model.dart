@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:formsflowai_shared/shared/app_strings.dart';
 
+import '../../../../shared/app_strings.dart';
 import 'memebers_data_model.dart';
 
 /// [ViewMembersFilterDM] data model class contains data fields
@@ -19,11 +19,11 @@ class ViewMembersFilterDM {
   static List<ViewMembersFilterDM> _getFilterList() {
     List<ViewMembersFilterDM> mData = List.empty(growable: true);
     mData.add(ViewMembersFilterDM.named(
-        MembersFilterType.FIRSTNAME, Strings.assignLabelSearchByFirstName));
+        MembersFilterType.firstName, Strings.assignLabelSearchByFirstName));
     mData.add(ViewMembersFilterDM.named(
-        MembersFilterType.LASTNAME, Strings.assignLabelSearchByLastName));
+        MembersFilterType.lastName, Strings.assignLabelSearchByLastName));
     mData.add(ViewMembersFilterDM.named(
-        MembersFilterType.EMAIL, Strings.assignLabelSearchByEmail));
+        MembersFilterType.email, Strings.assignLabelSearchByEmail));
     return mData;
   }
 
@@ -31,7 +31,7 @@ class ViewMembersFilterDM {
   /// ---> Returns [ViewMembersFilterDM]
   static ViewMembersFilterDM getInitialFilterModel() {
     return ViewMembersFilterDM.named(
-        MembersFilterType.FIRSTNAME, Strings.assignLabelSearchByFirstName);
+        MembersFilterType.firstName, Strings.assignLabelSearchByFirstName);
   }
 
   /// Method to build filters dropdown views to filter members
@@ -56,20 +56,20 @@ class ViewMembersFilterDM {
   /// [ViewMembersFilterDM]
   /// ---> Returns [DisplayText]
   static String getDisplayText(MembersDM response, ViewMembersFilterDM dm) {
-    switch (dm.membersFilterType ?? MembersFilterType.FIRSTNAME) {
-      case MembersFilterType.FIRSTNAME:
+    switch (dm.membersFilterType ?? MembersFilterType.firstName) {
+      case MembersFilterType.firstName:
         String firstName = response.firstName ?? '';
         String lastName = response.lastName ?? '';
-        return firstName + "\n($firstName " "$lastName)";
-      case MembersFilterType.LASTNAME:
+        return "$firstName\n($firstName $lastName)";
+      case MembersFilterType.lastName:
         String firstName = response.firstName ?? '';
         String lastName = response.lastName ?? '';
-        return firstName + "\n($firstName " "$lastName)";
-      case MembersFilterType.EMAIL:
+        return "$firstName\n($firstName $lastName)";
+      case MembersFilterType.email:
         String email = response.email ?? Strings.assignLabelNoEmailAvailable;
         String firstName = response.firstName ?? '';
         String lastName = response.lastName ?? '';
-        return email + "\n($firstName " "$lastName)";
+        return "$email\n($firstName $lastName)";
       default:
         return response.firstName ?? '';
     }
@@ -89,9 +89,9 @@ class ViewMembersFilterDM {
 
 /// [MembersFilterType] Enum to specify Filter Type
 enum MembersFilterType {
-  FIRSTNAME,
+  firstName,
 
-  LASTNAME,
+  lastName,
 
-  EMAIL
+  email
 }

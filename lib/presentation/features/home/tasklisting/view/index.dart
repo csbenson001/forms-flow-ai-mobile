@@ -1,7 +1,7 @@
 export 'sorting/task_sort_view.dart';
 export 'sorting/widgets/add_sort_button.dart';
+export 'sorting/widgets/task_sort_bottom_sheet.dart';
 export 'sorting/widgets/task_sort_bottom_sheet_list_view.dart';
-export 'sorting/widgets/task_sort_filter_bottom_sheet.dart';
 export 'taskfilter/task_filter_view.dart';
 export 'taskfilter/widgets/task_filters_dropdown_view.dart';
 export 'tasklist/task_list_view.dart';

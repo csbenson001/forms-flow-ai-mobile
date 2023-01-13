@@ -1,10 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.formsflowai.app">
+
+    package="com.formsflowai.sample">  // Update your app package name
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
+
         android:label="FormsFlow.ai"
         android:name="${applicationName}"
-       android:icon="@drawable/formsflow">
+       android:usesCleartextTraffic="true"
+       android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -31,5 +34,7 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+
     </application>
 </manifest>

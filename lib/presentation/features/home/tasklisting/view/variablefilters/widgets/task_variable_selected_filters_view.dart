@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_riverpod/src/consumer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:formsflowai_shared/core/base/base_consumer_widget.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -10,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../../../../core/module/providers/view_model_provider.dart';
 import '../../../../../../../shared/app_text_styles.dart';
 import '../../../../../../../shared/imageassets/formsflowai_image_assets.dart';
+import '../../../../../../base/widgets/base_consumer_widget.dart';
 import '../../../model/task_selected_variables_count_data_model.dart';
 
 class TaskVariableSelectedFiltersView extends BaseConsumerWidget {
@@ -29,9 +27,9 @@ class TaskVariableSelectedFiltersView extends BaseConsumerWidget {
           child: Wrap(
             direction: Axis.horizontal,
             alignment: WrapAlignment.start,
-            spacing: Dimens.spacing_none,
+            spacing: Dimens.none,
             runAlignment: WrapAlignment.start,
-            runSpacing: Dimens.spacing_none,
+            runSpacing: Dimens.none,
             crossAxisAlignment: WrapCrossAlignment.start,
             verticalDirection: VerticalDirection.down,
             children: getVariableSelectedWrapItems(
@@ -108,7 +106,7 @@ class TaskVariableSelectedFiltersView extends BaseConsumerWidget {
                       decoration: BoxDecoration(
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(Dimens.spacing_6),
-                        color: AppColor.primarycolor,
+                        color: AppColor.primaryColor,
                       ),
                       child: Padding(
                         padding: const EdgeInsets.only(

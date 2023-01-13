@@ -1,6 +1,6 @@
-import 'package:formsflowai_api/response/task/variables/task_variables_response.dart';
-import 'package:formsflowai_shared/core/database/entity/task_entity.dart';
-import 'package:formsflowai_shared/shared/formsflow_app_constants.dart';
+import '../../../../core/api/response/task/variables/task_variables_response.dart';
+import '../../../../core/database/entity/task_entity.dart';
+import '../../../../shared/formsflow_app_constants.dart';
 
 /// [TaskVariableDM] data model class to hold task variable data fields
 class TaskVariableDM {
@@ -36,7 +36,7 @@ class TaskVariableDM {
     String formUrl = taskVariablesResponse.formUrl?.value ?? '';
     List<String> data = formUrl.split('/');
     String formResourceId = data[4];
-    if (formResourceId == FormsFlowAIConstants.FORMSFLOWAI_FORM) {
+    if (formResourceId == FormsFlowAIConstants.formsFlowAiForm) {
       formResourceId = data[5];
     }
     taskVariableDM.formResourceId = formResourceId;

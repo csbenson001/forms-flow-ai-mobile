@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_riverpod/src/consumer.dart';
-import 'package:formsflowai_shared/core/base/base_consumer_widget.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
-import 'package:formsflowai_shared/shared/app_strings.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../../../core/module/providers/view_model_provider.dart';
+import '../../../../../../shared/app_strings.dart';
 import '../../../../../../shared/app_text_styles.dart';
+import '../../../../../base/widgets/base_consumer_widget.dart';
 
 class AddGroupButton extends BaseConsumerWidget {
   const AddGroupButton({Key? key}) : super(key: key);
@@ -29,7 +27,7 @@ class AddGroupButton extends BaseConsumerWidget {
                 right: Dimens.spacing_18),
             padding: const EdgeInsets.only(left: Dimens.spacing_4),
             decoration: const ShapeDecoration(
-              color: AppColor.primarycolor,
+              color: AppColor.primaryColor,
               shape: OutlineInputBorder(
                 borderSide: BorderSide.none,
                 borderRadius:

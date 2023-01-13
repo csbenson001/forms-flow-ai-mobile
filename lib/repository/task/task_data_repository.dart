@@ -1,29 +1,31 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/model/task_base_response.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/model/task_listing_data_model.dart';
 import 'package:formsflowai/presentation/features/taskdetails/model/task_variable_dm.dart';
 import 'package:formsflowai/repository/task/task_local_data_source_impl.dart';
 import 'package:formsflowai/repository/task/task_remote_data_source_impl.dart';
 import 'package:formsflowai/repository/task/task_repository.dart';
-import 'package:formsflowai_api/post/form/form_submission_post_model.dart';
-import 'package:formsflowai_api/post/task/add_group_post_model.dart';
-import 'package:formsflowai_api/post/task/delete_group_post_model.dart';
-import 'package:formsflowai_api/post/task/tasklist_sort.dart';
-import 'package:formsflowai_api/post/task/update_task_post_model.dart';
-import 'package:formsflowai_api/response/base/base_response.dart';
-import 'package:formsflowai_api/response/diagram/activity_instance_response.dart';
-import 'package:formsflowai_api/response/diagram/bpmn_diagram_response.dart';
-import 'package:formsflowai_api/response/filter/get_filters_response.dart';
-import 'package:formsflowai_api/response/filter/task_count_response.dart';
-import 'package:formsflowai_api/response/processdefinition/process_definition_response.dart';
-import 'package:formsflowai_api/response/task/details/list_members_response.dart';
-import 'package:formsflowai_api/response/task/details/task_group_response.dart';
-import 'package:formsflowai_shared/core/database/entity/task_entity.dart';
-import 'package:formsflowai_shared/core/networkmanager/network_manager_controller.dart';
-import 'package:isolated_http_client/src/response.dart';
+import 'package:isolated_http_client/isolated_http_client.dart'
+    as isolated_response;
 
+import '../../core/api/post/form/form_submission_post_model.dart';
+import '../../core/api/post/task/add_group_post_model.dart';
+import '../../core/api/post/task/delete_group_post_model.dart';
+import '../../core/api/post/task/tasklist_sort.dart';
+import '../../core/api/post/task/update_task_post_model.dart';
+import '../../core/api/response/base/base_response.dart';
+import '../../core/api/response/diagram/activity_instance_response.dart';
+import '../../core/api/response/diagram/bpmn_diagram_response.dart';
+import '../../core/api/response/filter/filters_response.dart';
+import '../../core/api/response/filter/task_count_response.dart';
+import '../../core/api/response/processdefinition/process_definition_response.dart';
+import '../../core/api/response/task/details/list_members_response.dart';
+import '../../core/api/response/task/details/task_group_response.dart';
+import '../../core/database/entity/task_entity.dart';
 import '../../core/error/errors_failure.dart';
+import '../../core/networkmanager/network_manager_controller.dart';
 
 /// [TaskDataRepository] repository contains task related data source
 /// methods
@@ -128,9 +130,9 @@ class TaskDataRepository implements TaskRepository {
   /// Parameters
   /// ---> Returns [Response]
   @override
-  Future<Either<Failure, Response>> fetchIsolatedTaskVariables(
-      {required String host}) {
-    return remoteDataSource.fetchIsolatedTaskVariables(host: host);
+  Future<Either<Failure, isolated_response.Response>>
+      fetchTaskVariablesIsolated({required String taskId}) {
+    return remoteDataSource.fetchTaskVariablesIsolated(taskId: taskId);
   }
 
   /// Method to fetch members
@@ -191,9 +193,8 @@ class TaskDataRepository implements TaskRepository {
   /// [TaskId]
   /// ---> Returns [Response]
   @override
-  Future<Either<Failure, Response>> fetchTaskWithIsolate(
-      {required String host, required String taskId}) {
-    return remoteDataSource.fetchTaskWithIsolate(host: host, taskId: taskId);
+  Future<Either<Failure, Response>> fetchTask({required String taskId}) {
+    return remoteDataSource.fetchTask(taskId: taskId);
   }
 
   /// Method to fetch tasks
@@ -269,12 +270,11 @@ class TaskDataRepository implements TaskRepository {
   /// [UpdateTaskPostModel]
   /// ---> Returns [Response]
   @override
-  Future<Either<Failure, Response>> updateTaskWithIsolates(
-      {required String url,
-      required String taskId,
+  Future<Either<Failure, isolated_response.Response>> updateTaskIsolated(
+      {required String taskId,
       required UpdateTaskPostModel updateTaskPostModel}) {
-    return remoteDataSource.updateTaskWithIsolates(
-        url: url, taskId: taskId, updateTaskPostModel: updateTaskPostModel);
+    return remoteDataSource.updateTaskIsolated(
+        taskId: taskId, updateTaskPostModel: updateTaskPostModel);
   }
 
   /// Method to clear database data
@@ -347,10 +347,10 @@ class TaskDataRepository implements TaskRepository {
   /// [FormSubmissionPostModel]
   /// ---> Returns [BaseResponse]
   @override
-  Future<Either<Failure, BaseResponse>> submitFormIsolate(
+  Future<Either<Failure, BaseResponse>> submitFormIsolated(
       {required String id,
       required FormSubmissionPostModel formSubmissionPostModel}) {
-    return remoteDataSource.submitFormIsolate(
+    return remoteDataSource.submitFormIsolated(
         id: id, formSubmissionPostModel: formSubmissionPostModel);
   }
 }

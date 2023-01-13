@@ -5,7 +5,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'view_form_submission_state.freezed.dart';
 
 /// [ViewFormSubmissionState] to hold [ViewFormSubmissionScreen] state values
-@immutable
 @freezed
 class ViewFormSubmissionState with _$ViewFormSubmissionState {
   const factory ViewFormSubmissionState(

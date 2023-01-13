@@ -1,4 +1,4 @@
-package com.formsflowai.app
+package com.formsflowai.sample
 
 import io.flutter.embedding.android.FlutterActivity
 

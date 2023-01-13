@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:formsflowai/repository/user/user_local_data_source.dart';
-import 'package:formsflowai_api/response/user/info/user_info_response.dart';
-import 'package:formsflowai_shared/core/preferences/app_preference.dart';
 
+import '../../core/api/response/user/info/user_info_response.dart';
 import '../../core/error/errors_failure.dart';
+import '../../core/preferences/app_preference.dart';
 import '../../presentation/features/login/usecases/save_user_details_usecase.dart';
 import '../../utils/general_util.dart';
 
@@ -18,7 +18,7 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
   /// Parameters
   /// [SaveUserDetailsParams]
   @override
-  Future<Either<Failure, void>> saveUserDetails(
+  Future<Either<Failure, bool>> saveUserDetails(
       {required SaveUserDetailsParams params}) async {
     // Set User info and token values into the shared preferences
     appPreferences.setAccessToken(params.accessToken);
@@ -33,8 +33,6 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
         GeneralUtil.getUserRole(params.userInfoResponse.role ?? []));
     UserInfoResponse userInfoResponse = params.userInfoResponse;
     appPreferences.setUserInfo(json.encode(userInfoResponse));
-    appPreferences.setUserImage(
-        "https://img.icons8.com/fluency/344/user-male-circle.png");
     return const Right(true);
   }
 }

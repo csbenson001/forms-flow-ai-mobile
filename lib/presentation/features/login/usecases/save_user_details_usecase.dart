@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:formsflowai_api/response/user/info/user_info_response.dart';
 
+import '../../../../core/api/response/user/info/user_info_response.dart';
 import '../../../../core/error/errors_failure.dart';
 import '../../../../core/usecase/usecase.dart';
 import '../../../../repository/user/user_data_repository.dart';
@@ -9,13 +9,13 @@ import '../../../../repository/user/user_data_repository.dart';
 /// [SaveUserDetailsUseCase] to save user details in preferences
 /// interacts with [UserDataRepository] to complete the operation
 /// [SaveUserDetailsParams]
-class SaveUserDetailsUseCase implements UseCase<void, SaveUserDetailsParams> {
+class SaveUserDetailsUseCase implements UseCase<bool, SaveUserDetailsParams> {
   const SaveUserDetailsUseCase({required this.repository});
 
   final UserDataRepository repository;
 
   @override
-  Future<Either<Failure, void>> call({required SaveUserDetailsParams params}) {
+  Future<Either<Failure, bool>> call({required SaveUserDetailsParams params}) {
     return repository.saveUserDetails(params: params);
   }
 }

@@ -1,7 +1,7 @@
-import 'package:formsflowai_api/response/processdefinition/process_definition_response.dart';
-import 'package:formsflowai_shared/core/database/entity/task_entity.dart';
-import 'package:formsflowai_shared/shared/formsflow_app_constants.dart';
-import 'package:formsflowai_shared/shared/task_constants.dart';
+import '../core/api/response/processdefinition/process_definition_response.dart';
+import '../core/database/entity/task_entity.dart';
+import '../shared/formsflow_app_constants.dart';
+import '../shared/task_constants.dart';
 
 /// [GeneralUtil] class  contains all utilitu methods
 /// required in the formsFlow.ai mobile application
@@ -70,7 +70,7 @@ class GeneralUtil {
       {required List<String>? operatorList,
       required List<String>? operatorValues,
       required String selectedOperatorLabel,
-      required dynamic? variableType}) {
+      required dynamic variableType}) {
     var selectedOperator = _getOperator(selectedOperatorLabel);
     return selectedOperator;
   }
@@ -81,22 +81,22 @@ class GeneralUtil {
   /// --> [Returns] String [OperatorLabel]
   static String? _getOperator(String selectedOperator) {
     switch (selectedOperator) {
-      case TaskConstants.FILTER_OPERATOR_TYPE_EQUAL_OPERATOR:
-        return TaskConstants.FILTER_OPERATOR_TYPE_EQUAL_VALUE;
-      case TaskConstants.FILTER_OPERATOR_LIKE_OPERATOR:
-        return TaskConstants.FILTER_OPERATOR_LIKE_VALUE;
-      case TaskConstants.FILTER_OPERATOR_GREATER_THAN_OPERATOR:
-        return TaskConstants.FILTER_OPERATOR_GREATER_THAN_VALUE;
-      case TaskConstants.FILTER_OPERATOR_GREATER_THAN_EQUAL_TO_OPERATOR:
-        return TaskConstants.FILTER_OPERATOR_TYPE_EQUAL_VALUE;
-      case TaskConstants.FILTER_OPERATOR_LESS_THAN_OPERATOR:
-        return TaskConstants.FILTER_OPERATOR_LESS_THAN_VALUE;
-      case TaskConstants.FILTER_OPERATOR_LESS_THAN_EQUAL_TO_OPERATOR:
-        return TaskConstants.FILTER_OPERATOR_LESS_THAN_EQUAL_TO_VALUE;
-      case TaskConstants.FILTER_OPERATOR_AFTER_OPERATOR:
-        return TaskConstants.FILTER_OPERATOR_AFTER_VALUE;
-      case TaskConstants.FILTER_OPERATOR_BEFORE_OPERATOR:
-        return TaskConstants.FILTER_OPERATOR_BEFORE_VALUE;
+      case TaskConstants.filterOperatorTypeEqualOperator:
+        return TaskConstants.filterOperatorTypeEqualValue;
+      case TaskConstants.filterOperatorLikeOperator:
+        return TaskConstants.filterOperatorLikeValue;
+      case TaskConstants.filterOperatorGreaterThanOperator:
+        return TaskConstants.filterOperatorGreaterThanValue;
+      case TaskConstants.filterOperatorGreaterThanEqualToOperator:
+        return TaskConstants.filterOperatorTypeEqualValue;
+      case TaskConstants.filterOperatorLessThanOperator:
+        return TaskConstants.filterOperatorLessThanValue;
+      case TaskConstants.filterOperatorLessThanEqualToOperator:
+        return TaskConstants.filterOperatorLessThanEqualToValue;
+      case TaskConstants.filterOperatorAfterOperator:
+        return TaskConstants.filterOperatorAfterValue;
+      case TaskConstants.filterOperatorBeforeOperator:
+        return TaskConstants.filterOperatorBeforeValue;
       default:
         return '';
     }

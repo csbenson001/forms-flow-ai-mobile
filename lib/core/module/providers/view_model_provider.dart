@@ -16,11 +16,11 @@ import '../../di/injection.dart';
 
 /// Defining [loginViewModelProvider] as an auto disposable
 /// provider ref object for the [ViewModel] class [LoginViewModel]
-final loginViewModelProvider = Provider.autoDispose(
+final loginViewModelProvider = ChangeNotifierProvider.autoDispose(
   (ref) => LoginViewModel(
-      loginUserCase: dl(),
       appPreferences: dl(),
       fetchUserInfoUseCase: dl(),
+      loginKeycloakAuthenticatorUserCase: dl(),
       saveUserDetailsUsecase: dl(),
       ref: ref),
 );
@@ -29,7 +29,10 @@ final loginViewModelProvider = Provider.autoDispose(
 /// provider ref object for the [ViewModel] class [SplashViewModel]
 final splashViewModelProvider = Provider(
   (ref) => SplashViewModel(
-      appPreferences: dl(), ref: ref, networkManagerController: dl()),
+      refreshKeyCloakTokenUserCase: dl(),
+      appPreferences: dl(),
+      ref: ref,
+      networkManagerController: dl()),
 );
 
 /// Defining [taskListViewModelProvider] as an auto disposable
@@ -39,6 +42,7 @@ final taskListViewModelProvider = ChangeNotifierProvider.autoDispose(
       fetchFiltersUseCase: dl(),
       ref: ref,
       fetchProcessDefinitionUseCase: dl(),
+      fetchFormioRolesUseCase: dl(),
       fetchTaskCountUseCase: dl(),
       fetchTasksUseCase: dl(),
       databaseWorker: dl(),
@@ -73,10 +77,11 @@ final taskDetailsViewModelProvider = ChangeNotifierProvider.autoDispose((ref) =>
 
 /// Defining [viewFormSubmissionViewModelProvider]
 /// provider ref object for the [ViewModel] class [ViewFormSubmissionViewModel]
-final viewFormSubmissionViewModelProvider = Provider.autoDispose((ref) =>
-    ViewFormSubmissionViewModel(
+final viewFormSubmissionViewModelProvider = ChangeNotifierProvider.autoDispose(
+    (ref) => ViewFormSubmissionViewModel(
         ref: ref,
         fetchFormSubmissionUseCase: dl(),
+        socketService: dl(),
         networkManagerController: dl(),
         appPreferences: dl(),
         fetchFormUseCase: dl()));

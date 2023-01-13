@@ -1,16 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:formsflowai/presentation/features/assigntask/viewmodel/assign_task_state_notifier.dart';
-import 'package:formsflowai_shared/core/base/base_consumer_widget.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
-import 'package:formsflowai_shared/shared/app_strings.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
 import 'package:formsflowai_shared/widgets/dropdown/dropdown_below.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../../core/module/providers/view_model_provider.dart';
+import '../../../../../shared/app_strings.dart';
 import '../../../../../shared/app_text_styles.dart';
+import '../../../../base/widgets/base_consumer_widget.dart';
 
 /// [ViewMembersFilterDropDownView] widget to show the available
 /// filter dropdown values
@@ -81,14 +79,14 @@ class ViewMembersFilterDropDownView extends BaseConsumerWidget {
                     boxHeight: Dimens.size_40,
                     icon: const Icon(
                       Icons.keyboard_arrow_down_rounded,
-                      color: AppColor.primarycolor,
+                      color: AppColor.primaryColor,
                       size: Dimens.size_20,
                     ),
-                    reversedIcon: const Icon(
-                      Icons.keyboard_arrow_up_rounded,
-                      color: AppColor.primarycolor,
-                      size: Dimens.size_20,
-                    ),
+                    // reversedIcon: const Icon(
+                    //   Icons.keyboard_arrow_up_rounded,
+                    //   color: AppColor.primarycolor,
+                    //   size: Dimens.size_20,
+                    // ),
                     onChanged: (selectedItem) {
                       ref
                           .read(assignTaskViewModelProvider)

@@ -6,7 +6,7 @@ class TaskVariableFilterDM {
   List<String>? comparess;
   String? key;
   List<String>? values;
-  dynamic? type;
+  dynamic type;
   String? name;
   bool? isSelected = false;
   List<DropdownMenuItem<Object?>> variableDropDownItems;
@@ -16,11 +16,6 @@ class TaskVariableFilterDM {
   String? selectedVariableValue;
   bool? filterSaved;
   bool? enableEditing;
-
-  @override
-  String toString() {
-    return 'TaskVariableFilterDM{comparess: $comparess, values: $values, selectedOperatorValue: $selectedOperatorValue, selectedVariableProperty: $selectedVariableProperty, selectedVariableValue: $selectedVariableValue}';
-  }
 
   /// Named Constructor
   TaskVariableFilterDM.named(

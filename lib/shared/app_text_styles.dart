@@ -3,41 +3,54 @@ import 'package:formsflowai_shared/shared/app_color.dart';
 import 'package:formsflowai_shared/shared/app_font.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
 
-/// [AppTextStyles] contains all text styles used in the formsFlow.ai
-/// mobile application
-
 class AppTextStyles {
-  /// Returns [Bold] font text style
+  /// Function to return bold text style
+  /// Input Parameter
+  /// [FontSize]
+  /// [TextColor]
+  /// ---> Returns [TextStyle]
   static TextStyle boldTextStyle(
       {required double fontSize, required Color textColor}) {
     return TextStyle(
         fontSize: fontSize,
         fontWeight: FontWeight.bold,
         color: textColor,
-        fontFamily: AppFont.FONT_MONTERSERAT);
+        fontFamily: AppFont.fontMontserrat);
   }
 
-  /// Returns [Heading] font text style
+  /// Function to return heading text style
+  /// Input Parameter
+  /// [FontSize]
+  /// [TextColor]
+  /// ---> Returns [TextStyle]
   static TextStyle headingBoldTextStyle(
       {required double fontSize, required Color textColor}) {
     return TextStyle(
         fontSize: fontSize,
         fontWeight: FontWeight.w700,
         color: textColor,
-        fontFamily: AppFont.FONT_MONTERSERAT);
+        fontFamily: AppFont.fontMontserrat);
   }
 
-  /// Returns [Medium] font text style
+  /// Function to return font medium text style
+  /// Input Parameter
+  /// [FontSize]
+  /// [TextColor]
+  /// ---> Returns [TextStyle]
   static TextStyle mediumTextStyle(
       {required double fontSize, required Color textColor}) {
     return TextStyle(
         fontSize: fontSize,
         fontWeight: FontWeight.w500,
         color: textColor,
-        fontFamily: AppFont.FONT_MONTERSERAT);
+        fontFamily: AppFont.fontMontserrat);
   }
 
-  /// Returns [SemiBold] font text style
+  /// Function to return font semi bold text style
+  /// Input Parameter
+  /// [FontSize]
+  /// [TextColor]
+  /// ---> Returns [TextStyle]
   static TextStyle semiBoldTextStyle({
     required double fontSize,
     required Color textColor,
@@ -47,67 +60,79 @@ class AppTextStyles {
         fontSize: fontSize,
         fontWeight: FontWeight.w600,
         color: textColor,
-        fontFamily: AppFont.FONT_MONTERSERAT);
+        fontFamily: AppFont.fontMontserrat);
   }
 
-  /// Returns [Regular] font text style
+  /// Function to return font regular text style
+  /// Input Parameter
+  /// [FontSize]
+  /// [TextColor]
+  /// ---> Returns [TextStyle]
   static TextStyle regularTextStyle(
       {required double fontSize, required Color textColor}) {
     return TextStyle(
         fontSize: fontSize,
         fontWeight: FontWeight.w400,
         color: textColor,
-        fontFamily: AppFont.FONT_MONTERSERAT);
+        fontFamily: AppFont.fontMontserrat);
   }
 
-  /// Returns [Bold][Black] font text style with text size 24
-  static const blackTextStyle_24 = TextStyle(
+  /// black bold text style font 24
+  static TextStyle blackTextStyle_24 = const TextStyle(
       fontSize: Dimens.font_24,
       fontWeight: FontWeight.bold,
       color: Colors.black,
-      fontFamily: AppFont.FONT_MONTERSERAT);
+      fontFamily: AppFont.fontMontserrat);
 
-  /// Returns [Regular][Black] font text style with text size 12
-  static const blackRegularTextStyle_12 = TextStyle(
+  /// black medium text style font 12
+  static TextStyle blackRegularTextStyle_12 = const TextStyle(
       fontSize: Dimens.font_12,
       fontWeight: FontWeight.w500,
       color: Colors.black,
-      fontFamily: AppFont.FONT_MONTERSERAT);
+      fontFamily: AppFont.fontMontserrat);
 
-  /// Returns [Bold][White] font text style with text size 24
-  static const whiteTextStyle_24 = TextStyle(
+  /// white bold text style font 24
+  static TextStyle whiteTextStyle_24 = const TextStyle(
       fontSize: Dimens.font_24,
       fontWeight: FontWeight.bold,
-      fontFamily: AppFont.FONT_MONTERSERAT,
-      color: Colors.white);
+      color: Colors.white,
+      fontFamily: AppFont.fontMontserrat);
 
-  /// Returns [Bold][White] font text style with text size 14
-  static const whiteTextStyle_14 = TextStyle(
+  /// white bold text style font 14
+  static TextStyle whiteTextStyle_14 = const TextStyle(
       fontSize: Dimens.font_14,
       fontWeight: FontWeight.bold,
       color: Colors.white,
-      fontFamily: AppFont.FONT_MONTERSERAT);
+      fontFamily: AppFont.fontMontserrat);
 
-  /// Returns [Bold][White] font text style with text size 16
-  static const whiteTextStyle_Bold_16 = TextStyle(
+  /// white bold text style font 16
+  static TextStyle whiteTextStyleBold_16 = const TextStyle(
       fontSize: Dimens.font_16,
       fontWeight: FontWeight.bold,
       color: Colors.white,
-      fontFamily: AppFont.FONT_MONTERSERAT);
+      fontFamily: AppFont.fontMontserrat);
 
-  /// Returns [Bold][Blue] font text style with text size 14 with custom height
-  static const blueMediumTextStyleWithHeight = TextStyle(
+  /// black medium text style font 14
+  static TextStyle blueMediumTextStyleWithHeight = const TextStyle(
       fontSize: Dimens.font_14,
       fontWeight: FontWeight.w600,
       height: 1.5,
-      color: AppColor.primarycolor,
-      fontFamily: AppFont.FONT_MONTERSERAT);
+      color: AppColor.primaryColor,
+      fontFamily: AppFont.fontMontserrat);
 
-  /// Returns [Bold][Regular] font text style with text size 14
-  static const blackRegularTextStyleWithHeight_14 = TextStyle(
+  /// black regular text style font 14
+  static TextStyle blackRegularTextStyleWithHeight_14 = const TextStyle(
       fontSize: Dimens.font_14,
       fontWeight: FontWeight.w400,
       height: 1.5,
       color: Colors.black,
-      fontFamily: AppFont.FONT_MONTERSERAT);
+      fontFamily: AppFont.fontMontserrat);
+
+  /// white regular text style font 14
+  static TextStyle whiteRegularTextStyleWithHeight_14 = const TextStyle(
+      fontSize: Dimens.font_14,
+      fontWeight: FontWeight.w400,
+      height: 1.5,
+      color: Colors.white,
+      fontFamily: AppFont.fontMontserrat);
 }

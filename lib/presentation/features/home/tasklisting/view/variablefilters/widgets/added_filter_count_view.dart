@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_riverpod/src/consumer.dart';
-import 'package:formsflowai_shared/core/base/base_consumer_widget.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
 import 'package:formsflowai_shared/shared/app_font.dart';
-import 'package:formsflowai_shared/shared/app_strings.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../../../../core/module/providers/view_model_provider.dart';
+import '../../../../../../../shared/app_strings.dart';
 import '../../../../../../../shared/app_text_styles.dart';
+import '../../../../../../base/widgets/base_consumer_widget.dart';
 
 class AddedFilterCountView extends BaseConsumerWidget {
   const AddedFilterCountView({Key? key}) : super(key: key);
@@ -41,7 +39,7 @@ class AddedFilterCountView extends BaseConsumerWidget {
                     bottom: Dimens.spacing_2),
                 decoration: const BoxDecoration(
                     shape: BoxShape.rectangle,
-                    color: AppColor.primarycolor,
+                    color: AppColor.primaryColor,
                     borderRadius: BorderRadius.all(Radius.circular(6.0))),
                 child: Text(
                   selectedVariablesFiltersList.length.toString(),
@@ -61,7 +59,7 @@ class AddedFilterCountView extends BaseConsumerWidget {
                         .clearAllSelectedVariableFilters();
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: AppColor.red,
+                    backgroundColor: AppColor.red,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
@@ -78,7 +76,7 @@ class AddedFilterCountView extends BaseConsumerWidget {
                         style: TextStyle(
                             fontSize: Dimens.font_14,
                             color: Colors.white,
-                            fontFamily: AppFont.FONT_MONTERSERAT,
+                            fontFamily: AppFont.fontMontserrat,
                             fontWeight: FontWeight.w800),
                       ),
                     ),

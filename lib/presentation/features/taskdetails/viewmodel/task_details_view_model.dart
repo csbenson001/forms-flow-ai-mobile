@@ -1,8 +1,6 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:formsflowai/core/router/app_routes.dart';
 import 'package:formsflowai/presentation/features/assigntask/model/memebers_data_model.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/usecases/index.dart';
@@ -10,33 +8,33 @@ import 'package:formsflowai/presentation/features/taskdetails/model/eventbusdm/s
 import 'package:formsflowai/presentation/features/taskdetails/model/update_post_model_transformation.dart';
 import 'package:formsflowai/presentation/features/taskdetails/view/task_details_screen.dart';
 import 'package:formsflowai/presentation/features/taskdetails/viewmodel/task_details_providers.dart';
-import 'package:formsflowai_api/post/form/form_submission_post_model.dart';
-import 'package:formsflowai_api/response/task/details/task_group_response.dart';
-import 'package:formsflowai_shared/core/base/base_notifier_view_model.dart';
-import 'package:formsflowai_shared/core/database/entity/task_entity.dart';
-import 'package:formsflowai_shared/core/networkmanager/network_manager_controller.dart';
-import 'package:formsflowai_shared/core/preferences/app_preference.dart';
-import 'package:formsflowai_shared/shared/app_strings.dart';
-import 'package:formsflowai_shared/shared/formsflow_api_constants.dart';
-import 'package:formsflowai_shared/shared/formsflow_app_constants.dart';
-import 'package:formsflowai_shared/utils/api/api_utils.dart';
-import 'package:formsflowai_shared/utils/router/router_utils.dart';
 import 'package:formsflowai_shared/widgets/datetimepicker/formsflowai_date_time_picker.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../../core/api/post/form/form_submission_post_model.dart';
+import '../../../../core/api/response/task/details/task_group_response.dart';
+import '../../../../core/api/utils/api_utils.dart';
+import '../../../../core/database/entity/task_entity.dart';
 import '../../../../core/database/worker/database_worker.dart';
 import '../../../../core/error/errors_failure.dart';
 import '../../../../core/module/providers/view_model_provider.dart';
+import '../../../../core/networkmanager/network_manager_controller.dart';
+import '../../../../core/preferences/app_preference.dart';
+import '../../../../shared/app_strings.dart';
+import '../../../../shared/formsflow_api_constants.dart';
+import '../../../../shared/formsflow_app_constants.dart';
 import '../../../../shared/toast/toast_message_provider.dart';
 import '../../../../utils/database/database_query_util.dart';
 import '../../../../utils/general_util.dart';
+import '../../../../utils/router/router_utils.dart';
+import '../../../base/viewmodel/base_notifier_view_model.dart';
 import '../../home/tasklisting/model/index.dart';
 import '../../home/tasklisting/model/task_listing_data_model.dart';
 import '../../home/tasklisting/viewmodel/task_list_screen_providers.dart';
 import '../../home/tasklisting/viewmodel/task_list_view_model.dart';
 import '../model/index.dart';
+import '../usecases/form/submit_form_usecase.dart';
 import '../usecases/index.dart';
-import '../usecases/submit_form_usecase.dart';
 import '../view/addgroups/add_group_dialog.dart';
 
 /// [TaskDetailsViewModel] ViewModel class contains business logic
@@ -60,7 +58,7 @@ class TaskDetailsViewModel extends BaseNotifierViewModel {
   final UpdateAssigneeUseCase updateAssigneeUseCase;
   final ClaimTaskUseCase claimTaskUseCase;
   final UnClaimTaskUseCase unClaimTaskUseCase;
-  final FetchIsolatedTaskUseCase fetchIsolatedTaskUseCase;
+  final FetchTaskUseCase fetchIsolatedTaskUseCase;
   final SubmitFormUseCase submitFormUseCase;
 
   /// Network manager to handle network connectivity
@@ -76,9 +74,9 @@ class TaskDetailsViewModel extends BaseNotifierViewModel {
   /// Tab index
   int _selectedTabIndex = 0;
   int get selectedTabIndex => _selectedTabIndex;
-
-  ///  Private Variables
-  late InAppWebViewController formWebViewController;
+  //
+  // ///  Private Variables
+  // late InAppWebViewController formWebViewController;
 
   /// Selected Task from task listing screen
   TaskListingDM? _taskListingDM;
@@ -89,7 +87,7 @@ class TaskDetailsViewModel extends BaseNotifierViewModel {
   ToastStateDM get toastStateDM => _toastStateDM;
 
   /// variable to hold task groups
-  List<TaskGroupsResponse> _taskGroupsList = <TaskGroupsResponse>[];
+  final List<TaskGroupsResponse> _taskGroupsList = <TaskGroupsResponse>[];
   List<TaskGroupsResponse> get taskGroupsList => _taskGroupsList;
 
   TaskDetailsViewModel(
@@ -126,7 +124,7 @@ class TaskDetailsViewModel extends BaseNotifierViewModel {
     ref.listen<SocketEventBusDM>(socketCallbackProvider, (previous, next) {
       if (next.eventName != null && next.eventName!.isNotEmpty) {
         if (_taskListingDM?.taskId == next.taskId &&
-            next.eventName == FormsFlowAIAPIConstants.socketEventComplete) {
+            next.eventName == FormsFlowAIApiConstants.socketEventComplete) {
           if (_taskListingDM?.assignee ==
               appPreferences.getPreferredUserName()) {
             databaseWorker.deleteTaskFromLocalDb(
@@ -154,11 +152,11 @@ class TaskDetailsViewModel extends BaseNotifierViewModel {
   Future<void> onReceiveChangedTaskDataFromSocket(
       {required String taskId, required String eventName}) async {
     final fetchIsolatedTaskResponse = await fetchIsolatedTaskUseCase.call(
-        params: FetchIsolatedTaskParams(taskId: taskId));
+        params: FetchTaskParams(taskId: taskId));
     fetchIsolatedTaskResponse.fold((l) => {}, (response) async {
-      if (response.statusCode == FormsFlowAIAPIConstants.statusCode200 &&
-          response.body.isNotEmpty) {
-        var taskData = await compute(parseTaskIdResponse, response.body);
+      if (response.statusCode == FormsFlowAIApiConstants.statusCode200 &&
+          response.data.isNotEmpty) {
+        var taskData = await compute(parseTaskIdResponse, response.data);
         _taskListingDM = _taskListingDM?.copyWith(
             assignee: taskData.assignee,
             dueDate: DatabaseQueryUtil.decode(taskData.due),
@@ -421,7 +419,7 @@ class TaskDetailsViewModel extends BaseNotifierViewModel {
       final claimTaskResponse = await claimTaskUseCase.call(
           params: ClaimTaskParams(
               taskId: taskId,
-              payload: APIUtils.fetchClaimTaskPostBody(userId: userId)));
+              payload: ApiUtils.fetchClaimTaskPostBody(userId: userId)));
       claimTaskResponse.fold((l) {
         dismissProgressLoading();
         if (l is AuthorizationTokenExpiredFailure) {
@@ -443,6 +441,7 @@ class TaskDetailsViewModel extends BaseNotifierViewModel {
         ref
             .read(taskListViewModelProvider)
             .updatedTaskDetails(taskListingDM: _taskListingDM!);
+
         await databaseWorker.insertClaimedTask(
             taskEntity: TaskListingDM.transformTaskEntity(
                 taskListingDM!, _taskInfoDM, _taskVariablesDM.formResourceId));
@@ -466,7 +465,7 @@ class TaskDetailsViewModel extends BaseNotifierViewModel {
       final claimTaskResponse = await updateAssigneeUseCase.call(
           params: UpdateAssigneeParams(
               taskId: taskId,
-              payload: APIUtils.fetchClaimTaskPostBody(userId: userId)));
+              payload: ApiUtils.fetchClaimTaskPostBody(userId: userId)));
       claimTaskResponse.fold((l) {
         dismissProgressLoading();
         if (l is AuthorizationTokenExpiredFailure) {
@@ -523,9 +522,7 @@ class TaskDetailsViewModel extends BaseNotifierViewModel {
         _toastStateDM = _toastStateDM.copyWith(
             info: Strings.taskDetailsLabelUnclaimSuccess);
         notifyListeners();
-        ref
-            .read(taskListViewModelProvider)
-            .updatedTaskDetails(taskListingDM: _taskListingDM!);
+        ref.read(taskListViewModelProvider).refreshPageOnTaskUnClaimed();
       });
     }
   }
@@ -539,7 +536,6 @@ class TaskDetailsViewModel extends BaseNotifierViewModel {
     _taskListingDM = _taskListingDM?.copyWith(assignee: null);
     notifyListeners();
     ref.read(formsTabViewModelProvider).updateFormConfig(readOnly: true);
-
     databaseWorker.deleteTaskFromLocalDb(taskId: taskId);
   }
 
@@ -587,7 +583,6 @@ class TaskDetailsViewModel extends BaseNotifierViewModel {
         dismissProgressLoading();
       }, (r) {
         dismissProgressLoading();
-
         ref
             .read(taskListViewModelProvider)
             .onCurrentTaskCompleted(taskId: taskListingDM?.taskId);

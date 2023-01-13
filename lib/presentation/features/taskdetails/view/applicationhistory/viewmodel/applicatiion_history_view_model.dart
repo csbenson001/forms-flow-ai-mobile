@@ -1,13 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:formsflowai/core/module/providers/view_model_provider.dart';
-import 'package:formsflowai_shared/core/preferences/app_preference.dart';
-import 'package:formsflowai_shared/shared/app_status.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../../../../core/preferences/app_preference.dart';
+import '../../../../../../shared/app_status.dart';
 import '../../../model/application_history_data_model.dart';
-import '../../../usecases/fetch_application_history_entity_usecase.dart';
-import '../../../usecases/fetch_application_history_usecase.dart';
-import '../../../usecases/insert_local_application_history_usecase.dart';
+import '../../../usecases/application_history/fetch_application_history_entity_usecase.dart';
+import '../../../usecases/application_history/fetch_application_history_usecase.dart';
+import '../../../usecases/application_history/insert_local_application_history_usecase.dart';
 
 /// [ApplicationHistoryViewModel] ViewModel class contains business logic
 /// related to Application History Tab

@@ -1,28 +1,23 @@
-import 'dart:io';
-
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
+import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:formsflowai/core/error/errors_failure.dart';
 import 'package:formsflowai/presentation/features/taskdetails/model/application_history_data_model.dart';
-import 'package:formsflowai_api/client/application/application_api_client.dart';
-import 'package:formsflowai_api/client/user/user_api_client.dart';
-import 'package:formsflowai_api/response/user/login/keycloak_login_response.dart';
-import 'package:formsflowai_shared/core/database/entity/application_history_entity.dart';
-import 'package:formsflowai_shared/core/preferences/app_preference.dart';
-import 'package:formsflowai_shared/shared/formsflow_api_constants.dart';
 
-import '../../core/error/server_exception.dart';
+import '../../core/api/client/application/formsflowai_application_api_client.dart';
+import '../../core/api/response/form/roles/formio_roles_response.dart';
+import '../../core/database/entity/application_history_entity.dart';
+import '../../core/preferences/app_preference.dart';
 import 'application_repository.dart';
 
 class ApplicationRemoteDataSourceImpl implements ApplicationHistoryRepository {
-  final ApplicationApiClient applicationApiClient;
-  final UserApiClient userApiClient;
+  final FormsFlowAIApplicationApiClient applicationApiClient;
   final AppPreferences appPreferences;
+  final FlutterAppAuth flutterAppAuth;
 
   ApplicationRemoteDataSourceImpl(
       {required this.applicationApiClient,
       required this.appPreferences,
-      required this.userApiClient});
+      required this.flutterAppAuth});
 
   /// Method to fetch application history from remote
   /// Parameters
@@ -32,33 +27,13 @@ class ApplicationRemoteDataSourceImpl implements ApplicationHistoryRepository {
   Future<Either<Failure, List<ApplicationHistoryDM>>> fetchApplicationHistory(
       {required int applicationId}) async {
     try {
-      var response = await applicationApiClient.fetchApplicationHistory(
-          appPreferences.getBearerAccessToken(), applicationId);
+      var response =
+          await applicationApiClient.fetchApplicationHistory(applicationId);
+
       return Right(
           ApplicationHistoryDM.transform(applicationHistoryResponse: response));
-    } on SocketException {
-      return left(NoConnectionFailure());
-    } on ServerException {
-      return Left(ServerFailure());
     } catch (e) {
-      if (e is TypeError) {
-        return Left(DataTypeFailure());
-      } else if (e is DioError) {
-        if (e.response?.statusCode == 401) {
-          // Check for the retry limit get data with the refresh token
-          var newTokenResponse = await _fetchNewToken();
-          newTokenResponse.fold((l) {
-            return Left(AuthorizationTokenExpiredFailure());
-          }, (tokenResponse) {
-            appPreferences.setAccessToken(tokenResponse.accessToken);
-            appPreferences.setRefreshToken(tokenResponse.refreshToken);
-            return fetchApplicationHistory(applicationId: applicationId);
-          });
-        }
-        return Left(ServerFailure());
-      } else {
-        return Left(ServerFailure());
-      }
+      return Left(ServerFailure());
     }
   }
 
@@ -76,19 +51,14 @@ class ApplicationRemoteDataSourceImpl implements ApplicationHistoryRepository {
     throw UnimplementedError();
   }
 
-  // Method to get the new access token with the refresh token
-
-  Future<Either<Failure, KeyCloakLoginResponse>> _fetchNewToken() async {
+  @override
+  Future<Either<Failure, FormioRolesResponse>> fetchFormioRoles() async {
     try {
-      var response = await userApiClient.fetchNewToken(
-          FormsFlowAIAPIConstants.CLIENT_ID,
-          FormsFlowAIAPIConstants.CLIENT_SECRET_KEY,
-          appPreferences.getRefreshToken(),
-          FormsFlowAIAPIConstants.TOKEN_GRANT_TYPE_REFRESH_TOKEN);
-      return Right(response);
-    } on SocketException {
-      return left(NoConnectionFailure());
-    } on ServerException {
+      var response = await applicationApiClient.getFormioRoles();
+
+      if (response.form != null) {
+        return Right(response);
+      }
       return Left(ServerFailure());
     } catch (e) {
       return Left(ServerFailure());

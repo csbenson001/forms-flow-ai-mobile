@@ -6,14 +6,14 @@ class FormsFlowOpenWebPopup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Feature Unavailable"),
-      content: Text("This feature is not available in mobile"),
+      title: const Text("Feature Unavailable"),
+      content: const Text("This feature is not available in mobile"),
       actions: [
         TextButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text("Close"),
+          child: const Text("Close"),
         )
       ],
     );

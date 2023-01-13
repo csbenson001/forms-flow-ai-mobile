@@ -1,10 +1,12 @@
 import 'package:dartz/dartz.dart';
+import 'package:formsflowai/core/api/response/form/roles/formio_roles_response.dart';
 import 'package:formsflowai/core/error/errors_failure.dart';
 import 'package:formsflowai/presentation/features/taskdetails/model/application_history_data_model.dart';
 import 'package:formsflowai/repository/application/application_repository.dart';
-import 'package:formsflowai_shared/core/database/dao/application_history_dao.dart';
-import 'package:formsflowai_shared/core/database/entity/application_history_entity.dart';
-import 'package:formsflowai_shared/core/preferences/app_preference.dart';
+
+import '../../core/database/dao/application_history_dao.dart';
+import '../../core/database/entity/application_history_entity.dart';
+import '../../core/preferences/app_preference.dart';
 
 class ApplicationLocalDataSourceImpl implements ApplicationHistoryRepository {
   final AppPreferences appPreferences;
@@ -21,8 +23,8 @@ class ApplicationLocalDataSourceImpl implements ApplicationHistoryRepository {
   @override
   Future<Either<Failure, List<ApplicationHistoryDM>>> fetchApplicationHistory(
       {required int applicationId}) async {
-    var response =
-        await applicationHistoryDao.findHistoryByApplicationId(applicationId);
+    var response = await applicationHistoryDao
+        .fetchApplicationHistoryByApplicationId(applicationId);
     return Right(ApplicationHistoryDM.transformFromEntity(
         applicationHistorys: response));
   }
@@ -34,8 +36,8 @@ class ApplicationLocalDataSourceImpl implements ApplicationHistoryRepository {
   @override
   Future<Either<Failure, List<ApplicationHistoryEntity?>>>
       fetchApplicationHistoryFromDb({required int applicationId}) async {
-    return Right(
-        await applicationHistoryDao.findHistoryByApplicationId(applicationId));
+    return Right(await applicationHistoryDao
+        .fetchApplicationHistoryByApplicationId(applicationId));
   }
 
   /// Method to insert application history entity into local data source
@@ -45,6 +47,14 @@ class ApplicationLocalDataSourceImpl implements ApplicationHistoryRepository {
   Future<Either<Failure, void>> insertAllApplicationHistory(
       {required List<ApplicationHistoryEntity> applicationEntityList}) async {
     return Right(await applicationHistoryDao
-        .insertApplicationHistorys(applicationEntityList));
+        .insertAllApplicationHistory(applicationEntityList));
+  }
+
+  @override
+  Future<Either<Failure, FormioRolesResponse>> fetchFormioRoles() async {
+    if (appPreferences.getFormioRoleResponse() != null) {
+      return Right(appPreferences.getFormioRoleResponse()!);
+    }
+    return Left(ServerFailure());
   }
 }

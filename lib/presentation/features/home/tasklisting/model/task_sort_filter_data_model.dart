@@ -1,12 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 /// [TaskSortFilterDM] data class contains sorting related data fields
 class TaskSortFilterDM {
-  var sortLabel;
+  dynamic sortLabel;
   String sortOrder;
   bool isSelected;
-  var sortByValue;
+  dynamic sortByValue;
   IconData iconData;
 
   TaskSortFilterDM.named(

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/viewmodel/task_list_screen_providers.dart';
-import 'package:formsflowai_shared/core/base/base_consumer_widget.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
-import 'package:formsflowai_shared/shared/app_status.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
-import 'package:formsflowai_shared/shared/formsflow_api_constants.dart';
 import 'package:formsflowai_shared/widgets/shimmer/shimmer_widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../../../core/module/providers/view_model_provider.dart';
+import '../../../../../../shared/app_status.dart';
 import '../../../../../../shared/app_text_styles.dart';
+import '../../../../../../shared/formsflow_api_constants.dart';
+import '../../../../../base/widgets/base_consumer_widget.dart';
 import '../../model/task_sort_filter_data_model.dart';
 
 /// [TaskSortView] widget to show task sort filter views
@@ -40,7 +40,7 @@ class TaskSortView extends BaseConsumerWidget {
                 borderRadius:
                     const BorderRadius.all(Radius.circular(Dimens.radius_5))))
         : Container(
-            width: double.infinity,
+            width: MediaQuery.of(context).size.width,
             margin: const EdgeInsets.only(
                 left: Dimens.spacing_2,
                 right: Dimens.spacing_2,
@@ -48,9 +48,9 @@ class TaskSortView extends BaseConsumerWidget {
             child: Wrap(
               direction: Axis.horizontal,
               alignment: WrapAlignment.start,
-              spacing: Dimens.spacing_none,
+              spacing: Dimens.none,
               runAlignment: WrapAlignment.start,
-              runSpacing: Dimens.spacing_none,
+              runSpacing: Dimens.none,
               crossAxisAlignment: WrapCrossAlignment.start,
               verticalDirection: VerticalDirection.down,
               children: getSortItems(sortedFilterList, ref),
@@ -66,7 +66,11 @@ class TaskSortView extends BaseConsumerWidget {
       List<TaskSortFilterDM> sortedFilterList, WidgetRef ref) {
     List<Widget> list = List.empty(growable: true);
     for (var index = 0; index < sortedFilterList.length; index++) {
-      list.add(inflateFilterRow(sortedFilterList[index], index, ref));
+      list.add(inflateFilterRow(
+          dm: sortedFilterList[index],
+          index: index,
+          ref: ref,
+          totalSortFilterListCount: sortedFilterList.length));
     }
     return list;
   }
@@ -77,7 +81,11 @@ class TaskSortView extends BaseConsumerWidget {
   /// [Index]
   /// [Ref]
   /// ---> Returns [Widget]
-  Widget inflateFilterRow(TaskSortFilterDM dm, int index, WidgetRef ref) {
+  Widget inflateFilterRow(
+      {required TaskSortFilterDM dm,
+      required int index,
+      required WidgetRef ref,
+      required int totalSortFilterListCount}) {
     return Row(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -131,14 +139,14 @@ class TaskSortView extends BaseConsumerWidget {
                             decoration: BoxDecoration(
                               shape: BoxShape.rectangle,
                               borderRadius: BorderRadius.circular(6),
-                              color: AppColor.primarycolor,
+                              color: AppColor.primaryColor,
                             ),
                             child: Padding(
                               padding:
                                   const EdgeInsets.only(left: Dimens.spacing_2),
                               child: SvgPicture.asset(
                                 dm.sortOrder ==
-                                        FormsFlowAIAPIConstants.ASCENDING_ORDER
+                                        FormsFlowAIApiConstants.ascendingOrder
                                     ? "assets/images/ic_ascending.svg"
                                     : "assets/images/ic_descending.svg",
                                 width: Dimens.size_18,
@@ -146,33 +154,34 @@ class TaskSortView extends BaseConsumerWidget {
                                 color: Colors.white,
                               ),
                             ))),
-                    InkWell(
-                        onTap: () {
-                          ref
-                              .read(taskListViewModelProvider)
-                              .deleteSortItemFromList(index);
-                        },
-                        child: Container(
-                            margin: const EdgeInsets.only(
-                                left: Dimens.spacing_4,
-                                right: Dimens.spacing_4,
-                                top: Dimens.spacing_8),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.rectangle,
-                              borderRadius:
-                                  BorderRadius.circular(Dimens.radius_6),
-                              color: AppColor.red,
-                            ),
-                            child: const Padding(
-                              padding: EdgeInsets.only(
-                                  left: Dimens.spacing_2,
-                                  right: Dimens.spacing_2),
-                              child: Icon(
-                                Icons.close,
-                                size: Dimens.size_18,
-                                color: Colors.white,
+                    if (totalSortFilterListCount > 1)
+                      InkWell(
+                          onTap: () {
+                            ref
+                                .read(taskListViewModelProvider)
+                                .deleteSortItemFromList(index);
+                          },
+                          child: Container(
+                              margin: const EdgeInsets.only(
+                                  left: Dimens.spacing_4,
+                                  right: Dimens.spacing_4,
+                                  top: Dimens.spacing_8),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                borderRadius:
+                                    BorderRadius.circular(Dimens.radius_6),
+                                color: AppColor.red,
                               ),
-                            ))),
+                              child: const Padding(
+                                padding: EdgeInsets.only(
+                                    left: Dimens.spacing_2,
+                                    right: Dimens.spacing_2),
+                                child: Icon(
+                                  Icons.close,
+                                  size: Dimens.size_18,
+                                  color: Colors.white,
+                                ),
+                              ))),
                   ],
                 )),
           ),

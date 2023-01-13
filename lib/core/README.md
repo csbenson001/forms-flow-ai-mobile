@@ -1,5 +1,5 @@
 ## Core
-contains the core components for the formsflow.ai mobile application.
+contains the core components for the formsflowai mobile application.
 
 ## Database
    --> Database Worker - Contains all usecases to interact with local data source.
@@ -10,4 +10,6 @@ contains the core components for the formsflow.ai mobile application.
 
 ## Providers
    contains all view model providers injection.
-   
+
+## Preferences
+   contains userId, userName, token all current logged in session details

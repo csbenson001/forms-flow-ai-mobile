@@ -1,5 +1,5 @@
 shift(List l) {
-  if (l.length >= 1) {
+  if (l.isNotEmpty) {
     var first = l.first;
     l.removeAt(0);
     return first;
@@ -8,9 +8,7 @@ shift(List l) {
 }
 
 Map merge(Map obj, defaults) {
-  if (obj == null) {
-    obj = new Map();
-  }
+  obj;
   defaults.forEach((key, val) => obj.putIfAbsent(key, () => val));
   return obj;
 }

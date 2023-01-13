@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_riverpod/src/consumer.dart';
-import 'package:formsflowai_api/response/task/details/task_group_response.dart';
-import 'package:formsflowai_shared/core/base/base_consumer_widget.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:formsflowai_shared/shared/app_color.dart';
 import 'package:formsflowai_shared/shared/dimens.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../../../../core/api/response/task/details/task_group_response.dart';
 import '../../../../../../core/module/providers/view_model_provider.dart';
 import '../../../../../../shared/app_text_styles.dart';
+import '../../../../../../shared/imageassets/formsflowai_image_assets.dart';
+import '../../../../../base/widgets/base_consumer_widget.dart';
 
 class AddGroupsListView extends BaseConsumerWidget {
   const AddGroupsListView({Key? key}) : super(key: key);
@@ -88,25 +88,16 @@ class AddGroupsListView extends BaseConsumerWidget {
                               .read(addGroupViewModelProvider)
                               .onClickDeleteGroupButton(taskList);
                         },
-                        child: Container(
-                            margin: const EdgeInsets.only(
-                                left: Dimens.spacing_4,
-                                right: Dimens.spacing_8),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.rectangle,
-                              borderRadius: BorderRadius.circular(6),
-                              color: AppColor.red,
-                            ),
-                            child: const Padding(
-                              padding: EdgeInsets.only(
-                                  left: Dimens.spacing_2,
-                                  right: Dimens.spacing_2),
-                              child: Icon(
-                                Icons.close,
-                                size: Dimens.size_18,
-                                color: Colors.white,
-                              ),
-                            )))),
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: Dimens.spacing_4, right: Dimens.spacing_8),
+                          child: SvgPicture.asset(
+                            FormsFlowAIImageAssets.imagesCloseFilled,
+                            width: Dimens.size_16,
+                            height: Dimens.size_16,
+                            color: AppColor.red,
+                          ),
+                        ))),
               ],
             )));
   }

@@ -1,7 +1,4 @@
-import 'package:formsflowai/core/database/entity/task_entity.dart';
-
 import '../../core/api/post/task/tasklist_sort.dart';
-import '../../core/database/entity/form_entity.dart';
 
 class DatabaseQueryUtil {
   static const String spaceQueryExtra = " ";
@@ -61,15 +58,15 @@ class DatabaseQueryUtil {
 
   /// Function to generate sql query to check if the task exists
   /// ---> [Returns] Query String
-  static String generateTaskAddedSqlQuery({TaskEntity? task}) {
+  static String generateTaskAddedSqlQuery({String? taskId}) {
     // Query string
-    return 'SELECT COUNT(id) FROM task WHERE taskId = :${task?.taskId}';
+    return 'SELECT COUNT(id) FROM task WHERE taskId = "$taskId"';
   }
 
   /// Function to generate sql query to check if the task exists
   /// ---> [Returns] Query String
-  static String generateFormAddedSqlQuery({FormEntity? formEntity}) {
+  static String generateFormAddedSqlQuery({String? formId}) {
     // Query string
-    return 'SELECT COUNT(id) FROM formsflowform WHERE formId = :${formEntity?.formId}';
+    return 'SELECT COUNT(id) FROM formsflowform WHERE formId = "$formId"';
   }
 }

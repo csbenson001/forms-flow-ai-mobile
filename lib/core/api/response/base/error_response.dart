@@ -1,3 +1,5 @@
+/// [ErrorResponse] class
+/// contains list of errors
 class ErrorResponse {
   List<Errors>? errors;
 

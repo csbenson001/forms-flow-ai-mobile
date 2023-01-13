@@ -21,7 +21,7 @@ class SubmitFormIsolateUseCase
   @override
   Future<Either<Failure, BaseResponse>> call(
       {required SubmitFormIsolateParams params}) {
-    return repository.submitFormIsolate(
+    return repository.submitFormIsolated(
         id: params.taskId,
         formSubmissionPostModel: params.formSubmissionPostModel);
   }

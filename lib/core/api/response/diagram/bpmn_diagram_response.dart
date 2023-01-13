@@ -1,3 +1,5 @@
+/// [BpmnDiagramResponse] class to parse
+/// BPMNDiagram response
 class BpmnDiagramResponse {
   final String? id;
   final String? bpmn20Xml;

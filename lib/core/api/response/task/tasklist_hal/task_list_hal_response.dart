@@ -1,134 +1,5 @@
-// // To parse this JSON data, do
-// //
-// //     final taskListHalResponse = taskListHalResponseFromJson(jsonString);
-//
-// import 'package:freezed_annotation/freezed_annotation.dart';
-//
-// export 'task_list_hal_response.dart';
-//
-// part 'task_list_hal_response.freezed.dart';
-// part 'task_list_hal_response.g.dart';
-//
-// @freezed
-// abstract class TaskListHalResponse with _$TaskListHalResponse {
-//   const factory TaskListHalResponse({
-//     VariableLinks? links,
-//     TaskListHalResponseEmbedded? embedded,
-//     int? count,
-//   }) = _TaskListHalResponse;
-//
-//   factory TaskListHalResponse.fromJson(Map<String, dynamic> json) =>
-//       _$TaskListHalResponseFromJson(json);
-// }
-//
-// @freezed
-// abstract class TaskListHalResponseEmbedded with _$TaskListHalResponseEmbedded {
-//   const factory TaskListHalResponseEmbedded({
-//     List<Task>? task,
-//   }) = _TaskListHalResponseEmbedded;
-//
-//   factory TaskListHalResponseEmbedded.fromJson(Map<String, dynamic> json) =>
-//       _$TaskListHalResponseEmbeddedFromJson(json);
-// }
-//
-// @freezed
-// abstract class Task with _$Task {
-//   const factory Task({
-//     TaskLinks? links,
-//     TaskEmbedded? embedded,
-//     String? id,
-//     String? name,
-//     String? assignee,
-//     String? created,
-//     String? due,
-//     String? followUp,
-//     String? executionId,
-//     int? priority,
-//     String? processDefinitionId,
-//     String? processInstanceId,
-//     String? taskDefinitionKey,
-//     bool? suspended,
-//     String? delegationState,
-//     String? description,
-//     String? owner,
-//     String? parentTaskId,
-//     String? caseExecutionId,
-//     String? caseInstanceId,
-//     String? caseDefinitionId,
-//     String? formKey,
-//     String? camundaFormRef,
-//     String? tenantId,
-//   }) = _Task;
-//
-//   factory Task.fromJson(Map<String, dynamic> json) => _$TaskFromJson(json);
-// }
-//
-// @freezed
-// abstract class TaskEmbedded with _$TaskEmbedded {
-//   const factory TaskEmbedded({
-//     List<Variable>? variable,
-//   }) = _TaskEmbedded;
-//
-//   factory TaskEmbedded.fromJson(Map<String, dynamic> json) =>
-//       _$TaskEmbeddedFromJson(json);
-// }
-//
-// @freezed
-// abstract class Variable with _$Variable {
-//   const factory Variable({
-//     VariableLinks? links,
-//     String? name,
-//     String? value,
-//     String? type,
-//     ValueInfo? valueInfo,
-//   }) = _Variable;
-//
-//   factory Variable.fromJson(Map<String, dynamic> json) =>
-//       _$VariableFromJson(json);
-// }
-//
-// @freezed
-// abstract class VariableLinks with _$VariableLinks {
-//   const factory VariableLinks({
-//     Self? self,
-//   }) = _VariableLinks;
-//
-//   factory VariableLinks.fromJson(Map<String, dynamic> json) =>
-//       _$VariableLinksFromJson(json);
-// }
-//
-// @freezed
-// abstract class Self with _$Self {
-//   const factory Self({
-//     String? href,
-//   }) = _Self;
-//
-//   factory Self.fromJson(Map<String, dynamic> json) => _$SelfFromJson(json);
-// }
-//
-// @freezed
-// abstract class ValueInfo with _$ValueInfo {
-//   const factory ValueInfo() = _ValueInfo;
-//
-//   factory ValueInfo.fromJson(Map<String, dynamic> json) =>
-//       _$ValueInfoFromJson(json);
-// }
-//
-// @freezed
-// abstract class TaskLinks with _$TaskLinks {
-//   const factory TaskLinks({
-//     Self? assignee,
-//     Self? execution,
-//     Self? identityLink,
-//     Self? processDefinition,
-//     Self? processInstance,
-//     Self? self,
-//   }) = _TaskLinks;
-//
-//   factory TaskLinks.fromJson(Map<String, dynamic> json) =>
-//       _$TaskLinksFromJson(json);
-// }
-
+/// [TaskListHalResponse] class to parse
+/// task list application/json + Hal response
 class TaskListHalResponse {
   Links? lLinks;
   Embedded? eEmbedded;
@@ -138,9 +9,8 @@ class TaskListHalResponse {
 
   TaskListHalResponse.fromJson(Map<String, dynamic> json) {
     lLinks = json['_links'] != null ? Links.fromJson(json['_links']) : null;
-    eEmbedded = json['_embedded'] != null
-        ? Embedded.fromJson(json['_embedded'])
-        : null;
+    eEmbedded =
+        json['_embedded'] != null ? Embedded.fromJson(json['_embedded']) : null;
     count = json['count'];
   }
 
@@ -399,9 +269,8 @@ class Task {
 
   Task.fromJson(Map<String, dynamic> json) {
     lLinks = json['_links'] != null ? Links.fromJson(json['_links']) : null;
-    eEmbedded = json['_embedded'] != null
-        ? Embedded.fromJson(json['_embedded'])
-        : null;
+    eEmbedded =
+        json['_embedded'] != null ? Embedded.fromJson(json['_embedded']) : null;
     id = json['id'];
     name = json['name'];
     assignee = json['assignee'];

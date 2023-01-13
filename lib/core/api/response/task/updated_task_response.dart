@@ -1,4 +1,7 @@
-class UpdateTaskResponse {
+/// [UpdatedTaskResponse] class to parse
+/// response recieved on a task update
+
+class UpdatedTaskResponse {
   final String? id;
   final String? name;
   final String? assignee;
@@ -21,7 +24,7 @@ class UpdateTaskResponse {
   final dynamic formKey;
   final dynamic tenantId;
 
-  UpdateTaskResponse({
+  UpdatedTaskResponse({
     this.id,
     this.name,
     this.assignee,
@@ -45,7 +48,7 @@ class UpdateTaskResponse {
     this.tenantId,
   });
 
-  UpdateTaskResponse.fromJson(Map<String, dynamic> json)
+  UpdatedTaskResponse.fromJson(Map<String, dynamic> json)
       : id = json['id'] as String?,
         name = json['name'] as String?,
         assignee = json['assignee'] as String?,

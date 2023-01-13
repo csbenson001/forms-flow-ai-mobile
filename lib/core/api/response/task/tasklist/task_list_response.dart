@@ -12,8 +12,10 @@ List<TaskListResponse> taskListResponseFromJson(String str) =>
 String taskListResponseToJson(List<TaskListResponse> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
+/// [TaskListResponse] class to parse
+/// task list data
 @freezed
-abstract class TaskListResponse with _$TaskListResponse {
+class TaskListResponse with _$TaskListResponse {
   const factory TaskListResponse(
       {String? id,
       String? name,

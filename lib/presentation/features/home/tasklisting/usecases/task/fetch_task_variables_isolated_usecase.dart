@@ -7,21 +7,21 @@ import '../../../../../../core/error/errors_failure.dart';
 import '../../../../../../core/usecase/usecase.dart';
 import '../../../../../../repository/task/task_data_repository.dart';
 
-/// [FetchIsolatedTaskVariablesUseCase] to fetch task variables response in isolate
+/// [FetchTaskVariablesIsolatedUseCase] to fetch task variables response in isolate
 /// interacts with [TaskDataRepository] to complete the operation
 /// [FetchIsolatedTaskVariablesParams]
 /// [isolated_response.Response]
-class FetchIsolatedTaskVariablesUseCase
+class FetchTaskVariablesIsolatedUseCase
     implements
         UseCase<isolated_response.Response, FetchIsolatedTaskVariablesParams> {
-  const FetchIsolatedTaskVariablesUseCase({required this.repository});
+  const FetchTaskVariablesIsolatedUseCase({required this.repository});
 
   final TaskDataRepository repository;
 
   @override
   Future<Either<Failure, isolated_response.Response>> call(
       {required FetchIsolatedTaskVariablesParams params}) {
-    return repository.fetchIsolatedTaskVariables(taskId: params.taskId);
+    return repository.fetchTaskVariablesIsolated(taskId: params.taskId);
   }
 }
 

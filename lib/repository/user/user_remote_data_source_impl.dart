@@ -8,7 +8,8 @@ import 'package:formsflowai/repository/user/user_remote_data_source.dart';
 
 import '../../core/api/client/user/user_api_client.dart';
 import '../../core/api/response/user/info/user_info_response.dart';
-import '../../shared/api_constants_url.dart';
+import '../../core/api/utils/api_constants_url.dart';
+import '../../shared/flutter_auth_utils.dart';
 import '../../shared/formsflow_app_constants.dart';
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
@@ -47,15 +48,8 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     const String redirectUrl = FormsFlowAIConstants.keycloakRedirectUrl;
     const List<String> scopes = FormsFlowAIConstants.keycloakScopes;
 
-    AuthorizationServiceConfiguration serviceConfiguration =
-        AuthorizationServiceConfiguration(
-      authorizationEndpoint:
-          '${ApiConstantUrl.keycloakAuthBaseUrl}${ApiConstantUrl.fetchTokenOpenIdConnect}/auth',
-      tokenEndpoint:
-          '${ApiConstantUrl.keycloakAuthBaseUrl}${ApiConstantUrl.fetchTokenOpenIdConnect}/token',
-      endSessionEndpoint:
-          '${ApiConstantUrl.keycloakAuthBaseUrl}${ApiConstantUrl.fetchTokenOpenIdConnect}/logout',
-    );
+    final serviceConfiguration =
+        FlutterAuthUtils.fetchAuthorizationConfiguration();
 
     try {
       final AuthorizationTokenResponse? result =
@@ -90,15 +84,8 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
     const String redirectUrl = FormsFlowAIConstants.keycloakRedirectUrl;
     const List<String> scopes = FormsFlowAIConstants.keycloakScopes;
 
-    AuthorizationServiceConfiguration serviceConfiguration =
-        AuthorizationServiceConfiguration(
-      authorizationEndpoint:
-          '${ApiConstantUrl.keycloakAuthBaseUrl}${ApiConstantUrl.fetchTokenOpenIdConnect}/auth',
-      tokenEndpoint:
-          '${ApiConstantUrl.keycloakAuthBaseUrl}${ApiConstantUrl.fetchTokenOpenIdConnect}/token',
-      endSessionEndpoint:
-          '${ApiConstantUrl.keycloakAuthBaseUrl}${ApiConstantUrl.fetchTokenOpenIdConnect}/logout',
-    );
+    final serviceConfiguration =
+        FlutterAuthUtils.fetchAuthorizationConfiguration();
 
     try {
       final TokenResponse? result = await flutterAppAuth.token(

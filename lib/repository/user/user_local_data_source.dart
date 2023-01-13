@@ -4,6 +4,6 @@ import 'package:formsflowai/presentation/features/login/usecases/save_user_detai
 import '../../core/error/errors_failure.dart';
 
 abstract class UserLocalDataSource<T> {
-  Future<Either<Failure, void>> saveUserDetails(
+  Future<Either<Failure, bool>> saveUserDetails(
       {required SaveUserDetailsParams params});
 }

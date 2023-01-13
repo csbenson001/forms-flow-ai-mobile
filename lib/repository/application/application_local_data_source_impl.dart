@@ -23,8 +23,8 @@ class ApplicationLocalDataSourceImpl implements ApplicationHistoryRepository {
   @override
   Future<Either<Failure, List<ApplicationHistoryDM>>> fetchApplicationHistory(
       {required int applicationId}) async {
-    var response =
-        await applicationHistoryDao.findHistoryByApplicationId(applicationId);
+    var response = await applicationHistoryDao
+        .fetchApplicationHistoryByApplicationId(applicationId);
     return Right(ApplicationHistoryDM.transformFromEntity(
         applicationHistorys: response));
   }
@@ -36,8 +36,8 @@ class ApplicationLocalDataSourceImpl implements ApplicationHistoryRepository {
   @override
   Future<Either<Failure, List<ApplicationHistoryEntity?>>>
       fetchApplicationHistoryFromDb({required int applicationId}) async {
-    return Right(
-        await applicationHistoryDao.findHistoryByApplicationId(applicationId));
+    return Right(await applicationHistoryDao
+        .fetchApplicationHistoryByApplicationId(applicationId));
   }
 
   /// Method to insert application history entity into local data source
@@ -47,7 +47,7 @@ class ApplicationLocalDataSourceImpl implements ApplicationHistoryRepository {
   Future<Either<Failure, void>> insertAllApplicationHistory(
       {required List<ApplicationHistoryEntity> applicationEntityList}) async {
     return Right(await applicationHistoryDao
-        .insertApplicationHistorys(applicationEntityList));
+        .insertAllApplicationHistory(applicationEntityList));
   }
 
   @override

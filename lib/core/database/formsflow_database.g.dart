@@ -278,7 +278,7 @@ class _$TaskDao extends TaskDao {
   final DeletionAdapter<TaskEntity> _taskEntityDeletionAdapter;
 
   @override
-  Future<TaskEntity?> findTaskById(int id) async {
+  Future<TaskEntity?> fetchTaskById(int id) async {
     return _queryAdapter.query('SELECT * FROM task WHERE id = ?1',
         mapper: (Map<String, Object?> row) => TaskEntity(
             id: row['id'] as int?,
@@ -329,7 +329,7 @@ class _$TaskDao extends TaskDao {
   }
 
   @override
-  Future<TaskEntity?> findTaskByTaskId(String taskId) async {
+  Future<TaskEntity?> fetchTaskByTaskId(String taskId) async {
     return _queryAdapter.query('SELECT * FROM task WHERE taskId = ?1',
         mapper: (Map<String, Object?> row) => TaskEntity(
             id: row['id'] as int?,
@@ -435,7 +435,7 @@ class _$TaskDao extends TaskDao {
 
   @override
   Future<List<TaskEntity>> fetchAllTasks() async {
-    return _queryAdapter.queryList('SELECT * FROM task LIMIT 15',
+    return _queryAdapter.queryList('SELECT * FROM task',
         mapper: (Map<String, Object?> row) => TaskEntity(
             id: row['id'] as int?,
             taskId: row['taskId'] as String?,
@@ -484,11 +484,6 @@ class _$TaskDao extends TaskDao {
   }
 
   @override
-  Future<int?> getCount() async {
-    await _queryAdapter.queryNoReturn('SELECT COUNT(*) FROM task');
-  }
-
-  @override
   Future<void> deleteAllTasks() async {
     await _queryAdapter.queryNoReturn('DELETE FROM task');
   }
@@ -518,11 +513,6 @@ class _$TaskDao extends TaskDao {
   @override
   Future<void> deleteTask(TaskEntity task) async {
     await _taskEntityDeletionAdapter.delete(task);
-  }
-
-  @override
-  Future<void> deleteTasks(List<TaskEntity> tasks) async {
-    await _taskEntityDeletionAdapter.deleteList(tasks);
   }
 }
 
@@ -571,7 +561,7 @@ class _$FormsFlowFormsDao extends FormsFlowFormsDao {
   final DeletionAdapter<FormEntity> _formEntityDeletionAdapter;
 
   @override
-  Future<FormEntity?> findFormById(int id) async {
+  Future<FormEntity?> fetchFormById(int id) async {
     return _queryAdapter.query('SELECT * FROM formsflowform WHERE id = ?1',
         mapper: (Map<String, Object?> row) => FormEntity(
             id: row['id'] as int?,
@@ -581,7 +571,7 @@ class _$FormsFlowFormsDao extends FormsFlowFormsDao {
   }
 
   @override
-  Future<FormEntity?> findFormByFormId(String formId) async {
+  Future<FormEntity?> fetchFormByFormId(String formId) async {
     return _queryAdapter.query('SELECT * FROM formsflowform WHERE formId = ?1',
         mapper: (Map<String, Object?> row) => FormEntity(
             id: row['id'] as int?,
@@ -600,44 +590,29 @@ class _$FormsFlowFormsDao extends FormsFlowFormsDao {
   }
 
   @override
-  Future<int?> getCount() async {
-    await _queryAdapter.queryNoReturn('SELECT COUNT(*) FROM formsflowform');
-  }
-
-  @override
   Future<void> deleteAllForms() async {
     await _queryAdapter.queryNoReturn('DELETE FROM formsflowform');
   }
 
   @override
-  Future<void> insertForm(FormEntity Form) async {
-    await _formEntityInsertionAdapter.insert(Form, OnConflictStrategy.abort);
+  Future<void> insertForm(FormEntity form) async {
+    await _formEntityInsertionAdapter.insert(form, OnConflictStrategy.abort);
   }
 
   @override
-  Future<void> insertForms(List<FormEntity> Forms) async {
+  Future<void> insertForms(List<FormEntity> forms) async {
     await _formEntityInsertionAdapter.insertList(
-        Forms, OnConflictStrategy.abort);
+        forms, OnConflictStrategy.abort);
   }
 
   @override
-  Future<void> updateForm(FormEntity Form) async {
-    await _formEntityUpdateAdapter.update(Form, OnConflictStrategy.abort);
+  Future<void> updateForm(FormEntity form) async {
+    await _formEntityUpdateAdapter.update(form, OnConflictStrategy.abort);
   }
 
   @override
-  Future<void> updateForms(List<FormEntity> Form) async {
-    await _formEntityUpdateAdapter.updateList(Form, OnConflictStrategy.abort);
-  }
-
-  @override
-  Future<void> deleteForm(FormEntity Form) async {
-    await _formEntityDeletionAdapter.delete(Form);
-  }
-
-  @override
-  Future<void> deleteForms(List<FormEntity> Forms) async {
-    await _formEntityDeletionAdapter.deleteList(Forms);
+  Future<void> deleteForm(FormEntity form) async {
+    await _formEntityDeletionAdapter.delete(form);
   }
 }
 
@@ -707,7 +682,7 @@ class _$ApplicationHistoryDao extends ApplicationHistoryDao {
       _applicationHistoryEntityDeletionAdapter;
 
   @override
-  Future<ApplicationHistoryEntity?> findHistoryById(int id) async {
+  Future<ApplicationHistoryEntity?> fetchApplicationHistoryById(int id) async {
     return _queryAdapter.query('SELECT * FROM applicationhistory WHERE id = ?1',
         mapper: (Map<String, Object?> row) => ApplicationHistoryEntity(
             id: row['id'] as int?,
@@ -723,7 +698,8 @@ class _$ApplicationHistoryDao extends ApplicationHistoryDao {
   }
 
   @override
-  Future<ApplicationHistoryEntity?> findHistoryByTaskId(String taskId) async {
+  Future<ApplicationHistoryEntity?> fetchApplicationHistoryByTaskId(
+      String taskId) async {
     return _queryAdapter.query(
         'SELECT * FROM applicationhistory WHERE taskId = ?1',
         mapper: (Map<String, Object?> row) => ApplicationHistoryEntity(
@@ -740,7 +716,7 @@ class _$ApplicationHistoryDao extends ApplicationHistoryDao {
   }
 
   @override
-  Future<List<ApplicationHistoryEntity>> findHistoryByApplicationId(
+  Future<List<ApplicationHistoryEntity>> fetchApplicationHistoryByApplicationId(
       int applicationId) async {
     return _queryAdapter.queryList(
         'SELECT * FROM applicationhistory WHERE applicationId = ?1',
@@ -773,12 +749,6 @@ class _$ApplicationHistoryDao extends ApplicationHistoryDao {
   }
 
   @override
-  Future<int?> getCount() async {
-    await _queryAdapter
-        .queryNoReturn('SELECT COUNT(*) FROM applicationhistory');
-  }
-
-  @override
   Future<void> deleteAllApplicationHistory() async {
     await _queryAdapter.queryNoReturn('DELETE FROM applicationhistory');
   }
@@ -799,7 +769,7 @@ class _$ApplicationHistoryDao extends ApplicationHistoryDao {
   }
 
   @override
-  Future<void> insertApplicationHistorys(
+  Future<void> insertAllApplicationHistory(
       List<ApplicationHistoryEntity> applicationHistorys) async {
     await _applicationHistoryEntityInsertionAdapter.insertList(
         applicationHistorys, OnConflictStrategy.replace);
@@ -813,7 +783,7 @@ class _$ApplicationHistoryDao extends ApplicationHistoryDao {
   }
 
   @override
-  Future<void> updateApplicationHistorys(
+  Future<void> updateAllApplicationHistory(
       List<ApplicationHistoryEntity> applicationHistory) async {
     await _applicationHistoryEntityUpdateAdapter.updateList(
         applicationHistory, OnConflictStrategy.replace);
@@ -826,7 +796,7 @@ class _$ApplicationHistoryDao extends ApplicationHistoryDao {
   }
 
   @override
-  Future<void> deleteApplicationHistorys(
+  Future<void> deleteAllApplicationHistoryList(
       List<ApplicationHistoryEntity> applicationHistorys) async {
     await _applicationHistoryEntityDeletionAdapter
         .deleteList(applicationHistorys);

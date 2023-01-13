@@ -1,13 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'application_history_api_client.dart';
+part of 'formsflowai_application_api_client.dart';
 
 // **************************************************************************
 // RetrofitGenerator
 // **************************************************************************
 
-class _ApplicationHistoryApiClient implements ApplicationHistoryApiClient {
-  _ApplicationHistoryApiClient(
+class _FormsFlowAIApplicationApiClient
+    implements FormsFlowAIApplicationApiClient {
+  _FormsFlowAIApplicationApiClient(
     this._dio, {
     this.baseUrl,
   });
@@ -29,7 +30,7 @@ class _ApplicationHistoryApiClient implements ApplicationHistoryApiClient {
     )
             .compose(
               _dio.options,
-              'api/application/$id/history',
+              'application/$id/history',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -39,7 +40,7 @@ class _ApplicationHistoryApiClient implements ApplicationHistoryApiClient {
   }
 
   @override
-  Future<BpmnDiagramResponse> fetchBpmnDiagram(accessToken) async {
+  Future<BpmnDiagramResponse> fetchBpmnDiagram() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -51,7 +52,7 @@ class _ApplicationHistoryApiClient implements ApplicationHistoryApiClient {
     )
             .compose(
               _dio.options,
-              'api/process/onestepapproval/xml',
+              'process/onestepapproval/xml',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -83,19 +84,19 @@ class _ApplicationHistoryApiClient implements ApplicationHistoryApiClient {
   }
 
   @override
-  Future<FormioRolesResponse> getFormioRoles(token) async {
+  Future<FormioRolesResponse> getFormioRoles() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<FormioRolesResponse>(Options(
       method: 'GET',
-      headers: <String, dynamic>{r'Authorization': token},
+      headers: <String, dynamic>{},
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'api/formio/roles',
+              'formio/roles',
               queryParameters: queryParameters,
               data: _data,
             )

@@ -29,7 +29,7 @@ abstract class FormRepository<T> {
       {required String formId});
 
   Future<Either<Failure, isolated_response.Response>>
-      fetchFormSubmissionIsolatedData(
+      fetchFormSubmissionIsolated(
           {required String taskId,
           required String formResourceId,
           required String formSubmissionId});
@@ -39,7 +39,7 @@ abstract class FormRepository<T> {
       required String formSubmissionId,
       required String taskId});
 
-  Future<Either<Failure, BaseResponse>> submitFormDataIsolate(
+  Future<Either<Failure, BaseResponse>> submitFormDataIsolated(
       {required String formResourceId,
       required String formSubmissionId,
       required FormSubmissionResponse formSubmissionResponse});

@@ -1,3 +1,5 @@
+/// [ListMembersResponse] class to parse
+/// members response
 class ListMembersResponse {
   final String? id;
   final String? firstName;

@@ -1,4 +1,5 @@
 import 'package:formsflowai/presentation/features/taskdetails/model/task_info_dm.dart';
+import 'package:formsflowai/utils/general_util.dart';
 import 'package:formsflowai_shared/utils/datetime/timestamp_utils.dart';
 
 import '../../../../core/api/post/task/update_task_post_model.dart';
@@ -29,7 +30,9 @@ UpdateTaskPostModel transformUpdateTaskPostModel(
     processInstanceId: taskListingDM.processInstanceId,
     processDefinitionId: taskListingDM.processDefinitionId,
     created: TimeStampUtils.formatISOTime(taskListingDM.created),
-    assignee: taskListingDM.assignee,
+    assignee: !GeneralUtil.isStringEmpty(taskListingDM.assignee)
+        ? taskListingDM.assignee
+        : null,
     applicationId: taskInfoDM.applicationId,
     applicationStatus: taskInfoDM.applicationStatus,
     formUrl: taskInfoDM.formUrl,
@@ -69,7 +72,7 @@ UpdateTaskPostModel transformUpdateTaskPostModelFromEntity(
     processInstanceId: task.processInstanceId,
     processDefinitionId: task.processDefinitionId,
     created: TimeStampUtils.formatISOTime(task.created),
-    assignee: task.assignee,
+    assignee: !GeneralUtil.isStringEmpty(task.assignee) ? task.assignee : null,
     applicationId: task.formApplicationId,
     applicationStatus: task.applicationStatus,
     formUrl: task.formUrl ?? '',

@@ -1,3 +1,5 @@
+/// [TaskVariablesResponse] class to parse
+/// task variables response data
 class TaskVariablesResponse {
   final ApplicationStatus? applicationStatus;
   final Select? select;

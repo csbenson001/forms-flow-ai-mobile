@@ -5,8 +5,8 @@ import 'package:stomp_dart_client/stomp.dart';
 import 'package:stomp_dart_client/stomp_config.dart';
 import 'package:stomp_dart_client/stomp_frame.dart';
 
-import '../../shared/api_constants_url.dart';
 import '../../shared/formsflow_api_constants.dart';
+import '../api/utils/api_constants_url.dart';
 import '../preferences/app_preference.dart';
 
 class SocketService {
@@ -63,15 +63,20 @@ class SocketService {
   /// OnSocket Connect Callback Function
   void onConnect(StompFrame frame) {
     _stompClient?.subscribe(
-        destination: FormsFlowAIAPIConstants.socketTopicTaskEvent,
+        destination: FormsFlowAIApiConstants.socketTopicTaskEvent,
         callback: (frame) {
+          if (frame.body == null) {
+            return;
+          }
           Map<String, dynamic>? result = json.decode(frame.body!);
-          String eventName =
-              result![FormsFlowAIAPIConstants.socketKeyEventName];
-          String taskId = result[FormsFlowAIAPIConstants.socketKeyTaskId];
+          if (result != null) {
+            String eventName =
+                result[FormsFlowAIApiConstants.socketKeyEventName];
+            String taskId = result[FormsFlowAIApiConstants.socketKeyTaskId];
 
-          if (_socketEventCallback != null) {
-            _socketEventCallback!(taskId, eventName);
+            if (_socketEventCallback != null) {
+              _socketEventCallback!(taskId, eventName);
+            }
           }
         });
   }

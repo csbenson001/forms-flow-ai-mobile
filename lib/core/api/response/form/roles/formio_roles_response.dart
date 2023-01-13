@@ -3,6 +3,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'formio_roles_response.freezed.dart';
 part 'formio_roles_response.g.dart';
 
+/// [FormioRolesResponse] class to parse
+/// roles data
 @freezed
 class FormioRolesResponse with _$FormioRolesResponse {
   const factory FormioRolesResponse({

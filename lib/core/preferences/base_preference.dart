@@ -1,4 +1,4 @@
-import '../api/response/filter/get_filters_response.dart';
+import '../api/response/filter/filters_response.dart';
 import '../api/response/form/roles/formio_roles_response.dart';
 
 abstract class BasePreference<T> {

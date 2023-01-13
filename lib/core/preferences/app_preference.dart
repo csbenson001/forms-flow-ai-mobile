@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:formsflowai/utils/general_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../api/response/filter/get_filters_response.dart';
+import '../api/response/filter/filters_response.dart';
 import '../api/response/form/roles/formio_roles_response.dart';
 import '../api/utils/api_utils.dart';
 import 'base_preference.dart';
@@ -209,7 +209,7 @@ class AppPreferences implements BasePreference {
 
   @override
   String getBearerAccessToken() {
-    return APIUtils.getBearerToken(getAccessToken());
+    return ApiUtils.getBearerToken(getAccessToken());
   }
 
   @override

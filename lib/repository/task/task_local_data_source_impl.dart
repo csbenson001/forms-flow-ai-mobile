@@ -16,7 +16,7 @@ import '../../core/api/post/task/update_task_post_model.dart';
 import '../../core/api/response/base/base_response.dart';
 import '../../core/api/response/diagram/activity_instance_response.dart';
 import '../../core/api/response/diagram/bpmn_diagram_response.dart';
-import '../../core/api/response/filter/get_filters_response.dart';
+import '../../core/api/response/filter/filters_response.dart';
 import '../../core/api/response/filter/task_count_response.dart';
 import '../../core/api/response/processdefinition/process_definition_response.dart';
 import '../../core/api/response/task/details/list_members_response.dart';
@@ -139,7 +139,7 @@ class TaskLocalDataSourceImpl implements TaskRepository {
 
   @override
   Future<Either<Failure, isolated_response.Response>>
-      fetchIsolatedTaskVariables({required String taskId}) {
+      fetchTaskVariablesIsolated({required String taskId}) {
     // TODO: implement fetchIsolatedTaskVariables
     throw UnimplementedError();
   }
@@ -169,7 +169,7 @@ class TaskLocalDataSourceImpl implements TaskRepository {
   @override
   Future<Either<Failure, TaskEntity?>> fetchTaskByIdFromLocalDb(
       {required String taskId}) async {
-    return Right(await taskDao.findTaskByTaskId(taskId));
+    return Right(await taskDao.fetchTaskByTaskId(taskId));
   }
 
   /// Method to fetch task count
@@ -190,7 +190,7 @@ class TaskLocalDataSourceImpl implements TaskRepository {
   @override
   Future<Either<Failure, TaskVariableDM>> fetchTaskVariables(
       {required String id}) async {
-    var task = await taskDao.findTaskByTaskId(id);
+    var task = await taskDao.fetchTaskByTaskId(id);
 
     if (task != null && task.formResourceId != null) {
       return Right(TaskVariableDM.transformFromTask(task));
@@ -293,13 +293,13 @@ class TaskLocalDataSourceImpl implements TaskRepository {
   /// ---> Returns [Int]
   @override
   Future<Either<Failure, int>> insertTask({required TaskEntity task}) async {
-    final results = await formsFlowDatabase.database
-        .rawQuery(DatabaseQueryUtil.generateTaskAddedSqlQuery(task: task));
+    final results = await formsFlowDatabase.database.rawQuery(
+        DatabaseQueryUtil.generateTaskAddedSqlQuery(taskId: task.taskId));
     final int? taskCount = results[0]['COUNT(id)'] as int?;
+
     if (taskCount == null || taskCount == 0) {
       return Right(await taskDao.insertTask(task));
     } else {
-      // await taskDao.updateTask(task);
       return const Right(0);
     }
   }
@@ -343,7 +343,7 @@ class TaskLocalDataSourceImpl implements TaskRepository {
   }
 
   @override
-  Future<Either<Failure, isolated_response.Response>> updateTaskWithIsolates(
+  Future<Either<Failure, isolated_response.Response>> updateTaskIsolated(
       {required String taskId,
       required UpdateTaskPostModel updateTaskPostModel}) {
     // TODO: implement updateTaskWithIsolates
@@ -351,7 +351,7 @@ class TaskLocalDataSourceImpl implements TaskRepository {
   }
 
   @override
-  Future<Either<Failure, BaseResponse>> submitFormIsolate(
+  Future<Either<Failure, BaseResponse>> submitFormIsolated(
       {required String id,
       required FormSubmissionPostModel formSubmissionPostModel}) {
     // TODO: implement submitFormIsolate

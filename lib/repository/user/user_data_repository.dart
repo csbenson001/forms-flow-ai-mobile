@@ -23,7 +23,7 @@ class UserDataRepository implements UserRemoteDataSource, UserLocalDataSource {
   /// Parameters
   /// [SaveUserDetailsParams]
   @override
-  Future<Either<Failure, void>> saveUserDetails(
+  Future<Either<Failure, bool>> saveUserDetails(
       {required SaveUserDetailsParams params}) {
     return localDataSource.saveUserDetails(params: params);
   }

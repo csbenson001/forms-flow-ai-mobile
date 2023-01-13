@@ -1,3 +1,5 @@
+/// [BaseResponse] class
+/// contains status, message, status code
 class BaseResponse<T> {
   final bool? status;
   final int? statusCode;

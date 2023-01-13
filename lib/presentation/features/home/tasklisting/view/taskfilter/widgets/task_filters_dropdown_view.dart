@@ -210,22 +210,6 @@ class TaskFiltersDropdownView extends BaseConsumerWidget {
       return isFilterItemAdded;
     }
     for (int i = 0; i < selectedVariablesList.length; i++) {
-      // if (!GeneralUtil.isStringEmpty(
-      //         selectedVariablesList[i].selectedVariableProperty) &&
-      //     !GeneralUtil.isStringEmpty(
-      //         selectedVariablesList[i].selectedVariableValue) &&
-      //     !GeneralUtil.isStringEmpty(
-      //         selectedVariablesList[i].selectedOperatorValue)) {
-      //   isFilterItemAdded = true;
-      //   break;
-      // }
-      // else if(!GeneralUtil.isStringEmpty(
-      //     selectedVariablesList[i].selectedVariableValue) &&
-      //     !GeneralUtil.isStringEmpty(
-      //         selectedVariablesList[i].selectedOperatorValue)){
-      //   isFilterItemAdded = true;
-      //   break;
-      // }
       if (selectedVariablesList[i].filterSaved ?? false) {
         isFilterItemAdded = true;
         break;

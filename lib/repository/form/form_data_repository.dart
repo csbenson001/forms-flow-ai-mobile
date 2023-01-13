@@ -5,7 +5,8 @@ import 'package:formsflowai/presentation/features/taskdetails/model/form_dm.dart
 import 'package:formsflowai/repository/form/form_local_data_source_impl.dart';
 import 'package:formsflowai/repository/form/form_remote_data_source_impl.dart';
 import 'package:formsflowai/repository/form/form_repository.dart';
-import 'package:isolated_http_client/isolated_http_client.dart';
+import 'package:isolated_http_client/isolated_http_client.dart'
+    as isolated_response;
 
 import '../../core/api/response/base/base_response.dart';
 import '../../core/api/response/form/submission/form_submission_response.dart';
@@ -62,11 +63,12 @@ class FormDataRepository implements FormRepository {
   /// [TaskId]
   /// ---> Returns [Response]
   @override
-  Future<Either<Failure, Response>> fetchFormSubmissionIsolatedData(
-      {required String formResourceId,
-      required String taskId,
-      required String formSubmissionId}) {
-    return remoteDataSource.fetchFormSubmissionIsolatedData(
+  Future<Either<Failure, isolated_response.Response>>
+      fetchFormSubmissionIsolated(
+          {required String formResourceId,
+          required String taskId,
+          required String formSubmissionId}) {
+    return remoteDataSource.fetchFormSubmissionIsolated(
         taskId: taskId,
         formSubmissionId: formSubmissionId,
         formResourceId: formResourceId);
@@ -90,7 +92,7 @@ class FormDataRepository implements FormRepository {
   /// [Path]
   /// ---> Return [Response]
   @override
-  Future<Either<Failure, Response>> fetchIsolatedFormData(
+  Future<Either<Failure, isolated_response.Response>> fetchIsolatedFormData(
       {required String formId}) {
     return remoteDataSource.fetchIsolatedFormData(formId: formId);
   }
@@ -133,11 +135,11 @@ class FormDataRepository implements FormRepository {
   /// [FormSubmissionId]
   /// [FormSubmissionResponse]
   @override
-  Future<Either<Failure, BaseResponse>> submitFormDataIsolate(
+  Future<Either<Failure, BaseResponse>> submitFormDataIsolated(
       {required String formResourceId,
       required String formSubmissionId,
       required FormSubmissionResponse formSubmissionResponse}) {
-    return remoteDataSource.submitFormDataIsolate(
+    return remoteDataSource.submitFormDataIsolated(
         formResourceId: formResourceId,
         formSubmissionId: formSubmissionId,
         formSubmissionResponse: formSubmissionResponse);

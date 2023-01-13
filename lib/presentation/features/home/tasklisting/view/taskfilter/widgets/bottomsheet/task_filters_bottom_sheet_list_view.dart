@@ -5,7 +5,7 @@ import 'package:formsflowai_shared/shared/dimens.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-import '../../../../../../../../core/api/response/filter/get_filters_response.dart';
+import '../../../../../../../../core/api/response/filter/filters_response.dart';
 import '../../../../../../../../shared/app_text_styles.dart';
 import '../../../../../../../base/widgets/base_consumer_widget.dart';
 import '../../../../viewmodel/task_list_screen_providers.dart';

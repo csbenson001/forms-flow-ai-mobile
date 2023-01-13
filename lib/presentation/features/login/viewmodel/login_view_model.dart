@@ -91,7 +91,7 @@ class LoginViewModel extends BaseNotifierViewModel {
       {required String accessToken, required String refreshToken}) async {
     var userInfoResponse = await fetchUserInfoUseCase.call(
         params: FetchUserInfoParams(
-            accessToken: APIUtils.getBearerToken(accessToken)));
+            accessToken: ApiUtils.getBearerToken(accessToken)));
     userInfoResponse.fold((l) {
       _showLoginApiLoadingProgress = LoginStatus.failure;
       notifyListeners();

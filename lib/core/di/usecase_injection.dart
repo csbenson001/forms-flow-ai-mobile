@@ -39,16 +39,16 @@ Future<void> registerUseCases() async {
       () => FetchProcessDefinitionUseCase(repository: dl()));
   dl.registerLazySingleton(() => FetchFiltersUseCase(repository: dl()));
   dl.registerLazySingleton(
-      () => FetchIsolatedTaskVariablesUseCase(repository: dl()));
+      () => FetchTaskVariablesIsolatedUseCase(repository: dl()));
   dl.registerLazySingleton(
-      () => FetchIsolatedFormDataUseCase(repository: dl()));
+      () => FetchFormDataIsolatedUseCase(repository: dl()));
   dl.registerLazySingleton(
-      () => FetchIsolatedFormSubmissionDataUseCase(repository: dl()));
+      () => FetchFormSubmissionDataIsolatedUseCase(repository: dl()));
   dl.registerLazySingleton(() => FetchTasksUseCase(repository: dl()));
   dl.registerLazySingleton(() => FetchTaskCountUseCase(repository: dl()));
   dl.registerLazySingleton(() => FetchTaskVariablesUseCase(repository: dl()));
   dl.registerLazySingleton(() => FetchTaskUseCase(repository: dl()));
-  dl.registerLazySingleton(() => UpdateIsolatedTaskUseCase(repository: dl()));
+  dl.registerLazySingleton(() => UpdateTaskIsolatedUseCase(repository: dl()));
   dl.registerLazySingleton(() => UpdateRemoteTaskUseCase(repository: dl()));
   dl.registerLazySingleton(() => ListTaskGroupsUseCase(repository: dl()));
   dl.registerLazySingleton(() => AddGroupsUseCase(repository: dl()));

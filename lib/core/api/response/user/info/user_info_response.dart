@@ -5,8 +5,10 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'user_info_response.freezed.dart';
 part 'user_info_response.g.dart';
 
+/// [UserInfoResponse] class to parse
+/// user info after the keycloak login
 @freezed
-abstract class UserInfoResponse with _$UserInfoResponse {
+class UserInfoResponse with _$UserInfoResponse {
   const factory UserInfoResponse({
     String? sub,
     @JsonKey(name: "email_verified") bool? emailVerified,

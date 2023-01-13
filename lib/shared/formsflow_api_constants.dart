@@ -1,6 +1,6 @@
 import 'dart:core';
 
-class FormsFlowAIAPIConstants {
+class FormsFlowAIApiConstants {
   //Socket Constants
   static const socketAccessToken = 'accesstoken';
   static const socketTopicTaskEvent = '/topic/task-event';
@@ -34,4 +34,17 @@ class FormsFlowAIAPIConstants {
   // Unauthorized Error
   static const int statusCode401 = 401;
   static const String statusSuccessMessage = "Success";
+
+  // Accept type
+  static const String acceptTypeHalJson = "application/hal+json";
+  static const String acceptTypeApplicationJson = "application/json";
+
+  static const String bearerTokenType = "Bearer";
+  static const String contentTypeApplicationJson = "application/json";
+
+  /// Headers
+  static const String headerAuthorization = "Authorization";
+  static const String headerJwtToken = "x-jwt-token";
+  static const String headerAccept = "Accept";
+  static const String headerContentType = "Content-type";
 }

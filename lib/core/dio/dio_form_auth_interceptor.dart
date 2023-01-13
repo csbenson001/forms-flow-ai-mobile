@@ -51,11 +51,11 @@ class FormsAuthorizationInterceptor extends QueuedInterceptorsWrapper {
               try {
                 Form? reviewer = formioRolesResponse.form?.singleWhere(
                     (element) =>
-                        element.type == FormsFlowAIAPIConstants.reviewer);
+                        element.type == FormsFlowAIApiConstants.reviewer);
 
                 Form? resourceId = formioRolesResponse.form?.singleWhere(
                     (element) =>
-                        element.type == FormsFlowAIAPIConstants.resourceId);
+                        element.type == FormsFlowAIApiConstants.resourceId);
 
                 if (reviewer != null) {
                   List<String> roles = List.empty(growable: true);

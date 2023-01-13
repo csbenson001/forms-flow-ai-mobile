@@ -1,3 +1,5 @@
+/// [BpmnWorkflowInstancesResponse] class to parse
+/// BPMNWorkflow instance
 class BpmnWorkflowInstancesResponse {
   final String? childActivityInstances;
   final String? processInstanceId;

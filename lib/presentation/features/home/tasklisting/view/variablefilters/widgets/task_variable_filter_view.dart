@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:formsflowai/presentation/base/widgets/base_hooks_consumer_widget.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/view/variablefilters/widgets/added_filter_count_view.dart';
 import 'package:formsflowai/presentation/features/home/tasklisting/view/variablefilters/widgets/selected_variable_filter_list_view.dart';
@@ -24,8 +23,8 @@ class TaskVariableFiltersInputView extends BaseHooksConsumerWidget {
         ref.watch(taskListViewModelProvider).uiVariablesFiltersList;
     final uiSelectedCheckList =
         ref.watch(taskListViewModelProvider).selectedCheckBoxList;
-
-    final isAllFilteredSelected = useState(true);
+    final isAllFiltersApplied = ref.watch(
+        taskListViewModelProvider.select((value) => value.allFiltersApplied));
 
     return Padding(
         padding: const EdgeInsets.only(
@@ -98,8 +97,9 @@ class TaskVariableFiltersInputView extends BaseHooksConsumerWidget {
                           children: [
                             InkWell(
                                 onTap: () {
-                                  isAllFilteredSelected.value =
-                                      !isAllFilteredSelected.value;
+                                  ref
+                                      .read(taskListViewModelProvider)
+                                      .updateAllFiltersApplied();
                                 },
                                 child: Container(
                                     padding: const EdgeInsets.only(
@@ -113,7 +113,7 @@ class TaskVariableFiltersInputView extends BaseHooksConsumerWidget {
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(Dimens.radius_10))),
                                     child: Text(
-                                      isAllFilteredSelected.value
+                                      isAllFiltersApplied
                                           ? Strings.taskListingLabelAll
                                               .toUpperCase()
                                           : Strings.taskListingLabelAny

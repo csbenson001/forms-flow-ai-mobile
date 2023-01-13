@@ -1,3 +1,5 @@
+/// [AddGroupPostModel] class to send the application/json
+/// POST body on the add group api call
 class AddGroupPostModel {
   final String? groupId;
   final String? type;

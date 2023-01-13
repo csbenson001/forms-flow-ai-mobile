@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'task_api_client.dart';
+part of 'bpm_task_api_client.dart';
 
 // **************************************************************************
 // RetrofitGenerator
 // **************************************************************************
 
-class _TaskApiClient implements TaskApiClient {
-  _TaskApiClient(
+class _BpmTaskApiClient implements BpmTaskApiClient {
+  _BpmTaskApiClient(
     this._dio, {
     this.baseUrl,
   });
@@ -29,7 +29,7 @@ class _TaskApiClient implements TaskApiClient {
     )
             .compose(
               _dio.options,
-              'camunda/engine-rest-ext/v1/filter?resourceType=Task&itemCount=true',
+              'engine-rest-ext/v1/filter?resourceType=Task&itemCount=true',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -53,7 +53,7 @@ class _TaskApiClient implements TaskApiClient {
     )
             .compose(
               _dio.options,
-              'camunda/engine-rest-ext/v1/process-definition',
+              'engine-rest-ext/v1/process-definition',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -88,7 +88,7 @@ class _TaskApiClient implements TaskApiClient {
     )
             .compose(
               _dio.options,
-              'camunda/engine-rest-ext/v1/filter/$id/list?',
+              'engine-rest-ext/v1/filter/$id/list?',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -110,7 +110,7 @@ class _TaskApiClient implements TaskApiClient {
     )
             .compose(
               _dio.options,
-              'camunda/engine-rest-ext/v1/filter/$id/count',
+              'engine-rest-ext/v1/filter/$id/count',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -132,7 +132,7 @@ class _TaskApiClient implements TaskApiClient {
     )
             .compose(
               _dio.options,
-              'camunda/engine-rest-ext/v1/task/$id/variables',
+              'engine-rest-ext/v1/task/$id/variables',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -155,7 +155,7 @@ class _TaskApiClient implements TaskApiClient {
     )
             .compose(
               _dio.options,
-              'camunda/engine-rest-ext/v1/task/$id',
+              'engine-rest-ext/v1/task/$id',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -181,7 +181,7 @@ class _TaskApiClient implements TaskApiClient {
     )
             .compose(
               _dio.options,
-              'camunda/engine-rest-ext/v1/task/$id/claim',
+              'engine-rest-ext/v1/task/$id/claim',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -191,7 +191,7 @@ class _TaskApiClient implements TaskApiClient {
   }
 
   @override
-  Future<HttpResponse<void>> unclaimTask(id) async {
+  Future<HttpResponse<void>> unClaimTask(id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -203,7 +203,7 @@ class _TaskApiClient implements TaskApiClient {
     )
             .compose(
               _dio.options,
-              'camunda/engine-rest-ext/v1/task/$id/unclaim',
+              'engine-rest-ext/v1/task/$id/unclaim',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -229,7 +229,7 @@ class _TaskApiClient implements TaskApiClient {
     )
             .compose(
               _dio.options,
-              'camunda/engine-rest-ext/v1/task/$id/submit-form',
+              'engine-rest-ext/v1/task/$id/submit-form',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -254,7 +254,7 @@ class _TaskApiClient implements TaskApiClient {
     )
         .compose(
           _dio.options,
-          'camunda/engine-rest-ext/v1/task/$id',
+          'engine-rest-ext/v1/task/$id',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -275,7 +275,7 @@ class _TaskApiClient implements TaskApiClient {
     )
             .compose(
               _dio.options,
-              'camunda/engine-rest-ext/v1/task/$id/identity-links?type=candidate',
+              'engine-rest-ext/v1/task/$id/identity-links?type=candidate',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -305,7 +305,7 @@ class _TaskApiClient implements TaskApiClient {
     )
             .compose(
               _dio.options,
-              'camunda/engine-rest-ext/v1/task/$id/identity-links?type=candidate',
+              'engine-rest-ext/v1/task/$id/identity-links?type=candidate',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -328,7 +328,7 @@ class _TaskApiClient implements TaskApiClient {
     )
             .compose(
               _dio.options,
-              'camunda/engine-rest-ext/v1/user',
+              'engine-rest-ext/v1/user',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -358,7 +358,7 @@ class _TaskApiClient implements TaskApiClient {
     )
             .compose(
               _dio.options,
-              'camunda/engine-rest-ext/v1/task/$id/identity-links/delete',
+              'engine-rest-ext/v1/task/$id/identity-links/delete',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -384,7 +384,7 @@ class _TaskApiClient implements TaskApiClient {
     )
             .compose(
               _dio.options,
-              'camunda/engine-rest-ext/v1/task/$id/assignee',
+              'engine-rest-ext/v1/task/$id/assignee',
               queryParameters: queryParameters,
               data: _data,
             )

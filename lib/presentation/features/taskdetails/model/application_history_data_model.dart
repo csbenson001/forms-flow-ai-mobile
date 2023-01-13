@@ -1,6 +1,6 @@
 import '../../../../core/api/response/application/history/application_history_response.dart';
+import '../../../../core/api/utils/api_constants_url.dart';
 import '../../../../core/database/entity/application_history_entity.dart';
-import '../../../../shared/api_constants_url.dart';
 
 /// [ApplicationHistoryDM] data model class contains all application
 /// history related data fields
@@ -36,7 +36,7 @@ class ApplicationHistoryDM {
         dm.formId = element.formId;
         dm.submittedBy = element.submittedBy;
         dm.formUrl =
-            "${ApiConstantUrl.formsflowaiBpmBaseUrl}${ApiConstantUrl.form}/${element.formId}/${ApiConstantUrl.formSubmission}/${element.submissionId}";
+            "${ApiConstantUrl.formsflowaiFormBaseUrl}${ApiConstantUrl.form}/${element.formId}/${ApiConstantUrl.formSubmission}/${element.submissionId}";
         mData.add(dm);
       }
     }

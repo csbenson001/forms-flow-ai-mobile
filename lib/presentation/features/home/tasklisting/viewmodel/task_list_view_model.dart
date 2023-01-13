@@ -1,5 +1,3 @@
-// ignore_for_file: empty_catches
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +11,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../core/api/post/task/tasklist_sort.dart';
-import '../../../../../core/api/response/filter/get_filters_response.dart';
+import '../../../../../core/api/response/filter/filters_response.dart';
 import '../../../../../core/api/response/form/roles/formio_roles_response.dart'
     as roles_response;
 import '../../../../../core/api/response/processdefinition/process_definition_response.dart';
@@ -69,7 +67,7 @@ class TaskListViewModel extends BaseNotifierViewModel {
 
   /// List[Sorting] sort post model list
   List<Sorting> sortPostModel = List.empty(growable: true);
-  TaskSortPostModel taskSortPostModel = TaskSortPostModel();
+  TaskSortPostModel _taskSortPostModel = TaskSortPostModel();
 
   // list to show available sort filters with the state filters
   final List<TaskSortFilterDM> _uiSortFiltersList = [];
@@ -125,6 +123,10 @@ class TaskListViewModel extends BaseNotifierViewModel {
   int _totalTaskCount = 0;
   int get totalTaskCount => _totalTaskCount;
 
+  // All filters applied
+  bool _allFiltersApplied = true;
+  bool get allFiltersApplied => _allFiltersApplied;
+
   TaskListViewModel(
       {required this.fetchFiltersUseCase,
       required this.fetchProcessDefinitionUseCase,
@@ -142,8 +144,7 @@ class TaskListViewModel extends BaseNotifierViewModel {
   /// OnInit method to initialise listeners and to fetch initial data
   Future<void> onInit({required ScrollController scrollController}) async {
     this.scrollController = scrollController;
-    // ref.read(tokenServiceProvider).startService();
-    _startLocalDatabaseRemoteSync();
+    _startDatabaseRemoteSync();
     fetchFilters();
     fetchFormioRoles();
     scrollController.addListener(_onScroll);
@@ -194,6 +195,7 @@ class TaskListViewModel extends BaseNotifierViewModel {
     _selectedVariablesFiltersList.clear();
     _selectedVariableCountList.clear();
     _selectedCheckBoxList.clear();
+    _allFiltersApplied = true;
     notifyListeners();
     updateFiltersPostModelAndRefreshPage();
   }
@@ -213,7 +215,9 @@ class TaskListViewModel extends BaseNotifierViewModel {
         notifyListeners();
         resetTaskSortPostModel();
         refreshPageData();
-      } catch (e) {}
+      } catch (e) {
+        return;
+      }
     }
   }
 
@@ -227,7 +231,9 @@ class TaskListViewModel extends BaseNotifierViewModel {
         _selectedVariablesFiltersList.removeAt(index);
         notifyListeners();
         updateFiltersPostModelAndRefreshPage();
-      } catch (e) {}
+      } catch (e) {
+        return;
+      }
     }
   }
 
@@ -320,7 +326,7 @@ class TaskListViewModel extends BaseNotifierViewModel {
             firstResult: _start,
             maxResults: _limit,
             definitionResponse: _processDefinitionResponse,
-            taskSortingPostModel: taskSortPostModel));
+            taskSortingPostModel: _taskSortPostModel));
 
     taskResponse.fold((l) {
       _pageStatus = PageStatus.failure;
@@ -412,7 +418,7 @@ class TaskListViewModel extends BaseNotifierViewModel {
     FiltersResponse? filtersResponse;
     for (int i = 0; i < filterList.length; i++) {
       if (filterList[i].name!.toLowerCase() ==
-          FormsFlowAIAPIConstants.allTasks.toLowerCase()) {
+          FormsFlowAIApiConstants.allTasks.toLowerCase()) {
         filtersResponse = filterList[i];
         break;
       }
@@ -427,10 +433,10 @@ class TaskListViewModel extends BaseNotifierViewModel {
         formioRolesResponse.form!.isNotEmpty) {
       try {
         roles_response.Form? reviewer = formioRolesResponse.form?.singleWhere(
-            (element) => element.type == FormsFlowAIAPIConstants.reviewer);
+            (element) => element.type == FormsFlowAIApiConstants.reviewer);
 
         roles_response.Form? resourceId = formioRolesResponse.form?.singleWhere(
-            (element) => element.type == FormsFlowAIAPIConstants.resourceId);
+            (element) => element.type == FormsFlowAIApiConstants.resourceId);
 
         if (reviewer != null) {
           // Create a form jwt token
@@ -493,7 +499,7 @@ class TaskListViewModel extends BaseNotifierViewModel {
   }
 
   // Function to start offline sync and to validate completed tasks
-  void _startLocalDatabaseRemoteSync() {
+  void _startDatabaseRemoteSync() {
     databaseWorker.startTasksOfflineSync();
   }
 
@@ -508,7 +514,7 @@ class TaskListViewModel extends BaseNotifierViewModel {
           socketService.deActivateSocket();
         } else {
           _initWebSocket();
-          _startLocalDatabaseRemoteSync();
+          _startDatabaseRemoteSync();
         }
       }
     });
@@ -523,7 +529,7 @@ class TaskListViewModel extends BaseNotifierViewModel {
             .read(socketCallbackProvider.notifier)
             .state
             .copyWith(taskId: taskId, eventName: eventName);
-        if (eventName == FormsFlowAIAPIConstants.socketEventComplete) {
+        if (eventName == FormsFlowAIApiConstants.socketEventComplete) {
           removeCompletedTaskItem(taskId: taskId);
         } else {
           onReceiveChangedTaskDataFromSocket(
@@ -551,7 +557,9 @@ class TaskListViewModel extends BaseNotifierViewModel {
           _totalTaskCount--;
           notifyListeners();
         }
-      } catch (e) {}
+      } catch (e) {
+        return;
+      }
     }
   }
 
@@ -569,11 +577,11 @@ class TaskListViewModel extends BaseNotifierViewModel {
     final fetchIsolatedTaskResponse = await fetchIsolatedTaskUseCase.call(
         params: FetchTaskParams(taskId: taskId));
     fetchIsolatedTaskResponse.fold((l) => {}, (response) async {
-      if (response.statusCode == FormsFlowAIAPIConstants.statusCode200 &&
+      if (response.statusCode == FormsFlowAIApiConstants.statusCode200 &&
           response.data.isNotEmpty) {
         var taskData = await compute(parseTaskIdResponse, response.data);
         index = _taskList.indexWhere((element) => element.taskId == taskId);
-        if (eventName == FormsFlowAIAPIConstants.socketEventUpdate &&
+        if (eventName == FormsFlowAIApiConstants.socketEventUpdate &&
             index != FormsFlowAIConstants.noPosition) {
           _taskList[index] = _taskList[index].copyWith(
               assignee: taskData.assignee,
@@ -587,7 +595,7 @@ class TaskListViewModel extends BaseNotifierViewModel {
           } else {
             databaseWorker.deleteTaskFromLocalDb(taskId: taskId);
           }
-        } else if (eventName == FormsFlowAIAPIConstants.socketEventCreate) {
+        } else if (eventName == FormsFlowAIApiConstants.socketEventCreate) {
           _taskList.insert(
               0,
               TaskListingDM.transformSingle(
@@ -654,32 +662,30 @@ class TaskListViewModel extends BaseNotifierViewModel {
   /// Function to refresh page data
   void refreshPageData() {
     fetchTasks(filterId: _selectedSortFilterItemProvider.id, refresh: true);
-    // fetchTaskCount(filterId: _selectedSortFilterItemProvider.id);
   }
 
   /// Function to handle pull to refresh
   Future<void> pullToRefresh() async {
     fetchTasks(filterId: _selectedSortFilterItemProvider.id, refresh: true);
-    // fetchTaskCount(filterId: _selectedSortFilterItemProvider.id);
   }
 
   /// Function to clear and reset task sort post model
   void resetTaskSortPostModel() {
     sortPostModel.clear();
     sortPostModel = getTaskPostModel();
-    taskSortPostModel.sorting = sortPostModel;
+    _taskSortPostModel.sorting = sortPostModel;
   }
 
   /// Function to clear and reset task filters post model
   void updateFiltersPostModelAndRefreshPage() {
-    taskSortPostModel = transformVariableFilters(
-        _selectedVariablesFiltersList, taskSortPostModel.sorting);
+    _taskSortPostModel = transformVariableFilters(
+        _selectedVariablesFiltersList, _taskSortPostModel.sorting);
     if (_selectedCheckBoxList.isNotEmpty) {
       for (var element in _selectedCheckBoxList) {
         if (element == 'name') {
-          taskSortPostModel.variableNamesIgnoreCase = true;
+          _taskSortPostModel.variableNamesIgnoreCase = true;
         } else if (element == 'value') {
-          taskSortPostModel.variableValuesIgnoreCase = true;
+          _taskSortPostModel.variableValuesIgnoreCase = true;
         }
       }
     }
@@ -710,7 +716,8 @@ class TaskListViewModel extends BaseNotifierViewModel {
       _selectedSortFilterList.add(_uiSortFiltersList[0]);
     }
     sortPostModel = getTaskPostModel();
-    taskSortPostModel.sorting = sortPostModel;
+    _taskSortPostModel.sorting = sortPostModel;
+    _taskSortPostModel.isAllFiltersApplied = _allFiltersApplied;
     appPreferences.setFiltersResponse(value);
   }
 
@@ -900,6 +907,7 @@ class TaskListViewModel extends BaseNotifierViewModel {
       List<TaskVariableFilterDM> taskVariables, List<Sorting>? sorting) {
     TaskSortPostModel taskSortPostModel = TaskSortPostModel();
     taskSortPostModel.sorting = sorting;
+    taskSortPostModel.isAllFiltersApplied = _allFiltersApplied;
     for (TaskVariableFilterDM element in taskVariables) {
       switch (element.key) {
         case TaskConstants.filterKeyTaskVariables:
@@ -1013,6 +1021,32 @@ class TaskListViewModel extends BaseNotifierViewModel {
         });
       });
     }
+  }
+
+  /// Function to update all or any filters is applied
+  void updateAllFiltersApplied() {
+    _allFiltersApplied = !_allFiltersApplied;
+    notifyListeners();
+    final isTaskFiltersAdded = isFilterAdded(_selectedVariablesFiltersList);
+    if (isTaskFiltersAdded) {
+      updateFiltersPostModelAndRefreshPage();
+    }
+  }
+
+  /// Function to check if there are any filters added
+  bool isFilterAdded(List<TaskVariableFilterDM> selectedVariablesList) {
+    bool isFilterItemAdded = false;
+
+    if (selectedVariablesList.isEmpty) {
+      return isFilterItemAdded;
+    }
+    for (int i = 0; i < selectedVariablesList.length; i++) {
+      if (selectedVariablesList[i].filterSaved ?? false) {
+        isFilterItemAdded = true;
+        break;
+      }
+    }
+    return isFilterItemAdded;
   }
 }
 

@@ -3,14 +3,14 @@ import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:formsflowai/core/error/errors_failure.dart';
 import 'package:formsflowai/presentation/features/taskdetails/model/application_history_data_model.dart';
 
-import '../../core/api/client/application/application_history_api_client.dart';
+import '../../core/api/client/application/formsflowai_application_api_client.dart';
 import '../../core/api/response/form/roles/formio_roles_response.dart';
 import '../../core/database/entity/application_history_entity.dart';
 import '../../core/preferences/app_preference.dart';
 import 'application_repository.dart';
 
 class ApplicationRemoteDataSourceImpl implements ApplicationHistoryRepository {
-  final ApplicationHistoryApiClient applicationApiClient;
+  final FormsFlowAIApplicationApiClient applicationApiClient;
   final AppPreferences appPreferences;
   final FlutterAppAuth flutterAppAuth;
 
@@ -54,8 +54,7 @@ class ApplicationRemoteDataSourceImpl implements ApplicationHistoryRepository {
   @override
   Future<Either<Failure, FormioRolesResponse>> fetchFormioRoles() async {
     try {
-      var response = await applicationApiClient
-          .getFormioRoles(appPreferences.getBearerAccessToken());
+      var response = await applicationApiClient.getFormioRoles();
 
       if (response.form != null) {
         return Right(response);

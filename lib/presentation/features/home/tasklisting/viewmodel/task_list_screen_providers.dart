@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../../../core/api/response/filter/get_filters_response.dart';
+import '../../../../../core/api/response/filter/filters_response.dart';
 import '../../../../../shared/app_status.dart';
 
 /// [taskFilterDropDownItemsProvider] to handle dropdown task filters

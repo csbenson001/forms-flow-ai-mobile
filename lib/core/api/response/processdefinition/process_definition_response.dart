@@ -12,8 +12,10 @@ List<ProcessDefinitionResponse> processDefinitionResponseFromJson(String str) =>
 String processDefinitionResponseToJson(List<ProcessDefinitionResponse> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
+/// [ProcessDefinitionResponse] class to parse
+/// process definition data
 @freezed
-abstract class ProcessDefinitionResponse with _$ProcessDefinitionResponse {
+class ProcessDefinitionResponse with _$ProcessDefinitionResponse {
   const factory ProcessDefinitionResponse({
     String? id,
     String? key,

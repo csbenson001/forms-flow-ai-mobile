@@ -15,6 +15,13 @@
 
 ## Core
  Core contains core classes used in formsflow.ai mobile application.
+    ---> api
+    ---> database
+    ---> di
+    ---> preferences
+    ---> network manager
+    ---> router
+    ---> socket
 
 ## Packages
   --> formsflowai_shared - contains all shared UI components, color codes and app constants.
@@ -24,4 +31,5 @@
 Assets
     --> Font
     --> Images
+    --> Formio
     ***

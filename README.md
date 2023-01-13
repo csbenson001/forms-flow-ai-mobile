@@ -23,9 +23,10 @@ The application uses formio version 2.1.0 to support online/offline form renderi
 
 1. [Prerequisites](#prerequisites)
 2. [Solution Setup](#solution-setup)
-  - [Step 1 : Flutter Setup](#flutter-setup)
-  - [Step 2 : Installation](#installation)
-  - [Step 3 : Running the Application](#running-the-application)
+- [Step 1 : Flutter Setup](#flutter-setup)
+- [Step 2 : Update App Package](#update-app-package)
+- [Step 3 : Installation](#installation)
+- [Step 4 : Running the Application](#running-the-application)
 3. [Logo change](#logo-change)
 4. [Offline Access](#offline-access)
 5. [Offline Form Submission](#offline-form-submission)
@@ -46,11 +47,73 @@ Configure the Flutter development environment on your machine, checkout [here](h
 
 After completing the installation run the below command to check the flutter version.
 
- `flutter --version`
+ ```
+ flutter --version
+ ``` 
+
+### Update App Package
+
+Change the package name in your AndroidManifest.xml (in 3 of them, folders: main, debug and profile, according what environment you want to deploy)     file:
+
+**For Android**
+```
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.packagename">
+```    
+
+Also in your build.gradle file inside app folder
+
+**Gradle**
+```
+defaultConfig {
+        /// Update your app package name
+        applicationId "com.packagename"
+        minSdkVersion 19
+        targetSdkVersion flutter.targetSdkVersion
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+        manifestPlaceholders += [
+                /// Update your app package name for redirecting after keycloak login
+                'appAuthRedirectScheme': 'com.packagename'
+        ]
+    }
+ ```
+**MainActivity**
+
+Finally, change the package name in your MainActivity.java or MainActivity.kt class
+ ```
+    package com.packagename;
+
+    import android.os.Bundle;
+    import io.flutter.app.FlutterActivity;
+    import io.flutter.plugins.GeneratedPluginRegistrant;
+    public class MainActivity extends FlutterActivity {
+ ```
+
+**For iOS**
+
+Change the bundle identifier from your Info.plist file inside your ios/Runner directory.
+ ```
+<key>CFBundleIdentifier</key>
+<string>com.packagename</string>
+ ```
+```
+<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.packagename</string>
+			</array>
+		</dict>
+	</array>
+ ```
 
 ### Installation
 
-* Make sure your current working directory is "forms-flow-ai".
+* Make sure your current working directory is "forms-flow-ai-mobile".
 * Rename the file [sample.env](./sample.env) to **.env**.
 * Modify the environment variables in the newly created **.env** file if needed. Environment variables are given in the table below,
 * **NOTE : {URLs} given inside the .env file should be changed to your host URL. Please take special care to identify the correct URLs**
@@ -72,37 +135,42 @@ Variable name | Meaning | Possible values | Default value |
 ### Running the application
 
 **For installing dependencies run command**
-   
-   `flutter pub get`
-    
-**For creating the generated files run command** 
+   ```
+   flutter pub get
+   ```
 
-   `flutter pub run build_runner build`
-   
-**Fix conflict in generated files run command** 
+**For creating the generated files run command**
 
-   `flutter pub run build_runner build --delete-conflicting-outputs`
-   
-**For running the app run command** 
+   ```
+   flutter pub run build_runner build
+   ```
 
-   `flutter run`    
+**Fix conflict in generated files run command**
+ ```
+   flutter pub run build_runner build --delete-conflicting-outputs
+   ```
+
+**For running the app run command**
+```
+   flutter run
+   ```
 
 ### Logo Change
 
-   **For Android**
-     
-   update mipmap folders launcher images in android with your custom logo -> app -> src -> main -> res -> mipmap
-     
-   **For iOS**
-     
-   update Asset Appicon with your custom logo
+**For Android**
+
+update mipmap folders launcher images in android with your custom logo -> app -> src -> main -> res -> mipmap
+
+**For iOS**
+
+update Asset Appicon with your custom logo
 
 ### Offline Access
 
 * Formsflowai mobile app supports complete offline access.
 
 * Only tasks assigned to the loggedin user will be stored and rendered when there is no
-internet connectivity.
+  internet connectivity.
 
 * Users can submit the forms or update the tasks due-date, follow-up date offline.
 
@@ -136,26 +204,27 @@ Variable name | Meaning | Possible values | Expected value |
     Click the Edit Form button
 
 **Step 4**
-
-    Add the below code snippet in your custom action button click
+```
+ Add the below code snippet in your custom action button click
     
-    const submissionId = form._submission._id;
-    const formDataReqUrl = form.formio.formUrl+'/submission/'+submissionId;const formDataReqObj1 =  {  "_id": submissionId,  "data": data};
-    const formio = new Formio(formDataReqUrl);
-    formio.saveSubmission(formDataReqObj1).then( result => {
-    form.emit('customEvent', {
+ const submissionId = form._submission._id;
+ const formDataReqUrl = form.formio.formUrl+'/submission/'+submissionId;const formDataReqObj1 =  {  "_id": submissionId,  "data": data};
+ const formio = new Formio(formDataReqUrl);
+ formio.saveSubmission(formDataReqObj1).then( result => {
+ form.emit('customEvent', {
           type: "actionComplete",   
           component: component,
           actionType:data.managerActionType
           }); 
-      }).catch((error)=>{
-    //Error callback on not Save
-    form.emit('customEvent', {
+    }).catch((error)=>{
+ //Error callback on not Save
+  form.emit('customEvent', {
           type: "actionError",   
           component: component,
           actionType:data.managerActionType
       }); 
 });
+```
 
 ## forms-flow-web Events
 > This section elaborates events used in forms-flow-web.

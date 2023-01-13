@@ -1,29 +1,34 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-import 'package:isolated_http_client/isolated_http_client.dart';
+import 'package:dio/dio.dart';
+import 'package:isolated_http_client/isolated_http_client.dart'
+    as isolated_response;
 
 import '../../core/api/client/form/forms_api_client.dart';
 import '../../core/api/response/base/base_response.dart';
 import '../../core/api/response/form/submission/form_submission_response.dart';
+import '../../core/api/utils/api_constants_url.dart';
 import '../../core/api/utils/api_utils.dart';
 import '../../core/database/entity/form_entity.dart';
 import '../../core/error/errors_failure.dart';
 import '../../core/error/server_exception.dart';
 import '../../core/preferences/app_preference.dart';
 import '../../presentation/features/taskdetails/model/form_dm.dart';
-import '../../shared/api_constants_url.dart';
 import '../../shared/formsflow_api_constants.dart';
 import 'form_repository.dart';
 
 class FormRemoteDataSource implements FormRepository {
   final FormsApiClient formsApiClient;
   final AppPreferences appPreferences;
-  final HttpClientIsolated isolatedHttpClient;
+  final isolated_response.HttpClientIsolated isolatedHttpClient;
+  final Dio formDio;
 
   FormRemoteDataSource(
       {required this.formsApiClient,
       required this.appPreferences,
+      required this.formDio,
       required this.isolatedHttpClient});
 
   @override
@@ -47,9 +52,9 @@ class FormRemoteDataSource implements FormRepository {
       var response = await formsApiClient.fetchFormSubmissionData(
           formResourceId, formSubmissionId);
       if (response.response.statusCode ==
-              FormsFlowAIAPIConstants.statusCode200 ||
+              FormsFlowAIApiConstants.statusCode200 ||
           response.response.statusCode ==
-              FormsFlowAIAPIConstants.statusCode204) {
+              FormsFlowAIApiConstants.statusCode204) {
         return Right(response.data);
       } else {
         return Left(ServerFailure());
@@ -69,19 +74,20 @@ class FormRemoteDataSource implements FormRepository {
   /// [TaskId]
   /// ---> Returns [Response]
   @override
-  Future<Either<Failure, Response>> fetchFormSubmissionIsolatedData(
-      {required String taskId,
-      required String formResourceId,
-      required String formSubmissionId}) async {
+  Future<Either<Failure, isolated_response.Response>>
+      fetchFormSubmissionIsolated(
+          {required String taskId,
+          required String formResourceId,
+          required String formSubmissionId}) async {
     try {
       var response = await isolatedHttpClient.get(
           host:
               '${ApiConstantUrl.formsflowaiFormBaseUrl}${ApiConstantUrl.form}/$formResourceId/${ApiConstantUrl.formSubmission}/$formSubmissionId',
-          headers: APIUtils.getFormsJwtTokenHeader(
+          headers: ApiUtils.fetchFormsJwtTokenHeader(
               jwtToken: appPreferences.getFormJwtToken()));
 
-      if (response.statusCode == FormsFlowAIAPIConstants.statusCode200 ||
-          response.statusCode == FormsFlowAIAPIConstants.statusCode204) {
+      if (response.statusCode == FormsFlowAIApiConstants.statusCode200 ||
+          response.statusCode == FormsFlowAIApiConstants.statusCode204) {
         return Right(response);
       }
       return left(ServerFailure());
@@ -103,9 +109,9 @@ class FormRemoteDataSource implements FormRepository {
     try {
       var response = await formsApiClient.getFormIoJson(id);
       if (response.response.statusCode ==
-              FormsFlowAIAPIConstants.statusCode200 ||
+              FormsFlowAIApiConstants.statusCode200 ||
           response.response.statusCode ==
-              FormsFlowAIAPIConstants.statusCode204) {
+              FormsFlowAIApiConstants.statusCode204) {
         return Right(FormDM.transform(response.response));
       }
       return Left(ServerFailure());
@@ -123,18 +129,18 @@ class FormRemoteDataSource implements FormRepository {
   /// [Path]
   /// ---> Return [Response]
   @override
-  Future<Either<Failure, Response>> fetchIsolatedFormData(
+  Future<Either<Failure, isolated_response.Response>> fetchIsolatedFormData(
       {required String formId}) async {
     try {
       var response = await isolatedHttpClient.get(
           host:
               '${ApiConstantUrl.formsflowaiFormBaseUrl}${ApiConstantUrl.form}/',
           path: formId,
-          headers: APIUtils.getFormsJwtTokenHeader(
+          headers: ApiUtils.fetchFormsJwtTokenHeader(
               jwtToken: appPreferences.getFormJwtToken()));
 
-      if (response.statusCode == FormsFlowAIAPIConstants.statusCode200 ||
-          response.statusCode == FormsFlowAIAPIConstants.statusCode204) {
+      if (response.statusCode == FormsFlowAIApiConstants.statusCode200 ||
+          response.statusCode == FormsFlowAIApiConstants.statusCode204) {
         return Right(response);
       }
       return left(ServerFailure());
@@ -168,9 +174,9 @@ class FormRemoteDataSource implements FormRepository {
       var response = await formsApiClient.submitFormData(
           formResourceId, formSubmissionId, formSubmissionResponse);
       if (response.response.statusCode ==
-              FormsFlowAIAPIConstants.statusCode200 ||
+              FormsFlowAIApiConstants.statusCode200 ||
           response.response.statusCode ==
-              FormsFlowAIAPIConstants.statusCode204) {
+              FormsFlowAIApiConstants.statusCode204) {
         return Right(BaseResponse(
             statusCode: response.response.statusCode, message: "Success"));
       }
@@ -197,23 +203,19 @@ class FormRemoteDataSource implements FormRepository {
   /// [FormSubmissionId]
   /// [FormSubmissionResponse]
   @override
-  Future<Either<Failure, BaseResponse>> submitFormDataIsolate(
+  Future<Either<Failure, BaseResponse>> submitFormDataIsolated(
       {required String formResourceId,
       required String formSubmissionId,
       required FormSubmissionResponse formSubmissionResponse}) async {
-    String apiUrl =
-        "${ApiConstantUrl.formsflowaiFormBaseUrl}${ApiConstantUrl.form}/$formResourceId/${ApiConstantUrl.formSubmission}/$formSubmissionId";
     try {
-      var response = await isolatedHttpClient.put(
-          host: apiUrl,
-          body: formSubmissionResponse.toJson(),
-          headers: APIUtils.getFormsJwtTokenHeader(
-              jwtToken: appPreferences.getFormJwtToken()));
+      var response = await formDio.put(
+          "${ApiConstantUrl.form}/$formResourceId/${ApiConstantUrl.formSubmission}/$formSubmissionId",
+          data: json.encode(formSubmissionResponse.toJson()));
 
-      if (response.statusCode == FormsFlowAIAPIConstants.statusCode200 ||
-          response.statusCode == FormsFlowAIAPIConstants.statusCode204) {
+      if (response.statusCode == FormsFlowAIApiConstants.statusCode200 ||
+          response.statusCode == FormsFlowAIApiConstants.statusCode204) {
         return Right(BaseResponse(
-            message: FormsFlowAIAPIConstants.statusSuccessMessage));
+            message: FormsFlowAIApiConstants.statusSuccessMessage));
       }
       return left(ServerFailure());
     } on SocketException {

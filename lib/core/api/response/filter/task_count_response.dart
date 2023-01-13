@@ -1,3 +1,5 @@
+/// [TaskCountResponse] class to parse
+/// total task count
 class TaskCountResponse {
   final int? count;
 

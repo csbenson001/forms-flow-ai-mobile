@@ -124,7 +124,7 @@ class TaskDetailsViewModel extends BaseNotifierViewModel {
     ref.listen<SocketEventBusDM>(socketCallbackProvider, (previous, next) {
       if (next.eventName != null && next.eventName!.isNotEmpty) {
         if (_taskListingDM?.taskId == next.taskId &&
-            next.eventName == FormsFlowAIAPIConstants.socketEventComplete) {
+            next.eventName == FormsFlowAIApiConstants.socketEventComplete) {
           if (_taskListingDM?.assignee ==
               appPreferences.getPreferredUserName()) {
             databaseWorker.deleteTaskFromLocalDb(
@@ -154,7 +154,7 @@ class TaskDetailsViewModel extends BaseNotifierViewModel {
     final fetchIsolatedTaskResponse = await fetchIsolatedTaskUseCase.call(
         params: FetchTaskParams(taskId: taskId));
     fetchIsolatedTaskResponse.fold((l) => {}, (response) async {
-      if (response.statusCode == FormsFlowAIAPIConstants.statusCode200 &&
+      if (response.statusCode == FormsFlowAIApiConstants.statusCode200 &&
           response.data.isNotEmpty) {
         var taskData = await compute(parseTaskIdResponse, response.data);
         _taskListingDM = _taskListingDM?.copyWith(
@@ -419,7 +419,7 @@ class TaskDetailsViewModel extends BaseNotifierViewModel {
       final claimTaskResponse = await claimTaskUseCase.call(
           params: ClaimTaskParams(
               taskId: taskId,
-              payload: APIUtils.fetchClaimTaskPostBody(userId: userId)));
+              payload: ApiUtils.fetchClaimTaskPostBody(userId: userId)));
       claimTaskResponse.fold((l) {
         dismissProgressLoading();
         if (l is AuthorizationTokenExpiredFailure) {
@@ -465,7 +465,7 @@ class TaskDetailsViewModel extends BaseNotifierViewModel {
       final claimTaskResponse = await updateAssigneeUseCase.call(
           params: UpdateAssigneeParams(
               taskId: taskId,
-              payload: APIUtils.fetchClaimTaskPostBody(userId: userId)));
+              payload: ApiUtils.fetchClaimTaskPostBody(userId: userId)));
       claimTaskResponse.fold((l) {
         dismissProgressLoading();
         if (l is AuthorizationTokenExpiredFailure) {

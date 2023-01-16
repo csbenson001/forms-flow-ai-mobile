@@ -36,6 +36,7 @@ import '../../../taskdetails/viewmodel/task_details_providers.dart';
 import '../model/index.dart';
 import '../usecases/index.dart';
 import '../usecases/task/fetch_tasks_usecase.dart';
+import '../usecases/user/logout_keycloak_authenticator_usecase.dart';
 
 /// [TaskListViewModel] viewmodel class to hold business logic related to
 /// task list screen
@@ -59,6 +60,7 @@ class TaskListViewModel extends BaseNotifierViewModel {
   final FetchTaskUseCase fetchIsolatedTaskUseCase;
   final ClearLocalDatabaseUseCase clearLocalDatabaseUseCase;
   final FetchFormioRolesUseCase fetchFormioRolesUseCase;
+  final LogoutKeycloakAuthenticatorUserCase logoutKeycloakAuthenticatorUserCase;
 
   final AppPreferences appPreferences;
   final NetworkManagerController networkManagerController;
@@ -139,6 +141,7 @@ class TaskListViewModel extends BaseNotifierViewModel {
       required this.fetchIsolatedTaskUseCase,
       required this.clearLocalDatabaseUseCase,
       required this.fetchFormioRolesUseCase,
+      required this.logoutKeycloakAuthenticatorUserCase,
       required this.ref});
 
   /// OnInit method to initialise listeners and to fetch initial data

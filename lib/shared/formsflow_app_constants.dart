@@ -10,7 +10,8 @@ class FormsFlowAIConstants {
   static const envFileName = 'sample.env';
   static final clientId = dotenv.get(EnvKeyConstants.envKeycloakWebClientId);
   static const keycloakScopes = ['openid', 'profile', 'offline_access'];
-  static const keycloakRedirectUrl = 'com.aot.formsflowai:/*';
+  static final keycloakRedirectUrl =
+      dotenv.get(EnvKeyConstants.envKeycloakRedirectUrl);
   static const tokenGrantTypePassword = 'password';
   static const tokenGrantTypeRefreshToken = 'refresh_token';
   static final webSocketEncryptKey =

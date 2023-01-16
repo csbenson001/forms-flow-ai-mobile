@@ -17,4 +17,6 @@ abstract class UserRemoteDataSource<T> {
 
   Future<Either<Failure, TokenResponse>> refreshKeycloakToken(
       {required RefreshKeycloakTokenParams params});
+
+  Future<Either<Failure, EndSessionResponse>> logoutKeycloak();
 }

@@ -38,6 +38,10 @@ class UserDataRepository implements UserRemoteDataSource, UserLocalDataSource {
     return remoteDataSource.userInfo(fetchUserInfoParams: fetchUserInfoParams);
   }
 
+  /// Method to login user using Keycloak Authenticator
+  /// Parameters
+  /// [LoginKeycloakAuthenticatorParams]
+  /// ---> Returns [AuthorizationTokenResponse]
   @override
   Future<Either<Failure, AuthorizationTokenResponse>>
       loginUserUsingKeycloakAuthenticator(
@@ -45,9 +49,20 @@ class UserDataRepository implements UserRemoteDataSource, UserLocalDataSource {
     return remoteDataSource.loginUserUsingKeycloakAuthenticator(params: params);
   }
 
+  /// Method to refresh keycloak access token using Authenticator
+  /// Parameters
+  /// [RefreshKeycloakTokenParams]
+  /// ---> Returns [TokenResponse]
   @override
   Future<Either<Failure, TokenResponse>> refreshKeycloakToken(
       {required RefreshKeycloakTokenParams params}) {
     return remoteDataSource.refreshKeycloakToken(params: params);
+  }
+
+  /// Method to logout keycloak user using Authenticator
+  /// ---> Returns [EndSessionResponse]
+  @override
+  Future<Either<Failure, EndSessionResponse>> logoutKeycloak() {
+    return remoteDataSource.logoutKeycloak();
   }
 }

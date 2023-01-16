@@ -31,8 +31,8 @@ Future<void> registerRepository() async {
   /// Register User data sources and API client
   dl.registerLazySingleton(() => UserApiClient(dl<DioHelper>().getUserDio()));
   dl.registerLazySingleton(() => UserLocalDataSourceImpl(appPreferences: dl()));
-  dl.registerLazySingleton(() =>
-      UserRemoteDataSourceImpl(userApiClient: dl(), flutterAppAuth: dl()));
+  dl.registerLazySingleton(() => UserRemoteDataSourceImpl(
+      userApiClient: dl(), flutterAppAuth: dl(), appPreferences: dl()));
   dl.registerLazySingleton(
       () => UserDataRepository(remoteDataSource: dl(), localDataSource: dl()));
 

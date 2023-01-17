@@ -611,10 +611,30 @@ class TaskListViewModel extends BaseNotifierViewModel {
   }
 
   /// Function to logout User
-  /// Clear all database and preferences values then logout the user
+  /// Calls Keycloak Logout Api to revoke the token based on network
+  /// connectivity
   /// Input Parameters
   /// [BuildContext]
   Future<void> logoutUser({required BuildContext context}) async {
+    if (networkManagerController.connectionType == ConnectivityResult.none) {
+      clearLocalDataAndNavigateToLogin(context: context);
+    } else {
+      showProgressLoading();
+      logoutKeycloakAuthenticatorUserCase
+          .call(params: const LogoutKeycloakAuthenticatorParams())
+          .then((value) {
+        dismissProgressLoading();
+        clearLocalDataAndNavigateToLogin(context: context);
+      });
+    }
+  }
+
+  /// Function to logout Clear all database and local session preferences
+  /// values then navigate to login screen
+  /// Input Parameters
+  /// [BuildContext]
+  Future<void> clearLocalDataAndNavigateToLogin(
+      {required BuildContext context}) async {
     showProgressLoading();
     final clearDatabaseResponse = await clearLocalDatabaseUseCase.call(
         params: const ClearLocalDatabaseUseCaseParams());

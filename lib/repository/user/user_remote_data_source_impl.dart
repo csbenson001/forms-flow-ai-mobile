@@ -1,14 +1,15 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
+import 'package:formsflowai/core/api/response/base/base_response.dart';
 import 'package:formsflowai/core/error/errors_failure.dart';
 import 'package:formsflowai/presentation/features/login/usecases/fetch_user_info_usecase.dart';
 import 'package:formsflowai/presentation/features/login/usecases/login_keycloak_authenticator_usecase.dart';
 import 'package:formsflowai/presentation/features/login/usecases/refresk_keycloak_token_usecase.dart';
 import 'package:formsflowai/repository/user/user_remote_data_source.dart';
+import 'package:formsflowai/shared/formsflow_api_constants.dart';
 
 import '../../core/api/client/user/user_api_client.dart';
 import '../../core/api/response/user/info/user_info_response.dart';
-import '../../core/api/utils/api_constants_url.dart';
 import '../../core/preferences/app_preference.dart';
 import '../../shared/flutter_auth_utils.dart';
 import '../../shared/formsflow_app_constants.dart';
@@ -32,7 +33,9 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       {required FetchUserInfoParams fetchUserInfoParams}) async {
     try {
       var response = await userApiClient.getUserInfo(
-          fetchUserInfoParams.accessToken, ApiConstantUrl.realm);
+        fetchUserInfoParams.accessToken,
+        FormsFlowAIApiConstants.realm,
+      );
       return Right(response);
     } catch (e) {
       return Left(ServerFailure());
@@ -101,21 +104,20 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   }
 
   /// Method to logout keycloak user using Authenticator
-  /// ---> Returns [EndSessionResponse]
+  /// ---> Returns [BaseResponse]
   @override
-  Future<Either<Failure, EndSessionResponse>> logoutKeycloak() async {
+  Future<Either<Failure, BaseResponse>> logoutKeycloak() async {
     try {
-      final EndSessionResponse? result = await flutterAppAuth.endSession(
-        EndSessionRequest(
-            serviceConfiguration:
-                FlutterAuthUtils.fetchAuthorizationConfiguration(),
-            idTokenHint: appPreferences.getRefreshToken(),
-            allowInsecureConnections: false,
-            postLogoutRedirectUrl: FormsFlowAIConstants.keycloakRedirectUrl),
-      );
-
-      if (result != null) {
-        return Right(result);
+      final result = await userApiClient.logout(
+          FormsFlowAIApiConstants.realm,
+          appPreferences.getRefreshToken(),
+          appPreferences.getAccessToken(),
+          FormsFlowAIConstants.clientId);
+      if (result.response.statusCode == 200 ||
+          result.response.statusCode == 204) {
+        return Right(BaseResponse(
+            statusCode: result.response.statusCode,
+            message: FormsFlowAIApiConstants.statusSuccessMessage));
       } else {
         return Left(ServerFailure());
       }

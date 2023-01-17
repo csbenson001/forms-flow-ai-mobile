@@ -41,6 +41,39 @@ class _UserApiClient implements UserApiClient {
     return value;
   }
 
+  @override
+  Future<HttpResponse<dynamic>> logout(
+    realm,
+    refreshToken,
+    accessToken,
+    clientId,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = {
+      'refresh_token': refreshToken,
+      'access_token': accessToken,
+      'client_id': clientId,
+    };
+    final _result =
+        await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
+      method: 'POST',
+      headers: <String, dynamic>{},
+      extra: _extra,
+      contentType: 'application/x-www-form-urlencoded',
+    )
+            .compose(
+              _dio.options,
+              'auth/realms/$realm/protocol/openid-connect/logout',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data;
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

@@ -18,4 +18,18 @@ abstract class UserApiClient {
   @POST(ApiConstantUrl.fetchUserInfo)
   Future<UserInfoResponse> getUserInfo(
       @Header("Authorization") String accessToken, @Path() String realm);
+
+  /// Function to logout keycloak
+  /// Input Parameters
+  /// [AccessToken] - logged in user's access Token
+  /// [RefreshToken] - logged in user's access Token
+  /// [Realm] - Keycloak realm
+  /// ---> Returns [HttpResponse]
+  @POST(ApiConstantUrl.logoutKeycloak)
+  @FormUrlEncoded()
+  Future<HttpResponse> logout(
+      @Path() String realm,
+      @Field("refresh_token") String refreshToken,
+      @Field("access_token") String accessToken,
+      @Field("client_id") String clientId);
 }

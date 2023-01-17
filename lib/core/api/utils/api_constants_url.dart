@@ -1,6 +1,8 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:formsflowai/shared/env_key_constants.dart';
 
+import '../../../shared/formsflow_api_constants.dart';
+
 class ApiConstantUrl {
   // ------------------- BASE URLS AND BASE PROVIDERS  ---------------------
 
@@ -34,16 +36,17 @@ class ApiConstantUrl {
 
   // ----------------------- USER  ---------------------
 
-  static final String realm = dotenv.get(EnvKeyConstants.envKeycloakRealmKey);
-
   static final String fetchToken =
-      'auth/realms/$realm/protocol/openid-connect/token';
+      'auth/realms/${FormsFlowAIApiConstants.realm}/protocol/openid-connect/token';
 
   static final String fetchTokenOpenIdConnect =
-      '/auth/realms/$realm/protocol/openid-connect';
+      '/auth/realms/${FormsFlowAIApiConstants.realm}/protocol/openid-connect';
 
   static const String fetchUserInfo =
       'auth/realms/{realm}/protocol/openid-connect/userinfo';
+
+  static const String logoutKeycloak =
+      'auth/realms/{realm}/protocol/openid-connect/logout';
 
   // ----------------------- TASK  ---------------------
 

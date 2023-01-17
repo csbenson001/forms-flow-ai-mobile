@@ -36,6 +36,7 @@ import '../../../taskdetails/viewmodel/task_details_providers.dart';
 import '../model/index.dart';
 import '../usecases/index.dart';
 import '../usecases/task/fetch_tasks_usecase.dart';
+import '../usecases/user/logout_keycloak_authenticator_usecase.dart';
 
 /// [TaskListViewModel] viewmodel class to hold business logic related to
 /// task list screen
@@ -59,6 +60,7 @@ class TaskListViewModel extends BaseNotifierViewModel {
   final FetchTaskUseCase fetchIsolatedTaskUseCase;
   final ClearLocalDatabaseUseCase clearLocalDatabaseUseCase;
   final FetchFormioRolesUseCase fetchFormioRolesUseCase;
+  final LogoutKeycloakAuthenticatorUserCase logoutKeycloakAuthenticatorUserCase;
 
   final AppPreferences appPreferences;
   final NetworkManagerController networkManagerController;
@@ -139,6 +141,7 @@ class TaskListViewModel extends BaseNotifierViewModel {
       required this.fetchIsolatedTaskUseCase,
       required this.clearLocalDatabaseUseCase,
       required this.fetchFormioRolesUseCase,
+      required this.logoutKeycloakAuthenticatorUserCase,
       required this.ref});
 
   /// OnInit method to initialise listeners and to fetch initial data
@@ -608,10 +611,30 @@ class TaskListViewModel extends BaseNotifierViewModel {
   }
 
   /// Function to logout User
-  /// Clear all database and preferences values then logout the user
+  /// Calls Keycloak Logout Api to revoke the token based on network
+  /// connectivity
   /// Input Parameters
   /// [BuildContext]
   Future<void> logoutUser({required BuildContext context}) async {
+    if (networkManagerController.connectionType == ConnectivityResult.none) {
+      clearLocalDataAndNavigateToLogin(context: context);
+    } else {
+      showProgressLoading();
+      logoutKeycloakAuthenticatorUserCase
+          .call(params: const LogoutKeycloakAuthenticatorParams())
+          .then((value) {
+        dismissProgressLoading();
+        clearLocalDataAndNavigateToLogin(context: context);
+      });
+    }
+  }
+
+  /// Function to logout Clear all database and local session preferences
+  /// values then navigate to login screen
+  /// Input Parameters
+  /// [BuildContext]
+  Future<void> clearLocalDataAndNavigateToLogin(
+      {required BuildContext context}) async {
     showProgressLoading();
     final clearDatabaseResponse = await clearLocalDatabaseUseCase.call(
         params: const ClearLocalDatabaseUseCaseParams());

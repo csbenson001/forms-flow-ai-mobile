@@ -10,6 +10,7 @@ import 'package:formsflowai/repository/user/user_local_data_source_impl.dart';
 import 'package:formsflowai/repository/user/user_remote_data_source.dart';
 import 'package:formsflowai/repository/user/user_remote_data_source_impl.dart';
 
+import '../../core/api/response/base/base_response.dart';
 import '../../core/api/response/user/info/user_info_response.dart';
 
 class UserDataRepository implements UserRemoteDataSource, UserLocalDataSource {
@@ -38,6 +39,10 @@ class UserDataRepository implements UserRemoteDataSource, UserLocalDataSource {
     return remoteDataSource.userInfo(fetchUserInfoParams: fetchUserInfoParams);
   }
 
+  /// Method to login user using Keycloak Authenticator
+  /// Parameters
+  /// [LoginKeycloakAuthenticatorParams]
+  /// ---> Returns [AuthorizationTokenResponse]
   @override
   Future<Either<Failure, AuthorizationTokenResponse>>
       loginUserUsingKeycloakAuthenticator(
@@ -45,9 +50,20 @@ class UserDataRepository implements UserRemoteDataSource, UserLocalDataSource {
     return remoteDataSource.loginUserUsingKeycloakAuthenticator(params: params);
   }
 
+  /// Method to refresh keycloak access token using Authenticator
+  /// Parameters
+  /// [RefreshKeycloakTokenParams]
+  /// ---> Returns [TokenResponse]
   @override
   Future<Either<Failure, TokenResponse>> refreshKeycloakToken(
       {required RefreshKeycloakTokenParams params}) {
     return remoteDataSource.refreshKeycloakToken(params: params);
+  }
+
+  /// Method to logout keycloak user using Authenticator
+  /// ---> Returns [BaseResponse]
+  @override
+  Future<Either<Failure, BaseResponse>> logoutKeycloak() {
+    return remoteDataSource.logoutKeycloak();
   }
 }

@@ -14,7 +14,7 @@
 
 ## formsflow.ai Mobile Application
 
-formsflow.ai mobile application is a task management application.
+[**formsflow.ai**](https://formsflow.ai/) is a Free, Open-Source, Low Code Development Platform for rapidly building powerful business      applications. [**formsflow.ai**](https://formsflow.ai/) mobile application is a task management application.
 
 The application uses formio version 2.1.0 to support online/offline form rendering.
 
@@ -131,6 +131,7 @@ Variable name | Meaning | Possible values | Default value |
 `WEBSOCKET_ENCRYPT_KEY`|Camunda task event streaming. AES encryption of token| | `giert989jkwrgb@DR55`
 `WEB_BASE_CUSTOM_URL`|Clients can use WEB_BASE_CUSTOM_URL env variable to provide their custom URL |
 |`FORMIO_JWT_SECRET`|forms-flow-forms jwt secret| |`--- change me now ---`
+|`KEYCLOAK_REDIRECT_URL`|Keycloak redirect url| |`com.packagename:/*`
 
 ### Running the application
 
@@ -191,17 +192,17 @@ Variable name | Meaning | Possible values | Expected value |
 
     To implement offline form submission in the formsflowai mobile app please update the forms in formsflow-web following the below steps
 
-**Step 1**
+### Step 1
 
-    Navigate to Forms Page
+Navigate to Forms Page
 
-**Step 2**
+### Step 2
 
-    Select the form and click on “View/Edit Form” button
+Select the form and click on “View/Edit Form” button
 
-**Step 3**
+### Step 3
 
-    Click the Edit Form button
+Click the Edit Form button
 
 **Step 4**
 ```
@@ -224,7 +225,7 @@ Variable name | Meaning | Possible values | Expected value |
           actionType:data.managerActionType
       }); 
 });
-```
+ ```
 
 ## forms-flow-web Events
 > This section elaborates events used in forms-flow-web.

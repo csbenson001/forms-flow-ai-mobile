@@ -1,5 +1,9 @@
 import 'dart:core';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+import 'env_key_constants.dart';
+
 class FormsFlowAIApiConstants {
   //Socket Constants
   static const socketAccessToken = 'accesstoken';
@@ -12,6 +16,9 @@ class FormsFlowAIApiConstants {
 
   static const String ascendingOrder = "asc";
   static const String descendingOrder = "desc";
+
+  // Realm
+  static final String realm = dotenv.get(EnvKeyConstants.envKeycloakRealmKey);
 
   // Tasks
   static const String allTasks = 'All tasks';

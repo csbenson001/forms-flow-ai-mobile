@@ -1,24 +1,28 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
+import 'package:formsflowai/core/api/response/base/base_response.dart';
 import 'package:formsflowai/core/error/errors_failure.dart';
 import 'package:formsflowai/presentation/features/login/usecases/fetch_user_info_usecase.dart';
 import 'package:formsflowai/presentation/features/login/usecases/login_keycloak_authenticator_usecase.dart';
 import 'package:formsflowai/presentation/features/login/usecases/refresk_keycloak_token_usecase.dart';
 import 'package:formsflowai/repository/user/user_remote_data_source.dart';
+import 'package:formsflowai/shared/formsflow_api_constants.dart';
 
 import '../../core/api/client/user/user_api_client.dart';
 import '../../core/api/response/user/info/user_info_response.dart';
-import '../../core/api/utils/api_constants_url.dart';
+import '../../core/preferences/app_preference.dart';
 import '../../shared/flutter_auth_utils.dart';
 import '../../shared/formsflow_app_constants.dart';
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   final UserApiClient userApiClient;
-
   final FlutterAppAuth flutterAppAuth;
+  final AppPreferences appPreferences;
 
   UserRemoteDataSourceImpl(
-      {required this.userApiClient, required this.flutterAppAuth});
+      {required this.userApiClient,
+      required this.flutterAppAuth,
+      required this.appPreferences});
 
   /// Method to fetch User Info
   /// Parameters
@@ -29,7 +33,9 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       {required FetchUserInfoParams fetchUserInfoParams}) async {
     try {
       var response = await userApiClient.getUserInfo(
-          fetchUserInfoParams.accessToken, ApiConstantUrl.realm);
+        fetchUserInfoParams.accessToken,
+        FormsFlowAIApiConstants.realm,
+      );
       return Right(response);
     } catch (e) {
       return Left(ServerFailure());
@@ -44,21 +50,15 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   Future<Either<Failure, AuthorizationTokenResponse>>
       loginUserUsingKeycloakAuthenticator(
           {required LoginKeycloakAuthenticatorParams params}) async {
-    String clientId = FormsFlowAIConstants.clientId;
-    const String redirectUrl = FormsFlowAIConstants.keycloakRedirectUrl;
-    const List<String> scopes = FormsFlowAIConstants.keycloakScopes;
-
-    final serviceConfiguration =
-        FlutterAuthUtils.fetchAuthorizationConfiguration();
-
     try {
       final AuthorizationTokenResponse? result =
           await flutterAppAuth.authorizeAndExchangeCode(
         AuthorizationTokenRequest(
-          clientId,
-          redirectUrl,
-          serviceConfiguration: serviceConfiguration,
-          scopes: scopes,
+          FormsFlowAIConstants.clientId,
+          FormsFlowAIConstants.keycloakRedirectUrl,
+          serviceConfiguration:
+              FlutterAuthUtils.fetchAuthorizationConfiguration(),
+          scopes: FormsFlowAIConstants.keycloakScopes,
           preferEphemeralSession: false,
           allowInsecureConnections: false,
         ),
@@ -80,27 +80,44 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   @override
   Future<Either<Failure, TokenResponse>> refreshKeycloakToken(
       {required RefreshKeycloakTokenParams params}) async {
-    String clientId = FormsFlowAIConstants.clientId;
-    const String redirectUrl = FormsFlowAIConstants.keycloakRedirectUrl;
-    const List<String> scopes = FormsFlowAIConstants.keycloakScopes;
-
-    final serviceConfiguration =
-        FlutterAuthUtils.fetchAuthorizationConfiguration();
-
     try {
       final TokenResponse? result = await flutterAppAuth.token(
         TokenRequest(
-          clientId,
-          redirectUrl,
+          FormsFlowAIConstants.clientId,
+          FormsFlowAIConstants.keycloakRedirectUrl,
           refreshToken: params.refreshOfflineToken,
-          serviceConfiguration: serviceConfiguration,
-          scopes: scopes,
+          serviceConfiguration:
+              FlutterAuthUtils.fetchAuthorizationConfiguration(),
+          scopes: FormsFlowAIConstants.keycloakScopes,
           allowInsecureConnections: false,
         ),
       );
 
       if (result != null) {
         return Right(result);
+      } else {
+        return Left(ServerFailure());
+      }
+    } catch (e) {
+      return Left(ServerFailure());
+    }
+  }
+
+  /// Method to logout keycloak user using Authenticator
+  /// ---> Returns [BaseResponse]
+  @override
+  Future<Either<Failure, BaseResponse>> logoutKeycloak() async {
+    try {
+      final result = await userApiClient.logout(
+          FormsFlowAIApiConstants.realm,
+          appPreferences.getRefreshToken(),
+          appPreferences.getAccessToken(),
+          FormsFlowAIConstants.clientId);
+      if (result.response.statusCode == 200 ||
+          result.response.statusCode == 204) {
+        return Right(BaseResponse(
+            statusCode: result.response.statusCode,
+            message: FormsFlowAIApiConstants.statusSuccessMessage));
       } else {
         return Left(ServerFailure());
       }

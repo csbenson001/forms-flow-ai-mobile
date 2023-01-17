@@ -16,4 +16,6 @@ class EnvKeyConstants {
   static const String envKeycloakWebClientId = "KEYCLOAK_WEB_CLIENTID";
 
   static const String envWebsocketEncryptKey = "WEBSOCKET_ENCRYPT_KEY";
+
+  static const String envKeycloakRedirectUrl = "KEYCLOAK_REDIRECT_URL";
 }

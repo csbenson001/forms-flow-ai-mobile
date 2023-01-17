@@ -6,6 +6,7 @@ import 'package:formsflowai/presentation/features/taskdetails/usecases/form/subm
 import '../../presentation/features/home/tasklisting/usecases/form/fetch_formio_roles_usecase.dart';
 import '../../presentation/features/home/tasklisting/usecases/index.dart';
 import '../../presentation/features/home/tasklisting/usecases/task/fetch_tasks_usecase.dart';
+import '../../presentation/features/home/tasklisting/usecases/user/logout_keycloak_authenticator_usecase.dart';
 import '../../presentation/features/login/usecases/index.dart';
 import '../../presentation/features/login/usecases/login_keycloak_authenticator_usecase.dart';
 import '../../presentation/features/login/usecases/refresk_keycloak_token_usecase.dart';
@@ -21,6 +22,8 @@ Future<void> registerUseCases() async {
       () => LoginKeycloakAuthenticatorUserCase(repository: dl()));
   dl.registerLazySingleton(
       () => RefreshKeyCloakTokenUserCase(repository: dl()));
+  dl.registerLazySingleton(
+      () => LogoutKeycloakAuthenticatorUserCase(repository: dl()));
 
   /// Local
   dl.registerLazySingleton(() => SaveUserDetailsUseCase(repository: dl()));

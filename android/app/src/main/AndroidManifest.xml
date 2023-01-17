@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 
-    package="com.formsflowai.sample">  // Update your app package name
+    package="com.formsflowai.sample">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
 

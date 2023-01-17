@@ -46,6 +46,7 @@ final taskListViewModelProvider = ChangeNotifierProvider.autoDispose(
       fetchTaskCountUseCase: dl(),
       fetchTasksUseCase: dl(),
       databaseWorker: dl(),
+      logoutKeycloakAuthenticatorUserCase: dl(),
       networkManagerController: dl(),
       socketService: dl(),
       clearLocalDatabaseUseCase: dl(),

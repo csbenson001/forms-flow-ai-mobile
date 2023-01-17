@@ -114,20 +114,14 @@ class ApplicationHistoryAuthorizationInterceptor
   /// Method to update Refresh token using Authenticator
   /// ---> Returns [TokenResponse]?
   Future<TokenResponse?> refreshKeycloakToken() async {
-    String clientId = FormsFlowAIConstants.clientId;
-    const String redirectUrl = FormsFlowAIConstants.keycloakRedirectUrl;
-    const List<String> scopes = FormsFlowAIConstants.keycloakScopes;
-
-    final serviceConfiguration =
-        FlutterAuthUtils.fetchAuthorizationConfiguration();
-
     return await flutterAppAuth.token(
       TokenRequest(
-        clientId,
-        redirectUrl,
+        FormsFlowAIConstants.clientId,
+        FormsFlowAIConstants.keycloakRedirectUrl,
         refreshToken: appPreferences.getRefreshToken(),
-        serviceConfiguration: serviceConfiguration,
-        scopes: scopes,
+        serviceConfiguration:
+            FlutterAuthUtils.fetchAuthorizationConfiguration(),
+        scopes: FormsFlowAIConstants.keycloakScopes,
         allowInsecureConnections: false,
       ),
     );

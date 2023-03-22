@@ -95,7 +95,6 @@ class _DropdownScrollBehavior extends ScrollBehavior {
   TargetPlatform getPlatform(BuildContext context) =>
       Theme.of(context).platform;
 
-  @override
   Widget buildViewportChrome(
           BuildContext context, Widget child, AxisDirection axisDirection) =>
       child;

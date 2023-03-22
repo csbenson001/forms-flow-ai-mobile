@@ -27,8 +27,6 @@ class GroupedCheckbox extends StatefulWidget {
   final Function onChanged;
 
   /// The color to use when this checkbox is checked.
-  ///
-  /// Defaults to [ThemeData.toggleableActiveColor].
   final Color? activeColor;
 
   /// The color to use for the check icon when this checkbox is checked.

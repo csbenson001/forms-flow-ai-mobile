@@ -638,19 +638,21 @@ class TaskListViewModel extends BaseNotifierViewModel {
     showProgressLoading();
     final clearDatabaseResponse = await clearLocalDatabaseUseCase.call(
         params: const ClearLocalDatabaseUseCaseParams());
-    clearDatabaseResponse.fold((l) async {
+    clearDatabaseResponse.fold((l) {
       dismissProgressLoading();
-      await appPreferences.clear();
+      appPreferences.clear();
       socketService.deActivateSocket();
-      RouterUtils.logoutUser(
-          context: context, routeName: AppRoutes.loginScreen);
-    }, (r) async {
+      navigateToLoginScreen(context: context);
+    }, (r) {
       dismissProgressLoading();
-      await appPreferences.clear();
+      appPreferences.clear();
       socketService.deActivateSocket();
-      RouterUtils.logoutUser(
-          context: context, routeName: AppRoutes.loginScreen);
+      navigateToLoginScreen(context: context);
     });
+  }
+
+  void navigateToLoginScreen({required BuildContext context}) {
+    RouterUtils.logoutUser(context: context, routeName: AppRoutes.loginScreen);
   }
 
   /// Function to update selected sort filter dropdown

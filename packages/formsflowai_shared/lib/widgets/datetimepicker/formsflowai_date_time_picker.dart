@@ -32,6 +32,7 @@ class FormsflowAIDateTimePicker {
     );
     // Check if data is picked then open time picker
     if (picked != null) {
+      // ignore: use_build_context_synchronously
       final TimeOfDay? selectedTime = await showTimePicker(
           context: context,
           initialTime: const TimeOfDay(hour: 0, minute: 0),

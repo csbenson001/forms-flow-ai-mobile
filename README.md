@@ -160,11 +160,11 @@ Variable name | Meaning | Possible values | Default value |
 
 **For Android**
 
-update mipmap folders launcher images in android with your custom logo -> app -> src -> main -> res -> mipmap
+Update mipmap folders launcher images in android with your custom logo -> app -> src -> main -> res -> mipmap
 
 **For iOS**
 
-update Asset Appicon with your custom logo
+Update Asset Appicon with your custom logo
 
 ### Offline Access
 
@@ -190,24 +190,24 @@ Variable name | Meaning | Possible values | Expected value |
 
 ### Offline form submission
 
-    To implement offline form submission in the formsflowai mobile app please update the forms in formsflow-web following the below steps
+To implement offline form submission in the formsflowai mobile app please update the forms in formsflow-web following the below steps
 
 ### Step 1
 
-Navigate to Forms Page
+Navigate to forms page in the web
 
 ### Step 2
 
-Select the form and click on “View/Edit Form” button
+Select the required form to enable offline access and click on “View/Edit Form” button
 
 ### Step 3
 
-Click the Edit Form button
+Click the edit form button
 
 **Step 4**
-```
+
  Add the below code snippet in your custom action button click
-    
+``` 
  const submissionId = form._submission._id;
  const formDataReqUrl = form.formio.formUrl+'/submission/'+submissionId;const formDataReqObj1 =  {  "_id": submissionId,  "data": data};
  const formio = new Formio(formDataReqUrl);

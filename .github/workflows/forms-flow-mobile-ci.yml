@@ -18,14 +18,17 @@ jobs:
     name: forms-flow-mobile
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-java@v1
         with:
           java-version: '12.x'
-      - uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@v3
         with:
+          flutter-version: '3.7.7'
           channel: 'stable'
-
+          
+      - run: flutter --version
+      
         # Getting  Flutter dependencies
       - run: flutter clean
       - run: flutter pub get && flutter pub run build_runner build --delete-conflicting-outputs

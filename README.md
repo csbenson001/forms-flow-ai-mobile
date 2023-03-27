@@ -114,8 +114,7 @@ Change the bundle identifier from your Info.plist file inside your ios/Runner di
 ### Installation
 
 * Make sure your current working directory is "forms-flow-ai-mobile".
-* Rename the file [sample.env](./sample.env) to **.env**.
-* Modify the environment variables in the newly created **.env** file if needed. Environment variables are given in the table below,
+* Modify the environment variables in the **.env** file. Environment variables are given in the table below,
 * **NOTE : {URLs} given inside the .env file should be changed to your host URL. Please take special care to identify the correct URLs**
 
 > :information_source: Variables with trailing :triangular_flag_on_post: in below table should be updated in the .env file

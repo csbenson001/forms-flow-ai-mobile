@@ -80,7 +80,7 @@ dependencies:
     path: packages/formsflowai_shared
   stomp_dart_client:
     path: packages/stomp_dart_client
-  retrofit: any
+  retrofit: ^3.3.1
   retrofit_generator: ^4.2.0
   floor_generator: ^1.4.1
 
@@ -155,7 +155,7 @@ flutter:
     - assets/formio/app/fontawesome/less/mixins.less
     - assets/formio/app/fontawesome/less/rotated-flipped.less
     - assets/formio/app/fontawesome/scss/_icons.scss
-    - sample.env
+    - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

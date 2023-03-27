@@ -35,7 +35,7 @@ dependencies:
   cupertino_icons: ^1.0.3
   font_awesome_flutter: ^9.1.0
   awesome_dialog: ^2.2.0
-  analyzer: ^1.7.1
+  analyzer: ^5.9.0
   intl: ^0.17.0
   jiffy: ^5.0.0
   timelines: ^0.1.0
@@ -60,15 +60,14 @@ dependencies:
   flutter_appauth: ^4.2.1
   jwt_decoder: ^2.0.1
   connectivity_plus:
-  retrofit: ^2.0.1
-  freezed_annotation: ^0.14.2
+  freezed_annotation: ^2.2.0
   pretty_dio_logger: ^1.2.0-beta-1
   kt_dart: ^0.10.0
   dartz: ^0.10.1
   encrypt: ^5.0.1
   crypto: ^3.0.2
   tuple: ^2.0.1
-  floor: ^1.1.0
+  floor: ^1.4.1
   motion_toast: ^2.1.9
   logger: ^1.1.0
   go_router: ^3.1.0
@@ -81,20 +80,19 @@ dependencies:
     path: packages/formsflowai_shared
   stomp_dart_client:
     path: packages/stomp_dart_client
+  retrofit: ^3.3.1
+  retrofit_generator: ^4.2.0
+  floor_generator: ^1.4.1
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   meta: ^1.7.0
-
-  build_runner: ^2.1.11
+  build_runner: ^2.3.3
   flutter_lints: ^2.0.0
-  freezed: ^0.14.2
-  retrofit_generator:
-  json_serializable: ^4.1.4
-  floor_generator:
-
+  freezed: ^2.3.2
+  json_serializable: ^6.6.1
 
 
 analyzer:
@@ -157,7 +155,7 @@ flutter:
     - assets/formio/app/fontawesome/less/mixins.less
     - assets/formio/app/fontawesome/less/rotated-flipped.less
     - assets/formio/app/fontawesome/scss/_icons.scss
-    - sample.env
+    - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

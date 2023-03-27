@@ -1,5 +1,7 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'socket_event_bus_data_model.dart';
 
@@ -10,22 +12,7 @@ part of 'socket_event_bus_data_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$SocketEventBusDMTearOff {
-  const _$SocketEventBusDMTearOff();
-
-  _SocketEventBusDM call({String? taskId, String? eventName}) {
-    return _SocketEventBusDM(
-      taskId: taskId,
-      eventName: eventName,
-    );
-  }
-}
-
-/// @nodoc
-const $SocketEventBusDM = _$SocketEventBusDMTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$SocketEventBusDM {
@@ -41,69 +28,71 @@ mixin _$SocketEventBusDM {
 abstract class $SocketEventBusDMCopyWith<$Res> {
   factory $SocketEventBusDMCopyWith(
           SocketEventBusDM value, $Res Function(SocketEventBusDM) then) =
-      _$SocketEventBusDMCopyWithImpl<$Res>;
+      _$SocketEventBusDMCopyWithImpl<$Res, SocketEventBusDM>;
+  @useResult
   $Res call({String? taskId, String? eventName});
 }
 
 /// @nodoc
-class _$SocketEventBusDMCopyWithImpl<$Res>
+class _$SocketEventBusDMCopyWithImpl<$Res, $Val extends SocketEventBusDM>
     implements $SocketEventBusDMCopyWith<$Res> {
   _$SocketEventBusDMCopyWithImpl(this._value, this._then);
 
-  final SocketEventBusDM _value;
   // ignore: unused_field
-  final $Res Function(SocketEventBusDM) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? taskId = freezed,
     Object? eventName = freezed,
   }) {
     return _then(_value.copyWith(
-      taskId: taskId == freezed
+      taskId: freezed == taskId
           ? _value.taskId
           : taskId // ignore: cast_nullable_to_non_nullable
               as String?,
-      eventName: eventName == freezed
+      eventName: freezed == eventName
           ? _value.eventName
           : eventName // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$SocketEventBusDMCopyWith<$Res>
+abstract class _$$_SocketEventBusDMCopyWith<$Res>
     implements $SocketEventBusDMCopyWith<$Res> {
-  factory _$SocketEventBusDMCopyWith(
-          _SocketEventBusDM value, $Res Function(_SocketEventBusDM) then) =
-      __$SocketEventBusDMCopyWithImpl<$Res>;
+  factory _$$_SocketEventBusDMCopyWith(
+          _$_SocketEventBusDM value, $Res Function(_$_SocketEventBusDM) then) =
+      __$$_SocketEventBusDMCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String? taskId, String? eventName});
 }
 
 /// @nodoc
-class __$SocketEventBusDMCopyWithImpl<$Res>
-    extends _$SocketEventBusDMCopyWithImpl<$Res>
-    implements _$SocketEventBusDMCopyWith<$Res> {
-  __$SocketEventBusDMCopyWithImpl(
-      _SocketEventBusDM _value, $Res Function(_SocketEventBusDM) _then)
-      : super(_value, (v) => _then(v as _SocketEventBusDM));
+class __$$_SocketEventBusDMCopyWithImpl<$Res>
+    extends _$SocketEventBusDMCopyWithImpl<$Res, _$_SocketEventBusDM>
+    implements _$$_SocketEventBusDMCopyWith<$Res> {
+  __$$_SocketEventBusDMCopyWithImpl(
+      _$_SocketEventBusDM _value, $Res Function(_$_SocketEventBusDM) _then)
+      : super(_value, _then);
 
-  @override
-  _SocketEventBusDM get _value => super._value as _SocketEventBusDM;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? taskId = freezed,
     Object? eventName = freezed,
   }) {
-    return _then(_SocketEventBusDM(
-      taskId: taskId == freezed
+    return _then(_$_SocketEventBusDM(
+      taskId: freezed == taskId
           ? _value.taskId
           : taskId // ignore: cast_nullable_to_non_nullable
               as String?,
-      eventName: eventName == freezed
+      eventName: freezed == eventName
           ? _value.eventName
           : eventName // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -129,36 +118,33 @@ class _$_SocketEventBusDM implements _SocketEventBusDM {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _SocketEventBusDM &&
-            (identical(other.taskId, taskId) ||
-                const DeepCollectionEquality().equals(other.taskId, taskId)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$_SocketEventBusDM &&
+            (identical(other.taskId, taskId) || other.taskId == taskId) &&
             (identical(other.eventName, eventName) ||
-                const DeepCollectionEquality()
-                    .equals(other.eventName, eventName)));
+                other.eventName == eventName));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(taskId) ^
-      const DeepCollectionEquality().hash(eventName);
+  int get hashCode => Object.hash(runtimeType, taskId, eventName);
 
   @JsonKey(ignore: true)
   @override
-  _$SocketEventBusDMCopyWith<_SocketEventBusDM> get copyWith =>
-      __$SocketEventBusDMCopyWithImpl<_SocketEventBusDM>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_SocketEventBusDMCopyWith<_$_SocketEventBusDM> get copyWith =>
+      __$$_SocketEventBusDMCopyWithImpl<_$_SocketEventBusDM>(this, _$identity);
 }
 
 abstract class _SocketEventBusDM implements SocketEventBusDM {
-  const factory _SocketEventBusDM({String? taskId, String? eventName}) =
-      _$_SocketEventBusDM;
+  const factory _SocketEventBusDM(
+      {final String? taskId, final String? eventName}) = _$_SocketEventBusDM;
 
   @override
-  String? get taskId => throw _privateConstructorUsedError;
+  String? get taskId;
   @override
-  String? get eventName => throw _privateConstructorUsedError;
+  String? get eventName;
   @override
   @JsonKey(ignore: true)
-  _$SocketEventBusDMCopyWith<_SocketEventBusDM> get copyWith =>
+  _$$_SocketEventBusDMCopyWith<_$_SocketEventBusDM> get copyWith =>
       throw _privateConstructorUsedError;
 }

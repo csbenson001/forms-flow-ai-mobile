@@ -1,5 +1,7 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'task_list_response.dart';
 
@@ -10,52 +12,11 @@ part of 'task_list_response.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 TaskListResponse _$TaskListResponseFromJson(Map<String, dynamic> json) {
   return _TaskListResponse.fromJson(json);
 }
-
-/// @nodoc
-class _$TaskListResponseTearOff {
-  const _$TaskListResponseTearOff();
-
-  _TaskListResponse call(
-      {String? id,
-      String? name,
-      String? assignee,
-      String? created,
-      String? due,
-      String? followUp,
-      String? executionId,
-      int? priority,
-      String? processDefinitionId,
-      String? processInstanceId,
-      String? taskDefinitionKey,
-      bool? suspended}) {
-    return _TaskListResponse(
-      id: id,
-      name: name,
-      assignee: assignee,
-      created: created,
-      due: due,
-      followUp: followUp,
-      executionId: executionId,
-      priority: priority,
-      processDefinitionId: processDefinitionId,
-      processInstanceId: processInstanceId,
-      taskDefinitionKey: taskDefinitionKey,
-      suspended: suspended,
-    );
-  }
-
-  TaskListResponse fromJson(Map<String, Object> json) {
-    return TaskListResponse.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $TaskListResponse = _$TaskListResponseTearOff();
 
 /// @nodoc
 mixin _$TaskListResponse {
@@ -82,7 +43,8 @@ mixin _$TaskListResponse {
 abstract class $TaskListResponseCopyWith<$Res> {
   factory $TaskListResponseCopyWith(
           TaskListResponse value, $Res Function(TaskListResponse) then) =
-      _$TaskListResponseCopyWithImpl<$Res>;
+      _$TaskListResponseCopyWithImpl<$Res, TaskListResponse>;
+  @useResult
   $Res call(
       {String? id,
       String? name,
@@ -99,14 +61,16 @@ abstract class $TaskListResponseCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$TaskListResponseCopyWithImpl<$Res>
+class _$TaskListResponseCopyWithImpl<$Res, $Val extends TaskListResponse>
     implements $TaskListResponseCopyWith<$Res> {
   _$TaskListResponseCopyWithImpl(this._value, this._then);
 
-  final TaskListResponse _value;
   // ignore: unused_field
-  final $Res Function(TaskListResponse) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -123,65 +87,66 @@ class _$TaskListResponseCopyWithImpl<$Res>
     Object? suspended = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      assignee: assignee == freezed
+      assignee: freezed == assignee
           ? _value.assignee
           : assignee // ignore: cast_nullable_to_non_nullable
               as String?,
-      created: created == freezed
+      created: freezed == created
           ? _value.created
           : created // ignore: cast_nullable_to_non_nullable
               as String?,
-      due: due == freezed
+      due: freezed == due
           ? _value.due
           : due // ignore: cast_nullable_to_non_nullable
               as String?,
-      followUp: followUp == freezed
+      followUp: freezed == followUp
           ? _value.followUp
           : followUp // ignore: cast_nullable_to_non_nullable
               as String?,
-      executionId: executionId == freezed
+      executionId: freezed == executionId
           ? _value.executionId
           : executionId // ignore: cast_nullable_to_non_nullable
               as String?,
-      priority: priority == freezed
+      priority: freezed == priority
           ? _value.priority
           : priority // ignore: cast_nullable_to_non_nullable
               as int?,
-      processDefinitionId: processDefinitionId == freezed
+      processDefinitionId: freezed == processDefinitionId
           ? _value.processDefinitionId
           : processDefinitionId // ignore: cast_nullable_to_non_nullable
               as String?,
-      processInstanceId: processInstanceId == freezed
+      processInstanceId: freezed == processInstanceId
           ? _value.processInstanceId
           : processInstanceId // ignore: cast_nullable_to_non_nullable
               as String?,
-      taskDefinitionKey: taskDefinitionKey == freezed
+      taskDefinitionKey: freezed == taskDefinitionKey
           ? _value.taskDefinitionKey
           : taskDefinitionKey // ignore: cast_nullable_to_non_nullable
               as String?,
-      suspended: suspended == freezed
+      suspended: freezed == suspended
           ? _value.suspended
           : suspended // ignore: cast_nullable_to_non_nullable
               as bool?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$TaskListResponseCopyWith<$Res>
+abstract class _$$_TaskListResponseCopyWith<$Res>
     implements $TaskListResponseCopyWith<$Res> {
-  factory _$TaskListResponseCopyWith(
-          _TaskListResponse value, $Res Function(_TaskListResponse) then) =
-      __$TaskListResponseCopyWithImpl<$Res>;
+  factory _$$_TaskListResponseCopyWith(
+          _$_TaskListResponse value, $Res Function(_$_TaskListResponse) then) =
+      __$$_TaskListResponseCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? id,
       String? name,
@@ -198,16 +163,14 @@ abstract class _$TaskListResponseCopyWith<$Res>
 }
 
 /// @nodoc
-class __$TaskListResponseCopyWithImpl<$Res>
-    extends _$TaskListResponseCopyWithImpl<$Res>
-    implements _$TaskListResponseCopyWith<$Res> {
-  __$TaskListResponseCopyWithImpl(
-      _TaskListResponse _value, $Res Function(_TaskListResponse) _then)
-      : super(_value, (v) => _then(v as _TaskListResponse));
+class __$$_TaskListResponseCopyWithImpl<$Res>
+    extends _$TaskListResponseCopyWithImpl<$Res, _$_TaskListResponse>
+    implements _$$_TaskListResponseCopyWith<$Res> {
+  __$$_TaskListResponseCopyWithImpl(
+      _$_TaskListResponse _value, $Res Function(_$_TaskListResponse) _then)
+      : super(_value, _then);
 
-  @override
-  _TaskListResponse get _value => super._value as _TaskListResponse;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -223,52 +186,52 @@ class __$TaskListResponseCopyWithImpl<$Res>
     Object? taskDefinitionKey = freezed,
     Object? suspended = freezed,
   }) {
-    return _then(_TaskListResponse(
-      id: id == freezed
+    return _then(_$_TaskListResponse(
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      assignee: assignee == freezed
+      assignee: freezed == assignee
           ? _value.assignee
           : assignee // ignore: cast_nullable_to_non_nullable
               as String?,
-      created: created == freezed
+      created: freezed == created
           ? _value.created
           : created // ignore: cast_nullable_to_non_nullable
               as String?,
-      due: due == freezed
+      due: freezed == due
           ? _value.due
           : due // ignore: cast_nullable_to_non_nullable
               as String?,
-      followUp: followUp == freezed
+      followUp: freezed == followUp
           ? _value.followUp
           : followUp // ignore: cast_nullable_to_non_nullable
               as String?,
-      executionId: executionId == freezed
+      executionId: freezed == executionId
           ? _value.executionId
           : executionId // ignore: cast_nullable_to_non_nullable
               as String?,
-      priority: priority == freezed
+      priority: freezed == priority
           ? _value.priority
           : priority // ignore: cast_nullable_to_non_nullable
               as int?,
-      processDefinitionId: processDefinitionId == freezed
+      processDefinitionId: freezed == processDefinitionId
           ? _value.processDefinitionId
           : processDefinitionId // ignore: cast_nullable_to_non_nullable
               as String?,
-      processInstanceId: processInstanceId == freezed
+      processInstanceId: freezed == processInstanceId
           ? _value.processInstanceId
           : processInstanceId // ignore: cast_nullable_to_non_nullable
               as String?,
-      taskDefinitionKey: taskDefinitionKey == freezed
+      taskDefinitionKey: freezed == taskDefinitionKey
           ? _value.taskDefinitionKey
           : taskDefinitionKey // ignore: cast_nullable_to_non_nullable
               as String?,
-      suspended: suspended == freezed
+      suspended: freezed == suspended
           ? _value.suspended
           : suspended // ignore: cast_nullable_to_non_nullable
               as bool?,
@@ -294,7 +257,7 @@ class _$_TaskListResponse implements _TaskListResponse {
       this.suspended});
 
   factory _$_TaskListResponse.fromJson(Map<String, dynamic> json) =>
-      _$_$_TaskListResponseFromJson(json);
+      _$$_TaskListResponseFromJson(json);
 
   @override
   final String? id;
@@ -329,113 +292,105 @@ class _$_TaskListResponse implements _TaskListResponse {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _TaskListResponse &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$_TaskListResponse &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
             (identical(other.assignee, assignee) ||
-                const DeepCollectionEquality()
-                    .equals(other.assignee, assignee)) &&
-            (identical(other.created, created) ||
-                const DeepCollectionEquality()
-                    .equals(other.created, created)) &&
-            (identical(other.due, due) ||
-                const DeepCollectionEquality().equals(other.due, due)) &&
+                other.assignee == assignee) &&
+            (identical(other.created, created) || other.created == created) &&
+            (identical(other.due, due) || other.due == due) &&
             (identical(other.followUp, followUp) ||
-                const DeepCollectionEquality()
-                    .equals(other.followUp, followUp)) &&
+                other.followUp == followUp) &&
             (identical(other.executionId, executionId) ||
-                const DeepCollectionEquality()
-                    .equals(other.executionId, executionId)) &&
+                other.executionId == executionId) &&
             (identical(other.priority, priority) ||
-                const DeepCollectionEquality()
-                    .equals(other.priority, priority)) &&
+                other.priority == priority) &&
             (identical(other.processDefinitionId, processDefinitionId) ||
-                const DeepCollectionEquality()
-                    .equals(other.processDefinitionId, processDefinitionId)) &&
+                other.processDefinitionId == processDefinitionId) &&
             (identical(other.processInstanceId, processInstanceId) ||
-                const DeepCollectionEquality()
-                    .equals(other.processInstanceId, processInstanceId)) &&
+                other.processInstanceId == processInstanceId) &&
             (identical(other.taskDefinitionKey, taskDefinitionKey) ||
-                const DeepCollectionEquality()
-                    .equals(other.taskDefinitionKey, taskDefinitionKey)) &&
+                other.taskDefinitionKey == taskDefinitionKey) &&
             (identical(other.suspended, suspended) ||
-                const DeepCollectionEquality()
-                    .equals(other.suspended, suspended)));
+                other.suspended == suspended));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(name) ^
-      const DeepCollectionEquality().hash(assignee) ^
-      const DeepCollectionEquality().hash(created) ^
-      const DeepCollectionEquality().hash(due) ^
-      const DeepCollectionEquality().hash(followUp) ^
-      const DeepCollectionEquality().hash(executionId) ^
-      const DeepCollectionEquality().hash(priority) ^
-      const DeepCollectionEquality().hash(processDefinitionId) ^
-      const DeepCollectionEquality().hash(processInstanceId) ^
-      const DeepCollectionEquality().hash(taskDefinitionKey) ^
-      const DeepCollectionEquality().hash(suspended);
 
   @JsonKey(ignore: true)
   @override
-  _$TaskListResponseCopyWith<_TaskListResponse> get copyWith =>
-      __$TaskListResponseCopyWithImpl<_TaskListResponse>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      name,
+      assignee,
+      created,
+      due,
+      followUp,
+      executionId,
+      priority,
+      processDefinitionId,
+      processInstanceId,
+      taskDefinitionKey,
+      suspended);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_TaskListResponseCopyWith<_$_TaskListResponse> get copyWith =>
+      __$$_TaskListResponseCopyWithImpl<_$_TaskListResponse>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_TaskListResponseToJson(this);
+    return _$$_TaskListResponseToJson(
+      this,
+    );
   }
 }
 
 abstract class _TaskListResponse implements TaskListResponse {
   const factory _TaskListResponse(
-      {String? id,
-      String? name,
-      String? assignee,
-      String? created,
-      String? due,
-      String? followUp,
-      String? executionId,
-      int? priority,
-      String? processDefinitionId,
-      String? processInstanceId,
-      String? taskDefinitionKey,
-      bool? suspended}) = _$_TaskListResponse;
+      {final String? id,
+      final String? name,
+      final String? assignee,
+      final String? created,
+      final String? due,
+      final String? followUp,
+      final String? executionId,
+      final int? priority,
+      final String? processDefinitionId,
+      final String? processInstanceId,
+      final String? taskDefinitionKey,
+      final bool? suspended}) = _$_TaskListResponse;
 
   factory _TaskListResponse.fromJson(Map<String, dynamic> json) =
       _$_TaskListResponse.fromJson;
 
   @override
-  String? get id => throw _privateConstructorUsedError;
+  String? get id;
   @override
-  String? get name => throw _privateConstructorUsedError;
+  String? get name;
   @override
-  String? get assignee => throw _privateConstructorUsedError;
+  String? get assignee;
   @override
-  String? get created => throw _privateConstructorUsedError;
+  String? get created;
   @override
-  String? get due => throw _privateConstructorUsedError;
+  String? get due;
   @override
-  String? get followUp => throw _privateConstructorUsedError;
+  String? get followUp;
   @override
-  String? get executionId => throw _privateConstructorUsedError;
+  String? get executionId;
   @override
-  int? get priority => throw _privateConstructorUsedError;
+  int? get priority;
   @override
-  String? get processDefinitionId => throw _privateConstructorUsedError;
+  String? get processDefinitionId;
   @override
-  String? get processInstanceId => throw _privateConstructorUsedError;
+  String? get processInstanceId;
   @override
-  String? get taskDefinitionKey => throw _privateConstructorUsedError;
+  String? get taskDefinitionKey;
   @override
-  bool? get suspended => throw _privateConstructorUsedError;
+  bool? get suspended;
   @override
   @JsonKey(ignore: true)
-  _$TaskListResponseCopyWith<_TaskListResponse> get copyWith =>
+  _$$_TaskListResponseCopyWith<_$_TaskListResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }

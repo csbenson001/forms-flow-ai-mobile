@@ -1,5 +1,7 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'user_info_response.dart';
 
@@ -10,50 +12,11 @@ part of 'user_info_response.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 UserInfoResponse _$UserInfoResponseFromJson(Map<String, dynamic> json) {
   return _UserInfoResponse.fromJson(json);
 }
-
-/// @nodoc
-class _$UserInfoResponseTearOff {
-  const _$UserInfoResponseTearOff();
-
-  _UserInfoResponse call(
-      {String? sub,
-      @JsonKey(name: "email_verified") bool? emailVerified,
-      List<String>? role,
-      String? name,
-      @JsonKey(name: "groups") List<String>? groups,
-      @JsonKey(name: "preferred_username") String? preferredUsername,
-      String? locale,
-      @JsonKey(name: "given_name") String? givenName,
-      List<String>? dashboards,
-      @JsonKey(name: "family_name") String? familyName,
-      String? email}) {
-    return _UserInfoResponse(
-      sub: sub,
-      emailVerified: emailVerified,
-      role: role,
-      name: name,
-      groups: groups,
-      preferredUsername: preferredUsername,
-      locale: locale,
-      givenName: givenName,
-      dashboards: dashboards,
-      familyName: familyName,
-      email: email,
-    );
-  }
-
-  UserInfoResponse fromJson(Map<String, Object> json) {
-    return UserInfoResponse.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $UserInfoResponse = _$UserInfoResponseTearOff();
 
 /// @nodoc
 mixin _$UserInfoResponse {
@@ -84,7 +47,8 @@ mixin _$UserInfoResponse {
 abstract class $UserInfoResponseCopyWith<$Res> {
   factory $UserInfoResponseCopyWith(
           UserInfoResponse value, $Res Function(UserInfoResponse) then) =
-      _$UserInfoResponseCopyWithImpl<$Res>;
+      _$UserInfoResponseCopyWithImpl<$Res, UserInfoResponse>;
+  @useResult
   $Res call(
       {String? sub,
       @JsonKey(name: "email_verified") bool? emailVerified,
@@ -100,14 +64,16 @@ abstract class $UserInfoResponseCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$UserInfoResponseCopyWithImpl<$Res>
+class _$UserInfoResponseCopyWithImpl<$Res, $Val extends UserInfoResponse>
     implements $UserInfoResponseCopyWith<$Res> {
   _$UserInfoResponseCopyWithImpl(this._value, this._then);
 
-  final UserInfoResponse _value;
   // ignore: unused_field
-  final $Res Function(UserInfoResponse) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? sub = freezed,
@@ -123,61 +89,62 @@ class _$UserInfoResponseCopyWithImpl<$Res>
     Object? email = freezed,
   }) {
     return _then(_value.copyWith(
-      sub: sub == freezed
+      sub: freezed == sub
           ? _value.sub
           : sub // ignore: cast_nullable_to_non_nullable
               as String?,
-      emailVerified: emailVerified == freezed
+      emailVerified: freezed == emailVerified
           ? _value.emailVerified
           : emailVerified // ignore: cast_nullable_to_non_nullable
               as bool?,
-      role: role == freezed
+      role: freezed == role
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      groups: groups == freezed
+      groups: freezed == groups
           ? _value.groups
           : groups // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      preferredUsername: preferredUsername == freezed
+      preferredUsername: freezed == preferredUsername
           ? _value.preferredUsername
           : preferredUsername // ignore: cast_nullable_to_non_nullable
               as String?,
-      locale: locale == freezed
+      locale: freezed == locale
           ? _value.locale
           : locale // ignore: cast_nullable_to_non_nullable
               as String?,
-      givenName: givenName == freezed
+      givenName: freezed == givenName
           ? _value.givenName
           : givenName // ignore: cast_nullable_to_non_nullable
               as String?,
-      dashboards: dashboards == freezed
+      dashboards: freezed == dashboards
           ? _value.dashboards
           : dashboards // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      familyName: familyName == freezed
+      familyName: freezed == familyName
           ? _value.familyName
           : familyName // ignore: cast_nullable_to_non_nullable
               as String?,
-      email: email == freezed
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$UserInfoResponseCopyWith<$Res>
+abstract class _$$_UserInfoResponseCopyWith<$Res>
     implements $UserInfoResponseCopyWith<$Res> {
-  factory _$UserInfoResponseCopyWith(
-          _UserInfoResponse value, $Res Function(_UserInfoResponse) then) =
-      __$UserInfoResponseCopyWithImpl<$Res>;
+  factory _$$_UserInfoResponseCopyWith(
+          _$_UserInfoResponse value, $Res Function(_$_UserInfoResponse) then) =
+      __$$_UserInfoResponseCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? sub,
       @JsonKey(name: "email_verified") bool? emailVerified,
@@ -193,16 +160,14 @@ abstract class _$UserInfoResponseCopyWith<$Res>
 }
 
 /// @nodoc
-class __$UserInfoResponseCopyWithImpl<$Res>
-    extends _$UserInfoResponseCopyWithImpl<$Res>
-    implements _$UserInfoResponseCopyWith<$Res> {
-  __$UserInfoResponseCopyWithImpl(
-      _UserInfoResponse _value, $Res Function(_UserInfoResponse) _then)
-      : super(_value, (v) => _then(v as _UserInfoResponse));
+class __$$_UserInfoResponseCopyWithImpl<$Res>
+    extends _$UserInfoResponseCopyWithImpl<$Res, _$_UserInfoResponse>
+    implements _$$_UserInfoResponseCopyWith<$Res> {
+  __$$_UserInfoResponseCopyWithImpl(
+      _$_UserInfoResponse _value, $Res Function(_$_UserInfoResponse) _then)
+      : super(_value, _then);
 
-  @override
-  _UserInfoResponse get _value => super._value as _UserInfoResponse;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? sub = freezed,
@@ -217,48 +182,48 @@ class __$UserInfoResponseCopyWithImpl<$Res>
     Object? familyName = freezed,
     Object? email = freezed,
   }) {
-    return _then(_UserInfoResponse(
-      sub: sub == freezed
+    return _then(_$_UserInfoResponse(
+      sub: freezed == sub
           ? _value.sub
           : sub // ignore: cast_nullable_to_non_nullable
               as String?,
-      emailVerified: emailVerified == freezed
+      emailVerified: freezed == emailVerified
           ? _value.emailVerified
           : emailVerified // ignore: cast_nullable_to_non_nullable
               as bool?,
-      role: role == freezed
-          ? _value.role
+      role: freezed == role
+          ? _value._role
           : role // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      groups: groups == freezed
-          ? _value.groups
+      groups: freezed == groups
+          ? _value._groups
           : groups // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      preferredUsername: preferredUsername == freezed
+      preferredUsername: freezed == preferredUsername
           ? _value.preferredUsername
           : preferredUsername // ignore: cast_nullable_to_non_nullable
               as String?,
-      locale: locale == freezed
+      locale: freezed == locale
           ? _value.locale
           : locale // ignore: cast_nullable_to_non_nullable
               as String?,
-      givenName: givenName == freezed
+      givenName: freezed == givenName
           ? _value.givenName
           : givenName // ignore: cast_nullable_to_non_nullable
               as String?,
-      dashboards: dashboards == freezed
-          ? _value.dashboards
+      dashboards: freezed == dashboards
+          ? _value._dashboards
           : dashboards // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      familyName: familyName == freezed
+      familyName: freezed == familyName
           ? _value.familyName
           : familyName // ignore: cast_nullable_to_non_nullable
               as String?,
-      email: email == freezed
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -272,31 +237,50 @@ class _$_UserInfoResponse implements _UserInfoResponse {
   const _$_UserInfoResponse(
       {this.sub,
       @JsonKey(name: "email_verified") this.emailVerified,
-      this.role,
+      final List<String>? role,
       this.name,
-      @JsonKey(name: "groups") this.groups,
+      @JsonKey(name: "groups") final List<String>? groups,
       @JsonKey(name: "preferred_username") this.preferredUsername,
       this.locale,
       @JsonKey(name: "given_name") this.givenName,
-      this.dashboards,
+      final List<String>? dashboards,
       @JsonKey(name: "family_name") this.familyName,
-      this.email});
+      this.email})
+      : _role = role,
+        _groups = groups,
+        _dashboards = dashboards;
 
   factory _$_UserInfoResponse.fromJson(Map<String, dynamic> json) =>
-      _$_$_UserInfoResponseFromJson(json);
+      _$$_UserInfoResponseFromJson(json);
 
   @override
   final String? sub;
   @override
   @JsonKey(name: "email_verified")
   final bool? emailVerified;
+  final List<String>? _role;
   @override
-  final List<String>? role;
+  List<String>? get role {
+    final value = _role;
+    if (value == null) return null;
+    if (_role is EqualUnmodifiableListView) return _role;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   final String? name;
+  final List<String>? _groups;
   @override
   @JsonKey(name: "groups")
-  final List<String>? groups;
+  List<String>? get groups {
+    final value = _groups;
+    if (value == null) return null;
+    if (_groups is EqualUnmodifiableListView) return _groups;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   @JsonKey(name: "preferred_username")
   final String? preferredUsername;
@@ -305,8 +289,16 @@ class _$_UserInfoResponse implements _UserInfoResponse {
   @override
   @JsonKey(name: "given_name")
   final String? givenName;
+  final List<String>? _dashboards;
   @override
-  final List<String>? dashboards;
+  List<String>? get dashboards {
+    final value = _dashboards;
+    if (value == null) return null;
+    if (_dashboards is EqualUnmodifiableListView) return _dashboards;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   @JsonKey(name: "family_name")
   final String? familyName;
@@ -321,108 +313,102 @@ class _$_UserInfoResponse implements _UserInfoResponse {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _UserInfoResponse &&
-            (identical(other.sub, sub) ||
-                const DeepCollectionEquality().equals(other.sub, sub)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$_UserInfoResponse &&
+            (identical(other.sub, sub) || other.sub == sub) &&
             (identical(other.emailVerified, emailVerified) ||
-                const DeepCollectionEquality()
-                    .equals(other.emailVerified, emailVerified)) &&
-            (identical(other.role, role) ||
-                const DeepCollectionEquality().equals(other.role, role)) &&
-            (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)) &&
-            (identical(other.groups, groups) ||
-                const DeepCollectionEquality().equals(other.groups, groups)) &&
+                other.emailVerified == emailVerified) &&
+            const DeepCollectionEquality().equals(other._role, _role) &&
+            (identical(other.name, name) || other.name == name) &&
+            const DeepCollectionEquality().equals(other._groups, _groups) &&
             (identical(other.preferredUsername, preferredUsername) ||
-                const DeepCollectionEquality()
-                    .equals(other.preferredUsername, preferredUsername)) &&
-            (identical(other.locale, locale) ||
-                const DeepCollectionEquality().equals(other.locale, locale)) &&
+                other.preferredUsername == preferredUsername) &&
+            (identical(other.locale, locale) || other.locale == locale) &&
             (identical(other.givenName, givenName) ||
-                const DeepCollectionEquality()
-                    .equals(other.givenName, givenName)) &&
-            (identical(other.dashboards, dashboards) ||
-                const DeepCollectionEquality()
-                    .equals(other.dashboards, dashboards)) &&
+                other.givenName == givenName) &&
+            const DeepCollectionEquality()
+                .equals(other._dashboards, _dashboards) &&
             (identical(other.familyName, familyName) ||
-                const DeepCollectionEquality()
-                    .equals(other.familyName, familyName)) &&
-            (identical(other.email, email) ||
-                const DeepCollectionEquality().equals(other.email, email)));
+                other.familyName == familyName) &&
+            (identical(other.email, email) || other.email == email));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(sub) ^
-      const DeepCollectionEquality().hash(emailVerified) ^
-      const DeepCollectionEquality().hash(role) ^
-      const DeepCollectionEquality().hash(name) ^
-      const DeepCollectionEquality().hash(groups) ^
-      const DeepCollectionEquality().hash(preferredUsername) ^
-      const DeepCollectionEquality().hash(locale) ^
-      const DeepCollectionEquality().hash(givenName) ^
-      const DeepCollectionEquality().hash(dashboards) ^
-      const DeepCollectionEquality().hash(familyName) ^
-      const DeepCollectionEquality().hash(email);
 
   @JsonKey(ignore: true)
   @override
-  _$UserInfoResponseCopyWith<_UserInfoResponse> get copyWith =>
-      __$UserInfoResponseCopyWithImpl<_UserInfoResponse>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType,
+      sub,
+      emailVerified,
+      const DeepCollectionEquality().hash(_role),
+      name,
+      const DeepCollectionEquality().hash(_groups),
+      preferredUsername,
+      locale,
+      givenName,
+      const DeepCollectionEquality().hash(_dashboards),
+      familyName,
+      email);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_UserInfoResponseCopyWith<_$_UserInfoResponse> get copyWith =>
+      __$$_UserInfoResponseCopyWithImpl<_$_UserInfoResponse>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_UserInfoResponseToJson(this);
+    return _$$_UserInfoResponseToJson(
+      this,
+    );
   }
 }
 
 abstract class _UserInfoResponse implements UserInfoResponse {
   const factory _UserInfoResponse(
-      {String? sub,
-      @JsonKey(name: "email_verified") bool? emailVerified,
-      List<String>? role,
-      String? name,
-      @JsonKey(name: "groups") List<String>? groups,
-      @JsonKey(name: "preferred_username") String? preferredUsername,
-      String? locale,
-      @JsonKey(name: "given_name") String? givenName,
-      List<String>? dashboards,
-      @JsonKey(name: "family_name") String? familyName,
-      String? email}) = _$_UserInfoResponse;
+      {final String? sub,
+      @JsonKey(name: "email_verified") final bool? emailVerified,
+      final List<String>? role,
+      final String? name,
+      @JsonKey(name: "groups") final List<String>? groups,
+      @JsonKey(name: "preferred_username") final String? preferredUsername,
+      final String? locale,
+      @JsonKey(name: "given_name") final String? givenName,
+      final List<String>? dashboards,
+      @JsonKey(name: "family_name") final String? familyName,
+      final String? email}) = _$_UserInfoResponse;
 
   factory _UserInfoResponse.fromJson(Map<String, dynamic> json) =
       _$_UserInfoResponse.fromJson;
 
   @override
-  String? get sub => throw _privateConstructorUsedError;
+  String? get sub;
   @override
   @JsonKey(name: "email_verified")
-  bool? get emailVerified => throw _privateConstructorUsedError;
+  bool? get emailVerified;
   @override
-  List<String>? get role => throw _privateConstructorUsedError;
+  List<String>? get role;
   @override
-  String? get name => throw _privateConstructorUsedError;
+  String? get name;
   @override
   @JsonKey(name: "groups")
-  List<String>? get groups => throw _privateConstructorUsedError;
+  List<String>? get groups;
   @override
   @JsonKey(name: "preferred_username")
-  String? get preferredUsername => throw _privateConstructorUsedError;
+  String? get preferredUsername;
   @override
-  String? get locale => throw _privateConstructorUsedError;
+  String? get locale;
   @override
   @JsonKey(name: "given_name")
-  String? get givenName => throw _privateConstructorUsedError;
+  String? get givenName;
   @override
-  List<String>? get dashboards => throw _privateConstructorUsedError;
+  List<String>? get dashboards;
   @override
   @JsonKey(name: "family_name")
-  String? get familyName => throw _privateConstructorUsedError;
+  String? get familyName;
   @override
-  String? get email => throw _privateConstructorUsedError;
+  String? get email;
   @override
   @JsonKey(ignore: true)
-  _$UserInfoResponseCopyWith<_UserInfoResponse> get copyWith =>
+  _$$_UserInfoResponseCopyWith<_$_UserInfoResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }

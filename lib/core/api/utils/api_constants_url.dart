@@ -50,7 +50,7 @@ class ApiConstantUrl {
 
   // ----------------------- TASK  ---------------------
 
-  static const String fetchTasks = '$bpmV1/$filter/$pathId/list?';
+  static const String fetchTasks = '$bpmV1/$filter/$pathId/list';
 
   static const String fetchTasksById = '$bpmV1/$task/$pathId';
 

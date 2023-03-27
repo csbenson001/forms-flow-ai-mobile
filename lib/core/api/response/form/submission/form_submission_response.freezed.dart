@@ -1,5 +1,7 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'form_submission_response.dart';
 
@@ -10,51 +12,12 @@ part of 'form_submission_response.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 FormSubmissionResponse _$FormSubmissionResponseFromJson(
     Map<String, dynamic> json) {
   return _FormSubmissionResponse.fromJson(json);
 }
-
-/// @nodoc
-class _$FormSubmissionResponseTearOff {
-  const _$FormSubmissionResponseTearOff();
-
-  _FormSubmissionResponse call(
-      {@JsonKey(name: "_id") String? id,
-      String? form,
-      String? owner,
-      List<dynamic>? roles,
-      List<dynamic>? access,
-      dynamic? metadata = const {},
-      dynamic? data = const {},
-      List<dynamic>? externalIds,
-      String? created,
-      String? modified,
-      String? state}) {
-    return _FormSubmissionResponse(
-      id: id,
-      form: form,
-      owner: owner,
-      roles: roles,
-      access: access,
-      metadata: metadata,
-      data: data,
-      externalIds: externalIds,
-      created: created,
-      modified: modified,
-      state: state,
-    );
-  }
-
-  FormSubmissionResponse fromJson(Map<String, Object> json) {
-    return FormSubmissionResponse.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $FormSubmissionResponse = _$FormSubmissionResponseTearOff();
 
 /// @nodoc
 mixin _$FormSubmissionResponse {
@@ -82,7 +45,8 @@ mixin _$FormSubmissionResponse {
 abstract class $FormSubmissionResponseCopyWith<$Res> {
   factory $FormSubmissionResponseCopyWith(FormSubmissionResponse value,
           $Res Function(FormSubmissionResponse) then) =
-      _$FormSubmissionResponseCopyWithImpl<$Res>;
+      _$FormSubmissionResponseCopyWithImpl<$Res, FormSubmissionResponse>;
+  @useResult
   $Res call(
       {@JsonKey(name: "_id") String? id,
       String? form,
@@ -98,14 +62,17 @@ abstract class $FormSubmissionResponseCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$FormSubmissionResponseCopyWithImpl<$Res>
+class _$FormSubmissionResponseCopyWithImpl<$Res,
+        $Val extends FormSubmissionResponse>
     implements $FormSubmissionResponseCopyWith<$Res> {
   _$FormSubmissionResponseCopyWithImpl(this._value, this._then);
 
-  final FormSubmissionResponse _value;
   // ignore: unused_field
-  final $Res Function(FormSubmissionResponse) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -121,61 +88,62 @@ class _$FormSubmissionResponseCopyWithImpl<$Res>
     Object? state = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      form: form == freezed
+      form: freezed == form
           ? _value.form
           : form // ignore: cast_nullable_to_non_nullable
               as String?,
-      owner: owner == freezed
+      owner: freezed == owner
           ? _value.owner
           : owner // ignore: cast_nullable_to_non_nullable
               as String?,
-      roles: roles == freezed
+      roles: freezed == roles
           ? _value.roles
           : roles // ignore: cast_nullable_to_non_nullable
               as List<dynamic>?,
-      access: access == freezed
+      access: freezed == access
           ? _value.access
           : access // ignore: cast_nullable_to_non_nullable
               as List<dynamic>?,
-      metadata: metadata == freezed
+      metadata: freezed == metadata
           ? _value.metadata
           : metadata // ignore: cast_nullable_to_non_nullable
               as dynamic?,
-      data: data == freezed
+      data: freezed == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
               as dynamic?,
-      externalIds: externalIds == freezed
+      externalIds: freezed == externalIds
           ? _value.externalIds
           : externalIds // ignore: cast_nullable_to_non_nullable
               as List<dynamic>?,
-      created: created == freezed
+      created: freezed == created
           ? _value.created
           : created // ignore: cast_nullable_to_non_nullable
               as String?,
-      modified: modified == freezed
+      modified: freezed == modified
           ? _value.modified
           : modified // ignore: cast_nullable_to_non_nullable
               as String?,
-      state: state == freezed
+      state: freezed == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$FormSubmissionResponseCopyWith<$Res>
+abstract class _$$_FormSubmissionResponseCopyWith<$Res>
     implements $FormSubmissionResponseCopyWith<$Res> {
-  factory _$FormSubmissionResponseCopyWith(_FormSubmissionResponse value,
-          $Res Function(_FormSubmissionResponse) then) =
-      __$FormSubmissionResponseCopyWithImpl<$Res>;
+  factory _$$_FormSubmissionResponseCopyWith(_$_FormSubmissionResponse value,
+          $Res Function(_$_FormSubmissionResponse) then) =
+      __$$_FormSubmissionResponseCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {@JsonKey(name: "_id") String? id,
       String? form,
@@ -191,16 +159,15 @@ abstract class _$FormSubmissionResponseCopyWith<$Res>
 }
 
 /// @nodoc
-class __$FormSubmissionResponseCopyWithImpl<$Res>
-    extends _$FormSubmissionResponseCopyWithImpl<$Res>
-    implements _$FormSubmissionResponseCopyWith<$Res> {
-  __$FormSubmissionResponseCopyWithImpl(_FormSubmissionResponse _value,
-      $Res Function(_FormSubmissionResponse) _then)
-      : super(_value, (v) => _then(v as _FormSubmissionResponse));
+class __$$_FormSubmissionResponseCopyWithImpl<$Res>
+    extends _$FormSubmissionResponseCopyWithImpl<$Res,
+        _$_FormSubmissionResponse>
+    implements _$$_FormSubmissionResponseCopyWith<$Res> {
+  __$$_FormSubmissionResponseCopyWithImpl(_$_FormSubmissionResponse _value,
+      $Res Function(_$_FormSubmissionResponse) _then)
+      : super(_value, _then);
 
-  @override
-  _FormSubmissionResponse get _value => super._value as _FormSubmissionResponse;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -215,48 +182,48 @@ class __$FormSubmissionResponseCopyWithImpl<$Res>
     Object? modified = freezed,
     Object? state = freezed,
   }) {
-    return _then(_FormSubmissionResponse(
-      id: id == freezed
+    return _then(_$_FormSubmissionResponse(
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      form: form == freezed
+      form: freezed == form
           ? _value.form
           : form // ignore: cast_nullable_to_non_nullable
               as String?,
-      owner: owner == freezed
+      owner: freezed == owner
           ? _value.owner
           : owner // ignore: cast_nullable_to_non_nullable
               as String?,
-      roles: roles == freezed
-          ? _value.roles
+      roles: freezed == roles
+          ? _value._roles
           : roles // ignore: cast_nullable_to_non_nullable
               as List<dynamic>?,
-      access: access == freezed
-          ? _value.access
+      access: freezed == access
+          ? _value._access
           : access // ignore: cast_nullable_to_non_nullable
               as List<dynamic>?,
-      metadata: metadata == freezed
+      metadata: freezed == metadata
           ? _value.metadata
           : metadata // ignore: cast_nullable_to_non_nullable
               as dynamic?,
-      data: data == freezed
+      data: freezed == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
               as dynamic?,
-      externalIds: externalIds == freezed
-          ? _value.externalIds
+      externalIds: freezed == externalIds
+          ? _value._externalIds
           : externalIds // ignore: cast_nullable_to_non_nullable
               as List<dynamic>?,
-      created: created == freezed
+      created: freezed == created
           ? _value.created
           : created // ignore: cast_nullable_to_non_nullable
               as String?,
-      modified: modified == freezed
+      modified: freezed == modified
           ? _value.modified
           : modified // ignore: cast_nullable_to_non_nullable
               as String?,
-      state: state == freezed
+      state: freezed == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -271,37 +238,65 @@ class _$_FormSubmissionResponse implements _FormSubmissionResponse {
       {@JsonKey(name: "_id") this.id,
       this.form,
       this.owner,
-      this.roles,
-      this.access,
+      final List<dynamic>? roles,
+      final List<dynamic>? access,
       this.metadata = const {},
       this.data = const {},
-      this.externalIds,
+      final List<dynamic>? externalIds,
       this.created,
       this.modified,
-      this.state});
+      this.state})
+      : _roles = roles,
+        _access = access,
+        _externalIds = externalIds;
 
   factory _$_FormSubmissionResponse.fromJson(Map<String, dynamic> json) =>
-      _$_$_FormSubmissionResponseFromJson(json);
+      _$$_FormSubmissionResponseFromJson(json);
 
-  @override // ignore: invalid_annotation_target
+// ignore: invalid_annotation_target
+  @override
   @JsonKey(name: "_id")
   final String? id;
   @override
   final String? form;
   @override
   final String? owner;
+  final List<dynamic>? _roles;
   @override
-  final List<dynamic>? roles;
+  List<dynamic>? get roles {
+    final value = _roles;
+    if (value == null) return null;
+    if (_roles is EqualUnmodifiableListView) return _roles;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<dynamic>? _access;
   @override
-  final List<dynamic>? access;
-  @JsonKey(defaultValue: const {})
+  List<dynamic>? get access {
+    final value = _access;
+    if (value == null) return null;
+    if (_access is EqualUnmodifiableListView) return _access;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
+  @JsonKey()
   final dynamic? metadata;
-  @JsonKey(defaultValue: const {})
   @override
+  @JsonKey()
   final dynamic? data;
+  final List<dynamic>? _externalIds;
   @override
-  final List<dynamic>? externalIds;
+  List<dynamic>? get externalIds {
+    final value = _externalIds;
+    if (value == null) return null;
+    if (_externalIds is EqualUnmodifiableListView) return _externalIds;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   final String? created;
   @override
@@ -317,104 +312,96 @@ class _$_FormSubmissionResponse implements _FormSubmissionResponse {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _FormSubmissionResponse &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.form, form) ||
-                const DeepCollectionEquality().equals(other.form, form)) &&
-            (identical(other.owner, owner) ||
-                const DeepCollectionEquality().equals(other.owner, owner)) &&
-            (identical(other.roles, roles) ||
-                const DeepCollectionEquality().equals(other.roles, roles)) &&
-            (identical(other.access, access) ||
-                const DeepCollectionEquality().equals(other.access, access)) &&
-            (identical(other.metadata, metadata) ||
-                const DeepCollectionEquality()
-                    .equals(other.metadata, metadata)) &&
-            (identical(other.data, data) ||
-                const DeepCollectionEquality().equals(other.data, data)) &&
-            (identical(other.externalIds, externalIds) ||
-                const DeepCollectionEquality()
-                    .equals(other.externalIds, externalIds)) &&
-            (identical(other.created, created) ||
-                const DeepCollectionEquality()
-                    .equals(other.created, created)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$_FormSubmissionResponse &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.form, form) || other.form == form) &&
+            (identical(other.owner, owner) || other.owner == owner) &&
+            const DeepCollectionEquality().equals(other._roles, _roles) &&
+            const DeepCollectionEquality().equals(other._access, _access) &&
+            const DeepCollectionEquality().equals(other.metadata, metadata) &&
+            const DeepCollectionEquality().equals(other.data, data) &&
+            const DeepCollectionEquality()
+                .equals(other._externalIds, _externalIds) &&
+            (identical(other.created, created) || other.created == created) &&
             (identical(other.modified, modified) ||
-                const DeepCollectionEquality()
-                    .equals(other.modified, modified)) &&
-            (identical(other.state, state) ||
-                const DeepCollectionEquality().equals(other.state, state)));
+                other.modified == modified) &&
+            (identical(other.state, state) || other.state == state));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(form) ^
-      const DeepCollectionEquality().hash(owner) ^
-      const DeepCollectionEquality().hash(roles) ^
-      const DeepCollectionEquality().hash(access) ^
-      const DeepCollectionEquality().hash(metadata) ^
-      const DeepCollectionEquality().hash(data) ^
-      const DeepCollectionEquality().hash(externalIds) ^
-      const DeepCollectionEquality().hash(created) ^
-      const DeepCollectionEquality().hash(modified) ^
-      const DeepCollectionEquality().hash(state);
 
   @JsonKey(ignore: true)
   @override
-  _$FormSubmissionResponseCopyWith<_FormSubmissionResponse> get copyWith =>
-      __$FormSubmissionResponseCopyWithImpl<_FormSubmissionResponse>(
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      form,
+      owner,
+      const DeepCollectionEquality().hash(_roles),
+      const DeepCollectionEquality().hash(_access),
+      const DeepCollectionEquality().hash(metadata),
+      const DeepCollectionEquality().hash(data),
+      const DeepCollectionEquality().hash(_externalIds),
+      created,
+      modified,
+      state);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_FormSubmissionResponseCopyWith<_$_FormSubmissionResponse> get copyWith =>
+      __$$_FormSubmissionResponseCopyWithImpl<_$_FormSubmissionResponse>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_FormSubmissionResponseToJson(this);
+    return _$$_FormSubmissionResponseToJson(
+      this,
+    );
   }
 }
 
 abstract class _FormSubmissionResponse implements FormSubmissionResponse {
   const factory _FormSubmissionResponse(
-      {@JsonKey(name: "_id") String? id,
-      String? form,
-      String? owner,
-      List<dynamic>? roles,
-      List<dynamic>? access,
-      dynamic? metadata,
-      dynamic? data,
-      List<dynamic>? externalIds,
-      String? created,
-      String? modified,
-      String? state}) = _$_FormSubmissionResponse;
+      {@JsonKey(name: "_id") final String? id,
+      final String? form,
+      final String? owner,
+      final List<dynamic>? roles,
+      final List<dynamic>? access,
+      final dynamic? metadata,
+      final dynamic? data,
+      final List<dynamic>? externalIds,
+      final String? created,
+      final String? modified,
+      final String? state}) = _$_FormSubmissionResponse;
 
   factory _FormSubmissionResponse.fromJson(Map<String, dynamic> json) =
       _$_FormSubmissionResponse.fromJson;
 
   @override // ignore: invalid_annotation_target
   @JsonKey(name: "_id")
-  String? get id => throw _privateConstructorUsedError;
+  String? get id;
   @override
-  String? get form => throw _privateConstructorUsedError;
+  String? get form;
   @override
-  String? get owner => throw _privateConstructorUsedError;
+  String? get owner;
   @override
-  List<dynamic>? get roles => throw _privateConstructorUsedError;
+  List<dynamic>? get roles;
   @override
-  List<dynamic>? get access => throw _privateConstructorUsedError;
+  List<dynamic>? get access;
   @override
-  dynamic? get metadata => throw _privateConstructorUsedError;
+  dynamic? get metadata;
   @override
-  dynamic? get data => throw _privateConstructorUsedError;
+  dynamic? get data;
   @override
-  List<dynamic>? get externalIds => throw _privateConstructorUsedError;
+  List<dynamic>? get externalIds;
   @override
-  String? get created => throw _privateConstructorUsedError;
+  String? get created;
   @override
-  String? get modified => throw _privateConstructorUsedError;
+  String? get modified;
   @override
-  String? get state => throw _privateConstructorUsedError;
+  String? get state;
   @override
   @JsonKey(ignore: true)
-  _$FormSubmissionResponseCopyWith<_FormSubmissionResponse> get copyWith =>
+  _$$_FormSubmissionResponseCopyWith<_$_FormSubmissionResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }

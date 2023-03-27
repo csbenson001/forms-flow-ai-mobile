@@ -1,5 +1,7 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'task_listing_data_model.dart';
 
@@ -10,50 +12,7 @@ part of 'task_listing_data_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$TaskListingDMTearOff {
-  const _$TaskListingDMTearOff();
-
-  _TaskListingDM call(
-      {String? taskId,
-      String? name,
-      DateTime? created,
-      String? executionId,
-      int? priority,
-      String? processDefinitionId,
-      String? processInstanceId,
-      String? taskDefinitionKey,
-      bool? suspended,
-      String? assignee,
-      DateTime? followUp,
-      DateTime? dueDate,
-      String? status,
-      String? formResourceId,
-      String? processDefinitionName}) {
-    return _TaskListingDM(
-      taskId: taskId,
-      name: name,
-      created: created,
-      executionId: executionId,
-      priority: priority,
-      processDefinitionId: processDefinitionId,
-      processInstanceId: processInstanceId,
-      taskDefinitionKey: taskDefinitionKey,
-      suspended: suspended,
-      assignee: assignee,
-      followUp: followUp,
-      dueDate: dueDate,
-      status: status,
-      formResourceId: formResourceId,
-      processDefinitionName: processDefinitionName,
-    );
-  }
-}
-
-/// @nodoc
-const $TaskListingDM = _$TaskListingDMTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$TaskListingDM {
@@ -82,7 +41,8 @@ mixin _$TaskListingDM {
 abstract class $TaskListingDMCopyWith<$Res> {
   factory $TaskListingDMCopyWith(
           TaskListingDM value, $Res Function(TaskListingDM) then) =
-      _$TaskListingDMCopyWithImpl<$Res>;
+      _$TaskListingDMCopyWithImpl<$Res, TaskListingDM>;
+  @useResult
   $Res call(
       {String? taskId,
       String? name,
@@ -102,14 +62,16 @@ abstract class $TaskListingDMCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$TaskListingDMCopyWithImpl<$Res>
+class _$TaskListingDMCopyWithImpl<$Res, $Val extends TaskListingDM>
     implements $TaskListingDMCopyWith<$Res> {
   _$TaskListingDMCopyWithImpl(this._value, this._then);
 
-  final TaskListingDM _value;
   // ignore: unused_field
-  final $Res Function(TaskListingDM) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? taskId = freezed,
@@ -129,77 +91,78 @@ class _$TaskListingDMCopyWithImpl<$Res>
     Object? processDefinitionName = freezed,
   }) {
     return _then(_value.copyWith(
-      taskId: taskId == freezed
+      taskId: freezed == taskId
           ? _value.taskId
           : taskId // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      created: created == freezed
+      created: freezed == created
           ? _value.created
           : created // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      executionId: executionId == freezed
+      executionId: freezed == executionId
           ? _value.executionId
           : executionId // ignore: cast_nullable_to_non_nullable
               as String?,
-      priority: priority == freezed
+      priority: freezed == priority
           ? _value.priority
           : priority // ignore: cast_nullable_to_non_nullable
               as int?,
-      processDefinitionId: processDefinitionId == freezed
+      processDefinitionId: freezed == processDefinitionId
           ? _value.processDefinitionId
           : processDefinitionId // ignore: cast_nullable_to_non_nullable
               as String?,
-      processInstanceId: processInstanceId == freezed
+      processInstanceId: freezed == processInstanceId
           ? _value.processInstanceId
           : processInstanceId // ignore: cast_nullable_to_non_nullable
               as String?,
-      taskDefinitionKey: taskDefinitionKey == freezed
+      taskDefinitionKey: freezed == taskDefinitionKey
           ? _value.taskDefinitionKey
           : taskDefinitionKey // ignore: cast_nullable_to_non_nullable
               as String?,
-      suspended: suspended == freezed
+      suspended: freezed == suspended
           ? _value.suspended
           : suspended // ignore: cast_nullable_to_non_nullable
               as bool?,
-      assignee: assignee == freezed
+      assignee: freezed == assignee
           ? _value.assignee
           : assignee // ignore: cast_nullable_to_non_nullable
               as String?,
-      followUp: followUp == freezed
+      followUp: freezed == followUp
           ? _value.followUp
           : followUp // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      dueDate: dueDate == freezed
+      dueDate: freezed == dueDate
           ? _value.dueDate
           : dueDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      status: status == freezed
+      status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String?,
-      formResourceId: formResourceId == freezed
+      formResourceId: freezed == formResourceId
           ? _value.formResourceId
           : formResourceId // ignore: cast_nullable_to_non_nullable
               as String?,
-      processDefinitionName: processDefinitionName == freezed
+      processDefinitionName: freezed == processDefinitionName
           ? _value.processDefinitionName
           : processDefinitionName // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$TaskListingDMCopyWith<$Res>
+abstract class _$$_TaskListingDMCopyWith<$Res>
     implements $TaskListingDMCopyWith<$Res> {
-  factory _$TaskListingDMCopyWith(
-          _TaskListingDM value, $Res Function(_TaskListingDM) then) =
-      __$TaskListingDMCopyWithImpl<$Res>;
+  factory _$$_TaskListingDMCopyWith(
+          _$_TaskListingDM value, $Res Function(_$_TaskListingDM) then) =
+      __$$_TaskListingDMCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? taskId,
       String? name,
@@ -219,16 +182,14 @@ abstract class _$TaskListingDMCopyWith<$Res>
 }
 
 /// @nodoc
-class __$TaskListingDMCopyWithImpl<$Res>
-    extends _$TaskListingDMCopyWithImpl<$Res>
-    implements _$TaskListingDMCopyWith<$Res> {
-  __$TaskListingDMCopyWithImpl(
-      _TaskListingDM _value, $Res Function(_TaskListingDM) _then)
-      : super(_value, (v) => _then(v as _TaskListingDM));
+class __$$_TaskListingDMCopyWithImpl<$Res>
+    extends _$TaskListingDMCopyWithImpl<$Res, _$_TaskListingDM>
+    implements _$$_TaskListingDMCopyWith<$Res> {
+  __$$_TaskListingDMCopyWithImpl(
+      _$_TaskListingDM _value, $Res Function(_$_TaskListingDM) _then)
+      : super(_value, _then);
 
-  @override
-  _TaskListingDM get _value => super._value as _TaskListingDM;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? taskId = freezed,
@@ -247,64 +208,64 @@ class __$TaskListingDMCopyWithImpl<$Res>
     Object? formResourceId = freezed,
     Object? processDefinitionName = freezed,
   }) {
-    return _then(_TaskListingDM(
-      taskId: taskId == freezed
+    return _then(_$_TaskListingDM(
+      taskId: freezed == taskId
           ? _value.taskId
           : taskId // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      created: created == freezed
+      created: freezed == created
           ? _value.created
           : created // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      executionId: executionId == freezed
+      executionId: freezed == executionId
           ? _value.executionId
           : executionId // ignore: cast_nullable_to_non_nullable
               as String?,
-      priority: priority == freezed
+      priority: freezed == priority
           ? _value.priority
           : priority // ignore: cast_nullable_to_non_nullable
               as int?,
-      processDefinitionId: processDefinitionId == freezed
+      processDefinitionId: freezed == processDefinitionId
           ? _value.processDefinitionId
           : processDefinitionId // ignore: cast_nullable_to_non_nullable
               as String?,
-      processInstanceId: processInstanceId == freezed
+      processInstanceId: freezed == processInstanceId
           ? _value.processInstanceId
           : processInstanceId // ignore: cast_nullable_to_non_nullable
               as String?,
-      taskDefinitionKey: taskDefinitionKey == freezed
+      taskDefinitionKey: freezed == taskDefinitionKey
           ? _value.taskDefinitionKey
           : taskDefinitionKey // ignore: cast_nullable_to_non_nullable
               as String?,
-      suspended: suspended == freezed
+      suspended: freezed == suspended
           ? _value.suspended
           : suspended // ignore: cast_nullable_to_non_nullable
               as bool?,
-      assignee: assignee == freezed
+      assignee: freezed == assignee
           ? _value.assignee
           : assignee // ignore: cast_nullable_to_non_nullable
               as String?,
-      followUp: followUp == freezed
+      followUp: freezed == followUp
           ? _value.followUp
           : followUp // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      dueDate: dueDate == freezed
+      dueDate: freezed == dueDate
           ? _value.dueDate
           : dueDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      status: status == freezed
+      status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String?,
-      formResourceId: formResourceId == freezed
+      formResourceId: freezed == formResourceId
           ? _value.formResourceId
           : formResourceId // ignore: cast_nullable_to_non_nullable
               as String?,
-      processDefinitionName: processDefinitionName == freezed
+      processDefinitionName: freezed == processDefinitionName
           ? _value.processDefinitionName
           : processDefinitionName // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -366,126 +327,111 @@ class _$_TaskListingDM implements _TaskListingDM {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _TaskListingDM &&
-            (identical(other.taskId, taskId) ||
-                const DeepCollectionEquality().equals(other.taskId, taskId)) &&
-            (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)) &&
-            (identical(other.created, created) ||
-                const DeepCollectionEquality()
-                    .equals(other.created, created)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$_TaskListingDM &&
+            (identical(other.taskId, taskId) || other.taskId == taskId) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.created, created) || other.created == created) &&
             (identical(other.executionId, executionId) ||
-                const DeepCollectionEquality()
-                    .equals(other.executionId, executionId)) &&
+                other.executionId == executionId) &&
             (identical(other.priority, priority) ||
-                const DeepCollectionEquality()
-                    .equals(other.priority, priority)) &&
+                other.priority == priority) &&
             (identical(other.processDefinitionId, processDefinitionId) ||
-                const DeepCollectionEquality()
-                    .equals(other.processDefinitionId, processDefinitionId)) &&
+                other.processDefinitionId == processDefinitionId) &&
             (identical(other.processInstanceId, processInstanceId) ||
-                const DeepCollectionEquality()
-                    .equals(other.processInstanceId, processInstanceId)) &&
+                other.processInstanceId == processInstanceId) &&
             (identical(other.taskDefinitionKey, taskDefinitionKey) ||
-                const DeepCollectionEquality()
-                    .equals(other.taskDefinitionKey, taskDefinitionKey)) &&
+                other.taskDefinitionKey == taskDefinitionKey) &&
             (identical(other.suspended, suspended) ||
-                const DeepCollectionEquality()
-                    .equals(other.suspended, suspended)) &&
+                other.suspended == suspended) &&
             (identical(other.assignee, assignee) ||
-                const DeepCollectionEquality()
-                    .equals(other.assignee, assignee)) &&
+                other.assignee == assignee) &&
             (identical(other.followUp, followUp) ||
-                const DeepCollectionEquality()
-                    .equals(other.followUp, followUp)) &&
-            (identical(other.dueDate, dueDate) ||
-                const DeepCollectionEquality()
-                    .equals(other.dueDate, dueDate)) &&
-            (identical(other.status, status) ||
-                const DeepCollectionEquality().equals(other.status, status)) &&
+                other.followUp == followUp) &&
+            (identical(other.dueDate, dueDate) || other.dueDate == dueDate) &&
+            (identical(other.status, status) || other.status == status) &&
             (identical(other.formResourceId, formResourceId) ||
-                const DeepCollectionEquality()
-                    .equals(other.formResourceId, formResourceId)) &&
+                other.formResourceId == formResourceId) &&
             (identical(other.processDefinitionName, processDefinitionName) ||
-                const DeepCollectionEquality().equals(
-                    other.processDefinitionName, processDefinitionName)));
+                other.processDefinitionName == processDefinitionName));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(taskId) ^
-      const DeepCollectionEquality().hash(name) ^
-      const DeepCollectionEquality().hash(created) ^
-      const DeepCollectionEquality().hash(executionId) ^
-      const DeepCollectionEquality().hash(priority) ^
-      const DeepCollectionEquality().hash(processDefinitionId) ^
-      const DeepCollectionEquality().hash(processInstanceId) ^
-      const DeepCollectionEquality().hash(taskDefinitionKey) ^
-      const DeepCollectionEquality().hash(suspended) ^
-      const DeepCollectionEquality().hash(assignee) ^
-      const DeepCollectionEquality().hash(followUp) ^
-      const DeepCollectionEquality().hash(dueDate) ^
-      const DeepCollectionEquality().hash(status) ^
-      const DeepCollectionEquality().hash(formResourceId) ^
-      const DeepCollectionEquality().hash(processDefinitionName);
+  int get hashCode => Object.hash(
+      runtimeType,
+      taskId,
+      name,
+      created,
+      executionId,
+      priority,
+      processDefinitionId,
+      processInstanceId,
+      taskDefinitionKey,
+      suspended,
+      assignee,
+      followUp,
+      dueDate,
+      status,
+      formResourceId,
+      processDefinitionName);
 
   @JsonKey(ignore: true)
   @override
-  _$TaskListingDMCopyWith<_TaskListingDM> get copyWith =>
-      __$TaskListingDMCopyWithImpl<_TaskListingDM>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_TaskListingDMCopyWith<_$_TaskListingDM> get copyWith =>
+      __$$_TaskListingDMCopyWithImpl<_$_TaskListingDM>(this, _$identity);
 }
 
 abstract class _TaskListingDM implements TaskListingDM {
   const factory _TaskListingDM(
-      {String? taskId,
-      String? name,
-      DateTime? created,
-      String? executionId,
-      int? priority,
-      String? processDefinitionId,
-      String? processInstanceId,
-      String? taskDefinitionKey,
-      bool? suspended,
-      String? assignee,
-      DateTime? followUp,
-      DateTime? dueDate,
-      String? status,
-      String? formResourceId,
-      String? processDefinitionName}) = _$_TaskListingDM;
+      {final String? taskId,
+      final String? name,
+      final DateTime? created,
+      final String? executionId,
+      final int? priority,
+      final String? processDefinitionId,
+      final String? processInstanceId,
+      final String? taskDefinitionKey,
+      final bool? suspended,
+      final String? assignee,
+      final DateTime? followUp,
+      final DateTime? dueDate,
+      final String? status,
+      final String? formResourceId,
+      final String? processDefinitionName}) = _$_TaskListingDM;
 
   @override
-  String? get taskId => throw _privateConstructorUsedError;
+  String? get taskId;
   @override
-  String? get name => throw _privateConstructorUsedError;
+  String? get name;
   @override
-  DateTime? get created => throw _privateConstructorUsedError;
+  DateTime? get created;
   @override
-  String? get executionId => throw _privateConstructorUsedError;
+  String? get executionId;
   @override
-  int? get priority => throw _privateConstructorUsedError;
+  int? get priority;
   @override
-  String? get processDefinitionId => throw _privateConstructorUsedError;
+  String? get processDefinitionId;
   @override
-  String? get processInstanceId => throw _privateConstructorUsedError;
+  String? get processInstanceId;
   @override
-  String? get taskDefinitionKey => throw _privateConstructorUsedError;
+  String? get taskDefinitionKey;
   @override
-  bool? get suspended => throw _privateConstructorUsedError;
+  bool? get suspended;
   @override
-  String? get assignee => throw _privateConstructorUsedError;
+  String? get assignee;
   @override
-  DateTime? get followUp => throw _privateConstructorUsedError;
+  DateTime? get followUp;
   @override
-  DateTime? get dueDate => throw _privateConstructorUsedError;
+  DateTime? get dueDate;
   @override
-  String? get status => throw _privateConstructorUsedError;
+  String? get status;
   @override
-  String? get formResourceId => throw _privateConstructorUsedError;
+  String? get formResourceId;
   @override
-  String? get processDefinitionName => throw _privateConstructorUsedError;
+  String? get processDefinitionName;
   @override
   @JsonKey(ignore: true)
-  _$TaskListingDMCopyWith<_TaskListingDM> get copyWith =>
+  _$$_TaskListingDMCopyWith<_$_TaskListingDM> get copyWith =>
       throw _privateConstructorUsedError;
 }

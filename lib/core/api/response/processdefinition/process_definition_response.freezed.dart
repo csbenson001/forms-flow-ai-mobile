@@ -1,5 +1,7 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'process_definition_response.dart';
 
@@ -10,57 +12,12 @@ part of 'process_definition_response.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 ProcessDefinitionResponse _$ProcessDefinitionResponseFromJson(
     Map<String, dynamic> json) {
   return _ProcessDefinitionResponse.fromJson(json);
 }
-
-/// @nodoc
-class _$ProcessDefinitionResponseTearOff {
-  const _$ProcessDefinitionResponseTearOff();
-
-  _ProcessDefinitionResponse call(
-      {String? id,
-      String? key,
-      String? category,
-      dynamic description = "",
-      String? name,
-      int? version,
-      String? resource,
-      String? deploymentId,
-      dynamic diagram = "",
-      bool? suspended,
-      dynamic tenantId = "",
-      String? versionTag,
-      dynamic historyTimeToLive = false,
-      bool? startableInTasklist}) {
-    return _ProcessDefinitionResponse(
-      id: id,
-      key: key,
-      category: category,
-      description: description,
-      name: name,
-      version: version,
-      resource: resource,
-      deploymentId: deploymentId,
-      diagram: diagram,
-      suspended: suspended,
-      tenantId: tenantId,
-      versionTag: versionTag,
-      historyTimeToLive: historyTimeToLive,
-      startableInTasklist: startableInTasklist,
-    );
-  }
-
-  ProcessDefinitionResponse fromJson(Map<String, Object> json) {
-    return ProcessDefinitionResponse.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $ProcessDefinitionResponse = _$ProcessDefinitionResponseTearOff();
 
 /// @nodoc
 mixin _$ProcessDefinitionResponse {
@@ -89,7 +46,8 @@ mixin _$ProcessDefinitionResponse {
 abstract class $ProcessDefinitionResponseCopyWith<$Res> {
   factory $ProcessDefinitionResponseCopyWith(ProcessDefinitionResponse value,
           $Res Function(ProcessDefinitionResponse) then) =
-      _$ProcessDefinitionResponseCopyWithImpl<$Res>;
+      _$ProcessDefinitionResponseCopyWithImpl<$Res, ProcessDefinitionResponse>;
+  @useResult
   $Res call(
       {String? id,
       String? key,
@@ -108,14 +66,17 @@ abstract class $ProcessDefinitionResponseCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ProcessDefinitionResponseCopyWithImpl<$Res>
+class _$ProcessDefinitionResponseCopyWithImpl<$Res,
+        $Val extends ProcessDefinitionResponse>
     implements $ProcessDefinitionResponseCopyWith<$Res> {
   _$ProcessDefinitionResponseCopyWithImpl(this._value, this._then);
 
-  final ProcessDefinitionResponse _value;
   // ignore: unused_field
-  final $Res Function(ProcessDefinitionResponse) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -134,73 +95,75 @@ class _$ProcessDefinitionResponseCopyWithImpl<$Res>
     Object? startableInTasklist = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      key: key == freezed
+      key: freezed == key
           ? _value.key
           : key // ignore: cast_nullable_to_non_nullable
               as String?,
-      category: category == freezed
+      category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
               as String?,
-      description: description == freezed
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      version: version == freezed
+      version: freezed == version
           ? _value.version
           : version // ignore: cast_nullable_to_non_nullable
               as int?,
-      resource: resource == freezed
+      resource: freezed == resource
           ? _value.resource
           : resource // ignore: cast_nullable_to_non_nullable
               as String?,
-      deploymentId: deploymentId == freezed
+      deploymentId: freezed == deploymentId
           ? _value.deploymentId
           : deploymentId // ignore: cast_nullable_to_non_nullable
               as String?,
-      diagram: diagram == freezed
+      diagram: freezed == diagram
           ? _value.diagram
           : diagram // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      suspended: suspended == freezed
+      suspended: freezed == suspended
           ? _value.suspended
           : suspended // ignore: cast_nullable_to_non_nullable
               as bool?,
-      tenantId: tenantId == freezed
+      tenantId: freezed == tenantId
           ? _value.tenantId
           : tenantId // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      versionTag: versionTag == freezed
+      versionTag: freezed == versionTag
           ? _value.versionTag
           : versionTag // ignore: cast_nullable_to_non_nullable
               as String?,
-      historyTimeToLive: historyTimeToLive == freezed
+      historyTimeToLive: freezed == historyTimeToLive
           ? _value.historyTimeToLive
           : historyTimeToLive // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      startableInTasklist: startableInTasklist == freezed
+      startableInTasklist: freezed == startableInTasklist
           ? _value.startableInTasklist
           : startableInTasklist // ignore: cast_nullable_to_non_nullable
               as bool?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$ProcessDefinitionResponseCopyWith<$Res>
+abstract class _$$_ProcessDefinitionResponseCopyWith<$Res>
     implements $ProcessDefinitionResponseCopyWith<$Res> {
-  factory _$ProcessDefinitionResponseCopyWith(_ProcessDefinitionResponse value,
-          $Res Function(_ProcessDefinitionResponse) then) =
-      __$ProcessDefinitionResponseCopyWithImpl<$Res>;
+  factory _$$_ProcessDefinitionResponseCopyWith(
+          _$_ProcessDefinitionResponse value,
+          $Res Function(_$_ProcessDefinitionResponse) then) =
+      __$$_ProcessDefinitionResponseCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? id,
       String? key,
@@ -219,17 +182,16 @@ abstract class _$ProcessDefinitionResponseCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ProcessDefinitionResponseCopyWithImpl<$Res>
-    extends _$ProcessDefinitionResponseCopyWithImpl<$Res>
-    implements _$ProcessDefinitionResponseCopyWith<$Res> {
-  __$ProcessDefinitionResponseCopyWithImpl(_ProcessDefinitionResponse _value,
-      $Res Function(_ProcessDefinitionResponse) _then)
-      : super(_value, (v) => _then(v as _ProcessDefinitionResponse));
+class __$$_ProcessDefinitionResponseCopyWithImpl<$Res>
+    extends _$ProcessDefinitionResponseCopyWithImpl<$Res,
+        _$_ProcessDefinitionResponse>
+    implements _$$_ProcessDefinitionResponseCopyWith<$Res> {
+  __$$_ProcessDefinitionResponseCopyWithImpl(
+      _$_ProcessDefinitionResponse _value,
+      $Res Function(_$_ProcessDefinitionResponse) _then)
+      : super(_value, _then);
 
-  @override
-  _ProcessDefinitionResponse get _value =>
-      super._value as _ProcessDefinitionResponse;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -247,60 +209,60 @@ class __$ProcessDefinitionResponseCopyWithImpl<$Res>
     Object? historyTimeToLive = freezed,
     Object? startableInTasklist = freezed,
   }) {
-    return _then(_ProcessDefinitionResponse(
-      id: id == freezed
+    return _then(_$_ProcessDefinitionResponse(
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      key: key == freezed
+      key: freezed == key
           ? _value.key
           : key // ignore: cast_nullable_to_non_nullable
               as String?,
-      category: category == freezed
+      category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
               as String?,
-      description: description == freezed
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      version: version == freezed
+      version: freezed == version
           ? _value.version
           : version // ignore: cast_nullable_to_non_nullable
               as int?,
-      resource: resource == freezed
+      resource: freezed == resource
           ? _value.resource
           : resource // ignore: cast_nullable_to_non_nullable
               as String?,
-      deploymentId: deploymentId == freezed
+      deploymentId: freezed == deploymentId
           ? _value.deploymentId
           : deploymentId // ignore: cast_nullable_to_non_nullable
               as String?,
-      diagram: diagram == freezed
+      diagram: freezed == diagram
           ? _value.diagram
           : diagram // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      suspended: suspended == freezed
+      suspended: freezed == suspended
           ? _value.suspended
           : suspended // ignore: cast_nullable_to_non_nullable
               as bool?,
-      tenantId: tenantId == freezed
+      tenantId: freezed == tenantId
           ? _value.tenantId
           : tenantId // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      versionTag: versionTag == freezed
+      versionTag: freezed == versionTag
           ? _value.versionTag
           : versionTag // ignore: cast_nullable_to_non_nullable
               as String?,
-      historyTimeToLive: historyTimeToLive == freezed
+      historyTimeToLive: freezed == historyTimeToLive
           ? _value.historyTimeToLive
           : historyTimeToLive // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      startableInTasklist: startableInTasklist == freezed
+      startableInTasklist: freezed == startableInTasklist
           ? _value.startableInTasklist
           : startableInTasklist // ignore: cast_nullable_to_non_nullable
               as bool?,
@@ -328,7 +290,7 @@ class _$_ProcessDefinitionResponse implements _ProcessDefinitionResponse {
       this.startableInTasklist});
 
   factory _$_ProcessDefinitionResponse.fromJson(Map<String, dynamic> json) =>
-      _$_$_ProcessDefinitionResponseFromJson(json);
+      _$$_ProcessDefinitionResponseFromJson(json);
 
   @override
   final String? id;
@@ -336,8 +298,8 @@ class _$_ProcessDefinitionResponse implements _ProcessDefinitionResponse {
   final String? key;
   @override
   final String? category;
-  @JsonKey(defaultValue: "")
   @override
+  @JsonKey()
   final dynamic description;
   @override
   final String? name;
@@ -347,18 +309,18 @@ class _$_ProcessDefinitionResponse implements _ProcessDefinitionResponse {
   final String? resource;
   @override
   final String? deploymentId;
-  @JsonKey(defaultValue: "")
   @override
+  @JsonKey()
   final dynamic diagram;
   @override
   final bool? suspended;
-  @JsonKey(defaultValue: "")
   @override
+  @JsonKey()
   final dynamic tenantId;
   @override
   final String? versionTag;
-  @JsonKey(defaultValue: false)
   @override
+  @JsonKey()
   final dynamic historyTimeToLive;
   @override
   final bool? startableInTasklist;
@@ -371,129 +333,116 @@ class _$_ProcessDefinitionResponse implements _ProcessDefinitionResponse {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _ProcessDefinitionResponse &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.key, key) ||
-                const DeepCollectionEquality().equals(other.key, key)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$_ProcessDefinitionResponse &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.key, key) || other.key == key) &&
             (identical(other.category, category) ||
-                const DeepCollectionEquality()
-                    .equals(other.category, category)) &&
-            (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
-            (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)) &&
-            (identical(other.version, version) ||
-                const DeepCollectionEquality()
-                    .equals(other.version, version)) &&
+                other.category == category) &&
+            const DeepCollectionEquality()
+                .equals(other.description, description) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.version, version) || other.version == version) &&
             (identical(other.resource, resource) ||
-                const DeepCollectionEquality()
-                    .equals(other.resource, resource)) &&
+                other.resource == resource) &&
             (identical(other.deploymentId, deploymentId) ||
-                const DeepCollectionEquality()
-                    .equals(other.deploymentId, deploymentId)) &&
-            (identical(other.diagram, diagram) ||
-                const DeepCollectionEquality()
-                    .equals(other.diagram, diagram)) &&
+                other.deploymentId == deploymentId) &&
+            const DeepCollectionEquality().equals(other.diagram, diagram) &&
             (identical(other.suspended, suspended) ||
-                const DeepCollectionEquality()
-                    .equals(other.suspended, suspended)) &&
-            (identical(other.tenantId, tenantId) ||
-                const DeepCollectionEquality()
-                    .equals(other.tenantId, tenantId)) &&
+                other.suspended == suspended) &&
+            const DeepCollectionEquality().equals(other.tenantId, tenantId) &&
             (identical(other.versionTag, versionTag) ||
-                const DeepCollectionEquality()
-                    .equals(other.versionTag, versionTag)) &&
-            (identical(other.historyTimeToLive, historyTimeToLive) ||
-                const DeepCollectionEquality()
-                    .equals(other.historyTimeToLive, historyTimeToLive)) &&
+                other.versionTag == versionTag) &&
+            const DeepCollectionEquality()
+                .equals(other.historyTimeToLive, historyTimeToLive) &&
             (identical(other.startableInTasklist, startableInTasklist) ||
-                const DeepCollectionEquality()
-                    .equals(other.startableInTasklist, startableInTasklist)));
+                other.startableInTasklist == startableInTasklist));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(key) ^
-      const DeepCollectionEquality().hash(category) ^
-      const DeepCollectionEquality().hash(description) ^
-      const DeepCollectionEquality().hash(name) ^
-      const DeepCollectionEquality().hash(version) ^
-      const DeepCollectionEquality().hash(resource) ^
-      const DeepCollectionEquality().hash(deploymentId) ^
-      const DeepCollectionEquality().hash(diagram) ^
-      const DeepCollectionEquality().hash(suspended) ^
-      const DeepCollectionEquality().hash(tenantId) ^
-      const DeepCollectionEquality().hash(versionTag) ^
-      const DeepCollectionEquality().hash(historyTimeToLive) ^
-      const DeepCollectionEquality().hash(startableInTasklist);
 
   @JsonKey(ignore: true)
   @override
-  _$ProcessDefinitionResponseCopyWith<_ProcessDefinitionResponse>
-      get copyWith =>
-          __$ProcessDefinitionResponseCopyWithImpl<_ProcessDefinitionResponse>(
-              this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      key,
+      category,
+      const DeepCollectionEquality().hash(description),
+      name,
+      version,
+      resource,
+      deploymentId,
+      const DeepCollectionEquality().hash(diagram),
+      suspended,
+      const DeepCollectionEquality().hash(tenantId),
+      versionTag,
+      const DeepCollectionEquality().hash(historyTimeToLive),
+      startableInTasklist);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ProcessDefinitionResponseCopyWith<_$_ProcessDefinitionResponse>
+      get copyWith => __$$_ProcessDefinitionResponseCopyWithImpl<
+          _$_ProcessDefinitionResponse>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_ProcessDefinitionResponseToJson(this);
+    return _$$_ProcessDefinitionResponseToJson(
+      this,
+    );
   }
 }
 
 abstract class _ProcessDefinitionResponse implements ProcessDefinitionResponse {
   const factory _ProcessDefinitionResponse(
-      {String? id,
-      String? key,
-      String? category,
-      dynamic description,
-      String? name,
-      int? version,
-      String? resource,
-      String? deploymentId,
-      dynamic diagram,
-      bool? suspended,
-      dynamic tenantId,
-      String? versionTag,
-      dynamic historyTimeToLive,
-      bool? startableInTasklist}) = _$_ProcessDefinitionResponse;
+      {final String? id,
+      final String? key,
+      final String? category,
+      final dynamic description,
+      final String? name,
+      final int? version,
+      final String? resource,
+      final String? deploymentId,
+      final dynamic diagram,
+      final bool? suspended,
+      final dynamic tenantId,
+      final String? versionTag,
+      final dynamic historyTimeToLive,
+      final bool? startableInTasklist}) = _$_ProcessDefinitionResponse;
 
   factory _ProcessDefinitionResponse.fromJson(Map<String, dynamic> json) =
       _$_ProcessDefinitionResponse.fromJson;
 
   @override
-  String? get id => throw _privateConstructorUsedError;
+  String? get id;
   @override
-  String? get key => throw _privateConstructorUsedError;
+  String? get key;
   @override
-  String? get category => throw _privateConstructorUsedError;
+  String? get category;
   @override
-  dynamic get description => throw _privateConstructorUsedError;
+  dynamic get description;
   @override
-  String? get name => throw _privateConstructorUsedError;
+  String? get name;
   @override
-  int? get version => throw _privateConstructorUsedError;
+  int? get version;
   @override
-  String? get resource => throw _privateConstructorUsedError;
+  String? get resource;
   @override
-  String? get deploymentId => throw _privateConstructorUsedError;
+  String? get deploymentId;
   @override
-  dynamic get diagram => throw _privateConstructorUsedError;
+  dynamic get diagram;
   @override
-  bool? get suspended => throw _privateConstructorUsedError;
+  bool? get suspended;
   @override
-  dynamic get tenantId => throw _privateConstructorUsedError;
+  dynamic get tenantId;
   @override
-  String? get versionTag => throw _privateConstructorUsedError;
+  String? get versionTag;
   @override
-  dynamic get historyTimeToLive => throw _privateConstructorUsedError;
+  dynamic get historyTimeToLive;
   @override
-  bool? get startableInTasklist => throw _privateConstructorUsedError;
+  bool? get startableInTasklist;
   @override
   @JsonKey(ignore: true)
-  _$ProcessDefinitionResponseCopyWith<_ProcessDefinitionResponse>
+  _$$_ProcessDefinitionResponseCopyWith<_$_ProcessDefinitionResponse>
       get copyWith => throw _privateConstructorUsedError;
 }

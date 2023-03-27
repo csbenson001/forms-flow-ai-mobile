@@ -6,6 +6,8 @@ part of 'user_api_client.dart';
 // RetrofitGenerator
 // **************************************************************************
 
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
+
 class _UserApiClient implements UserApiClient {
   _UserApiClient(
     this._dio, {
@@ -23,16 +25,18 @@ class _UserApiClient implements UserApiClient {
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': accessToken};
+    _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<UserInfoResponse>(Options(
       method: 'POST',
-      headers: <String, dynamic>{r'Authorization': accessToken},
+      headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'auth/realms/$realm/protocol/openid-connect/userinfo',
+              'auth/realms/${realm}/protocol/openid-connect/userinfo',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -50,6 +54,7 @@ class _UserApiClient implements UserApiClient {
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = {
       'refresh_token': refreshToken,
       'access_token': accessToken,
@@ -58,13 +63,13 @@ class _UserApiClient implements UserApiClient {
     final _result =
         await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
       method: 'POST',
-      headers: <String, dynamic>{},
+      headers: _headers,
       extra: _extra,
       contentType: 'application/x-www-form-urlencoded',
     )
             .compose(
               _dio.options,
-              'auth/realms/$realm/protocol/openid-connect/logout',
+              'auth/realms/${realm}/protocol/openid-connect/logout',
               queryParameters: queryParameters,
               data: _data,
             )

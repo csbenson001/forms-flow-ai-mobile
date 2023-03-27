@@ -6,6 +6,8 @@ part of 'bpm_task_api_client.dart';
 // RetrofitGenerator
 // **************************************************************************
 
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
+
 class _BpmTaskApiClient implements BpmTaskApiClient {
   _BpmTaskApiClient(
     this._dio, {
@@ -20,11 +22,12 @@ class _BpmTaskApiClient implements BpmTaskApiClient {
   Future<List<FiltersResponse>> fetchFilters() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio
         .fetch<List<dynamic>>(_setStreamType<List<FiltersResponse>>(Options(
       method: 'GET',
-      headers: <String, dynamic>{},
+      headers: _headers,
       extra: _extra,
     )
             .compose(
@@ -44,11 +47,12 @@ class _BpmTaskApiClient implements BpmTaskApiClient {
   Future<List<ProcessDefinitionResponse>> fetchProcessDefinitions() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<List<dynamic>>(
         _setStreamType<List<ProcessDefinitionResponse>>(Options(
       method: 'GET',
-      headers: <String, dynamic>{},
+      headers: _headers,
       extra: _extra,
     )
             .compose(
@@ -78,17 +82,19 @@ class _BpmTaskApiClient implements BpmTaskApiClient {
       r'firstResult': firstResult,
       r'maxResults': maxResults,
     };
+    final _headers = <String, dynamic>{r'Accept': acceptType};
+    _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(taskSortingPostModel.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<TaskListHalResponse>(Options(
       method: 'POST',
-      headers: <String, dynamic>{r'Accept': acceptType},
+      headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'engine-rest-ext/v1/filter/$id/list?',
+              'engine-rest-ext/v1/filter/${id}/list',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -101,16 +107,17 @@ class _BpmTaskApiClient implements BpmTaskApiClient {
   Future<TaskCountResponse> fetchTaskCount(id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<TaskCountResponse>(Options(
       method: 'GET',
-      headers: <String, dynamic>{},
+      headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'engine-rest-ext/v1/filter/$id/count',
+              'engine-rest-ext/v1/filter/${id}/count',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -123,16 +130,17 @@ class _BpmTaskApiClient implements BpmTaskApiClient {
   Future<HttpResponse<TaskVariablesResponse>> fetchTaskVariables(id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<TaskVariablesResponse>>(Options(
       method: 'GET',
-      headers: <String, dynamic>{},
+      headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'engine-rest-ext/v1/task/$id/variables',
+              'engine-rest-ext/v1/task/${id}/variables',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -146,16 +154,17 @@ class _BpmTaskApiClient implements BpmTaskApiClient {
   Future<TaskListResponse> fetchTaskById(id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<TaskListResponse>(Options(
       method: 'POST',
-      headers: <String, dynamic>{},
+      headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'engine-rest-ext/v1/task/$id',
+              'engine-rest-ext/v1/task/${id}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -171,17 +180,18 @@ class _BpmTaskApiClient implements BpmTaskApiClient {
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body);
     final _result =
         await _dio.fetch<void>(_setStreamType<HttpResponse<void>>(Options(
       method: 'POST',
-      headers: <String, dynamic>{},
+      headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'engine-rest-ext/v1/task/$id/claim',
+              'engine-rest-ext/v1/task/${id}/claim',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -194,16 +204,17 @@ class _BpmTaskApiClient implements BpmTaskApiClient {
   Future<HttpResponse<void>> unClaimTask(id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result =
         await _dio.fetch<void>(_setStreamType<HttpResponse<void>>(Options(
       method: 'POST',
-      headers: <String, dynamic>{},
+      headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'engine-rest-ext/v1/task/$id/unclaim',
+              'engine-rest-ext/v1/task/${id}/unclaim',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -219,17 +230,18 @@ class _BpmTaskApiClient implements BpmTaskApiClient {
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(formSubmissionPostModel.toJson());
     final _result =
         await _dio.fetch<void>(_setStreamType<HttpResponse<void>>(Options(
       method: 'POST',
-      headers: <String, dynamic>{},
+      headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'engine-rest-ext/v1/task/$id/submit-form',
+              'engine-rest-ext/v1/task/${id}/submit-form',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -245,16 +257,17 @@ class _BpmTaskApiClient implements BpmTaskApiClient {
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(updateTaskPostModel.toJson());
     await _dio.fetch<void>(_setStreamType<void>(Options(
       method: 'PUT',
-      headers: <String, dynamic>{},
+      headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          'engine-rest-ext/v1/task/$id',
+          'engine-rest-ext/v1/task/${id}',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -266,16 +279,17 @@ class _BpmTaskApiClient implements BpmTaskApiClient {
   Future<HttpResponse<List<TaskGroupsResponse>>> fetchTaskGroups(id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<List<dynamic>>(
         _setStreamType<HttpResponse<List<TaskGroupsResponse>>>(Options(
       method: 'GET',
-      headers: <String, dynamic>{},
+      headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'engine-rest-ext/v1/task/$id/identity-links?type=candidate',
+              'engine-rest-ext/v1/task/${id}/identity-links?type=candidate',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -295,17 +309,18 @@ class _BpmTaskApiClient implements BpmTaskApiClient {
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(addGroupPostModel.toJson());
     final _result =
         await _dio.fetch<void>(_setStreamType<HttpResponse<void>>(Options(
       method: 'POST',
-      headers: <String, dynamic>{},
+      headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'engine-rest-ext/v1/task/$id/identity-links?type=candidate',
+              'engine-rest-ext/v1/task/${id}/identity-links?type=candidate',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -319,11 +334,12 @@ class _BpmTaskApiClient implements BpmTaskApiClient {
       memberOfGroup) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'memberOfGroup': memberOfGroup};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<List<dynamic>>(
         _setStreamType<HttpResponse<List<ListMembersResponse>>>(Options(
       method: 'GET',
-      headers: <String, dynamic>{},
+      headers: _headers,
       extra: _extra,
     )
             .compose(
@@ -348,17 +364,18 @@ class _BpmTaskApiClient implements BpmTaskApiClient {
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(deleteGroupPostModel.toJson());
     final _result =
         await _dio.fetch<void>(_setStreamType<HttpResponse<void>>(Options(
       method: 'POST',
-      headers: <String, dynamic>{},
+      headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'engine-rest-ext/v1/task/$id/identity-links/delete',
+              'engine-rest-ext/v1/task/${id}/identity-links/delete',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -374,17 +391,18 @@ class _BpmTaskApiClient implements BpmTaskApiClient {
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body);
     final _result =
         await _dio.fetch<void>(_setStreamType<HttpResponse<void>>(Options(
       method: 'POST',
-      headers: <String, dynamic>{},
+      headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'engine-rest-ext/v1/task/$id/assignee',
+              'engine-rest-ext/v1/task/${id}/assignee',
               queryParameters: queryParameters,
               data: _data,
             )

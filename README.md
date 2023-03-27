@@ -8,7 +8,7 @@
 <img src="https://img.shields.io/badge/release-v1.0.0-blue"/>
 <img src="https://img.shields.io/badge/LICENSE-Apache%202-green"/>
 
-![Flutter](https://img.shields.io/badge/Flutter-3.3-blue) ![dart](https://img.shields.io/badge/dart-2.18.2-green)
+![Flutter](https://img.shields.io/badge/Flutter-3.7.7-blue) ![dart](https://img.shields.io/badge/dart-2.18.2-green)
 
 
 

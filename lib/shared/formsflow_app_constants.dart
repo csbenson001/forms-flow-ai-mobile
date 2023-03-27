@@ -7,7 +7,7 @@ import 'env_key_constants.dart';
 class FormsFlowAIConstants {
   //Environment File
 
-  static const envFileName = 'sample.env';
+  static const envFileName = '.env';
   static final clientId = dotenv.get(EnvKeyConstants.envKeycloakWebClientId);
   static const keycloakScopes = ['openid', 'profile', 'offline_access'];
   static final keycloakRedirectUrl =

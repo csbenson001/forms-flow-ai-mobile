@@ -1,5 +1,7 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'formio_roles_response.dart';
 
@@ -10,29 +12,11 @@ part of 'formio_roles_response.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 FormioRolesResponse _$FormioRolesResponseFromJson(Map<String, dynamic> json) {
   return _FormioRolesResponse.fromJson(json);
 }
-
-/// @nodoc
-class _$FormioRolesResponseTearOff {
-  const _$FormioRolesResponseTearOff();
-
-  _FormioRolesResponse call({List<Form>? form}) {
-    return _FormioRolesResponse(
-      form: form,
-    );
-  }
-
-  FormioRolesResponse fromJson(Map<String, Object> json) {
-    return FormioRolesResponse.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $FormioRolesResponse = _$FormioRolesResponseTearOff();
 
 /// @nodoc
 mixin _$FormioRolesResponse {
@@ -48,60 +32,62 @@ mixin _$FormioRolesResponse {
 abstract class $FormioRolesResponseCopyWith<$Res> {
   factory $FormioRolesResponseCopyWith(
           FormioRolesResponse value, $Res Function(FormioRolesResponse) then) =
-      _$FormioRolesResponseCopyWithImpl<$Res>;
+      _$FormioRolesResponseCopyWithImpl<$Res, FormioRolesResponse>;
+  @useResult
   $Res call({List<Form>? form});
 }
 
 /// @nodoc
-class _$FormioRolesResponseCopyWithImpl<$Res>
+class _$FormioRolesResponseCopyWithImpl<$Res, $Val extends FormioRolesResponse>
     implements $FormioRolesResponseCopyWith<$Res> {
   _$FormioRolesResponseCopyWithImpl(this._value, this._then);
 
-  final FormioRolesResponse _value;
   // ignore: unused_field
-  final $Res Function(FormioRolesResponse) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? form = freezed,
   }) {
     return _then(_value.copyWith(
-      form: form == freezed
+      form: freezed == form
           ? _value.form
           : form // ignore: cast_nullable_to_non_nullable
               as List<Form>?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$FormioRolesResponseCopyWith<$Res>
+abstract class _$$_FormioRolesResponseCopyWith<$Res>
     implements $FormioRolesResponseCopyWith<$Res> {
-  factory _$FormioRolesResponseCopyWith(_FormioRolesResponse value,
-          $Res Function(_FormioRolesResponse) then) =
-      __$FormioRolesResponseCopyWithImpl<$Res>;
+  factory _$$_FormioRolesResponseCopyWith(_$_FormioRolesResponse value,
+          $Res Function(_$_FormioRolesResponse) then) =
+      __$$_FormioRolesResponseCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({List<Form>? form});
 }
 
 /// @nodoc
-class __$FormioRolesResponseCopyWithImpl<$Res>
-    extends _$FormioRolesResponseCopyWithImpl<$Res>
-    implements _$FormioRolesResponseCopyWith<$Res> {
-  __$FormioRolesResponseCopyWithImpl(
-      _FormioRolesResponse _value, $Res Function(_FormioRolesResponse) _then)
-      : super(_value, (v) => _then(v as _FormioRolesResponse));
+class __$$_FormioRolesResponseCopyWithImpl<$Res>
+    extends _$FormioRolesResponseCopyWithImpl<$Res, _$_FormioRolesResponse>
+    implements _$$_FormioRolesResponseCopyWith<$Res> {
+  __$$_FormioRolesResponseCopyWithImpl(_$_FormioRolesResponse _value,
+      $Res Function(_$_FormioRolesResponse) _then)
+      : super(_value, _then);
 
-  @override
-  _FormioRolesResponse get _value => super._value as _FormioRolesResponse;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? form = freezed,
   }) {
-    return _then(_FormioRolesResponse(
-      form: form == freezed
-          ? _value.form
+    return _then(_$_FormioRolesResponse(
+      form: freezed == form
+          ? _value._form
           : form // ignore: cast_nullable_to_non_nullable
               as List<Form>?,
     ));
@@ -111,13 +97,20 @@ class __$FormioRolesResponseCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_FormioRolesResponse implements _FormioRolesResponse {
-  const _$_FormioRolesResponse({this.form});
+  const _$_FormioRolesResponse({final List<Form>? form}) : _form = form;
 
   factory _$_FormioRolesResponse.fromJson(Map<String, dynamic> json) =>
-      _$_$_FormioRolesResponseFromJson(json);
+      _$$_FormioRolesResponseFromJson(json);
 
+  final List<Form>? _form;
   @override
-  final List<Form>? form;
+  List<Form>? get form {
+    final value = _form;
+    if (value == null) return null;
+    if (_form is EqualUnmodifiableListView) return _form;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
@@ -127,64 +120,49 @@ class _$_FormioRolesResponse implements _FormioRolesResponse {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _FormioRolesResponse &&
-            (identical(other.form, form) ||
-                const DeepCollectionEquality().equals(other.form, form)));
+        (other.runtimeType == runtimeType &&
+            other is _$_FormioRolesResponse &&
+            const DeepCollectionEquality().equals(other._form, _form));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(form);
 
   @JsonKey(ignore: true)
   @override
-  _$FormioRolesResponseCopyWith<_FormioRolesResponse> get copyWith =>
-      __$FormioRolesResponseCopyWithImpl<_FormioRolesResponse>(
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_form));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_FormioRolesResponseCopyWith<_$_FormioRolesResponse> get copyWith =>
+      __$$_FormioRolesResponseCopyWithImpl<_$_FormioRolesResponse>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_FormioRolesResponseToJson(this);
+    return _$$_FormioRolesResponseToJson(
+      this,
+    );
   }
 }
 
 abstract class _FormioRolesResponse implements FormioRolesResponse {
-  const factory _FormioRolesResponse({List<Form>? form}) =
+  const factory _FormioRolesResponse({final List<Form>? form}) =
       _$_FormioRolesResponse;
 
   factory _FormioRolesResponse.fromJson(Map<String, dynamic> json) =
       _$_FormioRolesResponse.fromJson;
 
   @override
-  List<Form>? get form => throw _privateConstructorUsedError;
+  List<Form>? get form;
   @override
   @JsonKey(ignore: true)
-  _$FormioRolesResponseCopyWith<_FormioRolesResponse> get copyWith =>
+  _$$_FormioRolesResponseCopyWith<_$_FormioRolesResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 Form _$FormFromJson(Map<String, dynamic> json) {
   return _Form.fromJson(json);
 }
-
-/// @nodoc
-class _$FormTearOff {
-  const _$FormTearOff();
-
-  _Form call({String? roleId, String? type}) {
-    return _Form(
-      roleId: roleId,
-      type: type,
-    );
-  }
-
-  Form fromJson(Map<String, Object> json) {
-    return Form.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $Form = _$FormTearOff();
 
 /// @nodoc
 mixin _$Form {
@@ -199,64 +177,67 @@ mixin _$Form {
 /// @nodoc
 abstract class $FormCopyWith<$Res> {
   factory $FormCopyWith(Form value, $Res Function(Form) then) =
-      _$FormCopyWithImpl<$Res>;
+      _$FormCopyWithImpl<$Res, Form>;
+  @useResult
   $Res call({String? roleId, String? type});
 }
 
 /// @nodoc
-class _$FormCopyWithImpl<$Res> implements $FormCopyWith<$Res> {
+class _$FormCopyWithImpl<$Res, $Val extends Form>
+    implements $FormCopyWith<$Res> {
   _$FormCopyWithImpl(this._value, this._then);
 
-  final Form _value;
   // ignore: unused_field
-  final $Res Function(Form) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? roleId = freezed,
     Object? type = freezed,
   }) {
     return _then(_value.copyWith(
-      roleId: roleId == freezed
+      roleId: freezed == roleId
           ? _value.roleId
           : roleId // ignore: cast_nullable_to_non_nullable
               as String?,
-      type: type == freezed
+      type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$FormCopyWith<$Res> implements $FormCopyWith<$Res> {
-  factory _$FormCopyWith(_Form value, $Res Function(_Form) then) =
-      __$FormCopyWithImpl<$Res>;
+abstract class _$$_FormCopyWith<$Res> implements $FormCopyWith<$Res> {
+  factory _$$_FormCopyWith(_$_Form value, $Res Function(_$_Form) then) =
+      __$$_FormCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String? roleId, String? type});
 }
 
 /// @nodoc
-class __$FormCopyWithImpl<$Res> extends _$FormCopyWithImpl<$Res>
-    implements _$FormCopyWith<$Res> {
-  __$FormCopyWithImpl(_Form _value, $Res Function(_Form) _then)
-      : super(_value, (v) => _then(v as _Form));
+class __$$_FormCopyWithImpl<$Res> extends _$FormCopyWithImpl<$Res, _$_Form>
+    implements _$$_FormCopyWith<$Res> {
+  __$$_FormCopyWithImpl(_$_Form _value, $Res Function(_$_Form) _then)
+      : super(_value, _then);
 
-  @override
-  _Form get _value => super._value as _Form;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? roleId = freezed,
     Object? type = freezed,
   }) {
-    return _then(_Form(
-      roleId: roleId == freezed
+    return _then(_$_Form(
+      roleId: freezed == roleId
           ? _value.roleId
           : roleId // ignore: cast_nullable_to_non_nullable
               as String?,
-      type: type == freezed
+      type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -269,8 +250,7 @@ class __$FormCopyWithImpl<$Res> extends _$FormCopyWithImpl<$Res>
 class _$_Form implements _Form {
   const _$_Form({this.roleId, this.type});
 
-  factory _$_Form.fromJson(Map<String, dynamic> json) =>
-      _$_$_FormFromJson(json);
+  factory _$_Form.fromJson(Map<String, dynamic> json) => _$$_FormFromJson(json);
 
   @override
   final String? roleId;
@@ -285,40 +265,40 @@ class _$_Form implements _Form {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _Form &&
-            (identical(other.roleId, roleId) ||
-                const DeepCollectionEquality().equals(other.roleId, roleId)) &&
-            (identical(other.type, type) ||
-                const DeepCollectionEquality().equals(other.type, type)));
+        (other.runtimeType == runtimeType &&
+            other is _$_Form &&
+            (identical(other.roleId, roleId) || other.roleId == roleId) &&
+            (identical(other.type, type) || other.type == type));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(roleId) ^
-      const DeepCollectionEquality().hash(type);
 
   @JsonKey(ignore: true)
   @override
-  _$FormCopyWith<_Form> get copyWith =>
-      __$FormCopyWithImpl<_Form>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, roleId, type);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_FormCopyWith<_$_Form> get copyWith =>
+      __$$_FormCopyWithImpl<_$_Form>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_FormToJson(this);
+    return _$$_FormToJson(
+      this,
+    );
   }
 }
 
 abstract class _Form implements Form {
-  const factory _Form({String? roleId, String? type}) = _$_Form;
+  const factory _Form({final String? roleId, final String? type}) = _$_Form;
 
   factory _Form.fromJson(Map<String, dynamic> json) = _$_Form.fromJson;
 
   @override
-  String? get roleId => throw _privateConstructorUsedError;
+  String? get roleId;
   @override
-  String? get type => throw _privateConstructorUsedError;
+  String? get type;
   @override
   @JsonKey(ignore: true)
-  _$FormCopyWith<_Form> get copyWith => throw _privateConstructorUsedError;
+  _$$_FormCopyWith<_$_Form> get copyWith => throw _privateConstructorUsedError;
 }

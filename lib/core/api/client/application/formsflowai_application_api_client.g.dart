@@ -6,6 +6,8 @@ part of 'formsflowai_application_api_client.dart';
 // RetrofitGenerator
 // **************************************************************************
 
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
+
 class _FormsFlowAIApplicationApiClient
     implements FormsFlowAIApplicationApiClient {
   _FormsFlowAIApplicationApiClient(
@@ -21,16 +23,17 @@ class _FormsFlowAIApplicationApiClient
   Future<ApplicationHistoryResponse> fetchApplicationHistory(id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ApplicationHistoryResponse>(Options(
       method: 'GET',
-      headers: <String, dynamic>{},
+      headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'application/$id/history',
+              'application/${id}/history',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -43,11 +46,12 @@ class _FormsFlowAIApplicationApiClient
   Future<BpmnDiagramResponse> fetchBpmnDiagram() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<BpmnDiagramResponse>(Options(
       method: 'GET',
-      headers: <String, dynamic>{},
+      headers: _headers,
       extra: _extra,
     )
             .compose(
@@ -65,16 +69,17 @@ class _FormsFlowAIApplicationApiClient
   Future<BpmnWorkflowInstancesResponse> fetchBpmnWorkflowInstance(id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<BpmnWorkflowInstancesResponse>(Options(
       method: 'GET',
-      headers: <String, dynamic>{},
+      headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'api/process/process-instance/$id}/activity-instances',
+              'api/process/process-instance/${id}}/activity-instances',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -87,11 +92,12 @@ class _FormsFlowAIApplicationApiClient
   Future<FormioRolesResponse> getFormioRoles() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<FormioRolesResponse>(Options(
       method: 'GET',
-      headers: <String, dynamic>{},
+      headers: _headers,
       extra: _extra,
     )
             .compose(

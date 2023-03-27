@@ -1,5 +1,7 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'assign_task_state.dart';
 
@@ -10,28 +12,7 @@ part of 'assign_task_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$AssignTaskStateTearOff {
-  const _$AssignTaskStateTearOff();
-
-  _AssignTaskState call(
-      {required ViewState viewState,
-      required bool enableAssignButton,
-      required List<MembersDM> membersList,
-      required ViewMembersFilterDM selectedMemberFilter}) {
-    return _AssignTaskState(
-      viewState: viewState,
-      enableAssignButton: enableAssignButton,
-      membersList: membersList,
-      selectedMemberFilter: selectedMemberFilter,
-    );
-  }
-}
-
-/// @nodoc
-const $AssignTaskState = _$AssignTaskStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$AssignTaskState {
@@ -50,7 +31,8 @@ mixin _$AssignTaskState {
 abstract class $AssignTaskStateCopyWith<$Res> {
   factory $AssignTaskStateCopyWith(
           AssignTaskState value, $Res Function(AssignTaskState) then) =
-      _$AssignTaskStateCopyWithImpl<$Res>;
+      _$AssignTaskStateCopyWithImpl<$Res, AssignTaskState>;
+  @useResult
   $Res call(
       {ViewState viewState,
       bool enableAssignButton,
@@ -59,49 +41,52 @@ abstract class $AssignTaskStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$AssignTaskStateCopyWithImpl<$Res>
+class _$AssignTaskStateCopyWithImpl<$Res, $Val extends AssignTaskState>
     implements $AssignTaskStateCopyWith<$Res> {
   _$AssignTaskStateCopyWithImpl(this._value, this._then);
 
-  final AssignTaskState _value;
   // ignore: unused_field
-  final $Res Function(AssignTaskState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? viewState = freezed,
-    Object? enableAssignButton = freezed,
-    Object? membersList = freezed,
-    Object? selectedMemberFilter = freezed,
+    Object? viewState = null,
+    Object? enableAssignButton = null,
+    Object? membersList = null,
+    Object? selectedMemberFilter = null,
   }) {
     return _then(_value.copyWith(
-      viewState: viewState == freezed
+      viewState: null == viewState
           ? _value.viewState
           : viewState // ignore: cast_nullable_to_non_nullable
               as ViewState,
-      enableAssignButton: enableAssignButton == freezed
+      enableAssignButton: null == enableAssignButton
           ? _value.enableAssignButton
           : enableAssignButton // ignore: cast_nullable_to_non_nullable
               as bool,
-      membersList: membersList == freezed
+      membersList: null == membersList
           ? _value.membersList
           : membersList // ignore: cast_nullable_to_non_nullable
               as List<MembersDM>,
-      selectedMemberFilter: selectedMemberFilter == freezed
+      selectedMemberFilter: null == selectedMemberFilter
           ? _value.selectedMemberFilter
           : selectedMemberFilter // ignore: cast_nullable_to_non_nullable
               as ViewMembersFilterDM,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$AssignTaskStateCopyWith<$Res>
+abstract class _$$_AssignTaskStateCopyWith<$Res>
     implements $AssignTaskStateCopyWith<$Res> {
-  factory _$AssignTaskStateCopyWith(
-          _AssignTaskState value, $Res Function(_AssignTaskState) then) =
-      __$AssignTaskStateCopyWithImpl<$Res>;
+  factory _$$_AssignTaskStateCopyWith(
+          _$_AssignTaskState value, $Res Function(_$_AssignTaskState) then) =
+      __$$_AssignTaskStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {ViewState viewState,
       bool enableAssignButton,
@@ -110,37 +95,35 @@ abstract class _$AssignTaskStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$AssignTaskStateCopyWithImpl<$Res>
-    extends _$AssignTaskStateCopyWithImpl<$Res>
-    implements _$AssignTaskStateCopyWith<$Res> {
-  __$AssignTaskStateCopyWithImpl(
-      _AssignTaskState _value, $Res Function(_AssignTaskState) _then)
-      : super(_value, (v) => _then(v as _AssignTaskState));
+class __$$_AssignTaskStateCopyWithImpl<$Res>
+    extends _$AssignTaskStateCopyWithImpl<$Res, _$_AssignTaskState>
+    implements _$$_AssignTaskStateCopyWith<$Res> {
+  __$$_AssignTaskStateCopyWithImpl(
+      _$_AssignTaskState _value, $Res Function(_$_AssignTaskState) _then)
+      : super(_value, _then);
 
-  @override
-  _AssignTaskState get _value => super._value as _AssignTaskState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? viewState = freezed,
-    Object? enableAssignButton = freezed,
-    Object? membersList = freezed,
-    Object? selectedMemberFilter = freezed,
+    Object? viewState = null,
+    Object? enableAssignButton = null,
+    Object? membersList = null,
+    Object? selectedMemberFilter = null,
   }) {
-    return _then(_AssignTaskState(
-      viewState: viewState == freezed
+    return _then(_$_AssignTaskState(
+      viewState: null == viewState
           ? _value.viewState
           : viewState // ignore: cast_nullable_to_non_nullable
               as ViewState,
-      enableAssignButton: enableAssignButton == freezed
+      enableAssignButton: null == enableAssignButton
           ? _value.enableAssignButton
           : enableAssignButton // ignore: cast_nullable_to_non_nullable
               as bool,
-      membersList: membersList == freezed
-          ? _value.membersList
+      membersList: null == membersList
+          ? _value._membersList
           : membersList // ignore: cast_nullable_to_non_nullable
               as List<MembersDM>,
-      selectedMemberFilter: selectedMemberFilter == freezed
+      selectedMemberFilter: null == selectedMemberFilter
           ? _value.selectedMemberFilter
           : selectedMemberFilter // ignore: cast_nullable_to_non_nullable
               as ViewMembersFilterDM,
@@ -154,15 +137,22 @@ class _$_AssignTaskState implements _AssignTaskState {
   const _$_AssignTaskState(
       {required this.viewState,
       required this.enableAssignButton,
-      required this.membersList,
-      required this.selectedMemberFilter});
+      required final List<MembersDM> membersList,
+      required this.selectedMemberFilter})
+      : _membersList = membersList;
 
   @override
   final ViewState viewState;
   @override
   final bool enableAssignButton;
+  final List<MembersDM> _membersList;
   @override
-  final List<MembersDM> membersList;
+  List<MembersDM> get membersList {
+    if (_membersList is EqualUnmodifiableListView) return _membersList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_membersList);
+  }
+
   @override
   final ViewMembersFilterDM selectedMemberFilter;
 
@@ -174,53 +164,47 @@ class _$_AssignTaskState implements _AssignTaskState {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _AssignTaskState &&
+        (other.runtimeType == runtimeType &&
+            other is _$_AssignTaskState &&
             (identical(other.viewState, viewState) ||
-                const DeepCollectionEquality()
-                    .equals(other.viewState, viewState)) &&
+                other.viewState == viewState) &&
             (identical(other.enableAssignButton, enableAssignButton) ||
-                const DeepCollectionEquality()
-                    .equals(other.enableAssignButton, enableAssignButton)) &&
-            (identical(other.membersList, membersList) ||
-                const DeepCollectionEquality()
-                    .equals(other.membersList, membersList)) &&
+                other.enableAssignButton == enableAssignButton) &&
+            const DeepCollectionEquality()
+                .equals(other._membersList, _membersList) &&
             (identical(other.selectedMemberFilter, selectedMemberFilter) ||
-                const DeepCollectionEquality()
-                    .equals(other.selectedMemberFilter, selectedMemberFilter)));
+                other.selectedMemberFilter == selectedMemberFilter));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(viewState) ^
-      const DeepCollectionEquality().hash(enableAssignButton) ^
-      const DeepCollectionEquality().hash(membersList) ^
-      const DeepCollectionEquality().hash(selectedMemberFilter);
+  int get hashCode => Object.hash(runtimeType, viewState, enableAssignButton,
+      const DeepCollectionEquality().hash(_membersList), selectedMemberFilter);
 
   @JsonKey(ignore: true)
   @override
-  _$AssignTaskStateCopyWith<_AssignTaskState> get copyWith =>
-      __$AssignTaskStateCopyWithImpl<_AssignTaskState>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_AssignTaskStateCopyWith<_$_AssignTaskState> get copyWith =>
+      __$$_AssignTaskStateCopyWithImpl<_$_AssignTaskState>(this, _$identity);
 }
 
 abstract class _AssignTaskState implements AssignTaskState {
   const factory _AssignTaskState(
-      {required ViewState viewState,
-      required bool enableAssignButton,
-      required List<MembersDM> membersList,
-      required ViewMembersFilterDM selectedMemberFilter}) = _$_AssignTaskState;
+          {required final ViewState viewState,
+          required final bool enableAssignButton,
+          required final List<MembersDM> membersList,
+          required final ViewMembersFilterDM selectedMemberFilter}) =
+      _$_AssignTaskState;
 
   @override
-  ViewState get viewState => throw _privateConstructorUsedError;
+  ViewState get viewState;
   @override
-  bool get enableAssignButton => throw _privateConstructorUsedError;
+  bool get enableAssignButton;
   @override
-  List<MembersDM> get membersList => throw _privateConstructorUsedError;
+  List<MembersDM> get membersList;
   @override
-  ViewMembersFilterDM get selectedMemberFilter =>
-      throw _privateConstructorUsedError;
+  ViewMembersFilterDM get selectedMemberFilter;
   @override
   @JsonKey(ignore: true)
-  _$AssignTaskStateCopyWith<_AssignTaskState> get copyWith =>
+  _$$_AssignTaskStateCopyWith<_$_AssignTaskState> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -6,6 +6,8 @@ part of 'forms_api_client.dart';
 // RetrofitGenerator
 // **************************************************************************
 
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
+
 class _FormsApiClient implements FormsApiClient {
   _FormsApiClient(
     this._dio, {
@@ -24,17 +26,18 @@ class _FormsApiClient implements FormsApiClient {
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(formSubmissionResponse.toJson());
     final _result =
         await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
       method: 'PUT',
-      headers: <String, dynamic>{},
+      headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'formio/form/$formResourceId/submission/$formSubmissionId',
+              'formio/form/${formResourceId}/submission/${formSubmissionId}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -48,16 +51,17 @@ class _FormsApiClient implements FormsApiClient {
   Future<HttpResponse<dynamic>> getFormIoJson(id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result =
         await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
       method: 'GET',
-      headers: <String, dynamic>{},
+      headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'formio/form/$id',
+              'formio/form/${id}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -74,16 +78,17 @@ class _FormsApiClient implements FormsApiClient {
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<FormSubmissionResponse>>(Options(
       method: 'GET',
-      headers: <String, dynamic>{},
+      headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'formio/form/$resourceId/submission/$submissionId',
+              'formio/form/${resourceId}/submission/${submissionId}',
               queryParameters: queryParameters,
               data: _data,
             )

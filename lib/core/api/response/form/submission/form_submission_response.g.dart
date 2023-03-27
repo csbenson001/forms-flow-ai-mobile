@@ -6,24 +6,23 @@ part of 'form_submission_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_FormSubmissionResponse _$_$_FormSubmissionResponseFromJson(
-    Map<String, dynamic> json) {
-  return _$_FormSubmissionResponse(
-    id: json['_id'] as String?,
-    form: json['form'] as String?,
-    owner: json['owner'] as String?,
-    roles: json['roles'] as List<dynamic>?,
-    access: json['access'] as List<dynamic>?,
-    metadata: json['metadata'] ?? {},
-    data: json['data'] ?? {},
-    externalIds: json['externalIds'] as List<dynamic>?,
-    created: json['created'] as String?,
-    modified: json['modified'] as String?,
-    state: json['state'] as String?,
-  );
-}
+_$_FormSubmissionResponse _$$_FormSubmissionResponseFromJson(
+        Map<String, dynamic> json) =>
+    _$_FormSubmissionResponse(
+      id: json['_id'] as String?,
+      form: json['form'] as String?,
+      owner: json['owner'] as String?,
+      roles: json['roles'] as List<dynamic>?,
+      access: json['access'] as List<dynamic>?,
+      metadata: json['metadata'] ?? const {},
+      data: json['data'] ?? const {},
+      externalIds: json['externalIds'] as List<dynamic>?,
+      created: json['created'] as String?,
+      modified: json['modified'] as String?,
+      state: json['state'] as String?,
+    );
 
-Map<String, dynamic> _$_$_FormSubmissionResponseToJson(
+Map<String, dynamic> _$$_FormSubmissionResponseToJson(
         _$_FormSubmissionResponse instance) =>
     <String, dynamic>{
       '_id': instance.id,

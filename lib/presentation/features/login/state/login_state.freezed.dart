@@ -1,5 +1,7 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'login_state.dart';
 
@@ -10,30 +12,7 @@ part of 'login_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$LoginStateTearOff {
-  const _$LoginStateTearOff();
-
-  _LoginState call(
-      {required bool isPasswordVisible,
-      required bool isSubmitted,
-      required ToastStateDM toastStateDM,
-      required bool isLoginSuccess,
-      required bool isAgreedToTerms}) {
-    return _LoginState(
-      isPasswordVisible: isPasswordVisible,
-      isSubmitted: isSubmitted,
-      toastStateDM: toastStateDM,
-      isLoginSuccess: isLoginSuccess,
-      isAgreedToTerms: isAgreedToTerms,
-    );
-  }
-}
-
-/// @nodoc
-const $LoginState = _$LoginStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$LoginState {
@@ -52,7 +31,8 @@ mixin _$LoginState {
 abstract class $LoginStateCopyWith<$Res> {
   factory $LoginStateCopyWith(
           LoginState value, $Res Function(LoginState) then) =
-      _$LoginStateCopyWithImpl<$Res>;
+      _$LoginStateCopyWithImpl<$Res, LoginState>;
+  @useResult
   $Res call(
       {bool isPasswordVisible,
       bool isSubmitted,
@@ -62,52 +42,57 @@ abstract class $LoginStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$LoginStateCopyWithImpl<$Res> implements $LoginStateCopyWith<$Res> {
+class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
+    implements $LoginStateCopyWith<$Res> {
   _$LoginStateCopyWithImpl(this._value, this._then);
 
-  final LoginState _value;
   // ignore: unused_field
-  final $Res Function(LoginState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isPasswordVisible = freezed,
-    Object? isSubmitted = freezed,
-    Object? toastStateDM = freezed,
-    Object? isLoginSuccess = freezed,
-    Object? isAgreedToTerms = freezed,
+    Object? isPasswordVisible = null,
+    Object? isSubmitted = null,
+    Object? toastStateDM = null,
+    Object? isLoginSuccess = null,
+    Object? isAgreedToTerms = null,
   }) {
     return _then(_value.copyWith(
-      isPasswordVisible: isPasswordVisible == freezed
+      isPasswordVisible: null == isPasswordVisible
           ? _value.isPasswordVisible
           : isPasswordVisible // ignore: cast_nullable_to_non_nullable
               as bool,
-      isSubmitted: isSubmitted == freezed
+      isSubmitted: null == isSubmitted
           ? _value.isSubmitted
           : isSubmitted // ignore: cast_nullable_to_non_nullable
               as bool,
-      toastStateDM: toastStateDM == freezed
+      toastStateDM: null == toastStateDM
           ? _value.toastStateDM
           : toastStateDM // ignore: cast_nullable_to_non_nullable
               as ToastStateDM,
-      isLoginSuccess: isLoginSuccess == freezed
+      isLoginSuccess: null == isLoginSuccess
           ? _value.isLoginSuccess
           : isLoginSuccess // ignore: cast_nullable_to_non_nullable
               as bool,
-      isAgreedToTerms: isAgreedToTerms == freezed
+      isAgreedToTerms: null == isAgreedToTerms
           ? _value.isAgreedToTerms
           : isAgreedToTerms // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$LoginStateCopyWith<$Res> implements $LoginStateCopyWith<$Res> {
-  factory _$LoginStateCopyWith(
-          _LoginState value, $Res Function(_LoginState) then) =
-      __$LoginStateCopyWithImpl<$Res>;
+abstract class _$$_LoginStateCopyWith<$Res>
+    implements $LoginStateCopyWith<$Res> {
+  factory _$$_LoginStateCopyWith(
+          _$_LoginState value, $Res Function(_$_LoginState) then) =
+      __$$_LoginStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {bool isPasswordVisible,
       bool isSubmitted,
@@ -117,41 +102,40 @@ abstract class _$LoginStateCopyWith<$Res> implements $LoginStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$LoginStateCopyWithImpl<$Res> extends _$LoginStateCopyWithImpl<$Res>
-    implements _$LoginStateCopyWith<$Res> {
-  __$LoginStateCopyWithImpl(
-      _LoginState _value, $Res Function(_LoginState) _then)
-      : super(_value, (v) => _then(v as _LoginState));
+class __$$_LoginStateCopyWithImpl<$Res>
+    extends _$LoginStateCopyWithImpl<$Res, _$_LoginState>
+    implements _$$_LoginStateCopyWith<$Res> {
+  __$$_LoginStateCopyWithImpl(
+      _$_LoginState _value, $Res Function(_$_LoginState) _then)
+      : super(_value, _then);
 
-  @override
-  _LoginState get _value => super._value as _LoginState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isPasswordVisible = freezed,
-    Object? isSubmitted = freezed,
-    Object? toastStateDM = freezed,
-    Object? isLoginSuccess = freezed,
-    Object? isAgreedToTerms = freezed,
+    Object? isPasswordVisible = null,
+    Object? isSubmitted = null,
+    Object? toastStateDM = null,
+    Object? isLoginSuccess = null,
+    Object? isAgreedToTerms = null,
   }) {
-    return _then(_LoginState(
-      isPasswordVisible: isPasswordVisible == freezed
+    return _then(_$_LoginState(
+      isPasswordVisible: null == isPasswordVisible
           ? _value.isPasswordVisible
           : isPasswordVisible // ignore: cast_nullable_to_non_nullable
               as bool,
-      isSubmitted: isSubmitted == freezed
+      isSubmitted: null == isSubmitted
           ? _value.isSubmitted
           : isSubmitted // ignore: cast_nullable_to_non_nullable
               as bool,
-      toastStateDM: toastStateDM == freezed
+      toastStateDM: null == toastStateDM
           ? _value.toastStateDM
           : toastStateDM // ignore: cast_nullable_to_non_nullable
               as ToastStateDM,
-      isLoginSuccess: isLoginSuccess == freezed
+      isLoginSuccess: null == isLoginSuccess
           ? _value.isLoginSuccess
           : isLoginSuccess // ignore: cast_nullable_to_non_nullable
               as bool,
-      isAgreedToTerms: isAgreedToTerms == freezed
+      isAgreedToTerms: null == isAgreedToTerms
           ? _value.isAgreedToTerms
           : isAgreedToTerms // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -188,59 +172,51 @@ class _$_LoginState implements _LoginState {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _LoginState &&
+        (other.runtimeType == runtimeType &&
+            other is _$_LoginState &&
             (identical(other.isPasswordVisible, isPasswordVisible) ||
-                const DeepCollectionEquality()
-                    .equals(other.isPasswordVisible, isPasswordVisible)) &&
+                other.isPasswordVisible == isPasswordVisible) &&
             (identical(other.isSubmitted, isSubmitted) ||
-                const DeepCollectionEquality()
-                    .equals(other.isSubmitted, isSubmitted)) &&
+                other.isSubmitted == isSubmitted) &&
             (identical(other.toastStateDM, toastStateDM) ||
-                const DeepCollectionEquality()
-                    .equals(other.toastStateDM, toastStateDM)) &&
+                other.toastStateDM == toastStateDM) &&
             (identical(other.isLoginSuccess, isLoginSuccess) ||
-                const DeepCollectionEquality()
-                    .equals(other.isLoginSuccess, isLoginSuccess)) &&
+                other.isLoginSuccess == isLoginSuccess) &&
             (identical(other.isAgreedToTerms, isAgreedToTerms) ||
-                const DeepCollectionEquality()
-                    .equals(other.isAgreedToTerms, isAgreedToTerms)));
+                other.isAgreedToTerms == isAgreedToTerms));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(isPasswordVisible) ^
-      const DeepCollectionEquality().hash(isSubmitted) ^
-      const DeepCollectionEquality().hash(toastStateDM) ^
-      const DeepCollectionEquality().hash(isLoginSuccess) ^
-      const DeepCollectionEquality().hash(isAgreedToTerms);
+  int get hashCode => Object.hash(runtimeType, isPasswordVisible, isSubmitted,
+      toastStateDM, isLoginSuccess, isAgreedToTerms);
 
   @JsonKey(ignore: true)
   @override
-  _$LoginStateCopyWith<_LoginState> get copyWith =>
-      __$LoginStateCopyWithImpl<_LoginState>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_LoginStateCopyWith<_$_LoginState> get copyWith =>
+      __$$_LoginStateCopyWithImpl<_$_LoginState>(this, _$identity);
 }
 
 abstract class _LoginState implements LoginState {
   const factory _LoginState(
-      {required bool isPasswordVisible,
-      required bool isSubmitted,
-      required ToastStateDM toastStateDM,
-      required bool isLoginSuccess,
-      required bool isAgreedToTerms}) = _$_LoginState;
+      {required final bool isPasswordVisible,
+      required final bool isSubmitted,
+      required final ToastStateDM toastStateDM,
+      required final bool isLoginSuccess,
+      required final bool isAgreedToTerms}) = _$_LoginState;
 
   @override
-  bool get isPasswordVisible => throw _privateConstructorUsedError;
+  bool get isPasswordVisible;
   @override
-  bool get isSubmitted => throw _privateConstructorUsedError;
+  bool get isSubmitted;
   @override
-  ToastStateDM get toastStateDM => throw _privateConstructorUsedError;
+  ToastStateDM get toastStateDM;
   @override
-  bool get isLoginSuccess => throw _privateConstructorUsedError;
+  bool get isLoginSuccess;
   @override
-  bool get isAgreedToTerms => throw _privateConstructorUsedError;
+  bool get isAgreedToTerms;
   @override
   @JsonKey(ignore: true)
-  _$LoginStateCopyWith<_LoginState> get copyWith =>
+  _$$_LoginStateCopyWith<_$_LoginState> get copyWith =>
       throw _privateConstructorUsedError;
 }

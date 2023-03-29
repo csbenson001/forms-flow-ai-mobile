@@ -40,7 +40,7 @@ class ApiConstantUrl {
       'auth/realms/${FormsFlowAIApiConstants.realm}/protocol/openid-connect/token';
 
   static final String fetchTokenOpenIdConnect =
-      '/auth/realms/${FormsFlowAIApiConstants.realm}/protocol/openid-connect';
+      'auth/realms/${FormsFlowAIApiConstants.realm}/protocol/openid-connect';
 
   static const String fetchUserInfo =
       'auth/realms/{realm}/protocol/openid-connect/userinfo';

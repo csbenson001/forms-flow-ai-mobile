@@ -37,7 +37,7 @@ class _FormsApiClient implements FormsApiClient {
     )
             .compose(
               _dio.options,
-              'formio/form/${formResourceId}/submission/${formSubmissionId}',
+              'form/${formResourceId}/submission/${formSubmissionId}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -61,7 +61,7 @@ class _FormsApiClient implements FormsApiClient {
     )
             .compose(
               _dio.options,
-              'formio/form/${id}',
+              'form/${id}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -88,7 +88,7 @@ class _FormsApiClient implements FormsApiClient {
     )
             .compose(
               _dio.options,
-              'formio/form/${resourceId}/submission/${submissionId}',
+              'form/${resourceId}/submission/${submissionId}',
               queryParameters: queryParameters,
               data: _data,
             )

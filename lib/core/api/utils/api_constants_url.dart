@@ -26,7 +26,7 @@ class ApiConstantUrl {
 
   static const String task = 'task';
 
-  static const String form = 'formio/form';
+  static const String form = 'form';
 
   static const String processDefinitionKey = 'process-definition/key';
 
@@ -104,7 +104,7 @@ class ApiConstantUrl {
 
   static const String fetchApplicationHistory = 'application/{id}/history';
 
-  static const String fetchBpmnDiagram = 'process/onestepapproval/xml';
+  static const String fetchBpmnDiagram = 'api/process/onestepapproval/xml';
 
   static const String fetchBpmnInstances =
       'api/process/process-instance/$pathId}/activity-instances';

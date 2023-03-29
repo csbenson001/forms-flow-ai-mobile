@@ -6,8 +6,8 @@ import 'env_key_constants.dart';
 
 class FormsFlowAIConstants {
   //Environment File
-
-  static const envFileName = '.env';
+  static const prodEnvFileName = 'prod.env';
+  static const devEnvFileName = 'dev.env';
   static final clientId = dotenv.get(EnvKeyConstants.envKeycloakWebClientId);
   static const keycloakScopes = ['openid', 'profile', 'offline_access'];
   static final keycloakRedirectUrl =
@@ -34,6 +34,10 @@ class FormsFlowAIConstants {
 
   // Other constants
   static const int noPosition = -1;
+
+  // Allow insecure connections
+  static final keycloakAllowInSecureConnections =
+      dotenv.get(EnvKeyConstants.envKeycloakAllowInSecureConnections) == 'true';
 }
 
 enum ViewState { initial, success, failure, noData, loading }

@@ -54,10 +54,14 @@ class ApplicationRemoteDataSourceImpl implements ApplicationHistoryRepository {
   @override
   Future<Either<Failure, FormioRolesResponse>> fetchFormioRoles() async {
     try {
-      var response = await applicationApiClient.getFormioRoles();
-
-      if (response.form != null) {
-        return Right(response);
+      final httpResponse = await applicationApiClient.getFormioRoles();
+      List<String> jwtTokenList =
+          httpResponse.response.headers.map['x-jwt-token'] ?? [];
+      if (jwtTokenList.isNotEmpty) {
+        String jwtToken = jwtTokenList[0].toString() ?? '';
+        var formioRolesResponse = httpResponse.data;
+        formioRolesResponse = formioRolesResponse.copyWith(jwtToken: jwtToken);
+        return Right(formioRolesResponse);
       }
       return Left(ServerFailure());
     } catch (e) {

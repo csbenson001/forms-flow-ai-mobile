@@ -1,9 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
+import 'package:formsflowai/core/api/utils/api_constants_url.dart';
 
-import '../../shared/formsflow_api_constants.dart';
-import '../../utils/form/jwttoken/jwt_token_util.dart';
-import '../api/response/form/roles/formio_roles_response.dart';
 import '../error/errors_failure.dart';
 import '../preferences/app_preference.dart';
 
@@ -11,14 +9,16 @@ class FormsAuthorizationInterceptor extends QueuedInterceptorsWrapper {
   final AppPreferences appPreferences;
   final FlutterAppAuth flutterAppAuth;
 
-  FormsAuthorizationInterceptor(
-      {required this.appPreferences, required this.flutterAppAuth});
+  FormsAuthorizationInterceptor({
+    required this.appPreferences,
+    required this.flutterAppAuth,
+  });
 
   @override
   void onRequest(
     RequestOptions options,
     RequestInterceptorHandler handler,
-  ) async {
+  ) {
     final String token = appPreferences.getFormJwtToken();
     if (token.isNotEmpty) {
       options.headers.addAll(
@@ -45,52 +45,73 @@ class FormsAuthorizationInterceptor extends QueuedInterceptorsWrapper {
                 method: requestOptions.method,
                 contentType: requestOptions.contentType,
                 headers: requestOptions.headers);
-            final formioRolesResponse = appPreferences.getFormioRoleResponse();
-            if (formioRolesResponse != null &&
-                formioRolesResponse.form != null) {
-              try {
-                Form? reviewer = formioRolesResponse.form?.singleWhere(
-                    (element) =>
-                        element.type == FormsFlowAIApiConstants.reviewer);
-
-                Form? resourceId = formioRolesResponse.form?.singleWhere(
-                    (element) =>
-                        element.type == FormsFlowAIApiConstants.resourceId);
-
-                if (reviewer != null) {
-                  List<String> roles = List.empty(growable: true);
-                  roles.add(reviewer.roleId ?? '');
-                  appPreferences.setFormJWtToken(JwtTokenUtils.signJwtToken(
-                      userResourceId: resourceId?.roleId ?? '', roles: roles));
-                }
-              } catch (e) {
-                appPreferences.setFormJWtToken(JwtTokenUtils.signJwtToken());
-              }
-            } else {
-              appPreferences.setFormJWtToken(JwtTokenUtils.signJwtToken());
-            }
-
             try {
               Dio dio = Dio();
-              final response = await dio.request(
-                  requestOptions.baseUrl + requestOptions.path,
-                  options: options,
-                  cancelToken: requestOptions.cancelToken,
-                  onReceiveProgress: requestOptions.onReceiveProgress,
-                  data: requestOptions.data,
-                  queryParameters: requestOptions.queryParameters);
-              return handler.resolve(response);
+              final result = await refreshFormioToken(dio: dio);
+              if (result != null) {
+                appPreferences.setFormJWtToken(result ?? '');
+                if (result.isNotEmpty) {
+                  options.headers?.addAll(
+                    <String, String>{
+                      'x-jwt-token': result,
+                    },
+                  );
+                }
+                final response = await dio.request(
+                    requestOptions.baseUrl + requestOptions.path,
+                    options: options,
+                    onReceiveProgress: requestOptions.onReceiveProgress,
+                    data: requestOptions.data,
+                    queryParameters: requestOptions.queryParameters);
+                return handler.resolve(response);
+              }
             } catch (e) {
-              () {};
+              print("*** Error ***");
+              print(e.toString());
+              handler.next(RefreshTokenExpiredException(err.requestOptions));
             }
-          } else {}
+            ;
+          } else {
+            handler.next(RefreshTokenExpiredException(err.requestOptions));
+          }
           break;
-
         case DioErrorType.cancel:
           break;
         case DioErrorType.other:
           throw NoInternetConnectionException(err.requestOptions);
       }
+    }
+  }
+
+  /// Method to update Refresh token using Authenticator
+  Future<String?> refreshFormioToken({required Dio dio}) async {
+    final options = Options();
+    options.headers?.addAll(
+      <String, String>{
+        'Authorization': appPreferences.getBearerAccessToken(),
+      },
+    );
+    try {
+      final formioRoleResponse = await dio.get(
+        ApiConstantUrl.formsflowaiBaseUrl + ApiConstantUrl.fetchFormioRoles,
+        options: options,
+      );
+      if (formioRoleResponse.statusCode == 200 ||
+          formioRoleResponse.statusCode == 204 ||
+          formioRoleResponse.statusCode == 201) {
+        List<String> jwtTokenList =
+            formioRoleResponse.headers.map['x-jwt-token'] ?? [];
+        if (jwtTokenList.isNotEmpty) {
+          String jwtToken = jwtTokenList[0].toString() ?? '';
+          return jwtToken;
+        } else {
+          return null;
+        }
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
     }
   }
 }

@@ -117,20 +117,27 @@ Change the bundle identifier from your Info.plist file inside your ios/Runner di
 * Modify the environment variables in the **.env** file. Environment variables are given in the table below,
 * **NOTE : {URLs} given inside the .env file should be changed to your host URL. Please take special care to identify the correct URLs**
 
-> :information_source: Variables with trailing :triangular_flag_on_post: in below table should be updated in the .env file
+> :information_source: Variables with trailing :triangular_flag_on_post: in below table should be updated in the dev.env and prod.env files
+
+> :information_source: Please update development/QA urls on dev.env and live production urls on prod.env files
+
+> :information_source: If you need to run the app in the local environment update KEYCLOAK_ALLOW_INSECURE_CONNECTIONS in the dev.env file to true
+
+> :information_source: KEYCLOAK_ALLOW_INSECURE_CONNECTIONS can be updated only in the debug build mode
 
 Variable name | Meaning | Possible values | Default value |
  --- | --- | --- | ---
-`FORMIO_DEFAULT_PROJECT_URL`:triangular_flag_on_post:|The URL of the form.io server||`http://{your-ip-address}`
-`FORMSFLOW_API_URL`:triangular_flag_on_post:|formsflow Rest API URL||`http://{your-ip-address}/api`
+`FORMIO_DEFAULT_PROJECT_URL`:triangular_flag_on_post:|The URL of the form.io server||`http://{your-ip-address}/formio(add)`
+`FORMSFLOW_API_URL`:triangular_flag_on_post:|formsflow Rest API URL||`http://{your-ip-address}`
 `BPM_API_URL`:triangular_flag_on_post:|Camunda Rest API URL||`http://{your-ip-address}/camunda`
 `KEYCLOAK_URL`:triangular_flag_on_post:| URL to your Keycloak server || `http://{your-ip-address}`
 `KEYCLOAK_URL_REALM`|	The Keycloak realm to use|eg. forms-flow-ai | `forms-flow-ai`
-`KEYCLOAK_WEB_CLIENTID`|Your Keycloak Client ID within the realm| eg. forms-flow-mobile | `forms-flow-mobile`
+`KEYCLOAK_WEB_CLIENTID`|Your Keycloak Client ID within the realm| eg. forms-flow-web | `forms-flow-web`
 `WEBSOCKET_ENCRYPT_KEY`|Camunda task event streaming. AES encryption of token| | `giert989jkwrgb@DR55`
 `WEB_BASE_CUSTOM_URL`|Clients can use WEB_BASE_CUSTOM_URL env variable to provide their custom URL |
 |`FORMIO_JWT_SECRET`|forms-flow-forms jwt secret| |`--- change me now ---`
 |`KEYCLOAK_REDIRECT_URL`|Keycloak redirect url| |`com.packagename:/*`
+|`KEYCLOAK_ALLOW_INSECURE_CONNECTIONS`|Allow insecure connections|true/false |`false`
 
 ### Running the application
 

@@ -51,7 +51,7 @@ class FormsAuthorizationInterceptor extends QueuedInterceptorsWrapper {
               Dio dio = Dio();
               final result = await refreshFormioToken(dio: dio);
               if (result != null) {
-                appPreferences.setFormJWtToken(result ?? '');
+                appPreferences.setFormJWtToken(result);
                 if (result.isNotEmpty) {
                   options.headers?.addAll(
                     <String, String>{
@@ -70,7 +70,6 @@ class FormsAuthorizationInterceptor extends QueuedInterceptorsWrapper {
             } catch (e) {
               handler.next(RefreshTokenExpiredException(err.requestOptions));
             }
-            ;
           } else {
             handler.next(RefreshTokenExpiredException(err.requestOptions));
           }
@@ -102,7 +101,7 @@ class FormsAuthorizationInterceptor extends QueuedInterceptorsWrapper {
                 .headers.map[FormsFlowAIApiConstants.headerJwtToken] ??
             [];
         if (jwtTokenList.isNotEmpty) {
-          String jwtToken = jwtTokenList[0].toString() ?? '';
+          String jwtToken = jwtTokenList[0].toString();
           return jwtToken;
         } else {
           return null;

@@ -60,7 +60,7 @@ class ApplicationRemoteDataSourceImpl implements ApplicationHistoryRepository {
               .response.headers.map[FormsFlowAIApiConstants.headerJwtToken] ??
           [];
       if (jwtTokenList.isNotEmpty) {
-        String jwtToken = jwtTokenList[0].toString() ?? '';
+        String jwtToken = jwtTokenList[0].toString();
         var formioRolesResponse = httpResponse.data;
         formioRolesResponse = formioRolesResponse.copyWith(jwtToken: jwtToken);
         return Right(formioRolesResponse);

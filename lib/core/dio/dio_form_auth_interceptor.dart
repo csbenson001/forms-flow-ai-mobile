@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:formsflowai/core/api/utils/api_constants_url.dart';
 
+import '../../shared/formsflow_api_constants.dart';
 import '../error/errors_failure.dart';
 import '../preferences/app_preference.dart';
 
@@ -23,7 +24,7 @@ class FormsAuthorizationInterceptor extends QueuedInterceptorsWrapper {
     if (token.isNotEmpty) {
       options.headers.addAll(
         <String, String>{
-          'x-jwt-token': token,
+          FormsFlowAIApiConstants.headerJwtToken: token,
         },
       );
     }
@@ -39,7 +40,8 @@ class FormsAuthorizationInterceptor extends QueuedInterceptorsWrapper {
         case DioErrorType.receiveTimeout:
           throw DeadlineExceededException(err.requestOptions);
         case DioErrorType.response:
-          if (err.response?.statusCode == 401) {
+          if (err.response?.statusCode == 401 ||
+              err.response?.statusCode == 400) {
             RequestOptions requestOptions = err.requestOptions;
             final options = Options(
                 method: requestOptions.method,
@@ -53,7 +55,7 @@ class FormsAuthorizationInterceptor extends QueuedInterceptorsWrapper {
                 if (result.isNotEmpty) {
                   options.headers?.addAll(
                     <String, String>{
-                      'x-jwt-token': result,
+                      FormsFlowAIApiConstants.headerJwtToken: result,
                     },
                   );
                 }
@@ -66,8 +68,6 @@ class FormsAuthorizationInterceptor extends QueuedInterceptorsWrapper {
                 return handler.resolve(response);
               }
             } catch (e) {
-              print("*** Error ***");
-              print(e.toString());
               handler.next(RefreshTokenExpiredException(err.requestOptions));
             }
             ;
@@ -85,22 +85,22 @@ class FormsAuthorizationInterceptor extends QueuedInterceptorsWrapper {
 
   /// Method to update Refresh token using Authenticator
   Future<String?> refreshFormioToken({required Dio dio}) async {
-    final options = Options();
-    options.headers?.addAll(
-      <String, String>{
-        'Authorization': appPreferences.getBearerAccessToken(),
-      },
-    );
+    var options = Options(receiveTimeout: 15000, sendTimeout: 15000, headers: {
+      FormsFlowAIApiConstants.headerAuthorization:
+          appPreferences.getBearerAccessToken(),
+    });
     try {
       final formioRoleResponse = await dio.get(
         ApiConstantUrl.formsflowaiBaseUrl + ApiConstantUrl.fetchFormioRoles,
         options: options,
       );
+
       if (formioRoleResponse.statusCode == 200 ||
           formioRoleResponse.statusCode == 204 ||
           formioRoleResponse.statusCode == 201) {
-        List<String> jwtTokenList =
-            formioRoleResponse.headers.map['x-jwt-token'] ?? [];
+        List<String> jwtTokenList = formioRoleResponse
+                .headers.map[FormsFlowAIApiConstants.headerJwtToken] ??
+            [];
         if (jwtTokenList.isNotEmpty) {
           String jwtToken = jwtTokenList[0].toString() ?? '';
           return jwtToken;

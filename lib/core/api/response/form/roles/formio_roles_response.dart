@@ -7,9 +7,8 @@ part 'formio_roles_response.g.dart';
 /// roles data
 @freezed
 class FormioRolesResponse with _$FormioRolesResponse {
-  const factory FormioRolesResponse({
-    List<Form>? form,
-  }) = _FormioRolesResponse;
+  const factory FormioRolesResponse(
+      {List<Form>? form, @Default("") String? jwtToken}) = _FormioRolesResponse;
 
   factory FormioRolesResponse.fromJson(Map<String, dynamic> json) =>
       _$FormioRolesResponseFromJson(json);

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -18,7 +19,14 @@ Future<void> main() async {
 
   /// Init executor
   await Executor().warmUp(log: false);
-  await dotenv.load(fileName: FormsFlowAIConstants.envFileName);
+
+  /// Load environment variables based on the build mode
+  await dotenv.load(
+      fileName: kReleaseMode
+          ? FormsFlowAIConstants.prodEnvFileName
+          : FormsFlowAIConstants.devEnvFileName);
+
+  /// Call function[setAppStatusBarOverlay()] to set app status bar config
   await setAppStatusBarOverlay();
 
   /// Call function[RegisterServices] to inject services/useCases/repos
@@ -26,6 +34,7 @@ Future<void> main() async {
 
   /// call function [InitEasyLoading] to initialize overlay progress loading
   initEasyLoading();
+
   runApp(Sizer(builder: (context, orientation, deviceType) {
     return ProviderScope(
         child: MaterialApp.router(

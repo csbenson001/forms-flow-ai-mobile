@@ -37,5 +37,5 @@ abstract class FormsFlowAIApplicationApiClient {
   /// Formio roleids are used in Formio JWT token signing used in
   /// form api headers
   @GET(ApiConstantUrl.fetchFormioRoles)
-  Future<FormioRolesResponse> getFormioRoles();
+  Future<HttpResponse<FormioRolesResponse>> getFormioRoles();
 }

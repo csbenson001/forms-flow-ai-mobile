@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:formsflowai/core/api/response/base/base_response.dart';
 import 'package:formsflowai/core/error/errors_failure.dart';
@@ -60,7 +61,9 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
               FlutterAuthUtils.fetchAuthorizationConfiguration(),
           scopes: FormsFlowAIConstants.keycloakScopes,
           preferEphemeralSession: false,
-          allowInsecureConnections: false,
+          allowInsecureConnections: kReleaseMode
+              ? false
+              : FormsFlowAIConstants.keycloakAllowInSecureConnections,
         ),
       );
       if (result != null) {

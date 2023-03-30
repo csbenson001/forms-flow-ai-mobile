@@ -56,7 +56,7 @@ class _FormsFlowAIApplicationApiClient
     )
             .compose(
               _dio.options,
-              'process/onestepapproval/xml',
+              'api/process/onestepapproval/xml',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -89,13 +89,13 @@ class _FormsFlowAIApplicationApiClient
   }
 
   @override
-  Future<FormioRolesResponse> getFormioRoles() async {
+  Future<HttpResponse<FormioRolesResponse>> getFormioRoles() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<FormioRolesResponse>(Options(
+        _setStreamType<HttpResponse<FormioRolesResponse>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -108,7 +108,8 @@ class _FormsFlowAIApplicationApiClient
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = FormioRolesResponse.fromJson(_result.data!);
-    return value;
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

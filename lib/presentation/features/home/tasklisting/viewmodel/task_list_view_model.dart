@@ -12,8 +12,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../core/api/post/task/tasklist_sort.dart';
 import '../../../../../core/api/response/filter/filters_response.dart';
-import '../../../../../core/api/response/form/roles/formio_roles_response.dart'
-    as roles_response;
 import '../../../../../core/api/response/processdefinition/process_definition_response.dart';
 import '../../../../../core/api/response/task/tasklist/task_list_response.dart';
 import '../../../../../core/networkmanager/internet_connectivity_provider.dart';
@@ -27,7 +25,6 @@ import '../../../../../shared/formsflow_app_constants.dart';
 import '../../../../../shared/task_constants.dart';
 import '../../../../../shared/toast/toast_message_provider.dart';
 import '../../../../../utils/database/database_query_util.dart';
-import '../../../../../utils/form/jwttoken/jwt_token_util.dart';
 import '../../../../../utils/general_util.dart';
 import '../../../../../utils/router/router_utils.dart';
 import '../../../../base/viewmodel/base_notifier_view_model.dart';
@@ -429,36 +426,36 @@ class TaskListViewModel extends BaseNotifierViewModel {
     return filtersResponse;
   }
 
-  // Function to generate Formio JWT token if not added
-  void generateFormioJWTToken(
-      {required roles_response.FormioRolesResponse formioRolesResponse}) {
-    if (formioRolesResponse.form != null &&
-        formioRolesResponse.form!.isNotEmpty) {
-      try {
-        roles_response.Form? reviewer = formioRolesResponse.form?.singleWhere(
-            (element) => element.type == FormsFlowAIApiConstants.reviewer);
-
-        roles_response.Form? resourceId = formioRolesResponse.form?.singleWhere(
-            (element) => element.type == FormsFlowAIApiConstants.resourceId);
-
-        if (reviewer != null) {
-          // Create a form jwt token
-          List<String> roles = List.empty(growable: true);
-          roles.add(reviewer.roleId ?? '');
-          appPreferences.setFormioRoleResponse(formioRolesResponse);
-          appPreferences.setFormJWtToken(JwtTokenUtils.signJwtToken(
-              userResourceId: resourceId?.roleId ?? '', roles: roles));
-          appPreferences.setFormJwtTokenAdded(true);
-        }
-      } catch (e) {
-        appPreferences.setFormJWtToken(JwtTokenUtils.signJwtToken());
-        appPreferences.setFormJwtTokenAdded(true);
-      }
-    } else {
-      appPreferences.setFormJWtToken(JwtTokenUtils.signJwtToken());
-      appPreferences.setFormJwtTokenAdded(true);
-    }
-  }
+  // // Function to generate Formio JWT token if not added
+  // void generateFormioJWTToken(
+  //     {required roles_response.FormioRolesResponse formioRolesResponse}) {
+  //   if (formioRolesResponse.form != null &&
+  //       formioRolesResponse.form!.isNotEmpty) {
+  //     try {
+  //       roles_response.Form? reviewer = formioRolesResponse.form?.singleWhere(
+  //           (element) => element.type == FormsFlowAIApiConstants.reviewer);
+  //
+  //       roles_response.Form? resourceId = formioRolesResponse.form?.singleWhere(
+  //           (element) => element.type == FormsFlowAIApiConstants.resourceId);
+  //
+  //       if (reviewer != null) {
+  //         // Create a form jwt token
+  //         List<String> roles = List.empty(growable: true);
+  //         roles.add(reviewer.roleId ?? '');
+  //         appPreferences.setFormioRoleResponse(formioRolesResponse);
+  //         appPreferences.setFormJWtToken(JwtTokenUtils.signJwtToken(
+  //             userResourceId: resourceId?.roleId ?? '', roles: roles));
+  //         appPreferences.setFormJwtTokenAdded(true);
+  //       }
+  //     } catch (e) {
+  //       appPreferences.setFormJWtToken(JwtTokenUtils.signJwtToken());
+  //       appPreferences.setFormJwtTokenAdded(true);
+  //     }
+  //   } else {
+  //     appPreferences.setFormJWtToken(JwtTokenUtils.signJwtToken());
+  //     appPreferences.setFormJwtTokenAdded(true);
+  //   }
+  // }
 
   /// Function to get task post model
   /// ---> Returns List[Sorting]
@@ -1037,15 +1034,18 @@ class TaskListViewModel extends BaseNotifierViewModel {
 
   /// Function to fetch formioRoles
   void fetchFormioRoles() {
-    if (!appPreferences.isFormJwtTokenAdded()) {
-      fetchFormioRolesUseCase
-          .call(params: const FetchFormioRolesParams())
-          .then((value) {
-        value.fold((l) {}, (formioRolesResponse) {
-          generateFormioJWTToken(formioRolesResponse: formioRolesResponse);
-        });
+    fetchFormioRolesUseCase
+        .call(params: const FetchFormioRolesParams())
+        .then((value) {
+      value.fold((l) {
+        dismissProgressLoading();
+      }, (formioRolesResponse) {
+        if (!GeneralUtil.isStringEmpty(formioRolesResponse.jwtToken)) {
+          appPreferences.setFormioRoleResponse(formioRolesResponse);
+          appPreferences.setFormJWtToken(formioRolesResponse.jwtToken ?? '');
+        }
       });
-    }
+    });
   }
 
   /// Function to update all or any filters is applied

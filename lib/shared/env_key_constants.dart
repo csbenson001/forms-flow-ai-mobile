@@ -18,4 +18,7 @@ class EnvKeyConstants {
   static const String envWebsocketEncryptKey = "WEBSOCKET_ENCRYPT_KEY";
 
   static const String envKeycloakRedirectUrl = "KEYCLOAK_REDIRECT_URL";
+
+  static const String envKeycloakAllowInSecureConnections =
+      "KEYCLOAK_ALLOW_INSECURE_CONNECTIONS";
 }

@@ -7,6 +7,7 @@ import '../../core/api/client/application/formsflowai_application_api_client.dar
 import '../../core/api/response/form/roles/formio_roles_response.dart';
 import '../../core/database/entity/application_history_entity.dart';
 import '../../core/preferences/app_preference.dart';
+import '../../shared/formsflow_api_constants.dart';
 import 'application_repository.dart';
 
 class ApplicationRemoteDataSourceImpl implements ApplicationHistoryRepository {
@@ -54,10 +55,15 @@ class ApplicationRemoteDataSourceImpl implements ApplicationHistoryRepository {
   @override
   Future<Either<Failure, FormioRolesResponse>> fetchFormioRoles() async {
     try {
-      var response = await applicationApiClient.getFormioRoles();
-
-      if (response.form != null) {
-        return Right(response);
+      final httpResponse = await applicationApiClient.getFormioRoles();
+      List<String> jwtTokenList = httpResponse
+              .response.headers.map[FormsFlowAIApiConstants.headerJwtToken] ??
+          [];
+      if (jwtTokenList.isNotEmpty) {
+        String jwtToken = jwtTokenList[0].toString();
+        var formioRolesResponse = httpResponse.data;
+        formioRolesResponse = formioRolesResponse.copyWith(jwtToken: jwtToken);
+        return Right(formioRolesResponse);
       }
       return Left(ServerFailure());
     } catch (e) {

@@ -21,6 +21,7 @@ FormioRolesResponse _$FormioRolesResponseFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$FormioRolesResponse {
   List<Form>? get form => throw _privateConstructorUsedError;
+  String? get jwtToken => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +35,7 @@ abstract class $FormioRolesResponseCopyWith<$Res> {
           FormioRolesResponse value, $Res Function(FormioRolesResponse) then) =
       _$FormioRolesResponseCopyWithImpl<$Res, FormioRolesResponse>;
   @useResult
-  $Res call({List<Form>? form});
+  $Res call({List<Form>? form, String? jwtToken});
 }
 
 /// @nodoc
@@ -51,12 +52,17 @@ class _$FormioRolesResponseCopyWithImpl<$Res, $Val extends FormioRolesResponse>
   @override
   $Res call({
     Object? form = freezed,
+    Object? jwtToken = freezed,
   }) {
     return _then(_value.copyWith(
       form: freezed == form
           ? _value.form
           : form // ignore: cast_nullable_to_non_nullable
               as List<Form>?,
+      jwtToken: freezed == jwtToken
+          ? _value.jwtToken
+          : jwtToken // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -69,7 +75,7 @@ abstract class _$$_FormioRolesResponseCopyWith<$Res>
       __$$_FormioRolesResponseCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Form>? form});
+  $Res call({List<Form>? form, String? jwtToken});
 }
 
 /// @nodoc
@@ -84,12 +90,17 @@ class __$$_FormioRolesResponseCopyWithImpl<$Res>
   @override
   $Res call({
     Object? form = freezed,
+    Object? jwtToken = freezed,
   }) {
     return _then(_$_FormioRolesResponse(
       form: freezed == form
           ? _value._form
           : form // ignore: cast_nullable_to_non_nullable
               as List<Form>?,
+      jwtToken: freezed == jwtToken
+          ? _value.jwtToken
+          : jwtToken // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -97,7 +108,8 @@ class __$$_FormioRolesResponseCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_FormioRolesResponse implements _FormioRolesResponse {
-  const _$_FormioRolesResponse({final List<Form>? form}) : _form = form;
+  const _$_FormioRolesResponse({final List<Form>? form, this.jwtToken = ""})
+      : _form = form;
 
   factory _$_FormioRolesResponse.fromJson(Map<String, dynamic> json) =>
       _$$_FormioRolesResponseFromJson(json);
@@ -113,8 +125,12 @@ class _$_FormioRolesResponse implements _FormioRolesResponse {
   }
 
   @override
+  @JsonKey()
+  final String? jwtToken;
+
+  @override
   String toString() {
-    return 'FormioRolesResponse(form: $form)';
+    return 'FormioRolesResponse(form: $form, jwtToken: $jwtToken)';
   }
 
   @override
@@ -122,13 +138,15 @@ class _$_FormioRolesResponse implements _FormioRolesResponse {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_FormioRolesResponse &&
-            const DeepCollectionEquality().equals(other._form, _form));
+            const DeepCollectionEquality().equals(other._form, _form) &&
+            (identical(other.jwtToken, jwtToken) ||
+                other.jwtToken == jwtToken));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_form));
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_form), jwtToken);
 
   @JsonKey(ignore: true)
   @override
@@ -146,14 +164,17 @@ class _$_FormioRolesResponse implements _FormioRolesResponse {
 }
 
 abstract class _FormioRolesResponse implements FormioRolesResponse {
-  const factory _FormioRolesResponse({final List<Form>? form}) =
-      _$_FormioRolesResponse;
+  const factory _FormioRolesResponse(
+      {final List<Form>? form,
+      final String? jwtToken}) = _$_FormioRolesResponse;
 
   factory _FormioRolesResponse.fromJson(Map<String, dynamic> json) =
       _$_FormioRolesResponse.fromJson;
 
   @override
   List<Form>? get form;
+  @override
+  String? get jwtToken;
   @override
   @JsonKey(ignore: true)
   _$$_FormioRolesResponseCopyWith<_$_FormioRolesResponse> get copyWith =>
